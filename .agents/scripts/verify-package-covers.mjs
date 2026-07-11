@@ -100,6 +100,9 @@ for (const [binName, target] of Object.entries(packageJson.bin ?? {})) {
 const tmp = await mkdtemp(join(tmpdir(), "papyrus-cover-"));
 const cardCoverFont = [
   process.env.PAPYRUS_TEST_FONT,
+  "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+  "/usr/share/fonts/truetype/liberation2/LiberationSans-Regular.ttf",
+  "/usr/share/fonts/truetype/freefont/FreeSans.ttf",
   "/Users/marcelof/Library/Fonts/FiraCodeNerdFont-Regular.ttf",
   "/System/Library/Fonts/SFNS.ttf",
   "/System/Library/Fonts/Supplemental/Arial.ttf",

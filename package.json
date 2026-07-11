@@ -1,6 +1,7 @@
 {
   "name": "astro-theme-papyrus",
   "version": "0.1.0",
+  "packageManager": "pnpm@11.9.0",
   "type": "module",
   "private": false,
   "description": "Pure-backed Astro theme for blogs, docs, projects, profiles, search, RSS, and generated metadata.",
