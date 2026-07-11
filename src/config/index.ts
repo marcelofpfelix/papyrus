@@ -218,6 +218,14 @@ export function parsePaperConfigToml(source: string): PaperSiteConfig {
 }
 
 export async function loadPaperConfig(path = "paper.config.toml", cwd = process.cwd()): Promise<PaperSiteConfig> {
-  const source = await readFile(resolve(cwd, path), "utf8");
+  let source: string;
+  try {
+    source = await readFile(resolve(cwd, path), "utf8");
+  } catch (error) {
+    if (error && typeof error === "object" && "code" in error && error.code === "ENOENT") {
+      return resolvePaperConfig();
+    }
+    throw error;
+  }
   return parsePaperConfigToml(source);
 }

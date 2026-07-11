@@ -1,0 +1,35 @@
+---
+import { PaperBaseLayout, PaperProjectList } from "../../components";
+import { getTemplateProfile } from "../profile";
+import { getTemplateSite } from "../site";
+
+const site = await getTemplateSite();
+const profile = await getTemplateProfile();
+const description = profile.bio || site.description;
+const projects = site.projects.slice(0, 3);
+---
+
+<PaperBaseLayout title="About" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
+  <section class="paper-hero">
+    <h1>About</h1>
+    {description && <p class="paper-description">{description}</p>}
+  </section>
+
+  <section class="paper-section">
+    <h2>{profile.name}</h2>
+    {profile.bio && <p class="paper-description">{profile.bio}</p>}
+    <p><a href="/profile/">Profile</a></p>
+  </section>
+
+  {projects.length > 0 && (
+    <section class="paper-section">
+      <h2>Projects</h2>
+      <PaperProjectList projects={projects} />
+    </section>
+  )}
+
+  <section class="paper-section">
+    <h2>Posts</h2>
+    <p><a href="/posts/">Posts</a></p>
+  </section>
+</PaperBaseLayout>

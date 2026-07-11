@@ -82,6 +82,7 @@
     "./PaperJekyllCvPage.astro": "./src/components/PaperJekyllCvPage.astro",
     "./PaperAiMetadata.astro": "./src/components/PaperAiMetadata.astro",
     "./template/pages/index.astro": "./src/template/pages/index.astro",
+    "./template/pages/about.astro": "./src/template/pages/about.astro",
     "./template/pages/posts/index.astro": "./src/template/pages/posts/index.astro",
     "./template/pages/posts/[...slug].astro": "./src/template/pages/posts/[...slug].astro",
     "./template/pages/projects.astro": "./src/template/pages/projects.astro",
