@@ -42,7 +42,7 @@ The template depends on the npm package:
 ```json title="package.json"
 {
   "dependencies": {
-    "astro-theme-papyrus": "^0.1.0"
+    "astro-theme-papyrus": "^0.2.0"
   }
 }
 ```

@@ -25,7 +25,7 @@ for (const phrase of [
   "Package docs live at `/docs/`",
   "Open `/docs/` in the public Papyrus site",
   "pnpm create astro@latest -- --template marcelofpfelix/papyrus-template",
-  "\"astro-theme-papyrus\": \"^0.1.0\"",
+  "\"astro-theme-papyrus\": \"^0.2.0\"",
   "Use Papyrus when you want a small content site that feels finished on day one",
   "readable posts, useful docs, searchable archives, social previews, RSS",
   "`marcelofelix` is the real showcase site. It keeps its own content",

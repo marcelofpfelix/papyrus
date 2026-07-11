@@ -59,7 +59,7 @@ assert(existsSync(join(root, "CHANGELOG.md")), "CHANGELOG.md file missing");
 assert(existsSync(join(root, "docs/release.md")), "docs/release.md file missing");
 
 for (const phrase of [
-  "pnpm add github:marcelofpfelix/papyrus",
+  "\"astro-theme-papyrus\": \"^0.2.0\"",
   "astro-theme-papyrus/components",
   "astro-theme-papyrus/utils",
   "astro-theme-papyrus/paper.css",
@@ -71,7 +71,7 @@ for (const phrase of ["MIT License", "Permission is hereby granted", "Marcelo Fe
   assert(license.includes(phrase), `LICENSE missing phrase: ${phrase}`);
 }
 
-for (const phrase of ["## Unreleased", "## 0.1.0", "astro-theme-papyrus"]) {
+for (const phrase of ["## 0.2.0", "## 0.1.0", "astro-theme-papyrus"]) {
   assert(changelog.includes(phrase), `CHANGELOG missing phrase: ${phrase}`);
 }
 
