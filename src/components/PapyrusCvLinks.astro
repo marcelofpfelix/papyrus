@@ -1,0 +1,50 @@
+---
+import type { PapyrusCvLink } from "../utils/cv";
+import { cvLinkIcon } from "../utils/cv-icons";
+
+const { links = [] } = Astro.props as {
+  links?: PapyrusCvLink[];
+};
+---
+
+{links.length > 0 && (
+  <nav class="papyrus-cv-links" aria-label="Profile links">
+    {links.map((link) => (
+      link.href ? (
+        <a href={link.href}>
+          <svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvLinkIcon(link)} />
+          <span>{link.label}</span>
+        </a>
+      ) : (
+        <span class="papyrus-cv-link-item">
+          <svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvLinkIcon(link)} />
+          {link.emailParts ? (
+            <span class="papyrus-email-parts" data-email-user={link.emailParts.user} data-email-domain={link.emailParts.domain}>
+              <span>{link.emailParts.user}</span><span class="papyrus-email-at" aria-hidden="true"></span><span>{link.emailParts.domainParts.join(".")}</span>
+            </span>
+          ) : (
+            <span>{link.label}</span>
+          )}
+        </span>
+      )
+    ))}
+  </nav>
+)}
+
+<style>
+  .papyrus-cv-links {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .papyrus-cv-link-item {
+    align-items: center;
+    color: inherit;
+    display: inline-flex;
+    gap: 8px;
+  }
+
+  .papyrus-email-at::before {
+    content: "＠";
+  }
+</style>

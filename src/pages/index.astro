@@ -1,9 +1,9 @@
 ---
 import {
-  PaperBaseLayout,
-  PaperNoteList,
-  PaperPostList,
-  PaperProjectList,
+  PapyrusBaseLayout,
+  PapyrusNoteList,
+  PapyrusPostList,
+  PapyrusProjectList,
 } from "../components";
 import { readFile } from "node:fs/promises";
 import { demoNav, demoSocialLinks } from "../data/demo-nav";
@@ -13,7 +13,7 @@ import { pinRank, publishedPosts, sortPosts, sortPostsWithPinned } from "../util
 import { withBase } from "../utils/withBase";
 
 const siteData = JSON.parse(await readFile("public/demo/site-data.json", "utf8")) as {
-  projects: Parameters<typeof PaperProjectList>[0]["projects"];
+  projects: Parameters<typeof PapyrusProjectList>[0]["projects"];
   notes: Array<{
     id: string;
     text: string;
@@ -67,53 +67,53 @@ const postListProps = {
 };
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="papyrus"
   description="Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata."
   siteTitle="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <section class="paper-hero">
+  <section class="papyrus-hero">
     <h1>papyrus</h1>
-    <p class="paper-description">A reusable Astro theme package for quiet blogs, docs, projects, and profile/CV pages. Keep content in your site, import Papyrus components, and publish a fast static site with search, RSS, tags, metadata, and print-ready profile routes.</p>
-    <p class="paper-home-more">
+    <p class="papyrus-description">A reusable Astro theme package for quiet blogs, docs, projects, and profile/CV pages. Keep content in your site, import Papyrus components, and publish a fast static site with search, RSS, tags, metadata, and print-ready profile routes.</p>
+    <p class="papyrus-home-more">
       <a href={withBase("/about/")}>about me</a>
     </p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Posts</h2>
-    <PaperPostList posts={homePosts} {...postListProps} />
-    <p class="paper-section-more">
+    <PapyrusPostList posts={homePosts} {...postListProps} />
+    <p class="papyrus-section-more">
       <a href={withBase("/posts/")}>more posts</a>
     </p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Projects</h2>
-    <PaperProjectList projects={homeProjects} />
-    <p class="paper-section-more">
+    <PapyrusProjectList projects={homeProjects} />
+    <p class="papyrus-section-more">
       <a href={withBase("/projects/")}>more projects</a>
     </p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Docs</h2>
-    <ul class="paper-post-list paper-post-list-list paper-doc-list">
+    <ul class="papyrus-post-list papyrus-post-list-list papyrus-doc-list">
       {homeDocs.map(doc => (
         <li>
           <a href={withBase(doc.href)}>
-            <span class="paper-post-title">{doc.title}</span>
-            <span class="paper-post-description">{doc.description}</span>
+            <span class="papyrus-post-title">{doc.title}</span>
+            <span class="papyrus-post-description">{doc.description}</span>
           </a>
         </li>
       ))}
     </ul>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Notes</h2>
-    <PaperNoteList notes={demoNotes} />
+    <PapyrusNoteList notes={demoNotes} />
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>

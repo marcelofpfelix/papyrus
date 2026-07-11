@@ -1,5 +1,5 @@
 ---
-import { PaperBaseLayout, PaperCvActions, PaperCvLinks, PaperGithubCard, PaperTimeline } from "../../components";
+import { PapyrusBaseLayout, PapyrusCvActions, PapyrusCvLinks, PapyrusGithubCard, PapyrusTimeline } from "../../components";
 import { cvIconSvg } from "../../utils/cv-icons";
 import { getAssetPath, withBase } from "../../utils/withBase";
 import { shouldShowCvItemTitle } from "../../utils/cv";
@@ -46,7 +46,7 @@ function cvIcon(name: string) {
 
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Profile"
   description={profile.summary}
   siteTitle="papyrus"
@@ -61,7 +61,7 @@ function cvIcon(name: string) {
 
       <section>
         <h2>Contact</h2>
-        <PaperCvLinks links={visibleProfileLinks} />
+        <PapyrusCvLinks links={visibleProfileLinks} />
       </section>
 
       <section>
@@ -82,7 +82,7 @@ function cvIcon(name: string) {
 
     <div class="cv-main">
       <div class="cv-controls">
-        <PaperCvActions
+        <PapyrusCvActions
           profile
           markdownHref={cvMarkdownHref}
           shareText={profile.headline}
@@ -137,7 +137,7 @@ function cvIcon(name: string) {
       <section class="cv-template-panel" data-cv-panel="timeline" aria-hidden="true" inert>
         <section class="cv-section">
           <h2><span><svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIcon("timeline")} /></span>Timeline</h2>
-          <PaperTimeline events={timelineEvents} />
+          <PapyrusTimeline events={timelineEvents} />
         </section>
       </section>
 
@@ -146,7 +146,7 @@ function cvIcon(name: string) {
           <h2><span><svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIcon("repo")} /></span>Projects</h2>
           <div class="cv-repo-grid">
             {profileProjects.map(project => (
-              <PaperGithubCard repo={project.repo} description={project.description} fetchMetadata={false} />
+              <PapyrusGithubCard repo={project.repo} description={project.description} fetchMetadata={false} />
             ))}
           </div>
         </section>
@@ -174,7 +174,7 @@ function cvIcon(name: string) {
       </div>
     </div>
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>
 
 <script>
   function bindCvTabs() {
@@ -213,9 +213,9 @@ function cvIcon(name: string) {
 
   .cv-sidebar {
     align-self: start;
-    background: var(--paper-panel);
-    border: 1px solid var(--paper-border);
-    border-radius: var(--paper-radius);
+    background: var(--papyrus-panel);
+    border: 1px solid var(--papyrus-border);
+    border-radius: var(--papyrus-radius);
     display: grid;
     gap: 18px;
     padding: 18px;
@@ -225,7 +225,7 @@ function cvIcon(name: string) {
 
   .cv-sidebar img {
     aspect-ratio: 1;
-    border: 2px solid var(--paper-border);
+    border: 2px solid var(--papyrus-border);
     border-radius: 999px;
     justify-self: center;
     object-fit: cover;
@@ -233,7 +233,7 @@ function cvIcon(name: string) {
   }
 
   .cv-sidebar h1 {
-    color: var(--paper-accent);
+    color: var(--papyrus-accent);
     font-size: clamp(1.8rem, 4vw, 2.4rem);
     letter-spacing: 0;
     line-height: 1;
@@ -242,7 +242,7 @@ function cvIcon(name: string) {
   }
 
   .cv-sidebar h2 {
-    color: var(--paper-accent);
+    color: var(--papyrus-accent);
     font-size: 1rem;
     margin: 0 0 8px;
   }
@@ -261,7 +261,7 @@ function cvIcon(name: string) {
   }
 
   .cv-sidebar a {
-    color: var(--paper-accent);
+    color: var(--papyrus-accent);
     font-weight: 700;
     text-decoration: none;
   }
@@ -281,9 +281,9 @@ function cvIcon(name: string) {
 
   .cv-profile-detail {
     align-items: center;
-    background: var(--paper-panel);
-    border-radius: var(--paper-radius);
-    color: var(--paper-fg);
+    background: var(--papyrus-panel);
+    border-radius: var(--papyrus-radius);
+    color: var(--papyrus-fg);
     display: flex;
     gap: 6px;
     padding: 6px 9px;
@@ -291,15 +291,15 @@ function cvIcon(name: string) {
 
   .cv-sidebar dt {
     align-items: center;
-    color: var(--paper-muted);
+    color: var(--papyrus-muted);
     display: inline-flex;
     flex: 0 0 auto;
-    font-family: var(--paper-font-mono);
+    font-family: var(--papyrus-font-mono);
     font-size: 0.75rem;
   }
 
   .cv-sidebar dt svg {
-    color: var(--paper-accent);
+    color: var(--papyrus-accent);
     height: 1rem;
     stroke: currentColor;
     width: 1rem;
@@ -325,18 +325,18 @@ function cvIcon(name: string) {
     min-width: 0;
   }
 
-  .cv-sidebar :global(.paper-cv-links) {
+  .cv-sidebar :global(.papyrus-cv-links) {
     justify-content: flex-start;
     text-align: left;
   }
 
-  .cv-sidebar :global(.paper-cv-links svg) {
-    color: var(--paper-accent);
+  .cv-sidebar :global(.papyrus-cv-links svg) {
+    color: var(--papyrus-accent);
     stroke: currentColor;
   }
 
-  .cv-sidebar :global(.paper-cv-links a),
-  .cv-sidebar :global(.paper-cv-link-item) {
+  .cv-sidebar :global(.papyrus-cv-links a),
+  .cv-sidebar :global(.papyrus-cv-link-item) {
     justify-content: flex-start;
   }
 
@@ -369,10 +369,10 @@ function cvIcon(name: string) {
     appearance: none;
     background: transparent;
     border: 0;
-    color: var(--paper-accent);
+    color: var(--papyrus-accent);
     cursor: pointer;
     display: inline-flex;
-    font: 700 0.86rem/1 var(--paper-font-sans);
+    font: 700 0.86rem/1 var(--papyrus-font-sans);
     gap: 5px;
     min-height: 32px;
     padding: 4px 2px;
@@ -412,8 +412,8 @@ function cvIcon(name: string) {
   }
 
   .cv-source-links {
-    background: var(--paper-panel);
-    border: 1px solid var(--paper-border);
+    background: var(--papyrus-panel);
+    border: 1px solid var(--papyrus-border);
     box-shadow: 0 8px 24px rgb(24 24 27 / 0.14);
     display: grid;
     min-width: 120px;
@@ -425,7 +425,7 @@ function cvIcon(name: string) {
   }
 
   .cv-action-status {
-    color: var(--paper-muted);
+    color: var(--papyrus-muted);
     font-size: 0.78rem;
   }
 
@@ -446,12 +446,12 @@ function cvIcon(name: string) {
     align-items: center;
     appearance: none;
     background: transparent;
-    border: 1px solid var(--paper-border);
+    border: 1px solid var(--papyrus-border);
     border-radius: 6px;
-    color: var(--paper-muted);
+    color: var(--papyrus-muted);
     cursor: pointer;
     display: inline-flex;
-    font: 600 0.86rem/1 var(--paper-font-sans);
+    font: 600 0.86rem/1 var(--papyrus-font-sans);
     justify-content: center;
     min-height: 40px;
     padding: 8px 11px;
@@ -461,8 +461,8 @@ function cvIcon(name: string) {
   .cv-template-tabs button:hover,
   .cv-template-tabs button:focus-visible,
   .cv-template-tabs button[aria-selected="true"] {
-    border-color: var(--paper-accent);
-    color: var(--paper-accent);
+    border-color: var(--papyrus-accent);
+    color: var(--papyrus-accent);
     outline: none;
   }
 
@@ -486,13 +486,13 @@ function cvIcon(name: string) {
   }
 
   .cv-section {
-    border-top: 1px solid var(--paper-border);
+    border-top: 1px solid var(--papyrus-border);
     padding: 24px 0;
   }
 
   .cv-section h2 {
     align-items: center;
-    color: var(--paper-accent);
+    color: var(--papyrus-accent);
     display: flex;
     font-size: 1.35rem;
     gap: 10px;
@@ -501,12 +501,12 @@ function cvIcon(name: string) {
 
   .cv-section h2 span {
     align-items: center;
-    color: var(--paper-muted);
+    color: var(--papyrus-muted);
     display: inline-flex;
   }
 
   .cv-section h2 small {
-    color: var(--paper-muted);
+    color: var(--papyrus-muted);
     font-size: 0.76rem;
     font-weight: 600;
     margin-left: auto;
@@ -558,7 +558,7 @@ function cvIcon(name: string) {
   }
 
   .cv-item header p {
-    color: var(--paper-muted);
+    color: var(--papyrus-muted);
     font-size: 0.9rem;
     text-align: right;
   }
@@ -586,11 +586,11 @@ function cvIcon(name: string) {
 
   .cv-skill-tags a {
     align-items: center;
-    border: 1px solid var(--paper-border);
+    border: 1px solid var(--papyrus-border);
     border-radius: 6px;
-    color: var(--paper-accent);
+    color: var(--papyrus-accent);
     display: inline-flex;
-    font: 700 0.82rem/1 var(--paper-font-sans);
+    font: 700 0.82rem/1 var(--papyrus-font-sans);
     min-height: 30px;
     padding: 6px 9px;
     text-decoration: none;
@@ -598,7 +598,7 @@ function cvIcon(name: string) {
 
   .cv-skill-tags a:hover,
   .cv-skill-tags a:focus-visible {
-    border-color: var(--paper-accent);
+    border-color: var(--papyrus-accent);
     text-decoration: underline;
     text-underline-offset: 3px;
   }

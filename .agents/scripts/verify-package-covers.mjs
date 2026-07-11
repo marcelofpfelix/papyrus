@@ -19,7 +19,7 @@ function requirePath(label, relativePath) {
 
 async function walkDirs(dir, relativeDir = "") {
   const ignored = new Set([".git", "dist", "node_modules", ".astro", ".lighthouse"]);
-  const forbiddenCopiedDirs = new Set(["astro-paper", "astropaper", "astro-pure", "astro_theme_pure", "pure-theme"]);
+  const forbiddenCopiedDirs = new Set(["astro-papyrus", "astropapyrus", "astro-pure", "astro_theme_pure", "pure-theme"]);
   const entries = await readdir(join(dir, relativeDir), { withFileTypes: true });
 
   for (const entry of entries) {
@@ -38,8 +38,8 @@ async function walkDirs(dir, relativeDir = "") {
 
 if (packageJson.name !== "astro-theme-papyrus") fail(`package name is ${packageJson.name}, expected astro-theme-papyrus`);
 if (!packageJson.dependencies?.["astro-pure"]) fail("astro-pure dependency is missing");
-if (packageJson.dependencies?.["astro-paper"] || packageJson.devDependencies?.["astro-paper"]) {
-  fail("astro-paper must not be a direct dependency");
+if (packageJson.dependencies?.["astro-papyrus"] || packageJson.devDependencies?.["astro-papyrus"]) {
+  fail("astro-papyrus must not be a direct dependency");
 }
 
 await walkDirs(root);
@@ -48,15 +48,15 @@ const requiredExports = [
   ".",
   "./components",
   "./config",
-  "./PaperBaseLayout.astro",
-  "./PaperPostLayout.astro",
-  "./PaperHeader.astro",
-  "./PaperFooter.astro",
-  "./PaperPostList.astro",
-  "./runtime/PaperBackToTopRuntime.astro",
-  "./runtime/PaperMediaRuntime.astro",
-  "./runtime/PaperPostActionsRuntime.astro",
-  "./paper.css",
+  "./PapyrusBaseLayout.astro",
+  "./PapyrusPostLayout.astro",
+  "./PapyrusHeader.astro",
+  "./PapyrusFooter.astro",
+  "./PapyrusPostList.astro",
+  "./runtime/PapyrusBackToTopRuntime.astro",
+  "./runtime/PapyrusMediaRuntime.astro",
+  "./runtime/PapyrusPostActionsRuntime.astro",
+  "./papyrus.css",
   "./themes/pure.css",
   "./themes/catppuccin.css",
   "./themes/tokyo-night.css",
@@ -133,13 +133,13 @@ description: "Theme-aware cover description"
   } else {
     const svg = await readFile(generatedCover, "utf8");
     if (!svg.includes('viewBox="0 0 1200 630"')) fail("cover SVG does not use 1200x630 viewBox");
-    if (!svg.includes("var(--paper-bg")) fail("cover SVG does not use --paper-bg token");
-    if (!svg.includes("var(--paper-bg, #f9f5d7)")) fail("cover SVG does not use default theme background fallback");
-    if (svg.includes("var(--paper-panel") || svg.includes('class="panel"')) {
+    if (!svg.includes("var(--papyrus-bg")) fail("cover SVG does not use --papyrus-bg token");
+    if (!svg.includes("var(--papyrus-bg, #f9f5d7)")) fail("cover SVG does not use default theme background fallback");
+    if (svg.includes("var(--papyrus-panel") || svg.includes('class="panel"')) {
       fail("cover SVG should use a single background color without an inner panel");
     }
-    if (!svg.includes("var(--paper-accent")) fail("cover SVG does not use --paper-accent token");
-    if (!svg.includes("var(--paper-accent, #d8a657)")) fail("cover SVG does not use default theme accent fallback");
+    if (!svg.includes("var(--papyrus-accent")) fail("cover SVG does not use --papyrus-accent token");
+    if (!svg.includes("var(--papyrus-accent, #d8a657)")) fail("cover SVG does not use default theme accent fallback");
     if (!svg.includes('class="brand-mark"')) fail("cover SVG should use the default Twinkling brand mark");
     if (!svg.includes('class="brand">papyrus</text>')) fail("cover SVG should use the default papyrus brand title");
     if (!svg.includes("Theme-aware cover description")) fail("cover SVG did not read frontmatter description");
@@ -169,16 +169,16 @@ description: "Theme-aware cover description"
       if (!cardSvg.includes('viewBox="0 0 1200 630"')) fail("card cover SVG does not use 1200x630 viewBox");
       if (!cardSvg.includes('role="img"')) fail("card cover SVG is missing role=img");
       if (!cardSvg.includes("data-title-lines=")) fail("card cover SVG is missing title line metadata");
-      if (!cardSvg.includes("var(--paper-bg")) fail("card cover SVG does not use --paper-bg token");
-      if (!cardSvg.includes("var(--paper-bg, #f9f5d7)")) fail("card cover SVG does not use default theme background fallback");
-      if (!cardSvg.includes("var(--paper-fg")) fail("card cover SVG does not use --paper-fg token");
-      if (!cardSvg.includes("var(--paper-fg, #654735)")) fail("card cover SVG does not use default theme foreground fallback");
-      if (!cardSvg.includes("var(--paper-accent")) fail("card cover SVG does not use --paper-accent token");
-      if (!cardSvg.includes("var(--paper-accent, #d8a657)")) fail("card cover SVG does not use default theme accent fallback");
-      if (!cardSvg.includes("var(--paper-muted")) fail("card cover SVG does not use --paper-muted token");
-      if (!cardSvg.includes("var(--paper-muted, #928374)")) fail("card cover SVG does not use default theme muted fallback");
-      if (!cardSvg.includes("var(--paper-border")) fail("card cover SVG does not use --paper-border token");
-      if (!cardSvg.includes("var(--paper-border, #d5c4a1)")) fail("card cover SVG does not use default theme border fallback");
+      if (!cardSvg.includes("var(--papyrus-bg")) fail("card cover SVG does not use --papyrus-bg token");
+      if (!cardSvg.includes("var(--papyrus-bg, #f9f5d7)")) fail("card cover SVG does not use default theme background fallback");
+      if (!cardSvg.includes("var(--papyrus-fg")) fail("card cover SVG does not use --papyrus-fg token");
+      if (!cardSvg.includes("var(--papyrus-fg, #654735)")) fail("card cover SVG does not use default theme foreground fallback");
+      if (!cardSvg.includes("var(--papyrus-accent")) fail("card cover SVG does not use --papyrus-accent token");
+      if (!cardSvg.includes("var(--papyrus-accent, #d8a657)")) fail("card cover SVG does not use default theme accent fallback");
+      if (!cardSvg.includes("var(--papyrus-muted")) fail("card cover SVG does not use --papyrus-muted token");
+      if (!cardSvg.includes("var(--papyrus-muted, #928374)")) fail("card cover SVG does not use default theme muted fallback");
+      if (!cardSvg.includes("var(--papyrus-border")) fail("card cover SVG does not use --papyrus-border token");
+      if (!cardSvg.includes("var(--papyrus-border, #d5c4a1)")) fail("card cover SVG does not use default theme border fallback");
       for (const forbidden of ["#fafafa", "#18181b", "#2563eb", "#52525b", "#71717a", "#e4e4e7"]) {
         if (cardSvg.includes(`fill=\"${forbidden}\"`) || cardSvg.includes(`stroke=\"${forbidden}\"`)) {
           fail(`card cover SVG still contains hardcoded color attribute ${forbidden}`);

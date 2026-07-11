@@ -1,6 +1,6 @@
 ---
 import { getCollection, render } from "astro:content";
-import PaperPostLayout from "../../layouts/PaperPostLayout.astro";
+import PapyrusPostLayout from "../../layouts/PapyrusPostLayout.astro";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
 import { getAdjacentPosts, postSlug, postTags, publishedPosts, readingTime, routablePosts } from "../../utils/posts";
 
@@ -23,7 +23,7 @@ const sourceLinkUrl = `https://github.com/marcelofpfelix/papyrus/blob/main/${sou
 const sourceUrl = `https://raw.githubusercontent.com/marcelofpfelix/papyrus/main/${sourcePath}`;
 ---
 
-<PaperPostLayout
+<PapyrusPostLayout
   title={post.data.title}
   description={post.data.description}
   siteTitle="papyrus"
@@ -44,4 +44,4 @@ const sourceUrl = `https://raw.githubusercontent.com/marcelofpfelix/papyrus/main
   socialLinks={demoSocialLinks}
 >
   <Content />
-</PaperPostLayout>
+</PapyrusPostLayout>

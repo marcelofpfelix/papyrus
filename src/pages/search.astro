@@ -1,6 +1,6 @@
 ---
 import "@pagefind/default-ui/css/ui.css";
-import { PaperBaseLayout, PaperTagList } from "../components";
+import { PapyrusBaseLayout, PapyrusTagList } from "../components";
 import { demoNav, demoSocialLinks } from "../data/demo-nav";
 import { demoPosts } from "../data/demo-posts";
 import { formatPostDate, hiddenPosts, postCategory, postHref, postTags, publishedPosts, sortPosts } from "../utils/posts";
@@ -28,34 +28,34 @@ const archivePosts = sortPosts(archivedPosts).map((post) => ({
 const archivePostsJson = JSON.stringify(archivePosts).replace(/</g, "\\u003c");
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Search"
   description="Static search for Papyrus posts, optional sections, tags, and hidden archive entries."
   siteTitle="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <section class="paper-search">
+  <section class="papyrus-search">
     <h1>Search</h1>
-    <p class="paper-description">Papyrus uses static search output for public content and keeps hidden posts in a separate archive mode. Section and tag controls prefill the same query so readers can move between search, tag pages, and archives without a server. Sections are optional site metadata; tags remain the primary built-in topic model.</p>
-    <nav class="paper-search-tags" aria-label="Sections">
+    <p class="papyrus-description">Papyrus uses static search output for public content and keeps hidden posts in a separate archive mode. Section and tag controls prefill the same query so readers can move between search, tag pages, and archives without a server. Sections are optional site metadata; tags remain the primary built-in topic model.</p>
+    <nav class="papyrus-search-tags" aria-label="Sections">
       {
         categories.map(category => (
-          <button type="button" data-paper-search-category={category}>
+          <button type="button" data-papyrus-search-category={category}>
             <span>{category}</span>
             <small>{categoryCounts[category]}</small>
           </button>
         ))
       }
     </nav>
-    <div class="paper-search-tag-list" aria-label="Tags">
-      <PaperTagList tags={tags} counts={counts} />
+    <div class="papyrus-search-tag-list" aria-label="Tags">
+      <PapyrusTagList tags={tags} counts={counts} />
     </div>
     <div id="pagefind-search" data-pagefind-bundle="/pagefind/"></div>
-    <ul class="paper-post-list" data-paper-archive-results hidden></ul>
-    <script is:inline type="application/json" id="paper-archive-posts" set:html={archivePostsJson}></script>
+    <ul class="papyrus-post-list" data-papyrus-archive-results hidden></ul>
+    <script is:inline type="application/json" id="papyrus-archive-posts" set:html={archivePostsJson}></script>
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>
 
 <script>
   // @ts-expect-error - Pagefind does not ship TypeScript declarations for the default UI package.
@@ -70,10 +70,10 @@ const archivePostsJson = JSON.stringify(archivePosts).replace(/</g, "\\u003c");
     date: string;
   }
 
-  const archivePosts = JSON.parse(document.querySelector("#paper-archive-posts")?.textContent ?? "[]") as ArchivePost[];
+  const archivePosts = JSON.parse(document.querySelector("#papyrus-archive-posts")?.textContent ?? "[]") as ArchivePost[];
   const pagefindContainer = document.querySelector<HTMLElement>("#pagefind-search");
-  const archiveResults = document.querySelector<HTMLElement>("[data-paper-archive-results]");
-  const categoryButtons = document.querySelectorAll<HTMLButtonElement>("[data-paper-search-category]");
+  const archiveResults = document.querySelector<HTMLElement>("[data-papyrus-archive-results]");
+  const categoryButtons = document.querySelectorAll<HTMLButtonElement>("[data-papyrus-search-category]");
 
   function renderArchive(query = "") {
     if (!archiveResults || !pagefindContainer) return;
@@ -90,16 +90,16 @@ const archivePostsJson = JSON.stringify(archivePosts).replace(/</g, "\\u003c");
           const tags = post.tags.length ? ` · ${post.tags.map(tag => `#${tag}`).join(", ")}` : "";
           const category = post.category ? `${post.category} · ` : "";
           return `
-            <li class="paper-post-item">
+            <li class="papyrus-post-item">
               <a href="${post.href}">
-                <span class="paper-post-title">${post.title}</span>
-                <span class="paper-post-description">${post.description}</span>
-                <span class="paper-post-meta">${category}${post.date}${tags}</span>
+                <span class="papyrus-post-title">${post.title}</span>
+                <span class="papyrus-post-description">${post.description}</span>
+                <span class="papyrus-post-meta">${category}${post.date}${tags}</span>
               </a>
             </li>
           `;
         }).join("")
-      : `<li class="paper-search-empty">No posts found.</li>`;
+      : `<li class="papyrus-search-empty">No posts found.</li>`;
   }
 
   async function initPagefindSearch() {
@@ -137,7 +137,7 @@ const archivePostsJson = JSON.stringify(archivePosts).replace(/</g, "\\u003c");
     }
 
     categoryButtons.forEach((button) => {
-      button.addEventListener("click", () => triggerSearch(button.dataset.paperSearchCategory ?? ""));
+      button.addEventListener("click", () => triggerSearch(button.dataset.papyrusSearchCategory ?? ""));
     });
   }
 

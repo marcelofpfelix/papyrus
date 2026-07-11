@@ -41,7 +41,7 @@ make sure feeds, sitemap, search, AI indexes, and graph generation all use the
 same hidden-content rule.
 ## Dark mode and search in Papyrus
 URL: https://papyrus.marcelofelix.com/posts/dark-mode-and-search/
-Summary: The theme keeps a Pure-like neutral background, then adds a small Paper-style search flow.
+Summary: The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.
 Updated: 2026-06-30T11:15:00.000Z
 Source: src/content/posts/dark-mode-and-search.md
 The light and dark backgrounds stay close to the default Pure theme: neutral, quiet, and readable. Papyrus keeps color accents restrained so the content remains the main surface.
@@ -52,16 +52,16 @@ The public Papyrus site builds a Pagefind index from generated static HTML. A sm
 
 ```astro
 ---
-import { PaperBaseLayout } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Search"
   description="Static search for posts, tags, and archive entries."
   searchHref="/search/"
 >
   <p>The header search icon opens the site-owned search page.</p>
-</PaperBaseLayout>
+</PapyrusBaseLayout>
 ```
 
 That is the important boundary. The icon and layout affordance belong to the theme. The index strategy belongs to the site.
@@ -105,13 +105,13 @@ The template enables Papyrus in Astro:
 ```js title="astro.config.mjs"
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
-import { loadPaperConfig } from "astro-theme-papyrus/config";
+import { loadPapyrusConfig } from "astro-theme-papyrus/config";
 import papyrus from "astro-theme-papyrus/integration";
 
-const paper = await loadPaperConfig();
+const papyrus = await loadPapyrusConfig();
 
 export default defineConfig({
-  site: paper.site,
+  site: papyrus.site,
   integrations: [papyrus(), sitemap()],
 });
 ```
@@ -129,7 +129,7 @@ Papyrus injects these standard routes from the package:
 | `/` | Home page with latest posts and project cards |
 | `/posts/` | Public post list |
 | `/posts/[...slug]/` | Post detail page |
-| `/projects/` | Project cards from `paper.config.toml` |
+| `/projects/` | Project cards from `papyrus.config.toml` |
 | `/profile/` | Profile page from `src/data/profile.toml` |
 | `/tag/` and `/tag/[tag]/` | Tag index and tag detail pages |
 | `/404.html` | Helpful not-found page |
@@ -141,7 +141,7 @@ Because the pages are injected by the package, the template does not need a
 
 ## Know `src` vs `public`
 
-Papyrus follows the same Astro convention used by Paper-style starter repos:
+Papyrus follows the same Astro convention used by Papyrus-style starter repos:
 `src/` is source, `public/` is static output input.
 
 Use `src/` for files Astro should read, transform, type-check, or route during
@@ -157,13 +157,13 @@ Use `public/` for files that should be copied to the deployed site as-is:
 
 - `public/logo.svg`, `public/favicon.svg`, and `public/site.webmanifest`
 - `public/images/*` for covers, avatars, and project images referenced by
-  frontmatter or `paper.config.toml`
+  frontmatter or `papyrus.config.toml`
 - generated artifacts such as `public/cv/profile.json`,
   `public/cv/profile.md`, `public/ai/*`, `public/rss/tags/*`, and
   `public/pagefind/*`
 
 Do not hand-edit generated files in `public/`. Edit the source in `src/`,
-`paper.config.toml`, or `src/data/profile.toml`, then regenerate the artifacts.
+`papyrus.config.toml`, or `src/data/profile.toml`, then regenerate the artifacts.
 
 ## Edit the right file
 
@@ -171,7 +171,7 @@ For normal site work, start with these files:
 
 | Goal | Edit |
 | --- | --- |
-| Site title, description, nav, social links, projects, theme, feature flags, and post-card defaults | `paper.config.toml` |
+| Site title, description, nav, social links, projects, theme, feature flags, and post-card defaults | `papyrus.config.toml` |
 | Add or edit posts | `src/content/posts/*.md` |
 | Add a page that Papyrus does not already inject | `src/pages/*.astro` |
 | Change the profile, CV, links, skills, dates, and print color | `src/data/profile.toml` |
@@ -190,10 +190,10 @@ or docs content source.
 
 ## Edit the site config
 
-Most site behavior starts in `paper.config.toml`. The template keeps the system
+Most site behavior starts in `papyrus.config.toml`. The template keeps the system
 color preference as the default and uses the Everforest theme profile.
 
-```toml title="paper.config.toml"
+```toml title="papyrus.config.toml"
 [site]
 title = "My site"
 description = "Notes, projects, and profile."
@@ -307,7 +307,7 @@ Keep visual identity in `public/`:
 - `public/site.webmanifest`
 - `public/images/cover.svg`
 - `public/images/avatar.svg`
-- project images referenced by `paper.config.toml`
+- project images referenced by `papyrus.config.toml`
 
 These are normal site assets. Papyrus supplies the components and theme CSS,
 while the consuming site supplies its own images and metadata.
@@ -319,7 +319,7 @@ routes, import Papyrus components directly:
 
 ```astro
 ---
-import { PaperBaseLayout, PaperPostList } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts, routablePosts } from "astro-theme-papyrus/utils";
 
 const allPosts = await getCollection("posts");
@@ -328,9 +328,9 @@ const routePosts = routablePosts(allPosts);
 const adjacentPosts = publishedPosts(allPosts);
 ---
 
-<PaperBaseLayout title="My site" description="Custom page.">
-  <PaperPostList posts={posts} />
-</PaperBaseLayout>
+<PapyrusBaseLayout title="My site" description="Custom page.">
+  <PapyrusPostList posts={posts} />
+</PapyrusBaseLayout>
 ```
 
 Use `routePosts` when creating static post detail paths. Use `adjacentPosts`
@@ -340,9 +340,9 @@ routes without showing up in public navigation.
 In a post-detail route, pass folder-aware tags into the post layout:
 
 ```astro
-<PaperPostLayout post={post} tags={postTags(post)}>
+<PapyrusPostLayout post={post} tags={postTags(post)}>
   <Content />
-</PaperPostLayout>
+</PapyrusPostLayout>
 ```
 
 Keep the boundary clear: Papyrus owns reusable pages, components, styles, and
@@ -471,7 +471,7 @@ Inline code like `pnpm build` keeps paragraph line-height calm.
 TypeScript with a title and highlighted lines:
 
 ```ts title="src/pages/posts/index.astro" {1,4}
-import { PaperBaseLayout, PaperPostList } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts } from "astro-theme-papyrus/utils";
 
 const posts = publishedPosts(await getCollection("posts"));
@@ -504,14 +504,14 @@ fn main() {
 
 Diff with add/remove line styling:
 
-```diff title="paper.css"
-- .paper-icon-button:hover {
--   background: var(--paper-panel);
--   border-color: var(--paper-accent);
+```diff title="papyrus.css"
+- .papyrus-icon-button:hover {
+-   background: var(--papyrus-panel);
+-   border-color: var(--papyrus-accent);
 - }
-+ .paper-icon-button:hover {
++ .papyrus-icon-button:hover {
 +   background: transparent;
-+   color: var(--paper-accent);
++   color: var(--papyrus-accent);
 + }
 ```
 
@@ -529,7 +529,7 @@ pnpm papyrus-llms src/content/posts public "$SITE_URL" src/pages/docs
 flowchart LR
   Site[Astro site] --> Theme[Papyrus]
   Theme --> Pure[astro-pure]
-  Theme --> Style[AstroPaper-like CSS]
+  Theme --> Style[Papyrus CSS]
   Site --> Content[Markdown posts]
 ```
 
@@ -606,11 +606,11 @@ A content site usually needs the same core pieces on several routes:
 - generated metadata for RSS, sitemap, robots, search, and AI indexes
 
 The package boundary stays explicit. Papyrus reuses Pure as the foundation,
-adds Paper-style publishing features, exposes a stable public API through
+adds Papyrus-style publishing features, exposes a stable public API through
 package exports, and lets the site override content, config, and routes.
 
 ```ts
-import { PaperBaseLayout, PaperPostList } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts } from "astro-theme-papyrus/utils";
 ```
 
@@ -622,15 +622,15 @@ handled in one package.
 The public posts page uses the standard list view so the archive stays easy to scan:
 
 ```astro title="src/pages/posts/index.astro"
-<PaperPostList posts={posts} view="list" />
+<PapyrusPostList posts={posts} view="list" />
 ```
 
 The same component can still render denser or card-like post groups inside
 documentation references, landing pages, or custom sections:
 
 ```astro title="post-list-view-reference.astro"
-<PaperPostList posts={posts} view="compact" />
-<PaperPostList posts={posts} view="cards" />
+<PapyrusPostList posts={posts} view="compact" />
+<PapyrusPostList posts={posts} view="cards" />
 ```
 
 Keeping these alternatives inside a post leaves `/posts/` focused on the main
@@ -733,10 +733,10 @@ fn active_profile() -> ThemeProfile {
 ## Diff fence
 
 ```css title="diff.css"
-.paper-card {
-  background: var(--paper-panel); /* [!code --] */
+.papyrus-card {
+  background: var(--papyrus-panel); /* [!code --] */
   background: transparent; /* [!code ++] */
-  color: var(--paper-accent); /* [!code ++] */
+  color: var(--papyrus-accent); /* [!code ++] */
 }
 ```
 
@@ -916,7 +916,7 @@ Comments
 
 Default comment choice: giscus. Comments stay optional and site-owned: consuming sites pass their public GitHub Discussions repo, category, and IDs, while this route renders the component in disabled mode so the package site stays static and credential-free.
 
-Post stats are separate from comments. Use static fixture counts for documentation posts, or PaperRemotePostStats.astro when a site has a real stats endpoint.
+Post stats are separate from comments. Use static fixture counts for documentation posts, or PapyrusRemotePostStats.astro when a site has a real stats endpoint.
 
 SEO and social metadata
 
@@ -924,11 +924,11 @@ Papyrus layouts emit the metadata a small public site normally needs: titles, de
 
 Base path deploys
 
-Internal URLs in the shared layouts and list components go through withBase() and related helpers: stripBase(), stripLocale(), getAssetPath(), and getRelativeLocaleUrl(). This keeps navigation, post links, RSS links, favicon assets, covers, tags, archive links, adjacent posts, project cards, and 404 suggestions working when Astro is deployed under a subdirectory such as /astro-paper.
+Internal URLs in the shared layouts and list components go through withBase() and related helpers: stripBase(), stripLocale(), getAssetPath(), and getRelativeLocaleUrl(). This keeps navigation, post links, RSS links, favicon assets, covers, tags, archive links, adjacent posts, project cards, and 404 suggestions working when Astro is deployed under a subdirectory such as /astro-papyrus.
 
 Google site verification
 
-The preferred site-owned configuration is site.googleVerification. Pass that value to PaperBaseLayout or PaperPostLayout as googleVerification, and the layout emits the google-site-verification meta tag only when the value is configured.
+The preferred site-owned configuration is site.googleVerification. Pass that value to PapyrusBaseLayout or PapyrusPostLayout as googleVerification, and the layout emits the google-site-verification meta tag only when the value is configured.
 
 Sitemap and robots
 
@@ -968,7 +968,7 @@ Index
 
 Theme profiles Each theme profile defines one light token set and one dark token set. Runtime mode defaults to system, while the default color profile is Gruvbox and the default font profile is readable. Included profiles are Catppuccin, Tokyo Night, Kanagawa, Rosé Pine, Everforest, Dracula, Gruvbox, Nord, and Pure.
 
-{`:root[data-paper-theme="custom"] :root[data-paper-theme="custom"].dark, html[data-paper-theme="custom"].dark `} Use pnpm papyrus-theme list to inspect installed profiles and pnpm papyrus-theme validate to check that every profile file has the required light/dark selectors and tokens.
+{`:root[data-papyrus-theme="custom"] :root[data-papyrus-theme="custom"].dark, html[data-papyrus-theme="custom"].dark `} Use pnpm papyrus-theme list to inspect installed profiles and pnpm papyrus-theme validate to check that every profile file has the required light/dark selectors and tokens.
 
 Markdown
 

@@ -2,11 +2,11 @@
   <style>
     path {
       animation: twinkle 2.6s ease-in-out infinite;
-      fill: var(--paper-fg, #654735);
+      fill: var(--papyrus-fg, #654735);
       transform-box: fill-box;
       transform-origin: center;
     }
-    svg:hover path { fill: var(--paper-accent, currentColor); }
+    svg:hover path { fill: var(--papyrus-accent, currentColor); }
     @keyframes twinkle {
       0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
       45% { opacity: .72; transform: scale(.92) rotate(-7deg); }
@@ -14,6 +14,6 @@
     }
     @media (prefers-reduced-motion: reduce) { path { animation: none; } }
   </style>
-  <rect x="-5" y="-10" width="110" height="110" fill="var(--paper-bg, #f9f5d7)"/>
+  <rect x="-5" y="-10" width="110" height="110" fill="var(--papyrus-bg, #f9f5d7)"/>
   <path d="m61.383 45.285 10.68-14.574c0.36719-0.50391-0.19531-1.1562-0.74609-0.86328l-16.598 8.7695-4.1328-31.031c-0.089844-0.67969-1.0703-0.67969-1.1641 0l-4.1328 31.031-14.621-8.7578c-0.52344-0.3125-1.1172 0.28125-0.80469 0.80469l8.7578 14.621-31.031 4.1328c-0.67969 0.089843-0.67969 1.0703 0 1.1641l31.031 4.1328-8.7578 14.621c-0.3125 0.52344 0.28125 1.1172 0.80469 0.80469l14.621-8.7578 4.1328 31.031c0.089844 0.67969 1.0703 0.67969 1.1641 0l4.1328-31.031 14.621 8.7578c0.52344 0.3125 1.1172-0.28125 0.80469-0.80469l-8.7578-14.621 31.031-4.1328c0.67969-0.089843 0.67969-1.0703 0-1.1641l-31.031-4.1328z"/>
 </svg>

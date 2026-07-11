@@ -1,28 +1,28 @@
-:root[data-paper-theme="catppuccin"] {
+:root[data-papyrus-theme="catppuccin"] {
   color-scheme: light;
-  --paper-bg: #eff1f5;
-  --paper-fg: #4c4f69;
-  --paper-muted: #6c6f85;
-  --paper-panel: #e6e9ef;
-  --paper-border: #ccd0da;
-  --paper-accent: #7287fd;
-  --paper-code-bg: #e6e9ef;
-  --paper-code-fg: #4c4f69;
-  --paper-theme-color: #eff1f5;
-  --paper-font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --paper-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --papyrus-bg: #eff1f5;
+  --papyrus-fg: #4c4f69;
+  --papyrus-muted: #6c6f85;
+  --papyrus-panel: #e6e9ef;
+  --papyrus-border: #ccd0da;
+  --papyrus-accent: #7287fd;
+  --papyrus-code-bg: #e6e9ef;
+  --papyrus-code-fg: #4c4f69;
+  --papyrus-theme-color: #eff1f5;
+  --papyrus-font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --papyrus-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
-:root[data-paper-theme="catppuccin"].dark,
-html[data-paper-theme="catppuccin"].dark {
+:root[data-papyrus-theme="catppuccin"].dark,
+html[data-papyrus-theme="catppuccin"].dark {
   color-scheme: dark;
-  --paper-bg: #1e1e2e;
-  --paper-fg: #cdd6f4;
-  --paper-muted: #a6adc8;
-  --paper-panel: #313244;
-  --paper-border: #45475a;
-  --paper-accent: #b4befe;
-  --paper-code-bg: #181825;
-  --paper-code-fg: #cdd6f4;
-  --paper-theme-color: #1e1e2e;
+  --papyrus-bg: #1e1e2e;
+  --papyrus-fg: #cdd6f4;
+  --papyrus-muted: #a6adc8;
+  --papyrus-panel: #313244;
+  --papyrus-border: #45475a;
+  --papyrus-accent: #b4befe;
+  --papyrus-code-bg: #181825;
+  --papyrus-code-fg: #cdd6f4;
+  --papyrus-theme-color: #1e1e2e;
 }

@@ -1,0 +1,112 @@
+---
+import type { PapyrusCvSection, PapyrusCvUser } from "../utils/cv";
+import { cvHref } from "../utils/cv";
+
+const { user } = Astro.props as {
+  user: PapyrusCvUser;
+};
+
+const pageCount = Math.max(1, user.pages ?? 1);
+const pages = Array.from({ length: pageCount }, (_, index) => index + 1);
+const userHref = cvHref(user.url);
+
+function dateLabel(value?: string) {
+  return value?.slice(0, 10);
+}
+
+function durationLabel(range?: { start?: string; end?: string }) {
+  if (!range?.start) return undefined;
+  const start = new Date(range.start);
+  const end = range.end ? new Date(range.end) : new Date();
+  if (Number.isNaN(start.valueOf()) || Number.isNaN(end.valueOf())) return undefined;
+  const years = Math.round(((end.valueOf() - start.valueOf()) / (365.25 * 24 * 60 * 60 * 1000)) * 10) / 10;
+  return years > 0 ? `${years} y` : undefined;
+}
+
+function sectionsForPage(page: number): PapyrusCvSection[] {
+  return user.sections?.filter((section) => (section.page ?? 1) === page) ?? [];
+}
+---
+
+<div class="papyrus-jekyllcv">
+  <p class="papyrus-jekyllcv-print no-print">
+    You can also <button type="button" onclick="window.print()">Print or save it as PDF</button>.
+  </p>
+
+  {pages.map((page) => (
+    <section class="papyrus-jekyllcv-sheet">
+      <article class="papyrus-jekyllcv-page">
+        {page === 1 && (
+          <>
+            <header class="papyrus-jekyllcv-profile">
+              {user.avatar && <img src={user.avatar} alt="" loading="lazy" />}
+              <div>
+                <h1>{user.name}</h1>
+                {user.bio && <p>{user.bio}</p>}
+              </div>
+            </header>
+
+            <div class="papyrus-jekyllcv-profile-grid">
+              <section>
+                <h2>Contact</h2>
+                {user.email && <p><span aria-hidden="true">mail</span>{user.email}</p>}
+                {user.links?.map((link) => <p><a href={link.href}><span aria-hidden="true">link</span>{link.label}</a></p>)}
+                {userHref && <p><a href={userHref}><span aria-hidden="true">web</span>{user.url}</a></p>}
+              </section>
+
+              <section>
+                <h2>Info</h2>
+                {user.location && <p><span aria-hidden="true">loc</span>{user.location}</p>}
+                {user.born && <p><span aria-hidden="true">born</span>{dateLabel(user.born)}</p>}
+                {user.nationality?.map((item) => <p><span aria-hidden="true">flag</span>{item.name}</p>)}
+                {user.languages?.map((item) => <p><span aria-hidden="true">lang</span>{item.name}</p>)}
+                {user.roles?.map((role) => <p><span aria-hidden="true">role</span>{role}</p>)}
+              </section>
+            </div>
+
+            {userHref && (
+              <p class="papyrus-jekyllcv-updated">
+                You can find this CV always updated at <a href={userHref}>{user.url}</a>.
+              </p>
+            )}
+          </>
+        )}
+
+        {sectionsForPage(page).map((section) => (
+          <section class="papyrus-jekyllcv-section" id={`jekyllcv-${section.id ?? section.title}`}>
+            <h2>
+              <span aria-hidden="true">{section.icon ?? "section"}</span>
+              {section.title}
+              {durationLabel(section.groups?.flatMap((group) => group.items ?? []).find((item) => item.range)?.range) && (
+                <small>{durationLabel(section.groups?.flatMap((group) => group.items ?? []).find((item) => item.range)?.range)}</small>
+              )}
+            </h2>
+
+            {section.groups?.map((group) => (
+              <article class="papyrus-jekyllcv-group">
+                <a href={group.url ?? "#"} class="papyrus-jekyllcv-group-title">
+                  {group.logo && <img src={group.logo} alt="" loading="lazy" />}
+                  <h3>{group.title}</h3>
+                </a>
+                {group.items?.map((item, index) => (
+                  <div class="papyrus-jekyllcv-item">
+                    <h4>
+                      {index > 0 && <span aria-hidden="true">○</span>}
+                      {item.title}
+                      <small>{[item.location, item.dates, durationLabel(item.range)].filter(Boolean).join(", ")}</small>
+                    </h4>
+                    {item.description && <p>{item.description}</p>}
+                  </div>
+                ))}
+              </article>
+            ))}
+          </section>
+        ))}
+
+        <footer class="papyrus-jekyllcv-footer">
+          made with <a href="https://github.com/marcelofpfelix/jekyllcv">marcelofpfelix/jekyllcv</a>, rendered by papyrus.
+        </footer>
+      </article>
+    </section>
+  ))}
+</div>

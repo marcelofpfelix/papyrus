@@ -60,7 +60,7 @@ export const demoPosts = [
     filePath: "src/content/posts/dark-mode-and-search.md",
     data: {
       title: "Dark mode and search in Papyrus",
-      description: "The theme keeps a Pure-like neutral background, then adds a small Paper-style search flow.",
+      description: "The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.",
       slug: "dark-mode-and-search",
       pubDatetime: "2026-06-30T11:15:00.000Z",
       cover: "/images/papyrus-dark.svg",

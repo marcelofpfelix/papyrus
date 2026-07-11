@@ -1,6 +1,6 @@
 ---
 import { readFile } from "node:fs/promises";
-import { PaperBaseLayout, PaperContentIndex, PaperLinkPreview } from "../../components";
+import { PapyrusBaseLayout, PapyrusContentIndex, PapyrusLinkPreview } from "../../components";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
 
 interface ContentIndexItem {
@@ -75,28 +75,28 @@ function parseContentOutline(markdown: string) {
 const content = parseContentOutline(outline);
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Generated content structure"
   description="How Papyrus turns nested Markdown folders and folder metadata into a readable public content index."
   siteTitle="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <section class="paper-hero">
+  <section class="papyrus-hero">
     <h1>Generated content structure</h1>
-    <p class="paper-description">Use folder metadata when a site needs nested notes, guides, or knowledge-base pages without turning source paths into fragile public URLs.</p>
+    <p class="papyrus-description">Use folder metadata when a site needs nested notes, guides, or knowledge-base pages without turning source paths into fragile public URLs.</p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>What gets generated</h2>
     <p>Papyrus can read a folder tree, combine explicit frontmatter with folder-level labels, and render a public index that still feels hand-authored. The fixture below is generated from <code>{outlinePath}</code>, which itself was produced from Markdown files under <code>public/demo/content-tree</code>.</p>
-    <PaperContentIndex items={content.items} />
+    <PapyrusContentIndex items={content.items} />
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>How to use it</h2>
     <p>Keep canonical slugs in frontmatter when a page has a permanent URL. Use folders for organization, inherited tags, and section labels. This lets authors move files while the published route, RSS item, search result, and AI metadata stay stable.</p>
-    <pre class="paper-docs-raw"><code>pnpm papyrus-content-outline public/demo/content-tree public/demo/content-structure.md</code></pre>
+    <pre class="papyrus-docs-raw"><code>pnpm papyrus-content-outline public/demo/content-tree public/demo/content-structure.md</code></pre>
     <ul>
       <li>Use folder names for broad groups such as <code>guides</code>, <code>notes</code>, or <code>reference</code>.</li>
       <li>Use an index file or folder metadata to name a section for readers.</li>
@@ -105,18 +105,18 @@ const content = parseContentOutline(outline);
     </ul>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Public boundary</h2>
     <p>This route is public because the demo content tree is a public fixture for content-outline generation. User-facing docs live in rendered routes such as <code>src/pages/docs</code> or posts that opt into the docs index with <code>docs</code> frontmatter. Development-only notes stay under <code>docs/</code> and are not linked from the demo navigation unless they are intentionally rewritten as user documentation.</p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Source artifact</h2>
-    <PaperLinkPreview
+    <PapyrusLinkPreview
       href="/demo/content-structure.md"
       title="Generated markdown outline"
       description="Public Markdown outline generated from nested content folders and folder metadata."
       site="papyrus fixture"
     />
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>

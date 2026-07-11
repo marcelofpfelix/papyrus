@@ -3,7 +3,7 @@
 - [AI-first metadata](https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/) - How Papyrus publishes llms.txt and llms-full.txt for agents and search tools.
   Tags: #ai #metadata
   Updated: 2026-07-01T12:00:00.000Z
-- [Dark mode and search in Papyrus](https://papyrus.marcelofelix.com/posts/dark-mode-and-search/) - The theme keeps a Pure-like neutral background, then adds a small Paper-style search flow.
+- [Dark mode and search in Papyrus](https://papyrus.marcelofelix.com/posts/dark-mode-and-search/) - The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.
   Updated: 2026-06-30T11:15:00.000Z
 - [Install and configure Papyrus](https://papyrus.marcelofelix.com/posts/install-configure-papyrus/) - Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides.
   Updated: 2026-07-10T09:00:00.000Z

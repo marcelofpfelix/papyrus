@@ -161,7 +161,7 @@ function titleFromDoc(file, source) {
   const heading = source.match(/<h1[^>]*>([^<]+)<\/h1>/i) || source.match(/^#\s+(.+)$/m);
   if (heading) return heading[1].trim();
 
-  const layoutTitle = source.match(/<PaperBaseLayout[\s\S]*?\btitle=["']([^"']+)["']/);
+  const layoutTitle = source.match(/<PapyrusBaseLayout[\s\S]*?\btitle=["']([^"']+)["']/);
   if (layoutTitle) return layoutTitle[1].trim();
 
   const fallbackPath = pathname.replace(/^\/docs\/?|\/$/g, "");

@@ -1,0 +1,23 @@
+---
+export interface TimelineEvent {
+  date?: string;
+  content: string;
+}
+
+interface Props {
+  events: TimelineEvent[];
+}
+
+const { events } = Astro.props;
+---
+
+<ol class="papyrus-timeline">
+  {events.map((event, index) => (
+    <li class="papyrus-timeline-item">
+      <span class="papyrus-timeline-dot" aria-hidden="true"></span>
+      {index !== events.length - 1 && <span class="papyrus-timeline-line" aria-hidden="true"></span>}
+      {event.date ? <time>{event.date}</time> : <span class="papyrus-timeline-date-empty"></span>}
+      <div set:html={event.content} />
+    </li>
+  ))}
+</ol>

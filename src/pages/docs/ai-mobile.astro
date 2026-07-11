@@ -1,5 +1,5 @@
 ---
-import { PaperBaseLayout } from "../../components";
+import { PapyrusBaseLayout } from "../../components";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
 import { withBase } from "../../utils/withBase";
 
@@ -45,19 +45,19 @@ const mobileAuthoringTips = [
 ];
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="AI and mobile readiness"
   description="AI metadata, generated indexes, and mobile-ready defaults in a Papyrus site."
   siteTitle="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <section class="paper-hero">
+  <section class="papyrus-hero">
     <h1>AI and mobile readiness</h1>
-    <p class="paper-description">Papyrus ships useful agent-readable metadata, generated indexes, and responsive UI defaults for small content sites.</p>
+    <p class="papyrus-description">Papyrus ships useful agent-readable metadata, generated indexes, and responsive UI defaults for small content sites.</p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>AI-first primitives</h2>
     <ul>
       {aiPrimitives.map((item) => <li>{item}</li>)}
@@ -67,24 +67,24 @@ const mobileAuthoringTips = [
     </p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Site-specific AI extensions</h2>
     <ul>
       {aiExtensionIdeas.map((item) => <li>{item}</li>)}
     </ul>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Mobile-first primitives</h2>
     <ul>
       {mobilePrimitives.map((item) => <li>{item}</li>)}
     </ul>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Mobile authoring tips</h2>
     <ul>
       {mobileAuthoringTips.map((item) => <li>{item}</li>)}
     </ul>
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>

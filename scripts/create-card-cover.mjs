@@ -71,7 +71,7 @@ let svg = await satori(
         color: "#18181b",
         display: "flex",
         flexDirection: "column",
-        fontFamily: "PaperPure",
+        fontFamily: "PapyrusPure",
         height: "100%",
         justifyContent: "space-between",
         padding: "56px",
@@ -148,7 +148,7 @@ let svg = await satori(
     height: 630,
     fonts: [
       {
-        name: "PaperPure",
+        name: "PapyrusPure",
         data: font,
         weight: 400,
         style: "normal",
@@ -160,12 +160,12 @@ let svg = await satori(
 const titleLines = wrapWords(title, 30);
 svg = svg
   .replace("<svg ", `<svg role="img" aria-label="${escapeXml(title)}" data-title-lines="${titleLines.length}" data-title-line-text="${escapeXml(titleLines.join(" | "))}" `)
-  .replaceAll("#fafafa", `var(--paper-bg, ${tokens["--paper-bg"]})`)
-  .replaceAll("#18181b", `var(--paper-fg, ${tokens["--paper-fg"]})`)
-  .replaceAll("#2563eb", `var(--paper-accent, ${tokens["--paper-accent"]})`)
-  .replaceAll("#52525b", `var(--paper-muted, ${tokens["--paper-muted"]})`)
-  .replaceAll("#71717a", `var(--paper-muted, ${tokens["--paper-muted"]})`)
-  .replaceAll("#e4e4e7", `var(--paper-border, ${tokens["--paper-border"]})`);
+  .replaceAll("#fafafa", `var(--papyrus-bg, ${tokens["--papyrus-bg"]})`)
+  .replaceAll("#18181b", `var(--papyrus-fg, ${tokens["--papyrus-fg"]})`)
+  .replaceAll("#2563eb", `var(--papyrus-accent, ${tokens["--papyrus-accent"]})`)
+  .replaceAll("#52525b", `var(--papyrus-muted, ${tokens["--papyrus-muted"]})`)
+  .replaceAll("#71717a", `var(--papyrus-muted, ${tokens["--papyrus-muted"]})`)
+  .replaceAll("#e4e4e7", `var(--papyrus-border, ${tokens["--papyrus-border"]})`);
 
 await mkdir(dirname(target), { recursive: true });
 await writeFile(target, svg);

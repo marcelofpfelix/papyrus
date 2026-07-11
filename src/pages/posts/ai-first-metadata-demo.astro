@@ -1,5 +1,5 @@
 ---
-import PaperPostLayout from "../../layouts/PaperPostLayout.astro";
+import PapyrusPostLayout from "../../layouts/PapyrusPostLayout.astro";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
 import { readingTime } from "../../utils/posts";
 
@@ -17,7 +17,7 @@ const body = [
 ].join("\n\n");
 ---
 
-<PaperPostLayout
+<PapyrusPostLayout
   title="AI-first metadata"
   description="How Papyrus publishes llms.txt and llms-full.txt for agents and search tools."
   siteTitle="papyrus"
@@ -40,4 +40,4 @@ const body = [
   <pre><code>pnpm papyrus-ai-indexes src/content/posts public/ai "$SITE_URL" public/demo/site-data.json</code></pre>
   <p>Those outputs can power static search records, related-content tools, or external agents without giving them a different content model.</p>
   <p>Keep private notes out of public collections. If a post needs a direct route but should not appear in public discovery surfaces, mark it with <code>hidden: true</code> and make sure feeds, sitemap, search, AI indexes, and graph generation all use the same hidden-content rule.</p>
-</PaperPostLayout>
+</PapyrusPostLayout>

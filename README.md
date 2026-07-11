@@ -3,7 +3,7 @@
 Papyrus is a reusable Astro theme package for quiet blogs, documentation,
 project pages, and profile/CV sites. It wraps
 [`astro-pure`](https://www.npmjs.com/package/astro-pure), keeps Pure as the
-foundation, and adds a Paper-like publishing surface: centered reading layouts,
+foundation, and adds a Papyrus-like publishing surface: centered reading layouts,
 post actions, tags, RSS, search, theme profiles, profile/CV pages, and generated
 SEO/AI metadata.
 
@@ -39,15 +39,15 @@ Consuming sites can also import the public API directly:
 
 ```astro
 ---
-import { PaperBaseLayout } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
 import { publishedPosts } from "astro-theme-papyrus/utils";
-import "astro-theme-papyrus/paper.css";
+import "astro-theme-papyrus/papyrus.css";
 ---
 ```
 
 ## Features
 
-- Pure-backed Astro package with Paper-style layouts and typography.
+- Pure-backed Astro package with Papyrus-style layouts and typography.
 - Posts, tags, timeline archives, RSS, Pagefind search, sitemap, robots.txt, and helpful 404 suggestions.
 - Markdown docs for Shiki/Pure-style code blocks, callouts, tables, diagrams, media, source links, copy actions, and share actions.
 - SEO/social metadata, generated `llms.txt`, AI JSON indexes, and a static graph for content discovery.
@@ -61,7 +61,7 @@ analytics, private data, comments credentials, and deploy settings stay in the
 consuming site.
 
 `papyrus-template` is the recommended starting point. It keeps only
-`paper.config.toml`, `src/data/profile.toml`, one example post, and asset
+`papyrus.config.toml`, `src/data/profile.toml`, one example post, and asset
 overrides. The standard pages are injected by `astro-theme-papyrus/integration`.
 
 `marcelofelix` is the real showcase site. It keeps its own content and

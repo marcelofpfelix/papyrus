@@ -15,14 +15,14 @@ const checks = [
     patterns: [
       /@page\s*{[\s\S]*size:\s*A4/i,
       /margin:\s*0/i,
-      /paper-cv-print-shell/,
-      /PaperCvA4Page/,
+      /papyrus-cv-print-shell/,
+      /PapyrusCvA4Page/,
     ],
   },
   {
-    file: "src/styles/paper.css",
+    file: "src/styles/papyrus.css",
     patterns: [
-      /\.paper-cv-a4-page/,
+      /\.papyrus-cv-a4-page/,
       /width:\s*210mm/,
       /min-height:\s*297mm/,
       /break-inside:\s*avoid/,
@@ -32,19 +32,19 @@ const checks = [
   {
     file: "dist/docs/cv-demo/print/index.html",
     patterns: [
-      /paper-cv-a4-page/,
+      /papyrus-cv-a4-page/,
       /Mira Lee/,
       /@page\s*{[^}]*size:\s*A4/i,
-      /paper-cv-print-shell/,
+      /papyrus-cv-print-shell/,
     ],
   },
   {
     file: "dist/docs/cv-demo/jekyll/index.html",
     patterns: [
-      /paper-jekyllcv-page/,
-      /paper-jekyllcv-profile/,
-      /paper-jekyllcv-section/,
-      /paper-jekyllcv-footer/,
+      /papyrus-jekyllcv-page/,
+      /papyrus-jekyllcv-profile/,
+      /papyrus-jekyllcv-section/,
+      /papyrus-jekyllcv-footer/,
       /marcelofpfelix\/jekyllcv/,
       /Mira Lee/,
     ],
@@ -155,12 +155,12 @@ try {
     {
       fileName: "cv-demo-print.pdf",
       path: "/docs/cv-demo/print/",
-      selector: ".paper-cv-a4-page",
+      selector: ".papyrus-cv-a4-page",
     },
     {
       fileName: "cv-demo-jekyll.pdf",
       path: "/docs/cv-demo/jekyll/",
-      selector: ".paper-jekyllcv-page",
+      selector: ".papyrus-jekyllcv-page",
     },
   ]) {
     await page.goto(`${server.origin}${route.path}`, { waitUntil: "networkidle" });

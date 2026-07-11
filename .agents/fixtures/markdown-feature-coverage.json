@@ -60,7 +60,7 @@
     "route": "/docs/code-demo/",
     "source": "src/pages/docs/code-demo.md",
     "sourceNeedle": "| Feature | Expected behavior |",
-    "selector": ".paper-prose table",
+    "selector": ".papyrus-prose table",
     "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
   },
   {
@@ -68,7 +68,7 @@
     "route": "/docs/code-demo/",
     "source": "src/pages/docs/code-demo.md",
     "sourceNeedle": "```mermaid",
-    "selector": ".paper-mermaid svg",
+    "selector": ".papyrus-mermaid svg",
     "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
   },
   {
@@ -84,7 +84,7 @@
     "route": "/docs/code-demo/",
     "source": "src/pages/docs/code-demo.md",
     "sourceNeedle": "/demo/call-flow.puml",
-    "selector": ".paper-artifact-card",
+    "selector": ".papyrus-artifact-card",
     "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
   },
   {
@@ -92,7 +92,7 @@
     "route": "/docs/code-demo/",
     "source": "src/pages/docs/code-demo.md",
     "sourceNeedle": "Fallback rendering",
-    "selector": ".paper-prose table",
+    "selector": ".papyrus-prose table",
     "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
   }
 ]

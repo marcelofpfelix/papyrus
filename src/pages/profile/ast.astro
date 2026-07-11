@@ -1,10 +1,10 @@
 ---
 import { cvSections, printProfileLinks, profile } from "../../data/profile";
-import { PaperCvActions } from "../../components";
+import { PapyrusCvActions } from "../../components";
 import { compactDurationLabel, profileLinkKindLabel } from "../../utils/cv-profile-data";
 import { shouldShowCvItemTitle } from "../../utils/cv";
 import { withBase } from "../../utils/withBase";
-import "../../styles/paper.css";
+import "../../styles/papyrus.css";
 import "../../styles/cv-print.css";
 
 const currentCvHref = profile.canonicalCv;
@@ -59,10 +59,11 @@ const showSummaryParagraph = Boolean(
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={`ATS-friendly printable CV for ${profile.name}`} />
+    <link rel="icon" href={profile.favicon} />
     <title>{profile.name} - ATS CV</title>
   </head>
   <body>
-    <PaperCvActions
+    <PapyrusCvActions
       backHref={withBase("/profile/")}
       print
       markdownHref={cvMarkdownHref}

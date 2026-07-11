@@ -1,0 +1,70 @@
+---
+const {
+  json,
+  markdown,
+} = Astro.props as {
+  json?: string;
+  markdown?: string;
+};
+
+const jsonHref = json ? `data:application/json;charset=utf-8,${encodeURIComponent(json)}` : "";
+const markdownHref = markdown ? `data:text/markdown;charset=utf-8,${encodeURIComponent(markdown)}` : "";
+---
+
+{(json || markdown) && (
+  <div class="papyrus-cv-export-actions">
+    {json && (
+      <details class="papyrus-cv-export-card">
+        <summary>JSON export</summary>
+        <div class="papyrus-cv-export-toolbar">
+          <button type="button" data-papyrus-cv-copy="json" data-papyrus-cv-payload={json}>
+            <span class="papyrus-button-label">Copy JSON</span>
+          </button>
+          <a href={jsonHref} download="cv.json" data-papyrus-cv-download="json">Download JSON</a>
+        </div>
+        <pre><code>{json}</code></pre>
+      </details>
+    )}
+    {markdown && (
+      <details class="papyrus-cv-export-card">
+        <summary>Markdown export</summary>
+        <div class="papyrus-cv-export-toolbar">
+          <button type="button" data-papyrus-cv-copy="markdown" data-papyrus-cv-payload={markdown}>
+            <span class="papyrus-button-label">Copy Markdown</span>
+          </button>
+          <a href={markdownHref} download="cv.md" data-papyrus-cv-download="markdown">Download Markdown</a>
+        </div>
+        <pre><code>{markdown}</code></pre>
+      </details>
+    )}
+  </div>
+)}
+
+<script>
+  async function writeCvClipboard(text: string) {
+    if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+    await navigator.clipboard.writeText(text);
+    return "copied";
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("[data-papyrus-cv-copy]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const label = button.querySelector<HTMLElement>(".papyrus-button-label");
+      const original = label?.textContent ?? "Copy";
+
+      try {
+        await writeCvClipboard(button.dataset.papyrusCvPayload ?? "");
+        button.dataset.state = "copied";
+        if (label) label.textContent = button.dataset.papyrusCvCopy === "json" ? "JSON copied" : "Markdown copied";
+      } catch {
+        button.dataset.state = "failed";
+        if (label) label.textContent = "Copy failed";
+      }
+
+      window.setTimeout(() => {
+        button.dataset.state = "";
+        if (label) label.textContent = original;
+      }, 1800);
+    });
+  });
+</script>

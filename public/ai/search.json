@@ -19,14 +19,14 @@
     "title": "Dark mode and search in Papyrus",
     "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/",
     "sourcePath": "src/content/posts/dark-mode-and-search.md",
-    "description": "The theme keeps a Pure-like neutral background, then adds a small Paper-style search flow.",
+    "description": "The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.",
     "excerpt": "The light and dark backgrounds stay close to the default Pure theme: neutral, quiet, and readable. Papyrus keeps color accents restrained so the content remains the main surface. The header has a search icon. It links to the site-owned `/search/` page. That keeps the package gene",
     "tags": [
       "astro",
       "search",
       "dark-mode"
     ],
-    "text": "Dark mode and search in Papyrus\nThe theme keeps a Pure-like neutral background, then adds a small Paper-style search flow.\nThe light and dark backgrounds stay close to the default Pure theme: neutral, quiet, and readable. Papyrus keeps color accents restrained so the content remains the main surface. The header has a search icon. It links to the site-owned `/search/` page. That keeps the package gene\nastro search dark-mode"
+    "text": "Dark mode and search in Papyrus\nThe theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.\nThe light and dark backgrounds stay close to the default Pure theme: neutral, quiet, and readable. Papyrus keeps color accents restrained so the content remains the main surface. The header has a search icon. It links to the site-owned `/search/` page. That keeps the package gene\nastro search dark-mode"
   },
   {
     "id": "post:install-configure-papyrus",

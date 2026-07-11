@@ -37,7 +37,7 @@ can be installed by another Astro site.
 
 7. Smoke install the packed tarball in a clean temporary Astro fixture before publishing.
    The fixture should import `astro-theme-papyrus/components`,
-   `astro-theme-papyrus/config`, and `astro-theme-papyrus/paper.css`.
+   `astro-theme-papyrus/config`, and `astro-theme-papyrus/papyrus.css`.
 8. Publish only from an npm account with 2FA enabled. Keep
    `publishConfig.provenance` enabled so supported CI releases attach npm
    provenance.

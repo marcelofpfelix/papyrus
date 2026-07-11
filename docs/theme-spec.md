@@ -90,7 +90,7 @@ standard `google-site-verification` meta tag when provided.
 
 Base-path and subdirectory deployments MUST be supported. Internal links and
 asset links SHOULD go through shared helpers so a site can deploy under a path
-such as `/astro-paper` without manual link rewrites.
+such as `/astro-papyrus` without manual link rewrites.
 
 ## Home page and posts index
 
@@ -288,15 +288,15 @@ Theme profiles MUST be token-driven CSS files with light and dark variants.
 
 Every theme profile MUST define:
 
-- `--paper-bg`
-- `--paper-fg`
-- `--paper-muted`
-- `--paper-panel`
-- `--paper-border`
-- `--paper-accent`
-- `--paper-code-bg`
-- `--paper-code-fg`
-- `--paper-theme-color`
+- `--papyrus-bg`
+- `--papyrus-fg`
+- `--papyrus-muted`
+- `--papyrus-panel`
+- `--papyrus-border`
+- `--papyrus-accent`
+- `--papyrus-code-bg`
+- `--papyrus-code-fg`
+- `--papyrus-theme-color`
 - font tokens
 
 The default package theme MAY differ from a consuming site's default theme.
@@ -369,7 +369,7 @@ render the real email address if the site has enough public data to assemble it.
 The web profile page SHOULD center the photo, name, and title inside the profile
 summary box.
 
-The print CV view MUST be paper-like, centered, black-and-white friendly, and
+The print CV view MUST be papyrus-like, centered, black-and-white friendly, and
 easy for recruiting software to parse. It SHOULD avoid decorative graphics,
 complex columns, low-contrast text, and link styling that makes the print output
 look uneven.
@@ -547,6 +547,6 @@ Use this checklist when reviewing whether code still respects the spec:
 - Theme tokens, including Gruvbox dark colors, match the spec.
 - Profile and CV pages are data-driven and do not hardcode personal links.
 - Obfuscated email output avoids plain static email HTML when configured.
-- Print CV remains paper-like, readable, compact, and parser-friendly.
+- Print CV remains papyrus-like, readable, compact, and parser-friendly.
 - Accessibility and keyboard behavior remain intact.
 - Lighthouse minimum remains 100 before commit/release gates.

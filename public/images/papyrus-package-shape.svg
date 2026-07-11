@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Papyrus package shape">
   <style>
-    rect.bg { fill: var(--paper-bg, #f9f5d7); }
-    text { fill: var(--paper-fg, #654735); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .brand { fill: var(--paper-accent, #d8a657); font-size: 38px; font-weight: 700; }
-    .brand-mark { fill: var(--paper-accent, #d8a657); }
+    rect.bg { fill: var(--papyrus-bg, #f9f5d7); }
+    text { fill: var(--papyrus-fg, #654735); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .brand { fill: var(--papyrus-accent, #d8a657); font-size: 38px; font-weight: 700; }
+    .brand-mark { fill: var(--papyrus-accent, #d8a657); }
     .title { font-size: 62px; font-weight: 800; letter-spacing: 0; }
-    .desc { fill: var(--paper-muted, #928374); font-size: 30px; }
+    .desc { fill: var(--papyrus-muted, #928374); font-size: 30px; }
   </style>
   <rect class="bg" width="1200" height="630" rx="0"/>
   <g class="brand-mark" transform="translate(72 70) scale(.52)">

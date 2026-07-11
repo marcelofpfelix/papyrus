@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/PaperPostLayout.astro
+layout: ../../layouts/PapyrusPostLayout.astro
 title: Markdown code guide
 description: Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.
 siteTitle: papyrus
@@ -73,10 +73,10 @@ fn active_profile() -> ThemeProfile {
 ## Diff fence
 
 ```css title="diff.css"
-.paper-card {
-  background: var(--paper-panel); /* [!code --] */
+.papyrus-card {
+  background: var(--papyrus-panel); /* [!code --] */
   background: transparent; /* [!code ++] */
-  color: var(--paper-accent); /* [!code ++] */
+  color: var(--papyrus-accent); /* [!code ++] */
 }
 ```
 

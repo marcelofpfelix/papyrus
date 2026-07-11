@@ -1,47 +1,47 @@
-import type { PaperFeatureConfig } from "./features";
-import { resolvePaperFeatures } from "./features";
+import type { PapyrusFeatureConfig } from "./features";
+import { resolvePapyrusFeatures } from "./features";
 
-export type PaperPluginKind = "component" | "markdown" | "script" | "style" | "integration" | "route" | "data";
+export type PapyrusPluginKind = "component" | "markdown" | "script" | "style" | "integration" | "route" | "data";
 
-export type PaperPluginCapability = {
-  kind: PaperPluginKind;
+export type PapyrusPluginCapability = {
+  kind: PapyrusPluginKind;
   name: string;
   description?: string;
 };
 
-export type PaperPluginSetupContext = {
-  addCapability: (capability: PaperPluginCapability) => void;
-  setFeatureDefaults: (features: PaperFeatureConfig) => void;
+export type PapyrusPluginSetupContext = {
+  addCapability: (capability: PapyrusPluginCapability) => void;
+  setFeatureDefaults: (features: PapyrusFeatureConfig) => void;
 };
 
-export type PaperPluginSetup = (context: PaperPluginSetupContext) => void;
+export type PapyrusPluginSetup = (context: PapyrusPluginSetupContext) => void;
 
-export type PaperPluginDefinition = {
+export type PapyrusPluginDefinition = {
   name: string;
   description: string;
   packageName?: string;
   docsUrl?: string;
-  featureDefaults?: PaperFeatureConfig;
-  capabilities?: PaperPluginCapability[];
-  setup?: PaperPluginSetup;
+  featureDefaults?: PapyrusFeatureConfig;
+  capabilities?: PapyrusPluginCapability[];
+  setup?: PapyrusPluginSetup;
 };
 
-export type ResolvedPaperPluginConfig = {
-  features: Required<PaperFeatureConfig>;
-  plugins: PaperPluginDefinition[];
-  capabilities: PaperPluginCapability[];
+export type ResolvedPapyrusPluginConfig = {
+  features: Required<PapyrusFeatureConfig>;
+  plugins: PapyrusPluginDefinition[];
+  capabilities: PapyrusPluginCapability[];
 };
 
-export function definePaperPlugin(plugin: PaperPluginDefinition): PaperPluginDefinition {
+export function definePapyrusPlugin(plugin: PapyrusPluginDefinition): PapyrusPluginDefinition {
   return plugin;
 }
 
-export function resolvePaperPluginConfig(
-  plugins: PaperPluginDefinition[] = [],
-  siteFeatures: PaperFeatureConfig = {},
-): ResolvedPaperPluginConfig {
-  const setupFeatureDefaults = new Map<string, PaperFeatureConfig>();
-  const setupCapabilities = new Map<string, PaperPluginCapability[]>();
+export function resolvePapyrusPluginConfig(
+  plugins: PapyrusPluginDefinition[] = [],
+  siteFeatures: PapyrusFeatureConfig = {},
+): ResolvedPapyrusPluginConfig {
+  const setupFeatureDefaults = new Map<string, PapyrusFeatureConfig>();
+  const setupCapabilities = new Map<string, PapyrusPluginCapability[]>();
 
   plugins.forEach((plugin) => {
     plugin.setup?.({
@@ -57,14 +57,14 @@ export function resolvePaperPluginConfig(
     });
   });
 
-  const pluginFeatures = plugins.reduce<PaperFeatureConfig>((features, plugin) => ({
+  const pluginFeatures = plugins.reduce<PapyrusFeatureConfig>((features, plugin) => ({
     ...features,
     ...plugin.featureDefaults,
     ...setupFeatureDefaults.get(plugin.name),
   }), {});
 
   return {
-    features: resolvePaperFeatures({
+    features: resolvePapyrusFeatures({
       ...pluginFeatures,
       ...siteFeatures,
     }),

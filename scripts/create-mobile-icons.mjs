@@ -20,10 +20,10 @@ const [text, outputDir = "public"] = twinkleMode
 const targetDir = resolve(outputDir);
 const tokens = await themeTokens();
 const colors = {
-  background: hexToRgba(tokens["--paper-bg"]),
-  foreground: hexToRgba(tokens["--paper-fg"]),
-  accent: hexToRgba(tokens["--paper-accent"]),
-  border: hexToRgba(tokens["--paper-border"]),
+  background: hexToRgba(tokens["--papyrus-bg"]),
+  foreground: hexToRgba(tokens["--papyrus-fg"]),
+  accent: hexToRgba(tokens["--papyrus-accent"]),
+  border: hexToRgba(tokens["--papyrus-border"]),
 };
 
 const glyphs = {

@@ -1,0 +1,32 @@
+---
+import { formatPostDate } from "../utils/posts";
+
+interface NoteItem {
+  id: string;
+  data: {
+    text: string;
+    date?: Date | string;
+    tags?: string[];
+  };
+}
+
+interface Props {
+  notes: NoteItem[];
+}
+
+const { notes } = Astro.props;
+---
+
+<ul class="papyrus-note-list">
+  {
+    notes.map(note => (
+      <li id={note.id}>
+        <p>{note.data.text}</p>
+        <footer>
+          {note.data.date && <time>{formatPostDate(note.data.date)}</time>}
+          {note.data.tags?.map(tag => <a href={`/search/?tag=${encodeURIComponent(tag)}`}>#{tag}</a>)}
+        </footer>
+      </li>
+    ))
+  }
+</ul>

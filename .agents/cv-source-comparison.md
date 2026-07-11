@@ -46,12 +46,12 @@ Observed structure:
 
 - `profile.ts` defines typed profile links, metadata, CV sections, grouped
   entities, items, logos, timeline events, and profile projects.
-- `profile/print.astro` imports `paper-css`, renders `body.A4`, uses
+- `profile/print.astro` imports `papyrus-css`, renders `body.A4`, uses
   `pages = [1, 2]`, creates one `section.sheet.padding-10mm` per page, renders a
   first-page profile header/details block, filters `cvSections` by page, and
   keeps a footer at the bottom.
-- `profile/index.astro` uses papyrus components: `PaperBaseLayout`,
-  `PaperTimeline`, and `PaperGithubCard`.
+- `profile/index.astro` uses papyrus components: `PapyrusBaseLayout`,
+  `PapyrusTimeline`, and `PapyrusGithubCard`.
 - The web profile has a sidebar with avatar/contact/info, a print action linking
   `/profile/print/`, a canonical `bandonga.com/cv/marcelo` note, section groups,
   timeline, and project repository cards.
@@ -60,14 +60,14 @@ Observed structure:
 
 Current papyrus CV pieces checked against those sources:
 
-- `PaperJekyllCvPage` keeps the old jekyllcv-style print prompt, sheet/page
+- `PapyrusJekyllCvPage` keeps the old jekyllcv-style print prompt, sheet/page
   wrapper, first-page profile block, canonical updated note, section filtering,
   group logos/entity links, item metadata, and footer.
 - `/docs/cv-demo/jekyll/` exposes the old-style route.
-- `PaperCvA4Page` and `/docs/cv-demo/print/` expose modern A4 print routes from
+- `PapyrusCvA4Page` and `/docs/cv-demo/print/` expose modern A4 print routes from
   the same normalized CV data.
-- `PaperCvProfile`, `PaperCvHero`, `PaperCvLinks`, `PaperCvSections`, and
-  `PaperCvExportActions` expose reusable profile/CV building blocks.
+- `PapyrusCvProfile`, `PapyrusCvHero`, `PapyrusCvLinks`, `PapyrusCvSections`, and
+  `PapyrusCvExportActions` expose reusable profile/CV building blocks.
 - The demo normalizes upstream-shaped jekyllcv data with
   `normalizeJekyllCvUser`, then reuses it for web profile, export, A4, and
   jekyllcv-style routes.

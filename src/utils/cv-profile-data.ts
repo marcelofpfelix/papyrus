@@ -1,5 +1,5 @@
 import { parse } from "smol-toml";
-import { cvHref, normalizeJekyllCvUser, type PaperCvEmailParts, type PaperCvItem, type PaperCvUser } from "./cv";
+import { cvHref, normalizeJekyllCvUser, type PapyrusCvEmailParts, type PapyrusCvItem, type PapyrusCvUser } from "./cv";
 
 const DEFAULT_PRINT_COLOR = "#37474F";
 const DEFAULT_PRINT_LINKS = ["email", "linkedin", "github", "website"];
@@ -16,7 +16,7 @@ export type CvItem = {
   location?: string;
   description?: string;
   tags?: string[];
-  range?: PaperCvItem["range"];
+  range?: PapyrusCvItem["range"];
   duration?: string;
 };
 
@@ -53,7 +53,7 @@ export type ProfileData = {
     location: string;
     summary: string;
     email: string;
-    emailParts?: PaperCvEmailParts;
+    emailParts?: PapyrusCvEmailParts;
     printColor: string;
     pages: number;
     meta: ProfileMeta[];
@@ -62,13 +62,13 @@ export type ProfileData = {
     label: string;
     href?: string;
     icon?: string;
-    emailParts?: PaperCvEmailParts;
+    emailParts?: PapyrusCvEmailParts;
   }[];
   printProfileLinks: {
     label: string;
     href?: string;
     icon?: string;
-    emailParts?: PaperCvEmailParts;
+    emailParts?: PapyrusCvEmailParts;
   }[];
   cvSections: CvSection[];
   profilePages: number[];
@@ -108,7 +108,7 @@ export function ageLabel(born: string | undefined): string | undefined {
   return `${years} Year${years === 1 ? "" : "s"}`;
 }
 
-export function durationLabel(range: PaperCvItem["range"] | undefined): string | undefined {
+export function durationLabel(range: PapyrusCvItem["range"] | undefined): string | undefined {
   const months = fullMonthsBetween(range?.start, range?.end);
   if (months === undefined) return undefined;
   const years = Math.floor(months / 12);
@@ -129,7 +129,7 @@ export function compactDurationLabel(label: string | undefined): string | undefi
   ].filter(Boolean).join(" ") || label;
 }
 
-function firstDescription(user: PaperCvUser): string | undefined {
+function firstDescription(user: PapyrusCvUser): string | undefined {
   return user.sections
     ?.flatMap((section) => section.groups ?? [])
     .flatMap((group) => group.items ?? [])
@@ -137,13 +137,13 @@ function firstDescription(user: PaperCvUser): string | undefined {
     ?.description;
 }
 
-function handleFrom(user: PaperCvUser): string {
+function handleFrom(user: PapyrusCvUser): string {
   if (user.handle) return user.handle;
   const github = user.links?.find((link) => link.icon === "github");
   return github?.label ?? user.name.toLowerCase().replace(/\s+/g, "");
 }
 
-function profileLinksFor(user: PaperCvUser) {
+function profileLinksFor(user: PapyrusCvUser) {
   const links = [...(user.links ?? [])];
 
   if (user.emailParts) {
@@ -184,7 +184,7 @@ function printLinkMatches(link: ReturnType<typeof profileLinksFor>[number], key:
   return icon === normalizedKey || label === normalizedKey || href.includes(normalizedKey);
 }
 
-function printProfileLinksFor(user: PaperCvUser, links: ReturnType<typeof profileLinksFor>) {
+function printProfileLinksFor(user: PapyrusCvUser, links: ReturnType<typeof profileLinksFor>) {
   const keys = user.printLinks?.length ? user.printLinks : DEFAULT_PRINT_LINKS;
   const seen = new Set<string>();
 
@@ -208,7 +208,7 @@ export function profileLinkKindLabel(link: ReturnType<typeof profileLinksFor>[nu
   return link.icon ?? link.label;
 }
 
-function profileMetaFor(user: PaperCvUser): ProfileMeta[] {
+function profileMetaFor(user: PapyrusCvUser): ProfileMeta[] {
   return [
     user.location ? { label: "Location", value: user.location, icon: "location" } : undefined,
     user.born ? { label: "Age", value: ageLabel(user.born) ?? user.born.slice(0, 10), icon: "calendar" } : undefined,
@@ -251,7 +251,7 @@ function timelineContentFor(section: CvSection, group: CvGroup, item: CvItem): s
   return `<strong>${title}</strong>${entity}${description}`;
 }
 
-export function profileDataFromJekyllCvUser(user: PaperCvUser, projects: ProfileProject[] = []): ProfileData {
+export function profileDataFromJekyllCvUser(user: PapyrusCvUser, projects: ProfileProject[] = []): ProfileData {
   const cvSections = (user.sections ?? []).map((section): CvSection => {
     const groups = (section.groups ?? []).map((group): CvGroup => ({
       entity: group.title,

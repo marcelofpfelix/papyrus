@@ -137,7 +137,7 @@ Inline code like `pnpm build` keeps paragraph line-height calm.
 TypeScript with a title and highlighted lines:
 
 ```ts title="src/pages/posts/index.astro" {1,4}
-import { PaperBaseLayout, PaperPostList } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts } from "astro-theme-papyrus/utils";
 
 const posts = publishedPosts(await getCollection("posts"));
@@ -170,14 +170,14 @@ fn main() {
 
 Diff with add/remove line styling:
 
-```diff title="paper.css"
-- .paper-icon-button:hover {
--   background: var(--paper-panel);
--   border-color: var(--paper-accent);
+```diff title="papyrus.css"
+- .papyrus-icon-button:hover {
+-   background: var(--papyrus-panel);
+-   border-color: var(--papyrus-accent);
 - }
-+ .paper-icon-button:hover {
++ .papyrus-icon-button:hover {
 +   background: transparent;
-+   color: var(--paper-accent);
++   color: var(--papyrus-accent);
 + }
 ```
 
@@ -195,7 +195,7 @@ pnpm papyrus-llms src/content/posts public "$SITE_URL" src/pages/docs
 flowchart LR
   Site[Astro site] --> Theme[Papyrus]
   Theme --> Pure[astro-pure]
-  Theme --> Style[AstroPaper-like CSS]
+  Theme --> Style[Papyrus CSS]
   Site --> Content[Markdown posts]
 ```
 
@@ -209,7 +209,7 @@ Diagram source links:
 
 ## Link preview
 
-<a class="paper-link-preview" href="https://astro.build/">
+<a class="papyrus-link-preview" href="https://astro.build/">
   <span>
     <strong>Astro</strong>
     <small>The web framework used by this blog and theme wrapper.</small>

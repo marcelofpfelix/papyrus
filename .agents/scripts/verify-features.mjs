@@ -49,7 +49,7 @@ try {
   const plugins = await import(pluginsPath);
   const examplePlugin = await import(examplePluginPath);
 
-  same(features.defaultPaperFeatures, {
+  same(features.defaultPapyrusFeatures, {
     header: true,
     footer: true,
     scrollHeader: true,
@@ -80,7 +80,7 @@ try {
     sectionMenu: true,
   }, "default feature set should enable all built-in features");
 
-  same(features.resolvePaperFeatures({ rss: false, share: false, toc: false, header: false, mermaid: false }), {
+  same(features.resolvePapyrusFeatures({ rss: false, share: false, toc: false, header: false, mermaid: false }), {
     header: false,
     footer: true,
     scrollHeader: true,
@@ -111,7 +111,7 @@ try {
     sectionMenu: true,
   }, "site feature overrides should merge over defaults");
 
-  const commentsPlugin = plugins.definePaperPlugin({
+  const commentsPlugin = plugins.definePapyrusPlugin({
     name: "comments",
     description: "Comment rendering",
     packageName: "papyrus-comments",
@@ -123,7 +123,7 @@ try {
       { kind: "route", name: "comments-endpoint" },
     ],
   });
-  const quietPlugin = plugins.definePaperPlugin({
+  const quietPlugin = plugins.definePapyrusPlugin({
     name: "quiet",
     description: "Quiet default layout",
     featureDefaults: { rss: false, share: false },
@@ -132,7 +132,7 @@ try {
       { kind: "data", name: "quiet-metadata" },
     ],
   });
-  const lifecyclePlugin = plugins.definePaperPlugin({
+  const lifecyclePlugin = plugins.definePapyrusPlugin({
     name: "lifecycle",
     description: "Lifecycle plugin",
     setup({ addCapability, setFeatureDefaults }) {
@@ -141,9 +141,9 @@ try {
     },
   });
 
-  assert(commentsPlugin.packageName === "papyrus-comments", "definePaperPlugin should return the plugin definition unchanged");
+  assert(commentsPlugin.packageName === "papyrus-comments", "definePapyrusPlugin should return the plugin definition unchanged");
 
-  const resolved = plugins.resolvePaperPluginConfig([commentsPlugin, quietPlugin], {
+  const resolved = plugins.resolvePapyrusPluginConfig([commentsPlugin, quietPlugin], {
     sourceActions: true,
     toc: false,
   });
@@ -187,7 +187,7 @@ try {
     "data:quiet-metadata",
   ], "resolved config should aggregate plugin capabilities");
 
-  const resolvedLifecycle = plugins.resolvePaperPluginConfig([lifecyclePlugin], { poweredBy: true });
+  const resolvedLifecycle = plugins.resolvePapyrusPluginConfig([lifecyclePlugin], { poweredBy: true });
   same(resolvedLifecycle.features, {
     header: true,
     footer: true,
@@ -226,13 +226,13 @@ try {
   assert(examplePluginPackage.exports["."] === "./src/index.ts", "example plugin should export its default entry");
   assert(examplePluginPackage.peerDependencies["astro-theme-papyrus"] === "*", "example plugin should peer-depend on astro-theme-papyrus");
   assert(examplePluginPackage.peerDependencies.astro === ">=6.0.0", "example plugin should peer-depend on Astro");
-  assert(examplePlugin.default.name === "paper-kbd", "example plugin default export missing plugin definition");
+  assert(examplePlugin.default.name === "papyrus-kbd", "example plugin default export missing plugin definition");
   same(examplePlugin.default.capabilities.map(capability => `${capability.kind}:${capability.name}`), [
     "markdown:kbd-shortcodes",
     "style:kbd-theme-tokens",
   ], "example plugin should expose markdown and style capabilities");
 
-  const resolvedWithExample = plugins.resolvePaperPluginConfig([examplePlugin.default], { rss: false });
+  const resolvedWithExample = plugins.resolvePapyrusPluginConfig([examplePlugin.default], { rss: false });
   same(resolvedWithExample.plugins.map(plugin => plugin.packageName), ["@example/papyrus-kbd"], "example plugin should resolve through plugin config");
   same(resolvedWithExample.capabilities.map(capability => `${capability.kind}:${capability.name}`), [
     "markdown:kbd-shortcodes",

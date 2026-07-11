@@ -1,13 +1,13 @@
 ---
 import { getCollection } from "astro:content";
-import { PaperBaseLayout, PaperContentIndex, PaperLinkPreview, PaperSectionMenu } from "../../components";
+import { PapyrusBaseLayout, PapyrusContentIndex, PapyrusLinkPreview, PapyrusSectionMenu } from "../../components";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
-import { buildDocIndex, postDocIndexItem, publishedPosts, type PaperDocIndexItem } from "../../utils";
+import { buildDocIndex, postDocIndexItem, publishedPosts, type PapyrusDocIndexItem } from "../../utils";
 
 const docsIndex = (await getCollection("docs")).find(entry => entry.id.replace(/\.(md|mdx)$/i, "") === "index");
 const docSections = docsIndex?.data.sections ?? [];
 const docsDescription = docsIndex?.data.description ?? "Package docs for installing, composing, and extending papyrus without copying a full theme into every site.";
-const explicitDocs: PaperDocIndexItem[] = [
+const explicitDocs: PapyrusDocIndexItem[] = [
   {
     title: "Feature map",
     href: "/docs/feature-map/",
@@ -60,7 +60,7 @@ const explicitDocs: PaperDocIndexItem[] = [
 ];
 const postDocs = publishedPosts(await getCollection("posts"))
   .map(post => postDocIndexItem(post))
-  .filter((item): item is PaperDocIndexItem => Boolean(item));
+  .filter((item): item is PapyrusDocIndexItem => Boolean(item));
 const docs = buildDocIndex(docSections, [...explicitDocs, ...postDocs]);
 
 const sections = [
@@ -72,61 +72,61 @@ const sections = [
 ];
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="papyrus docs"
   description={docsDescription}
   siteTitle="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <PaperSectionMenu sections={sections} />
+  <PapyrusSectionMenu sections={sections} />
 
-  <section class="paper-hero">
+  <section class="papyrus-hero">
     <h1>Docs</h1>
-    <p class="paper-description">{docsDescription}</p>
+    <p class="papyrus-description">{docsDescription}</p>
   </section>
 
-  <section id="index" class="paper-section">
+  <section id="index" class="papyrus-section">
     <h2>Index</h2>
-    <PaperContentIndex items={docs} />
+    <PapyrusContentIndex items={docs} />
   </section>
 
-  <section id="theme-profiles" class="paper-section">
+  <section id="theme-profiles" class="papyrus-section">
     <h2>Theme profiles</h2>
     <p>Each theme profile defines one light token set and one dark token set. Runtime mode defaults to system, while the default color profile is Gruvbox and the default font profile is readable. Included profiles are Catppuccin, Tokyo Night, Kanagawa, Rosé Pine, Everforest, Dracula, Gruvbox, Nord, and Pure.</p>
-    <pre><code>{`:root[data-paper-theme="custom"] {
-  --paper-bg: #fbf7ef;
-  --paper-fg: #1f2933;
-  --paper-muted: #6b7280;
-  --paper-panel: #ffffff;
-  --paper-border: #d8d0bf;
-  --paper-accent: #7c3aed;
-  --paper-code-bg: #f4efe5;
-  --paper-code-fg: #111827;
-  --paper-theme-color: #fbf7ef;
-  --paper-font-sans: "Atkinson Hyperlegible", system-ui, sans-serif;
-  --paper-font-mono: "Fira Code", ui-monospace, monospace;
+    <pre><code>{`:root[data-papyrus-theme="custom"] {
+  --papyrus-bg: #fbf7ef;
+  --papyrus-fg: #1f2933;
+  --papyrus-muted: #6b7280;
+  --papyrus-panel: #ffffff;
+  --papyrus-border: #d8d0bf;
+  --papyrus-accent: #7c3aed;
+  --papyrus-code-bg: #f4efe5;
+  --papyrus-code-fg: #111827;
+  --papyrus-theme-color: #fbf7ef;
+  --papyrus-font-sans: "Atkinson Hyperlegible", system-ui, sans-serif;
+  --papyrus-font-mono: "Fira Code", ui-monospace, monospace;
 }
 
-:root[data-paper-theme="custom"].dark,
-html[data-paper-theme="custom"].dark {
-  --paper-bg: #111827;
-  --paper-fg: #f9fafb;
-  --paper-muted: #cbd5e1;
-  --paper-panel: #1f2937;
-  --paper-border: #374151;
-  --paper-accent: #c4b5fd;
-  --paper-code-bg: #0f172a;
-  --paper-code-fg: #f8fafc;
-  --paper-theme-color: #111827;
+:root[data-papyrus-theme="custom"].dark,
+html[data-papyrus-theme="custom"].dark {
+  --papyrus-bg: #111827;
+  --papyrus-fg: #f9fafb;
+  --papyrus-muted: #cbd5e1;
+  --papyrus-panel: #1f2937;
+  --papyrus-border: #374151;
+  --papyrus-accent: #c4b5fd;
+  --papyrus-code-bg: #0f172a;
+  --papyrus-code-fg: #f8fafc;
+  --papyrus-theme-color: #111827;
 }`}</code></pre>
     <p>Use <code>pnpm papyrus-theme list</code> to inspect installed profiles and <code>pnpm papyrus-theme validate</code> to check that every profile file has the required light/dark selectors and tokens.</p>
   </section>
 
-  <section id="markdown" class="paper-section">
+  <section id="markdown" class="papyrus-section">
     <h2>Markdown</h2>
     <p>The package owns markdown presentation for plain Astro/Shiki code blocks, alerts, task lists, tables, Mermaid blocks, artifact cards, and optional TOC rendering.</p>
-    <PaperLinkPreview
+    <PapyrusLinkPreview
       href="/docs/code-demo/"
       title="Markdown code guide"
       description="Open the Markdown guide to review code, alerts, diagrams, artifact links, and Markdown behavior."
@@ -134,10 +134,10 @@ html[data-paper-theme="custom"].dark {
     />
   </section>
 
-  <section id="ai-metadata" class="paper-section">
+  <section id="ai-metadata" class="papyrus-section">
     <h2>AI metadata</h2>
     <p>Post pages can emit JSON-LD, canonical URLs, source Markdown links, copy-source actions, copy-citation actions, and generated agent indexes.</p>
-    <PaperLinkPreview
+    <PapyrusLinkPreview
       href="/docs/ai-mobile/"
       title="AI and mobile readiness"
       description="See generated metadata, AI indexes, responsive defaults, and mobile authoring guidance."
@@ -145,9 +145,9 @@ html[data-paper-theme="custom"].dark {
     />
   </section>
 
-  <section id="content-model" class="paper-section">
+  <section id="content-model" class="papyrus-section">
     <h2>Content model</h2>
     <p>Consuming sites keep content and config. papyrus provides components and helpers for nested posts, folder tags, stable slugs, generated docs indexes, pinned posts, project cards, and profile/CV pages.</p>
     <p>The docs index follows the Starlight-style shape: section metadata lives in <code>src/content/docs/index.md</code>, docs entries use explicit <code>order</code> values, and posts can opt into docs with <code>docs</code> frontmatter because docs and posts are built from the same content source.</p>
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>

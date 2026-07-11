@@ -1,31 +1,31 @@
-import { postHref, type PaperPostEntry } from "./posts";
+import { postHref, type PapyrusPostEntry } from "./posts";
 
-export interface PaperDocSection {
+export interface PapyrusDocSection {
   id: string;
   title: string;
   description?: string;
   order?: number;
 }
 
-export interface PaperDocIndexItem {
+export interface PapyrusDocIndexItem {
   title: string;
   href?: string;
   description?: string;
   section?: string;
   order?: number;
   source?: "doc" | "post";
-  children?: PaperDocIndexItem[];
+  children?: PapyrusDocIndexItem[];
 }
 
-function docOrder(item: PaperDocIndexItem): number {
+function docOrder(item: PapyrusDocIndexItem): number {
   return typeof item.order === "number" ? item.order : Number.MAX_SAFE_INTEGER;
 }
 
-export function sortDocIndexItems<T extends PaperDocIndexItem>(items: T[]): T[] {
+export function sortDocIndexItems<T extends PapyrusDocIndexItem>(items: T[]): T[] {
   return [...items].sort((a, b) => docOrder(a) - docOrder(b) || a.title.localeCompare(b.title));
 }
 
-export function postDocIndexItem(post: PaperPostEntry, basePath = "/posts"): PaperDocIndexItem | undefined {
+export function postDocIndexItem(post: PapyrusPostEntry, basePath = "/posts"): PapyrusDocIndexItem | undefined {
   const docs = post.data.docs;
   if (!docs) return undefined;
 
@@ -40,12 +40,12 @@ export function postDocIndexItem(post: PaperPostEntry, basePath = "/posts"): Pap
   };
 }
 
-export function buildDocIndex(sections: PaperDocSection[], items: PaperDocIndexItem[]): PaperDocIndexItem[] {
+export function buildDocIndex(sections: PapyrusDocSection[], items: PapyrusDocIndexItem[]): PapyrusDocIndexItem[] {
   const sortedSections = [...sections].sort((a, b) =>
     (a.order ?? Number.MAX_SAFE_INTEGER) - (b.order ?? Number.MAX_SAFE_INTEGER) || a.title.localeCompare(b.title)
   );
   const sectionIds = new Set(sortedSections.map(section => section.id));
-  const bySection = new Map<string, PaperDocIndexItem[]>();
+  const bySection = new Map<string, PapyrusDocIndexItem[]>();
 
   for (const item of items) {
     const key = item.section && sectionIds.has(item.section) ? item.section : sortedSections[0]?.id ?? "docs";

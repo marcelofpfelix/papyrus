@@ -2,6 +2,10 @@
 
 ## 0.2.0
 
+- Rename the public theme API to `Papyrus*`/`papyrus.*`, including
+  `papyrus.config.toml`, `astro-theme-papyrus/papyrus.css`, CSS tokens, data
+  attributes, components, layouts, docs, and generated public artifacts. The old
+  names are intentionally not kept as compatibility aliases.
 - Prepare the package for a real `astro-theme-papyrus` npm release with public
   package metadata, MIT license text, release checklist, and pack verification.
 - Add TOML-first site configuration, injected template pages, Pagefind-ready

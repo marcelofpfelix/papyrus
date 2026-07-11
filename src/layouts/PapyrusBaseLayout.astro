@@ -1,0 +1,143 @@
+---
+import { ClientRouter } from "astro:transitions";
+import PapyrusHeader from "../components/PapyrusHeader.astro";
+import PapyrusFooter from "../components/PapyrusFooter.astro";
+import PapyrusThemeProvider from "../components/PapyrusThemeProvider.astro";
+import { resolvePapyrusFeatures, type PapyrusFeatureConfig } from "../utils/features";
+import { getAssetPath, stripBase, withBase } from "../utils/withBase";
+import "../styles/papyrus.css";
+
+interface NavItem {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  siteTitle?: string;
+  headerTitle?: string;
+  brandTitle?: string;
+  brandMark?: "twinkle" | "terminal";
+  brandAriaLabel?: string;
+  showBrandTitle?: boolean;
+  defaultThemeProfile?: string;
+  defaultFontProfile?: string;
+  canonicalURL?: string;
+  ogImage?: string;
+  robots?: string;
+  googleVerification?: string;
+  nav?: NavItem[];
+  footerLinks?: NavItem[];
+  socialLinks?: Array<{ href: string; label: string; icon?: string }>;
+  rssHref?: string;
+  poweredBy?: boolean;
+  searchHref?: string;
+  features?: PapyrusFeatureConfig;
+}
+
+const {
+  title,
+  description = "",
+  siteTitle = title,
+  headerTitle,
+  brandTitle,
+  brandMark,
+  brandAriaLabel,
+  showBrandTitle,
+  defaultThemeProfile = "gruvbox",
+  defaultFontProfile = "readable",
+  canonicalURL,
+  ogImage,
+  robots,
+  googleVerification,
+  nav = [],
+  footerLinks = [],
+  socialLinks = [],
+  rssHref = "/rss.xml",
+  poweredBy = true,
+  searchHref = "/search/",
+  features,
+} = Astro.props;
+
+const pageTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
+const resolvedFeatures = resolvePapyrusFeatures({
+  poweredBy,
+  ...features,
+});
+const resolvedSearchHref = resolvedFeatures.search ? searchHref : undefined;
+const resolvedRssHref = resolvedFeatures.rss ? rssHref : undefined;
+const showHeader = resolvedFeatures.header;
+const showFooter = resolvedFeatures.footer;
+const resolvedBrandMark = brandMark ?? (headerTitle ? "terminal" : "twinkle");
+const resolvedBrandTitle = brandTitle ?? headerTitle ?? siteTitle;
+const resolvedShowBrandTitle = showBrandTitle ?? !headerTitle;
+const resolvedCanonicalURL = canonicalURL ? new URL(withBase(canonicalURL), Astro.site ?? Astro.url).href : undefined;
+const resolvedOgImage = ogImage ? new URL(getAssetPath(ogImage), Astro.site ?? Astro.url).href : undefined;
+const resolvedPageUrl = resolvedCanonicalURL ?? new URL(withBase(stripBase(Astro.url.pathname)), Astro.site ?? Astro.url).href;
+const resolvedNav = nav.map(item => ({ ...item, href: withBase(item.href) }));
+const resolvedFooterLinks = footerLinks.map(item => ({ ...item, href: withBase(item.href) }));
+const resolvedSocialLinks = socialLinks.map(item => ({ ...item, href: withBase(item.href) }));
+const headerHomeHref = withBase("/");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    {robots && <meta name="robots" content={robots} />}
+    {googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#FCFCFD" />
+    <link rel="icon" href={getAssetPath("/favicon.svg")} type="image/svg+xml" />
+    <link rel="manifest" href={getAssetPath("/site.webmanifest")} />
+    <link rel="apple-touch-icon" href={getAssetPath("/apple-touch-icon.png")} />
+    {resolvedCanonicalURL && <link rel="canonical" href={resolvedCanonicalURL} />}
+    {resolvedRssHref && <link rel="alternate" type="application/rss+xml" title={`${siteTitle} RSS`} href={new URL(withBase(resolvedRssHref), Astro.site ?? Astro.url).href} />}
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={siteTitle} />
+    <meta property="og:url" content={resolvedPageUrl} />
+    {description && <meta property="og:description" content={description} />}
+    {resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+    <meta name="twitter:card" content={resolvedOgImage ? "summary_large_image" : "summary"} />
+    <meta name="twitter:title" content={pageTitle} />
+    {description && <meta name="twitter:description" content={description} />}
+    {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
+    <title>{pageTitle}</title>
+    <PapyrusThemeProvider defaultThemeProfile={defaultThemeProfile} defaultFontProfile={defaultFontProfile} />
+    <ClientRouter />
+  </head>
+  <body>
+    <div class="papyrus-shell">
+      {showHeader && <PapyrusHeader title={headerTitle} brandTitle={resolvedBrandTitle} brandMark={resolvedBrandMark} brandAriaLabel={brandAriaLabel} showBrandTitle={resolvedShowBrandTitle} homeHref={headerHomeHref} nav={resolvedNav} searchHref={resolvedSearchHref ? withBase(resolvedSearchHref) : undefined} />}
+      <main id="top" class="papyrus-main">
+        <slot />
+      </main>
+      {showFooter && <PapyrusFooter title={siteTitle} links={resolvedFooterLinks} socialLinks={resolvedSocialLinks} rssHref={resolvedRssHref ? withBase(resolvedRssHref) : undefined} poweredBy={resolvedFeatures.poweredBy} themeControls={resolvedFeatures.themeControls} />}
+    </div>
+    {showHeader && resolvedFeatures.scrollHeader && <script>
+      let lastScrollY = window.scrollY;
+      let headerScrollController: AbortController | undefined;
+
+      function bindHeaderScroll() {
+        headerScrollController?.abort();
+        headerScrollController = new AbortController();
+        const header = document.querySelector<HTMLElement>("[data-papyrus-header]");
+        if (!header) return;
+
+        window.addEventListener("scroll", () => {
+          const currentScrollY = window.scrollY;
+          const movingDown = currentScrollY > lastScrollY && currentScrollY > 80;
+          header.dataset.papyrusHidden = movingDown ? "true" : "false";
+          lastScrollY = currentScrollY;
+        }, { passive: true, signal: headerScrollController.signal });
+      }
+
+      bindHeaderScroll();
+      document.addEventListener("astro:page-load", bindHeaderScroll);
+    </script>}
+  </body>
+</html>

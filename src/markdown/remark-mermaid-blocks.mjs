@@ -11,7 +11,7 @@ export default function remarkMermaidBlocks() {
       if (node?.type === "code" && node.lang === "mermaid" && parent && typeof index === "number") {
         parent.children[index] = {
           type: "html",
-          value: `<div class="paper-mermaid" role="img">\n${escapeHtml(node.value ?? "")}\n</div>`,
+          value: `<div class="papyrus-mermaid" role="img">\n${escapeHtml(node.value ?? "")}\n</div>`,
         };
         return;
       }

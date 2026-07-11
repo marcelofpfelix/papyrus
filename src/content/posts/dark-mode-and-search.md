@@ -1,6 +1,6 @@
 ---
 title: "Dark mode and search in Papyrus"
-description: "The theme keeps a Pure-like neutral background, then adds a small Paper-style search flow."
+description: "The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow."
 slug: dark-mode-and-search
 pubDatetime: 2026-06-30T11:15:00.000Z
 license: CC-BY-4.0
@@ -25,16 +25,16 @@ The public Papyrus site builds a Pagefind index from generated static HTML. A sm
 
 ```astro
 ---
-import { PaperBaseLayout } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Search"
   description="Static search for posts, tags, and archive entries."
   searchHref="/search/"
 >
   <p>The header search icon opens the site-owned search page.</p>
-</PaperBaseLayout>
+</PapyrusBaseLayout>
 ```
 
 That is the important boundary. The icon and layout affordance belong to the theme. The index strategy belongs to the site.

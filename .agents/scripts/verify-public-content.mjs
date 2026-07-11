@@ -106,8 +106,8 @@ for (const file of files) {
 assert(failures.length === 0, `Public content fallback text found:\n${failures.join("\n")}`);
 
 const llmsFull = await readFile("public/llms-full.txt", "utf8");
-assert(llmsFull.includes('<PaperPostList posts={posts} view="list" />'), "llms-full.txt should preserve post-list Astro examples");
-assert(llmsFull.includes('<PaperBaseLayout title="My site" description="Custom page.">'), "llms-full.txt should preserve layout Astro examples");
+assert(llmsFull.includes('<PapyrusPostList posts={posts} view="list" />'), "llms-full.txt should preserve post-list Astro examples");
+assert(llmsFull.includes('<PapyrusBaseLayout title="My site" description="Custom page.">'), "llms-full.txt should preserve layout Astro examples");
 assert(llmsFull.includes("publishedPosts(await getCollection(\"posts\"))") && llmsFull.includes("The public posts page uses the standard list view"), "llms-full.txt should document the public post-list helper");
 assert(llmsFull.includes("Use folders for organization, inherited tags, and section labels"), "llms-full.txt should document folder-aware post tags");
 assert(!llmsFull.includes("[user.email_parts]"), "llms-full.txt should not document the unsupported user.email_parts TOML shape");
@@ -152,7 +152,7 @@ assert(publicDocsIndexHtml.includes("Feature references") && publicDocsIndexHtml
 assert(!publicDocsIndexHtml.includes(">Examples<") && !publicDocsIndexHtml.includes("feature examples stay in one"), "docs index should avoid generic Examples section wording");
 assert((publicDocsIndexHtml.match(/href="\/docs\/">Getting started<\/a>/g) ?? []).length === 1, "docs index should link the Getting started section once, not duplicate it as a child page");
 assert(publicDocsIndexHtml.includes("/posts/ai-first-metadata-demo/") && publicDocsIndexHtml.includes("AI-first metadata"), "docs index should include the AI metadata post-as-doc guide");
-assert(publicDocsIndexHtml.includes("data-paper-theme=&quot;custom&quot;") && publicDocsIndexHtml.includes("--paper-code-bg") && publicDocsIndexHtml.includes("pnpm papyrus-theme validate"), "docs index should show a complete public theme profile example");
+assert(publicDocsIndexHtml.includes("data-papyrus-theme=&quot;custom&quot;") && publicDocsIndexHtml.includes("--papyrus-code-bg") && publicDocsIndexHtml.includes("pnpm papyrus-theme validate"), "docs index should show a complete public theme profile example");
 assert(!publicDocsIndexHtml.includes('{ ... }'), "docs index should not use placeholder CSS theme examples");
 assert(publicDocsIndexHtml.includes("Post layout reference for published dates"), "docs index should describe the metadata route as a reference");
 assert(!publicDocsIndexHtml.includes("Post layout example for published dates"), "docs index should not use scaffold-style metadata wording");
@@ -161,7 +161,7 @@ assert(!publicDocsIndexHtml.includes("TOML and Astro content collection examples
 
 const pluginFeaturesHtml = await readFile("dist/docs/features/index.html", "utf8");
 assert(pluginFeaturesHtml.includes("@papyrus/plugin-giscus") && pluginFeaturesHtml.includes("@papyrus/plugin-diagrams"), "features docs should use Papyrus-owned plugin package names");
-assert(!pluginFeaturesHtml.includes("@example/paper-giscus") && !pluginFeaturesHtml.includes("@example/paper-diagrams"), "features docs should not show placeholder plugin package names");
+assert(!pluginFeaturesHtml.includes("@example/papyrus-giscus") && !pluginFeaturesHtml.includes("@example/papyrus-diagrams"), "features docs should not show placeholder plugin package names");
 
 const codeDemoHtml = await readFile("dist/docs/code-demo/index.html", "utf8");
 assert(codeDemoHtml.includes('alt="Profile fixture avatar"'), "Markdown code guide should use fixture-style image alt text");
@@ -200,7 +200,7 @@ assert(!metadataDemoHtml.includes('rel="canonical" href="https://example.com'), 
 assert(metadataDemoHtml.includes('rel="canonical" href="https://papyrus.marcelofelix.com/metadata-demo/"'), "metadata demo should publish its own canonical URL");
 assert(metadataDemoHtml.includes("Post layout reference for published date, updated date, reading time, and tags."), "metadata demo should use reference-style public description");
 assert(!metadataDemoHtml.includes("Post layout example with published date"), "metadata demo should not use scaffold-style example description");
-const metadataFooter = metadataDemoHtml.match(/<footer class="paper-post-footer">([\s\S]*?)<\/footer>/)?.[1] ?? "";
+const metadataFooter = metadataDemoHtml.match(/<footer class="papyrus-post-footer">([\s\S]*?)<\/footer>/)?.[1] ?? "";
 assert(metadataFooter.includes("Jul 01") && metadataFooter.includes("Jul 03"), "post detail footer should show both created and updated dates inside the post");
 assert(metadataFooter.includes("M16 2v4") && metadataFooter.includes("M21 12a9 9 0 0 1-9 9"), "post detail footer should use calendar and refresh icons for created/updated dates");
 
@@ -216,7 +216,7 @@ assert(installPostHtml.includes("Publishing with Papyrus") && installPostHtml.in
 assert(!installPostHtml.includes("First post in a Papyrus site."), "install guide post example should avoid first-post scaffold wording");
 
 const searchPostHtml = await readFile("dist/posts/dark-mode-and-search/index.html", "utf8");
-assert(searchPostHtml.includes("PaperBaseLayout") && searchPostHtml.includes('title="Search"'), "search guide should show a complete PaperBaseLayout search route example");
+assert(searchPostHtml.includes("PapyrusBaseLayout") && searchPostHtml.includes('title="Search"'), "search guide should show a complete PapyrusBaseLayout search route example");
 assert(searchPostHtml.includes("Static search for posts, tags, and archive entries.") && searchPostHtml.includes("searchHref") && searchPostHtml.includes("/search/"), "search guide should document searchHref with required layout props");
 assert(searchPostHtml.includes("The public Papyrus site builds a Pagefind index"), "search guide should describe the package site's search implementation directly");
 assert(!searchPostHtml.includes("Search example") && !searchPostHtml.includes("The demo site builds"), "search guide should not use placeholder or demo-site route titles");
@@ -285,7 +285,7 @@ assert(!searchHtml.includes('aria-label="Categories"') && !searchHtml.includes("
 const markdownGuideItem = postsIndexHtml.match(/<li[^>]*>\s*<a href="\/posts\/markdown-feature-sample\/">([\s\S]*?)<\/a>\s*<\/li>/)?.[1] ?? "";
 assert(markdownGuideItem.includes("Jun 30") && !markdownGuideItem.includes("Jun 29"), "posts index should show only the updated date for the updated Markdown guide");
 assert(markdownGuideItem.includes("M21 12a9 9 0 0 1-9 9") && !markdownGuideItem.includes("M16 2v4"), "posts index updated date should use the refresh icon instead of the calendar icon");
-assert((await readFile("src/styles/paper.css", "utf8")).includes(".paper-post-recently-updated svg"), "recently updated list styling should target the icon, not the whole date item");
+assert((await readFile("src/styles/papyrus.css", "utf8")).includes(".papyrus-post-recently-updated svg"), "recently updated list styling should target the icon, not the whole date item");
 assert(!postsIndexHtml.includes("Folder tags for nested posts"), "hidden folder-tags demo should stay out of public posts index");
 assert(!timelineHtml.includes("Folder tags for nested posts"), "hidden folder-tags demo should stay out of public timeline");
 assert(!astroTagHtml.includes("Folder tags for nested posts"), "hidden folder-tags demo should stay out of public tag pages");

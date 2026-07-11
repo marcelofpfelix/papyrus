@@ -1,15 +1,15 @@
 ---
-import PaperPostLayout from "../layouts/PaperPostLayout.astro";
+import PapyrusPostLayout from "../layouts/PapyrusPostLayout.astro";
 import { demoNav, demoSocialLinks } from "../data/demo-nav";
 import { readingTime } from "../utils/posts";
 
 const body = [
-  "Use this route to check how PaperPostLayout presents a published date, an updated date, reading time, and tags when a post has changed after publication.",
+  "Use this route to check how PapyrusPostLayout presents a published date, an updated date, reading time, and tags when a post has changed after publication.",
   "A consuming site gets the same footer behavior by passing pubDatetime, modDatetime, tags, and readingTime to the post layout.",
 ];
 ---
 
-<PaperPostLayout
+<PapyrusPostLayout
   title="Post metadata display"
   description="Post layout reference for published date, updated date, reading time, and tags."
   siteTitle="papyrus"
@@ -23,4 +23,4 @@ const body = [
   features={{ sourceActions: false, share: false, postStats: false, adjacentPosts: false }}
 >
   {body.map((paragraph) => <p>{paragraph}</p>)}
-</PaperPostLayout>
+</PapyrusPostLayout>

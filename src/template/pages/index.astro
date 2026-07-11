@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { PaperBaseLayout, PaperPostList, PaperProjectList } from "../../components";
+import { PapyrusBaseLayout, PapyrusPostList, PapyrusProjectList } from "../../components";
 import { publishedPosts, sortPostsWithPinned } from "../../utils";
 import { getTemplateSite } from "../site";
 
@@ -9,19 +9,19 @@ const posts = sortPostsWithPinned(publishedPosts(await getCollection("posts"))).
 const projects = site.projects.slice(0, 2);
 ---
 
-<PaperBaseLayout title={site.title} description={site.description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
-  <section class="paper-hero">
+<PapyrusBaseLayout title={site.title} description={site.description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
+  <section class="papyrus-hero">
     <h1>{site.title}</h1>
-    <p class="paper-description">{site.description}</p>
+    <p class="papyrus-description">{site.description}</p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Posts</h2>
-    <PaperPostList posts={posts} showTags={site.postCard.tags} showReadTime={site.postCard.readTime} />
+    <PapyrusPostList posts={posts} showTags={site.postCard.tags} showReadTime={site.postCard.readTime} />
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Projects</h2>
-    <PaperProjectList projects={projects} />
+    <PapyrusProjectList projects={projects} />
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>

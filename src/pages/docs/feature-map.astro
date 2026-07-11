@@ -1,5 +1,5 @@
 ---
-import { PaperBaseLayout, PaperContentIndex, PaperSectionMenu } from "../../components";
+import { PapyrusBaseLayout, PapyrusContentIndex, PapyrusSectionMenu } from "../../components";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
 
 
@@ -82,28 +82,28 @@ const features = [
 ];
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Feature map"
   description="Route-by-route guide to public Papyrus features."
   siteTitle="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <PaperSectionMenu sections={sections} />
+  <PapyrusSectionMenu sections={sections} />
 
-  <section class="paper-hero">
+  <section class="papyrus-hero">
     <h1>Feature map</h1>
-    <p class="paper-description">Every public feature has a route that shows how a consuming site can use it. Start here when exploring Papyrus.</p>
+    <p class="papyrus-description">Every public feature has a route that shows how a consuming site can use it. Start here when exploring Papyrus.</p>
   </section>
 
-  <section id="feature-map" class="paper-section">
+  <section id="feature-map" class="papyrus-section">
     <h2>Feature map</h2>
-    <PaperContentIndex items={features} />
+    <PapyrusContentIndex items={features} />
   </section>
 
-  <section id="how-to-use-it" class="paper-section">
+  <section id="how-to-use-it" class="papyrus-section">
     <h2>How to use it</h2>
     <p>Use this map as an orientation page when adding Papyrus to another Astro site. Each linked route shows the content, component, or generated artifact in context.</p>
     <p>The public Papyrus site focuses on reusable routes, content patterns, and generated artifacts. Repository-only implementation notes stay outside the visitor-facing docs.</p>
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>

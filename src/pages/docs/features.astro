@@ -1,11 +1,11 @@
 ---
-import { PaperBaseLayout, PaperLinkPreview, PaperPluginList } from "../../components";
+import { PapyrusBaseLayout, PapyrusLinkPreview, PapyrusPluginList } from "../../components";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
-import { definePaperPlugin, resolvePaperPluginConfig } from "../../utils";
+import { definePapyrusPlugin, resolvePapyrusPluginConfig } from "../../utils";
 
 
 const baseExample = `---
-import { PaperBaseLayout } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
 
 const features = {
   header: true,
@@ -18,12 +18,12 @@ const features = {
 };
 ---
 
-<PaperBaseLayout title="Minimal page" features={features}>
+<PapyrusBaseLayout title="Minimal page" features={features}>
   <p>No search icon and no RSS icon on this page.</p>
-</PaperBaseLayout>`;
+</PapyrusBaseLayout>`;
 
 const postExample = `---
-import { PaperPostLayout } from "astro-theme-papyrus/components";
+import { PapyrusPostLayout } from "astro-theme-papyrus/components";
 
 const features = {
   share: false,
@@ -38,22 +38,22 @@ const features = {
 };
 ---
 
-<PaperPostLayout title="Minimal post" siteTitle="My site" features={features}>
+<PapyrusPostLayout title="Minimal post" siteTitle="My site" features={features}>
   <p>Rendered without share, TOC, source actions, stats, or adjacent links.</p>
-</PaperPostLayout>`;
+</PapyrusPostLayout>`;
 
-const defaultsExample = `import { defaultPaperFeatures, resolvePaperFeatures } from "astro-theme-papyrus/utils";
+const defaultsExample = `import { defaultPapyrusFeatures, resolvePapyrusFeatures } from "astro-theme-papyrus/utils";
 
-const siteFeatures = resolvePaperFeatures({
+const siteFeatures = resolvePapyrusFeatures({
   rss: false,
   sourceActions: false,
 });`;
 
 const commentsExample = `---
-import PaperGiscusComments from "astro-theme-papyrus/PaperGiscusComments.astro";
+import PapyrusGiscusComments from "astro-theme-papyrus/PapyrusGiscusComments.astro";
 ---
 
-<PaperGiscusComments
+<PapyrusGiscusComments
   enabled={import.meta.env.PUBLIC_COMMENTS_ENABLED === "true"}
   repo="owner/repo"
   repoId="R_kgD..."
@@ -61,10 +61,10 @@ import PaperGiscusComments from "astro-theme-papyrus/PaperGiscusComments.astro";
   categoryId="DIC_kwD..."
 />`;
 
-const pluginExample = `import { definePaperPlugin, resolvePaperPluginConfig } from "astro-theme-papyrus/utils";
+const pluginExample = `import { definePapyrusPlugin, resolvePapyrusPluginConfig } from "astro-theme-papyrus/utils";
 
-const commentsPlugin = definePaperPlugin({
-  name: "paper-giscus",
+const commentsPlugin = definePapyrusPlugin({
+  name: "papyrus-giscus",
   description: "Site-owned comments adapter using Giscus.",
   packageName: "@papyrus/plugin-giscus",
   featureDefaults: { postStats: true },
@@ -75,13 +75,13 @@ const commentsPlugin = definePaperPlugin({
   ],
 });
 
-const config = resolvePaperPluginConfig([commentsPlugin], {
+const config = resolvePapyrusPluginConfig([commentsPlugin], {
   rss: false,
 });`;
 
 const demoPlugins = [
-  definePaperPlugin({
-    name: "paper-giscus",
+  definePapyrusPlugin({
+    name: "papyrus-giscus",
     description: "Site-owned comments adapter using Giscus.",
     packageName: "@papyrus/plugin-giscus",
     docsUrl: "/docs/features/#plugin-contract",
@@ -92,8 +92,8 @@ const demoPlugins = [
       { kind: "route", name: "comment-count endpoint", description: "optional site route for remote stats" },
     ],
   }),
-  definePaperPlugin({
-    name: "paper-diagrams",
+  definePapyrusPlugin({
+    name: "papyrus-diagrams",
     description: "Optional diagram renderers for PlantUML or Excalidraw once a renderer strategy is chosen.",
     packageName: "@papyrus/plugin-diagrams",
     docsUrl: "/docs/features/#plugin-contract",
@@ -105,91 +105,91 @@ const demoPlugins = [
   }),
 ];
 
-const demoPluginConfig = resolvePaperPluginConfig(demoPlugins, {
+const demoPluginConfig = resolvePapyrusPluginConfig(demoPlugins, {
   rss: false,
 });
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Feature config"
   description="Grouped feature toggles for papyrus layouts."
   siteTitle="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <section class="paper-hero">
+  <section class="papyrus-hero">
     <h1>Feature config</h1>
-    <p class="paper-description">Use one typed config object to disable optional layout and post features without copying theme components.</p>
+    <p class="papyrus-description">Use one typed config object to disable optional layout and post features without copying theme components.</p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Base layout</h2>
     <pre><code>{baseExample}</code></pre>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Post layout</h2>
     <pre><code>{postExample}</code></pre>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Defaults</h2>
     <pre><code>{defaultsExample}</code></pre>
     <p>Existing explicit props still work. The config object is for reusable site defaults and per-page overrides.</p>
   </section>
 
-  <section id="comments" class="paper-section">
+  <section id="comments" class="papyrus-section">
     <h2>Comments</h2>
     <p>Default comment choice: <code>giscus</code>. Comments stay optional and site-owned: consuming sites pass their public GitHub Discussions repo, category, and IDs, while this route renders the component in disabled mode so the package site stays static and credential-free.</p>
     <pre><code>{commentsExample}</code></pre>
-    <p>Post stats are separate from comments. Use static fixture counts for documentation posts, or <code>PaperRemotePostStats.astro</code> when a site has a real stats endpoint.</p>
+    <p>Post stats are separate from comments. Use static fixture counts for documentation posts, or <code>PapyrusRemotePostStats.astro</code> when a site has a real stats endpoint.</p>
   </section>
 
-  <section id="seo-social-metadata" class="paper-section">
+  <section id="seo-social-metadata" class="papyrus-section">
     <h2>SEO and social metadata</h2>
     <p>Papyrus layouts emit the metadata a small public site normally needs: titles, descriptions, canonical URLs, Open Graph, Twitter cards, RSS discovery, and post JSON-LD. Public pages can be indexed by search engines, while hidden posts stay out of public discovery surfaces. Use explicit <code>robots</code> frontmatter when a direct page should emit directives such as <code>noindex, follow</code>. Shared links also get predictable preview titles, descriptions, URLs, and images because the social tags come from the same page data.</p>
   </section>
 
-  <section id="base-path" class="paper-section">
+  <section id="base-path" class="papyrus-section">
     <h2>Base path deploys</h2>
-    <p>Internal URLs in the shared layouts and list components go through <code>withBase()</code> and related helpers: <code>stripBase()</code>, <code>stripLocale()</code>, <code>getAssetPath()</code>, and <code>getRelativeLocaleUrl()</code>. This keeps navigation, post links, RSS links, favicon assets, covers, tags, archive links, adjacent posts, project cards, and 404 suggestions working when Astro is deployed under a subdirectory such as <code>/astro-paper</code>.</p>
+    <p>Internal URLs in the shared layouts and list components go through <code>withBase()</code> and related helpers: <code>stripBase()</code>, <code>stripLocale()</code>, <code>getAssetPath()</code>, and <code>getRelativeLocaleUrl()</code>. This keeps navigation, post links, RSS links, favicon assets, covers, tags, archive links, adjacent posts, project cards, and 404 suggestions working when Astro is deployed under a subdirectory such as <code>/astro-papyrus</code>.</p>
   </section>
 
-  <section id="google-site-verification" class="paper-section">
+  <section id="google-site-verification" class="papyrus-section">
     <h2>Google site verification</h2>
-    <p>The preferred site-owned configuration is <code>site.googleVerification</code>. Pass that value to <code>PaperBaseLayout</code> or <code>PaperPostLayout</code> as <code>googleVerification</code>, and the layout emits the <code>google-site-verification</code> meta tag only when the value is configured.</p>
+    <p>The preferred site-owned configuration is <code>site.googleVerification</code>. Pass that value to <code>PapyrusBaseLayout</code> or <code>PapyrusPostLayout</code> as <code>googleVerification</code>, and the layout emits the <code>google-site-verification</code> meta tag only when the value is configured.</p>
   </section>
 
-  <section id="sitemap-robots" class="paper-section">
+  <section id="sitemap-robots" class="papyrus-section">
     <h2>Sitemap and robots</h2>
     <p>Regenerate the sitemap during every build so new posts, tag pages, profile pages, project pages, and docs routes are included automatically. Papyrus includes a dynamic <code>robots.txt</code> route that reads the site URL, keeps crawl rules near the site config, and always points crawlers to the sitemap index. Hidden posts are intentionally excluded from the sitemap and public discovery surfaces; direct route robots directives stay explicit per post.</p>
   </section>
 
-  <section id="keyboard-accessibility" class="paper-section">
+  <section id="keyboard-accessibility" class="papyrus-section">
     <h2>Keyboard accessibility</h2>
     <p>Readers can navigate the public Papyrus site with a keyboard: header links, search entry points, theme controls, post actions, profile template controls, and footer links all expose focusable controls. Papyrus uses semantic landmarks, ordered headings, descriptive labels, decorative icons marked with <code>aria-hidden</code>, meaningful image alt text where images carry content, and ARIA attributes only where they clarify interactive controls.</p>
   </section>
 
-  <section id="search-tags" class="paper-section">
+  <section id="search-tags" class="papyrus-section">
     <h2>Search and tags</h2>
     <p>Public posts can be found through the Pagefind search route, tag pages, and optional per-tag RSS feeds. The search page accepts tag-prefilled links, while tag pages such as <code>/tag/theme/</code> give readers a direct archive for one topic. Sites that want categories can model them as explicit tags or add site-owned facets without changing Papyrus post components.</p>
   </section>
 
-  <section id="plugin-contract" class="paper-section">
+  <section id="plugin-contract" class="papyrus-section">
     <h2>Plugin contract</h2>
     <p>Community plugins stay small: they declare capabilities, optional feature defaults, and site-owned integration points. They do not mutate papyrus internals. Routes stay native Astro pages in the consuming app unless a plugin explicitly documents a route capability.</p>
     <pre><code>{pluginExample}</code></pre>
-    <PaperPluginList plugins={demoPlugins} />
+    <PapyrusPluginList plugins={demoPlugins} />
     <p>The resolved plugin config disables RSS and registers {demoPluginConfig.capabilities.length} plugin capabilities.</p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Related guide</h2>
-    <PaperLinkPreview
+    <PapyrusLinkPreview
       href="/docs/code-demo/"
       title="Markdown code guide"
       description="The Markdown guide uses enabled rendering features: Shiki, alerts, diagrams, tasks, tables, artifacts, and zoom."
       site="papyrus docs"
     />
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>

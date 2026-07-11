@@ -1,0 +1,90 @@
+<script>
+  function setActionButtonState(button: HTMLButtonElement, label: string, restore = "Copy code") {
+    button.dataset.state = label.toLowerCase().replace(/\s+/g, "-");
+    button.setAttribute("aria-label", label);
+    const labelElement = button.querySelector<HTMLElement>(".papyrus-button-label");
+    if (labelElement) labelElement.textContent = label;
+    window.setTimeout(() => {
+      button.dataset.state = "";
+      button.setAttribute("aria-label", restore);
+      if (labelElement) labelElement.textContent = restore;
+    }, 1600);
+  }
+
+  async function writeActionClipboard(text: string) {
+    if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return "copied";
+      } catch {
+        // Fall through to prompt fallback where the caller needs it.
+      }
+    }
+
+    return "unavailable";
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("[data-papyrus-share]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const url = window.location.href;
+      const title = document.title;
+      const description = document.querySelector<HTMLMetaElement>('meta[name="description"]')?.content?.trim();
+      const shareData: ShareData = {
+        title,
+        url,
+      };
+      if (description) shareData.text = description;
+
+      if (navigator.share && (!navigator.canShare || navigator.canShare(shareData))) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (error) {
+          if (error instanceof DOMException && error.name === "AbortError") return;
+        }
+      }
+
+      const result = await writeActionClipboard(url);
+      if (result === "unavailable") window.prompt("Copy link", url);
+      setActionButtonState(button, result === "copied" ? "Copied" : "Share", "Share");
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>("[data-papyrus-copy-source]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const sourceUrl = button.dataset.papyrusCopySource;
+      if (!sourceUrl) return;
+
+      try {
+        const response = await fetch(sourceUrl);
+        if (!response.ok) throw new Error(`Could not load ${sourceUrl}`);
+        const source = await response.text();
+        const result = await writeActionClipboard(source);
+        setActionButtonState(button, result === "copied" ? "Copied" : "Copy", "Copy");
+      } catch {
+        setActionButtonState(button, "Unavailable", "Copy");
+      }
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>("[data-papyrus-copy-source-link]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const sourceUrl = button.dataset.papyrusCopySourceLink;
+      if (!sourceUrl) return;
+
+      const result = await writeActionClipboard(sourceUrl);
+      if (result === "unavailable") window.prompt("Copy source link", sourceUrl);
+      setActionButtonState(button, result === "copied" ? "Copied" : "Source", "Source");
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>("[data-papyrus-copy-citation]").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const url = button.dataset.papyrusCopyCitation ?? window.location.href;
+      const pageTitle = button.dataset.papyrusTitle ?? document.title;
+      const citation = `${pageTitle}. ${url}`;
+      const result = await writeActionClipboard(citation);
+      setActionButtonState(button, result === "copied" ? "Title + link copied" : "Copy title + link", "Copy title + link");
+    });
+  });
+</script>

@@ -1,4 +1,4 @@
-import type { PaperCvLink } from "./cv";
+import type { PapyrusCvLink } from "./cv";
 
 const icons: Record<string, string> = {
   award: `<path d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path><path d="m9 14-1 7 4-2 4 2-1-7" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>`,
@@ -30,7 +30,7 @@ const icons: Record<string, string> = {
   version: `<path d="M4 7h10M4 17h10M17 4l3 3-3 3M20 7h-6M7 14l-3 3 3 3M4 17h6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>`,
 };
 
-function inferIconName(link: Pick<PaperCvLink, "href" | "label" | "icon">): string {
+function inferIconName(link: Pick<PapyrusCvLink, "href" | "label" | "icon">): string {
   const value = `${link.icon ?? ""} ${link.label} ${link.href ?? ""}`.toLowerCase();
 
   if (value.includes("linkedin")) return "linkedin";
@@ -41,7 +41,7 @@ function inferIconName(link: Pick<PaperCvLink, "href" | "label" | "icon">): stri
   return "link";
 }
 
-export function cvLinkIcon(link: Pick<PaperCvLink, "href" | "label" | "icon">): string {
+export function cvLinkIcon(link: Pick<PapyrusCvLink, "href" | "label" | "icon">): string {
   return cvIconSvg(inferIconName(link));
 }
 
