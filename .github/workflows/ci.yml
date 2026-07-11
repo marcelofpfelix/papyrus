@@ -47,3 +47,4 @@ jobs:
           pnpm run verify:markdown
           pnpm run verify:pure-parity
           pnpm run verify:public-content
+          pnpm run verify:release

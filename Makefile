@@ -6,7 +6,7 @@ PAGES_PROJECT ?= papyrus
 DOCKER_IMAGE ?= papyrus-demo
 DOCKER_PORT ?= 4327
 
-.PHONY: install dev dev-stop build preview serve check check-links audit-status \
+.PHONY: install dev dev-stop build preview serve pre check check-links audit-status \
 	llms ai-indexes ai-validate rss-tags theme compress-images date-check \
 	date-touch docker-build docker-run docker-stop deploy-demo verify-%
 
@@ -27,6 +27,14 @@ dev-stop:
 
 build:
 	pnpm run build
+
+pre:
+	pnpm run precommit
+	pnpm run check
+	pnpm run verify:readme
+	pnpm run verify:docs
+	pnpm run verify:package
+	pnpm run verify:release
 
 preview serve: build
 	$(MAKE) dev-stop
