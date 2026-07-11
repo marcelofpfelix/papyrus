@@ -1,0 +1,29 @@
+[
+  {
+    "type": "cv",
+    "source": "/demo/users.toml",
+    "name": "Mira Lee",
+    "url": "https://papyrus.marcelofelix.com/profile/",
+    "roles": [
+      "Docs engineer",
+      "Frontend maintainer"
+    ],
+    "templates": [
+      "terminal",
+      "cards",
+      "timeline",
+      "a4-classic",
+      "a4-compact",
+      "jekyll-default"
+    ],
+    "sections": [
+      "about",
+      "experience",
+      "education",
+      "skills",
+      "interests"
+    ],
+    "href": "/profile/",
+    "id": "cv:mira-lee"
+  }
+]

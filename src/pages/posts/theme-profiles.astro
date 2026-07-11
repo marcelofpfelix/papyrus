@@ -1,0 +1,49 @@
+---
+import PaperPostLayout from "../../layouts/PaperPostLayout.astro";
+import { demoNav, demoSocialLinks } from "../../data/demo-nav";
+import { readingTime } from "../../utils/posts";
+
+const body = [
+  "Each theme profile defines a light token set and a dark token set. This site defaults to system mode, Gruvbox colors, and the readable font profile.",
+  "catppuccin: Catppuccin Latte and Mocha with lavender as the primary accent.",
+  "tokyo-night: Tokyo Night light and storm-like dark tokens.",
+  "kanagawa: Kanagawa Lotus and Wave tokens.",
+  "rose-pine: Rose Pine Dawn and main tokens.",
+  "everforest: Everforest light and dark tokens.",
+  "dracula: Dracula light and dark tokens.",
+  "gruvbox: Gruvbox light and dark tokens.",
+  "nord: Nord Snow Storm and Polar Night tokens.",
+  "pure: closer to Pure defaults.",
+  "Font profiles are independent from color profiles so a consuming site can change type without rewriting color tokens.",
+].join("\n\n");
+---
+
+<PaperPostLayout
+  title="Theme profiles"
+  description="Light/dark profiles, font profile switching, and token-driven colors."
+  siteTitle="papyrus"
+  pubDatetime="2026-06-30T10:00:00.000Z"
+  tags={["theme"]}
+  readingTime={readingTime(body)}
+  canonicalUrl="/posts/theme-profiles/"
+  nav={demoNav}
+  socialLinks={demoSocialLinks}
+>
+  <p>Each theme profile defines a light token set and a dark token set. This site defaults to system mode, Gruvbox colors, and the readable font profile.</p>
+
+  <h2>Profiles</h2>
+  <ul>
+    <li><code>catppuccin</code>: Catppuccin Latte and Mocha with lavender as the primary accent.</li>
+    <li><code>tokyo-night</code>: Tokyo Night light and storm-like dark tokens.</li>
+    <li><code>kanagawa</code>: Kanagawa Lotus and Wave tokens.</li>
+    <li><code>rose-pine</code>: Rosé Pine Dawn and main tokens.</li>
+    <li><code>everforest</code>: Everforest light and dark tokens.</li>
+    <li><code>dracula</code>: Dracula light and dark tokens.</li>
+    <li><code>gruvbox</code>: Gruvbox light and dark tokens.</li>
+    <li><code>nord</code>: Nord Snow Storm and Polar Night tokens.</li>
+    <li><code>pure</code>: closer to Pure defaults.</li>
+  </ul>
+
+  <h2>Fonts</h2>
+  <p>Font profiles are independent from color profiles so a consuming site can change type without rewriting color tokens.</p>
+</PaperPostLayout>

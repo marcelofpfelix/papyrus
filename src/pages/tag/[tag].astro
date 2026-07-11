@@ -1,0 +1,57 @@
+---
+import { PaperBaseLayout, PaperPostList } from "../../components";
+import { demoNav, demoSocialLinks } from "../../data/demo-nav";
+import { demoPosts } from "../../data/demo-posts";
+import { getAllTags, postsByTag, publishedPosts, routablePosts, tagSlug } from "../../utils/posts";
+import { withBase } from "../../utils/withBase";
+
+export function getStaticPaths() {
+  const posts = publishedPosts(demoPosts);
+  const routedTags = new Set([...getAllTags(routablePosts(demoPosts)), "ai", "code", "metadata"]);
+
+  return [...routedTags].toSorted((a, b) => a.localeCompare(b)).map(tag => ({
+    params: { tag: tagSlug(tag) },
+    props: {
+      posts: postsByTag(posts, tag),
+      tag,
+    },
+  }));
+}
+
+const { posts, tag } = Astro.props;
+---
+
+<PaperBaseLayout
+  title={`#${tag}`}
+  description={`Posts tagged ${tag} in the public Papyrus site.`}
+  siteTitle="papyrus"
+  nav={demoNav}
+  socialLinks={demoSocialLinks}
+>
+  <section class="paper-hero">
+    <p class="paper-post-back">
+      <a href={withBase("/tag/")}>
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M19 12H5"></path>
+          <path d="m12 19-7-7 7-7"></path>
+        </svg>
+        <span>Back</span>
+      </a>
+    </p>
+    <h1>#{tag}</h1>
+    <p class="paper-description">A generated tag page for posts labeled <strong>#{tag}</strong>. Use tag routes for focused reading paths, per-tag RSS feeds, and shareable topic archives.</p>
+  </section>
+
+  <section class="paper-section">
+    <h2>Tagged posts</h2>
+    {posts.length > 0 ? (
+      <PaperPostList posts={posts} showTags={false} showFirstTagWhenTagsHidden={false} />
+    ) : (
+      <div class="paper-search-empty">
+        <p>No public post list entries use this tag yet.</p>
+        <p>Tags can still exist for direct routes, hidden archive entries, per-tag RSS feeds, and future content. Use search archive mode when you want to inspect hidden fixtures.</p>
+        <p><a href={withBase(`/search/?archive=hidden&tag=${encodeURIComponent(tag)}`)}>Search hidden archive</a></p>
+      </div>
+    )}
+  </section>
+</PaperBaseLayout>

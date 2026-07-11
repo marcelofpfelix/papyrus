@@ -1,0 +1,50 @@
+---
+import { PaperBaseLayout, PaperGithubCard, PaperLinkPreview } from "../components";
+import { demoNav, demoSocialLinks } from "../data/demo-nav";
+
+---
+
+<PaperBaseLayout
+  title="About"
+  description="Compact about page pattern connecting an introduction, profile routes, project cards, and post indexes."
+  siteTitle="papyrus"
+  nav={demoNav}
+  socialLinks={demoSocialLinks}
+>
+  <section class="paper-hero">
+    <h1>About</h1>
+    <p class="paper-description">A compact about page can introduce the site owner, point readers to richer profile material, and keep the rest of the page focused on posts, projects, and documentation.</p>
+  </section>
+
+  <section class="paper-section">
+    <h2>Profile flow</h2>
+    <p>Use this section for the short human summary. Link to the full profile, timeline, and printable CV when readers need structured details instead of putting the entire resume on the about page.</p>
+    <PaperLinkPreview
+      href="/profile/"
+      title="Profile"
+      description="TOML-driven profile with resume, timeline, project, and printable CV views."
+      site="papyrus docs"
+    />
+  </section>
+
+  <section class="paper-section">
+    <h2>Project card</h2>
+    <PaperGithubCard repo="marcelofpfelix/papyrus" description="Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata." fetchMetadata={false} />
+  </section>
+
+  <section class="paper-section">
+    <h2>More posts</h2>
+    <PaperLinkPreview
+      href="/posts/"
+      title="Posts index"
+      description="Post index with pinned guides, tags, RSS, archive access, and a timeline link."
+      site="papyrus docs"
+    />
+    <PaperLinkPreview
+      href="/projects/"
+      title="Projects"
+      description="Dedicated project page with pinned cards and a GitHub repository preview."
+      site="papyrus docs"
+    />
+  </section>
+</PaperBaseLayout>

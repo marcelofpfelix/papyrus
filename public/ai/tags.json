@@ -1,0 +1,206 @@
+[
+  {
+    "id": "tag:ai",
+    "tag": "ai",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:ai-first-metadata-demo",
+        "slug": "ai-first-metadata-demo",
+        "title": "AI-first metadata",
+        "url": "https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/"
+      }
+    ]
+  },
+  {
+    "id": "tag:astro",
+    "tag": "astro",
+    "count": 3,
+    "posts": [
+      {
+        "id": "post:dark-mode-and-search",
+        "slug": "dark-mode-and-search",
+        "title": "Dark mode and search in Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/"
+      },
+      {
+        "id": "post:install-configure-papyrus",
+        "slug": "install-configure-papyrus",
+        "title": "Install and configure Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/"
+      },
+      {
+        "id": "post:papyrus-package-shape",
+        "slug": "papyrus-package-shape",
+        "title": "Papyrus package shape",
+        "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/"
+      }
+    ]
+  },
+  {
+    "id": "tag:authoring",
+    "tag": "authoring",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:markdown-feature-sample",
+        "slug": "markdown-feature-sample",
+        "title": "Markdown authoring guide",
+        "url": "https://papyrus.marcelofelix.com/posts/markdown-feature-sample/"
+      }
+    ]
+  },
+  {
+    "id": "tag:changelog",
+    "tag": "changelog",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:papyrus-package-shape",
+        "slug": "papyrus-package-shape",
+        "title": "Papyrus package shape",
+        "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/"
+      }
+    ]
+  },
+  {
+    "id": "tag:code",
+    "tag": "code",
+    "count": 0,
+    "posts": []
+  },
+  {
+    "id": "tag:custom",
+    "tag": "custom",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:markdown-feature-sample",
+        "slug": "markdown-feature-sample",
+        "title": "Markdown authoring guide",
+        "url": "https://papyrus.marcelofelix.com/posts/markdown-feature-sample/"
+      }
+    ]
+  },
+  {
+    "id": "tag:cv",
+    "tag": "cv",
+    "count": 0,
+    "posts": []
+  },
+  {
+    "id": "tag:dark-mode",
+    "tag": "dark-mode",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:dark-mode-and-search",
+        "slug": "dark-mode-and-search",
+        "title": "Dark mode and search in Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/"
+      }
+    ]
+  },
+  {
+    "id": "tag:data",
+    "tag": "data",
+    "count": 0,
+    "posts": []
+  },
+  {
+    "id": "tag:docs",
+    "tag": "docs",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:install-configure-papyrus",
+        "slug": "install-configure-papyrus",
+        "title": "Install and configure Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/"
+      }
+    ]
+  },
+  {
+    "id": "tag:markdown",
+    "tag": "markdown",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:markdown-feature-sample",
+        "slug": "markdown-feature-sample",
+        "title": "Markdown authoring guide",
+        "url": "https://papyrus.marcelofelix.com/posts/markdown-feature-sample/"
+      }
+    ]
+  },
+  {
+    "id": "tag:metadata",
+    "tag": "metadata",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:ai-first-metadata-demo",
+        "slug": "ai-first-metadata-demo",
+        "title": "AI-first metadata",
+        "url": "https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/"
+      }
+    ]
+  },
+  {
+    "id": "tag:papyrus",
+    "tag": "papyrus",
+    "count": 2,
+    "posts": [
+      {
+        "id": "post:install-configure-papyrus",
+        "slug": "install-configure-papyrus",
+        "title": "Install and configure Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/"
+      },
+      {
+        "id": "post:papyrus-package-shape",
+        "slug": "papyrus-package-shape",
+        "title": "Papyrus package shape",
+        "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/"
+      }
+    ]
+  },
+  {
+    "id": "tag:search",
+    "tag": "search",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:dark-mode-and-search",
+        "slug": "dark-mode-and-search",
+        "title": "Dark mode and search in Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/"
+      }
+    ]
+  },
+  {
+    "id": "tag:theme",
+    "tag": "theme",
+    "count": 2,
+    "posts": [
+      {
+        "id": "post:markdown-feature-sample",
+        "slug": "markdown-feature-sample",
+        "title": "Markdown authoring guide",
+        "url": "https://papyrus.marcelofelix.com/posts/markdown-feature-sample/"
+      },
+      {
+        "id": "post:papyrus-package-shape",
+        "slug": "papyrus-package-shape",
+        "title": "Papyrus package shape",
+        "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/"
+      }
+    ]
+  },
+  {
+    "id": "tag:ux",
+    "tag": "ux",
+    "count": 0,
+    "posts": []
+  }
+]

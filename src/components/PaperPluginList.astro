@@ -1,0 +1,26 @@
+---
+import type { PaperPluginDefinition } from "../utils/plugins";
+
+const { plugins } = Astro.props as {
+  plugins: PaperPluginDefinition[];
+};
+---
+
+<div class="paper-plugin-list">
+  {plugins.map((plugin) => (
+    <article class="paper-plugin-card">
+      <h3>
+        {plugin.docsUrl ? <a href={plugin.docsUrl}>{plugin.name}</a> : plugin.name}
+      </h3>
+      <p>{plugin.description}</p>
+      {plugin.packageName && <p class="paper-plugin-package"><code>{plugin.packageName}</code></p>}
+      {plugin.capabilities?.length ? (
+        <ul>
+          {plugin.capabilities.map((capability) => (
+            <li><strong>{capability.kind}</strong> {capability.name}{capability.description ? ` - ${capability.description}` : ""}</li>
+          ))}
+        </ul>
+      ) : null}
+    </article>
+  ))}
+</div>

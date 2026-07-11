@@ -1,0 +1,25 @@
+---
+import { getCollection } from "astro:content";
+import { PaperBaseLayout, PaperPostList } from "../../../components";
+import { getAllTags, postsByTag, publishedPosts, tagSlug } from "../../../utils";
+import { getTemplateSite } from "../../site";
+
+export async function getStaticPaths() {
+  const posts = publishedPosts(await getCollection("posts"));
+  return getAllTags(posts).map((tag) => ({
+    params: { tag: tagSlug(tag) },
+    props: { tag, posts: postsByTag(posts, tag) },
+  }));
+}
+
+const site = await getTemplateSite();
+const { tag, posts } = Astro.props;
+---
+
+<PaperBaseLayout title={`#${tag}`} description={`Posts tagged ${tag}.`} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+  <section class="paper-hero">
+    <h1>#{tag}</h1>
+    <p class="paper-description">{posts.length} post{posts.length === 1 ? "" : "s"} tagged with {tag}.</p>
+  </section>
+  <PaperPostList posts={posts} showTags={site.postCard.tags} showReadTime={site.postCard.readTime} />
+</PaperBaseLayout>

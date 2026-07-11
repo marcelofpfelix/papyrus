@@ -1,0 +1,28 @@
+:root[data-paper-theme="tokyo-night"] {
+  color-scheme: light;
+  --paper-bg: #e1e2e7;
+  --paper-fg: #3760bf;
+  --paper-muted: #6172b0;
+  --paper-panel: #d5d6db;
+  --paper-border: #b8c0e0;
+  --paper-accent: #2e7de9;
+  --paper-code-bg: #d5d6db;
+  --paper-code-fg: #3760bf;
+  --paper-theme-color: #e1e2e7;
+  --paper-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --paper-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+:root[data-paper-theme="tokyo-night"].dark,
+html[data-paper-theme="tokyo-night"].dark {
+  color-scheme: dark;
+  --paper-bg: #1a1b26;
+  --paper-fg: #c0caf5;
+  --paper-muted: #7aa2f7;
+  --paper-panel: #24283b;
+  --paper-border: #414868;
+  --paper-accent: #7aa2f7;
+  --paper-code-bg: #16161e;
+  --paper-code-fg: #c0caf5;
+  --paper-theme-color: #1a1b26;
+}

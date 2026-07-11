@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>papyrus</title>
+    <link>https://papyrus.marcelofelix.com/</link>
+    <description>Papyrus posts covering installation, docs, themes, profile/CV pages, RSS, search, and generated metadata.</description>
+    <atom:link href="https://papyrus.marcelofelix.com/rss.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Install and configure Papyrus</title>
+      <link>https://papyrus.marcelofelix.com/posts/install-configure-papyrus/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/install-configure-papyrus/</guid>
+      <description>A consuming-site guide for installing Papyrus, wiring layouts, posts, search, RSS, metadata, and profile data.</description>
+      <pubDate>Fri, 10 Jul 2026 09:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>AI-first metadata</title>
+      <link>https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/</guid>
+      <description>How Papyrus publishes llms.txt and llms-full.txt for agents and search tools.</description>
+      <pubDate>Wed, 01 Jul 2026 12:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Profile and CV</title>
+      <link>https://papyrus.marcelofelix.com/posts/cv-profile/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/cv-profile/</guid>
+      <description>Profile data, reusable CV components, timeline views, and print routes from one normalized source.</description>
+      <pubDate>Wed, 01 Jul 2026 10:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Dark mode and search in Papyrus</title>
+      <link>https://papyrus.marcelofelix.com/posts/dark-mode-and-search/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/dark-mode-and-search/</guid>
+      <description>The theme keeps a Pure-like neutral background, then adds a small Paper-style search flow.</description>
+      <pubDate>Tue, 30 Jun 2026 11:15:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Papyrus package shape</title>
+      <link>https://papyrus.marcelofelix.com/posts/papyrus-package-shape/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/papyrus-package-shape/</guid>
+      <description>Package-boundary guide showing how Papyrus keeps repeated blog UI in reusable theme exports.</description>
+      <pubDate>Tue, 30 Jun 2026 11:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Theme profiles</title>
+      <link>https://papyrus.marcelofelix.com/posts/theme-profiles/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/theme-profiles/</guid>
+      <description>Light/dark profiles, font profile switching, and token-driven colors.</description>
+      <pubDate>Tue, 30 Jun 2026 10:00:00 GMT</pubDate>
+    </item>
+    <item>
+      <title>Markdown authoring guide</title>
+      <link>https://papyrus.marcelofelix.com/posts/markdown-feature-sample/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/markdown-feature-sample/</guid>
+      <description>A practical guide showing how Papyrus renders Markdown, callouts, code, media, diagrams, and source actions.</description>
+      <pubDate>Mon, 29 Jun 2026 10:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,62 @@
+[
+  {
+    "tag": "ai",
+    "feed": "/rss/tags/ai.xml",
+    "count": 1
+  },
+  {
+    "tag": "astro",
+    "feed": "/rss/tags/astro.xml",
+    "count": 3
+  },
+  {
+    "tag": "authoring",
+    "feed": "/rss/tags/authoring.xml",
+    "count": 1
+  },
+  {
+    "tag": "changelog",
+    "feed": "/rss/tags/changelog.xml",
+    "count": 1
+  },
+  {
+    "tag": "custom",
+    "feed": "/rss/tags/custom.xml",
+    "count": 1
+  },
+  {
+    "tag": "dark-mode",
+    "feed": "/rss/tags/dark-mode.xml",
+    "count": 1
+  },
+  {
+    "tag": "docs",
+    "feed": "/rss/tags/docs.xml",
+    "count": 1
+  },
+  {
+    "tag": "markdown",
+    "feed": "/rss/tags/markdown.xml",
+    "count": 1
+  },
+  {
+    "tag": "metadata",
+    "feed": "/rss/tags/metadata.xml",
+    "count": 1
+  },
+  {
+    "tag": "papyrus",
+    "feed": "/rss/tags/papyrus.xml",
+    "count": 2
+  },
+  {
+    "tag": "search",
+    "feed": "/rss/tags/search.xml",
+    "count": 1
+  },
+  {
+    "tag": "theme",
+    "feed": "/rss/tags/theme.xml",
+    "count": 2
+  }
+]

@@ -1,0 +1,119 @@
+---
+import {
+  PaperBaseLayout,
+  PaperNoteList,
+  PaperPostList,
+  PaperProjectList,
+} from "../components";
+import { readFile } from "node:fs/promises";
+import { demoNav, demoSocialLinks } from "../data/demo-nav";
+import { demoPosts } from "../data/demo-posts";
+import { demoSite } from "../data/demo-site";
+import { pinRank, publishedPosts, sortPosts, sortPostsWithPinned } from "../utils/posts";
+import { withBase } from "../utils/withBase";
+
+const siteData = JSON.parse(await readFile("public/demo/site-data.json", "utf8")) as {
+  projects: Parameters<typeof PaperProjectList>[0]["projects"];
+  notes: Array<{
+    id: string;
+    text: string;
+    date?: string;
+    tags?: string[];
+  }>;
+};
+
+const demoNotes = siteData.notes.map((note) => ({
+  id: note.id,
+  data: {
+    text: note.text,
+    date: note.date,
+    tags: note.tags,
+  },
+}));
+
+const publicPosts = publishedPosts(demoPosts);
+const pinnedHomePosts = sortPostsWithPinned(publicPosts.filter((post) => pinRank(post) > 0));
+const latestHomePosts = sortPosts(publicPosts.filter((post) => pinRank(post) === 0)).slice(0, demoSite.homePostCount);
+const homePosts = [...pinnedHomePosts, ...latestHomePosts];
+const pinnedHomeProjects = siteData.projects.filter((project) => project.pinned);
+const latestHomeProjects = siteData.projects
+  .filter((project) => !project.pinned)
+  .slice(0, demoSite.homeProjectCount);
+const homeProjects = [...pinnedHomeProjects, ...latestHomeProjects];
+const homeDocs = [
+  {
+    title: "papyrus docs",
+    description: "Install guide, Markdown authoring, content model, profile/CV flow, and generated metadata.",
+    href: "/docs/",
+  },
+  {
+    title: "start here",
+    description: "Install and configure Papyrus as a reusable Astro theme package.",
+    href: "/posts/install-configure-papyrus/",
+  },
+  {
+    title: "feature map",
+    description: "See the demo routes and package features that Papyrus includes.",
+    href: "/docs/feature-map/",
+  },
+];
+const postListProps = {
+  showTags: demoSite.post_card.tags,
+  showReadTime: demoSite.post_card.read_time,
+  showFreshIndicators: demoSite.post_card.fresh_indicators,
+  showFreshIndicatorText: demoSite.post_card.fresh_indicator_text,
+  showUpdatedDateOnly: demoSite.post_card.updated_date_only,
+  showFirstTagWhenTagsHidden: !demoSite.post_card.tags,
+};
+---
+
+<PaperBaseLayout
+  title="papyrus"
+  description="Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata."
+  siteTitle="papyrus"
+  nav={demoNav}
+  socialLinks={demoSocialLinks}
+>
+  <section class="paper-hero">
+    <h1>papyrus</h1>
+    <p class="paper-description">A reusable Astro theme package for quiet blogs, docs, projects, and profile/CV pages. Keep content in your site, import Papyrus components, and publish a fast static site with search, RSS, tags, metadata, and print-ready profile routes.</p>
+    <p class="paper-home-more">
+      <a href={withBase("/about/")}>about me</a>
+    </p>
+  </section>
+
+  <section class="paper-section">
+    <h2>Posts</h2>
+    <PaperPostList posts={homePosts} {...postListProps} />
+    <p class="paper-section-more">
+      <a href={withBase("/posts/")}>more posts</a>
+    </p>
+  </section>
+
+  <section class="paper-section">
+    <h2>Projects</h2>
+    <PaperProjectList projects={homeProjects} />
+    <p class="paper-section-more">
+      <a href={withBase("/projects/")}>more projects</a>
+    </p>
+  </section>
+
+  <section class="paper-section">
+    <h2>Docs</h2>
+    <ul class="paper-post-list paper-post-list-list paper-doc-list">
+      {homeDocs.map(doc => (
+        <li>
+          <a href={withBase(doc.href)}>
+            <span class="paper-post-title">{doc.title}</span>
+            <span class="paper-post-description">{doc.description}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="paper-section">
+    <h2>Notes</h2>
+    <PaperNoteList notes={demoNotes} />
+  </section>
+</PaperBaseLayout>

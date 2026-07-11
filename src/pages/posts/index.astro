@@ -1,0 +1,79 @@
+---
+import { PaperBaseLayout, PaperPostList } from "../../components";
+import { demoNav, demoSocialLinks } from "../../data/demo-nav";
+import { demoPosts } from "../../data/demo-posts";
+import { demoSite } from "../../data/demo-site";
+import { hiddenPosts, publishedPosts, sortPostsWithPinned } from "../../utils/posts";
+import { withBase } from "../../utils/withBase";
+
+
+const posts = sortPostsWithPinned(publishedPosts(demoPosts));
+const archivedPosts = hiddenPosts(demoPosts);
+const visiblePosts = posts.slice(0, demoSite.postListLimit);
+const postListProps = {
+  showTags: demoSite.post_card.tags,
+  showReadTime: demoSite.post_card.read_time,
+  showFreshIndicators: demoSite.post_card.fresh_indicators,
+  showFreshIndicatorText: demoSite.post_card.fresh_indicator_text,
+  showUpdatedDateOnly: demoSite.post_card.updated_date_only,
+  showFirstTagWhenTagsHidden: !demoSite.post_card.tags,
+};
+
+function icon(name: string) {
+  const icons: Record<string, string> = {
+    archive: `<rect x="3" y="4" width="18" height="5" rx="1"></rect><path d="M5 9v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path>`,
+    clock: `<circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path>`,
+    rss: `<path d="M4 5a15 15 0 0 1 15 15"></path><path d="M4 11a9 9 0 0 1 9 9"></path><circle cx="5" cy="19" r="1"></circle>`,
+    tag: `<path d="M20.6 13.1 13 20.7a2 2 0 0 1-2.8 0L3.3 13.8a2 2 0 0 1-.6-1.4V5a2 2 0 0 1 2-2h7.4a2 2 0 0 1 1.4.6l7.1 7.1a1.9 1.9 0 0 1 0 2.4Z"></path><circle cx="7.5" cy="7.5" r=".5"></circle>`,
+  };
+
+  return icons[name] ?? "";
+}
+---
+
+<PaperBaseLayout
+  title="Posts"
+  description="Post index for Papyrus list, tag, archive, RSS, and timeline behavior."
+  siteTitle="papyrus"
+  nav={demoNav}
+  socialLinks={demoSocialLinks}
+>
+  <section class="paper-hero paper-posts-hero">
+    <h1 class="paper-heading-with-action">
+      <span>Posts</span>
+      <a class="paper-heading-icon-link" href={withBase("/rss.xml")} aria-label="RSS feed" title="RSS feed">
+        <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("rss")} />
+      </a>
+    </h1>
+    <p class="paper-description">A posts index that keeps homepage highlights separate from the full archive view.</p>
+    <p class="paper-actions">
+      <a href={withBase("/posts/timeline/")}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("clock")} />
+        Timeline
+      </a>
+      <a href={withBase("/tag/")}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("tag")} />
+        Tags
+      </a>
+      {
+        archivedPosts.length > 0 && (
+          <a href={withBase("/search/?archive=hidden")}>
+            <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("archive")} />
+            Archive
+          </a>
+        )
+      }
+    </p>
+  </section>
+
+  <section class="paper-section" data-posts-view="list">
+    <PaperPostList
+      posts={visiblePosts}
+      view="list"
+      {...postListProps}
+    />
+    <p class="paper-section-more">
+      <a href={withBase("/posts/timeline/")}>view all</a>
+    </p>
+  </section>
+</PaperBaseLayout>

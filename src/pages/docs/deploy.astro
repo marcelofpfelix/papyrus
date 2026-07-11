@@ -1,0 +1,50 @@
+---
+import { PaperBaseLayout } from "../../components";
+import { demoNav, demoSocialLinks } from "../../data/demo-nav";
+---
+
+<PaperBaseLayout
+  title="Deploy Papyrus"
+  description="Static hosting, build settings, metadata URLs, and base-path notes for a Papyrus site."
+  siteTitle="papyrus"
+  nav={demoNav}
+  socialLinks={demoSocialLinks}
+>
+  <section class="paper-hero">
+    <h1>Deploy Papyrus</h1>
+    <p class="paper-description">Papyrus builds to static Astro output, so a consuming site can publish the generated <code>dist</code> directory to any static host.</p>
+  </section>
+
+  <section class="paper-section">
+    <h2>Local preview</h2>
+    <p>Use the local development server while editing content, routes, and theme configuration. For a production-shaped preview, build first and serve the generated output.</p>
+    <pre class="paper-docs-raw"><code>pnpm install
+pnpm dev
+pnpm build
+pnpm preview</code></pre>
+  </section>
+
+  <section class="paper-section">
+    <h2>Static hosting</h2>
+    <p>The deployment artifact is the Astro <code>dist</code> directory. Cloudflare Pages, Netlify, Vercel static output, GitHub Pages, and any static file server can host it as long as the configured site URL matches the final domain.</p>
+    <ul>
+      <li>Set the production site URL before generating sitemap, robots, RSS, social metadata, and AI indexes.</li>
+      <li>Keep secret token lookup and host-specific deploy wrappers outside the reusable theme package.</li>
+      <li>Check <code>/robots.txt</code>, <code>/sitemap-index.xml</code>, <code>/rss.xml</code>, <code>/search/</code>, <code>/posts/</code>, and <code>/docs/</code> after publishing.</li>
+    </ul>
+  </section>
+
+  <section class="paper-section">
+    <h2>Build settings</h2>
+    <p>Most static hosts need only the package manager, build command, output directory, and production URL. Keep the URL in one environment variable so generated metadata agrees across sitemap, robots, RSS, social previews, search, and AI files.</p>
+    <pre class="paper-docs-raw"><code>package manager: pnpm
+build command: SITE_URL="https://example.test" pnpm build
+output directory: dist</code></pre>
+    <p>If the consuming site uses pnpm, keep <code>minimumReleaseAge</code> in <code>pnpm-workspace.yaml</code> so production builds do not pick up packages published only minutes ago.</p>
+  </section>
+
+  <section class="paper-section">
+    <h2>Subdirectory deploys</h2>
+    <p>When the site is published under a base path, route links go through Papyrus base-path helpers or Astro route helpers instead of hardcoded root-relative strings. Asset URLs use the same base-aware helper used by the layout. Configure the Astro <code>base</code> option in the consuming site, then keep internal links on helpers such as <code>withBase()</code> or <code>getRelativeLocaleUrl()</code>.</p>
+  </section>
+</PaperBaseLayout>

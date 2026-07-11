@@ -1,0 +1,15 @@
+---
+import { PaperBaseLayout, PaperNotFound } from "../../components";
+import { getTemplateSite } from "../site";
+
+const site = await getTemplateSite();
+const items = [
+  { title: "Posts", href: "/posts/", description: "Read the post index.", tags: ["posts"] },
+  { title: "Projects", href: "/projects/", description: "Open the project cards.", tags: ["projects"] },
+  { title: "Profile", href: "/profile/", description: "Open the profile page.", tags: ["profile"] },
+];
+---
+
+<PaperBaseLayout title="Not found" description="Find a nearby page." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+  <PaperNotFound items={items} searchHref="/posts/" />
+</PaperBaseLayout>

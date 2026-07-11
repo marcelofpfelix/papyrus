@@ -1,0 +1,417 @@
+{
+  "generatedAt": "2026-07-10T21:28:29.901Z",
+  "nodes": [
+    {
+      "id": "post:ai-first-metadata-demo",
+      "type": "post",
+      "label": "AI-first metadata",
+      "url": "https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/",
+      "sourcePath": "src/content/posts/ai-first-demo.md",
+      "tags": [
+        "ai",
+        "metadata"
+      ]
+    },
+    {
+      "id": "post:dark-mode-and-search",
+      "type": "post",
+      "label": "Dark mode and search in Papyrus",
+      "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/",
+      "sourcePath": "src/content/posts/dark-mode-and-search.md",
+      "tags": [
+        "astro",
+        "search",
+        "dark-mode"
+      ]
+    },
+    {
+      "id": "post:install-configure-papyrus",
+      "type": "post",
+      "label": "Install and configure Papyrus",
+      "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/",
+      "sourcePath": "src/content/posts/install-configure-papyrus.md",
+      "tags": [
+        "papyrus",
+        "astro",
+        "docs"
+      ]
+    },
+    {
+      "id": "post:markdown-feature-sample",
+      "type": "post",
+      "label": "Markdown authoring guide",
+      "url": "https://papyrus.marcelofelix.com/posts/markdown-feature-sample/",
+      "sourcePath": "src/content/posts/markdown-feature-sample.md",
+      "tags": [
+        "markdown",
+        "theme",
+        "authoring",
+        "custom"
+      ]
+    },
+    {
+      "id": "post:papyrus-package-shape",
+      "type": "post",
+      "label": "Papyrus package shape",
+      "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/",
+      "sourcePath": "src/content/posts/papyrus-package-shape.md",
+      "tags": [
+        "astro",
+        "theme",
+        "papyrus",
+        "changelog"
+      ]
+    },
+    {
+      "id": "tag:ai",
+      "type": "tag",
+      "label": "#ai",
+      "count": 1
+    },
+    {
+      "id": "tag:astro",
+      "type": "tag",
+      "label": "#astro",
+      "count": 3
+    },
+    {
+      "id": "tag:authoring",
+      "type": "tag",
+      "label": "#authoring",
+      "count": 1
+    },
+    {
+      "id": "tag:changelog",
+      "type": "tag",
+      "label": "#changelog",
+      "count": 1
+    },
+    {
+      "id": "tag:code",
+      "type": "tag",
+      "label": "#code",
+      "count": 0
+    },
+    {
+      "id": "tag:custom",
+      "type": "tag",
+      "label": "#custom",
+      "count": 1
+    },
+    {
+      "id": "tag:cv",
+      "type": "tag",
+      "label": "#cv",
+      "count": 0
+    },
+    {
+      "id": "tag:dark-mode",
+      "type": "tag",
+      "label": "#dark-mode",
+      "count": 1
+    },
+    {
+      "id": "tag:data",
+      "type": "tag",
+      "label": "#data",
+      "count": 0
+    },
+    {
+      "id": "tag:docs",
+      "type": "tag",
+      "label": "#docs",
+      "count": 1
+    },
+    {
+      "id": "tag:markdown",
+      "type": "tag",
+      "label": "#markdown",
+      "count": 1
+    },
+    {
+      "id": "tag:metadata",
+      "type": "tag",
+      "label": "#metadata",
+      "count": 1
+    },
+    {
+      "id": "tag:papyrus",
+      "type": "tag",
+      "label": "#papyrus",
+      "count": 2
+    },
+    {
+      "id": "tag:search",
+      "type": "tag",
+      "label": "#search",
+      "count": 1
+    },
+    {
+      "id": "tag:theme",
+      "type": "tag",
+      "label": "#theme",
+      "count": 2
+    },
+    {
+      "id": "tag:ux",
+      "type": "tag",
+      "label": "#ux",
+      "count": 0
+    },
+    {
+      "id": "project:papyrus",
+      "type": "project",
+      "label": "papyrus",
+      "url": "https://papyrus.marcelofelix.com/docs/",
+      "repo": "https://github.com/marcelofpfelix/papyrus",
+      "tags": []
+    },
+    {
+      "id": "project:cv-profile-components",
+      "type": "project",
+      "label": "CV profile components",
+      "url": "https://papyrus.marcelofelix.com/profile/",
+      "tags": []
+    },
+    {
+      "id": "project:ai-indexes",
+      "type": "project",
+      "label": "AI indexes",
+      "url": "https://papyrus.marcelofelix.com/docs/ai-mobile/",
+      "tags": []
+    },
+    {
+      "id": "note:pure-shiki-code",
+      "type": "note",
+      "label": "note:pure-shiki-code",
+      "url": "https://papyrus.marcelofelix.com/#pure-shiki-code",
+      "tags": [
+        "code",
+        "ux"
+      ]
+    },
+    {
+      "id": "note:theme-tokens",
+      "type": "note",
+      "label": "note:theme-tokens",
+      "url": "https://papyrus.marcelofelix.com/#theme-tokens",
+      "tags": [
+        "theme"
+      ]
+    },
+    {
+      "id": "note:cv-data",
+      "type": "note",
+      "label": "note:cv-data",
+      "url": "https://papyrus.marcelofelix.com/#cv-data",
+      "tags": [
+        "cv",
+        "data"
+      ]
+    },
+    {
+      "id": "cv:mira-lee",
+      "type": "cv",
+      "label": "Mira Lee",
+      "url": "https://papyrus.marcelofelix.com/profile/",
+      "source": "/demo/users.toml"
+    },
+    {
+      "id": "cv-section:about",
+      "type": "cv-section",
+      "label": "about"
+    },
+    {
+      "id": "cv-section:experience",
+      "type": "cv-section",
+      "label": "experience"
+    },
+    {
+      "id": "cv-section:education",
+      "type": "cv-section",
+      "label": "education"
+    },
+    {
+      "id": "cv-section:skills",
+      "type": "cv-section",
+      "label": "skills"
+    },
+    {
+      "id": "cv-section:interests",
+      "type": "cv-section",
+      "label": "interests"
+    }
+  ],
+  "edges": [
+    {
+      "source": "post:ai-first-metadata-demo",
+      "target": "tag:ai",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:ai-first-metadata-demo",
+      "target": "tag:metadata",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "tag:astro",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "tag:search",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "tag:dark-mode",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "tag:papyrus",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "tag:astro",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "tag:docs",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:markdown-feature-sample",
+      "target": "tag:markdown",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:markdown-feature-sample",
+      "target": "tag:theme",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:markdown-feature-sample",
+      "target": "tag:authoring",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:markdown-feature-sample",
+      "target": "tag:custom",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "tag:astro",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "tag:theme",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "tag:papyrus",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "tag:changelog",
+      "relation": "has-tag"
+    },
+    {
+      "source": "note:pure-shiki-code",
+      "target": "tag:code",
+      "relation": "mentions-tag"
+    },
+    {
+      "source": "note:pure-shiki-code",
+      "target": "tag:ux",
+      "relation": "mentions-tag"
+    },
+    {
+      "source": "note:theme-tokens",
+      "target": "tag:theme",
+      "relation": "mentions-tag"
+    },
+    {
+      "source": "note:cv-data",
+      "target": "tag:cv",
+      "relation": "mentions-tag"
+    },
+    {
+      "source": "note:cv-data",
+      "target": "tag:data",
+      "relation": "mentions-tag"
+    },
+    {
+      "source": "cv:mira-lee",
+      "target": "cv-section:about",
+      "relation": "has-section"
+    },
+    {
+      "source": "cv:mira-lee",
+      "target": "cv-section:experience",
+      "relation": "has-section"
+    },
+    {
+      "source": "cv:mira-lee",
+      "target": "cv-section:education",
+      "relation": "has-section"
+    },
+    {
+      "source": "cv:mira-lee",
+      "target": "cv-section:skills",
+      "relation": "has-section"
+    },
+    {
+      "source": "cv:mira-lee",
+      "target": "cv-section:interests",
+      "relation": "has-section"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:dark-mode-and-search",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:markdown-feature-sample",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "post:dark-mode-and-search",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "post:markdown-feature-sample",
+      "relation": "related-by-tag"
+    }
+  ]
+}

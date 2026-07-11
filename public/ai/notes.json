@@ -1,0 +1,37 @@
+[
+  {
+    "id": "note:pure-shiki-code",
+    "text": "Code fences use Astro/Shiki CSS-variable output with readable titles, highlights, diffs, and copy actions.",
+    "date": "2026-07-01T10:00:00.000Z",
+    "tags": [
+      "code",
+      "ux"
+    ],
+    "type": "note",
+    "url": "https://papyrus.marcelofelix.com/#pure-shiki-code",
+    "noteId": "pure-shiki-code"
+  },
+  {
+    "id": "note:theme-tokens",
+    "text": "Theme profiles own light and dark token sets; runtime switching only changes the selected profile and mode.",
+    "date": "2026-07-01T11:00:00.000Z",
+    "tags": [
+      "theme"
+    ],
+    "type": "note",
+    "url": "https://papyrus.marcelofelix.com/#theme-tokens",
+    "noteId": "theme-tokens"
+  },
+  {
+    "id": "note:cv-data",
+    "text": "Keep CV data stable and swap components/templates around it instead of rewriting the source file.",
+    "date": "2026-07-01T12:00:00.000Z",
+    "tags": [
+      "cv",
+      "data"
+    ],
+    "type": "note",
+    "url": "https://papyrus.marcelofelix.com/#cv-data",
+    "noteId": "cv-data"
+  }
+]

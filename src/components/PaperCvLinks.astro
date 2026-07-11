@@ -1,0 +1,50 @@
+---
+import type { PaperCvLink } from "../utils/cv";
+import { cvLinkIcon } from "../utils/cv-icons";
+
+const { links = [] } = Astro.props as {
+  links?: PaperCvLink[];
+};
+---
+
+{links.length > 0 && (
+  <nav class="paper-cv-links" aria-label="Profile links">
+    {links.map((link) => (
+      link.href ? (
+        <a href={link.href}>
+          <svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvLinkIcon(link)} />
+          <span>{link.label}</span>
+        </a>
+      ) : (
+        <span class="paper-cv-link-item">
+          <svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvLinkIcon(link)} />
+          {link.emailParts ? (
+            <span class="paper-email-parts" data-email-user={link.emailParts.user} data-email-domain={link.emailParts.domain}>
+              <span>{link.emailParts.user}</span><span class="paper-email-at" aria-hidden="true"></span><span>{link.emailParts.domainParts.join(".")}</span>
+            </span>
+          ) : (
+            <span>{link.label}</span>
+          )}
+        </span>
+      )
+    ))}
+  </nav>
+)}
+
+<style>
+  .paper-cv-links {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .paper-cv-link-item {
+    align-items: center;
+    color: inherit;
+    display: inline-flex;
+    gap: 8px;
+  }
+
+  .paper-email-at::before {
+    content: "＠";
+  }
+</style>

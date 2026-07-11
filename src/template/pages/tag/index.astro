@@ -1,0 +1,17 @@
+---
+import { getCollection } from "astro:content";
+import { PaperBaseLayout, PaperTagList } from "../../../components";
+import { getAllTags, publishedPosts } from "../../../utils";
+import { getTemplateSite } from "../../site";
+
+const site = await getTemplateSite();
+const tags = getAllTags(publishedPosts(await getCollection("posts")));
+---
+
+<PaperBaseLayout title="Tags" description="Browse posts by tag." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+  <section class="paper-hero">
+    <h1>Tags</h1>
+    <p class="paper-description">Topics used by the public posts.</p>
+  </section>
+  <PaperTagList tags={tags} />
+</PaperBaseLayout>

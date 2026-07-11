@@ -1,0 +1,8 @@
+@startuml
+actor Browser
+participant "papyrus" as Theme
+participant "Astro site" as Site
+Browser -> Site: request page
+Site -> Theme: render components
+Theme --> Browser: HTML/CSS/JS
+@enduml

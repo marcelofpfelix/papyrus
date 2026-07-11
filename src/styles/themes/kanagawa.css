@@ -1,0 +1,28 @@
+:root[data-paper-theme="kanagawa"] {
+  color-scheme: light;
+  --paper-bg: #f2ecbc;
+  --paper-fg: #545464;
+  --paper-muted: #8a8980;
+  --paper-panel: #e6ddb0;
+  --paper-border: #d5cea3;
+  --paper-accent: #5d57a3;
+  --paper-code-bg: #e6ddb0;
+  --paper-code-fg: #545464;
+  --paper-theme-color: #f2ecbc;
+  --paper-font-sans: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --paper-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+:root[data-paper-theme="kanagawa"].dark,
+html[data-paper-theme="kanagawa"].dark {
+  color-scheme: dark;
+  --paper-bg: #1f1f28;
+  --paper-fg: #dcd7ba;
+  --paper-muted: #938aa9;
+  --paper-panel: #2a2a37;
+  --paper-border: #54546d;
+  --paper-accent: #7e9cd8;
+  --paper-code-bg: #16161d;
+  --paper-code-fg: #dcd7ba;
+  --paper-theme-color: #1f1f28;
+}

@@ -1,0 +1,67 @@
+---
+interface Props {
+  id?: string;
+  type?: "BlogPosting" | "Person" | "Project" | "SoftwareSourceCode" | string;
+  title: string;
+  description?: string;
+  canonicalUrl?: string;
+  sourceUrl?: string;
+  image?: string;
+  datePublished?: Date | string;
+  dateModified?: Date | string;
+  tags?: string[];
+  author?: {
+    name: string;
+    url?: string;
+  };
+  extra?: Record<string, unknown>;
+}
+
+const {
+  id,
+  type = "BlogPosting",
+  title,
+  description,
+  canonicalUrl,
+  sourceUrl,
+  image,
+  datePublished,
+  dateModified,
+  tags = [],
+  author,
+  extra = {},
+} = Astro.props;
+
+const stableId = id ?? (canonicalUrl ? `${canonicalUrl.replace(/#.*$/, "")}#${type}` : undefined);
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@id": stableId,
+  "@type": type,
+  headline: title,
+  name: title,
+  description,
+  url: canonicalUrl,
+  image,
+  datePublished: datePublished ? new Date(datePublished).toISOString() : undefined,
+  dateModified: dateModified ? new Date(dateModified).toISOString() : undefined,
+  keywords: tags.length > 0 ? tags : undefined,
+  author: author
+    ? {
+        "@type": "Person",
+        name: author.name,
+        url: author.url,
+      }
+    : undefined,
+  isBasedOn: sourceUrl,
+  ...extra,
+};
+
+const compactJsonLd = JSON.stringify(
+  jsonLd,
+  (_key, value) => (value === undefined || value === null ? undefined : value),
+  0,
+);
+---
+
+<script is:inline type="application/ld+json" set:html={compactJsonLd}></script>

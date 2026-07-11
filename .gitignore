@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Astro and generated site output
+.astro/
+dist/
+.vercel/
+.netlify/
+
+# Generated local artifacts
+.lighthouse/
+.lighthouseci/
+.screenshots/
+public/pagefind/
+lhci-report/
+*.tgz
+
+# Logs and reports
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Caches and coverage
+.cache/
+.parcel-cache/
+.vite/
+coverage/
+*.lcov
+.nyc_output/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS/editor noise
+.DS_Store
+__MACOSX/
+.serena/
+.git.stale-*
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json

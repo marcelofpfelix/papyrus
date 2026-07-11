@@ -1,0 +1,22 @@
+<button class="paper-back-to-top" type="button" data-paper-back-to-top aria-label="Back to top" title="Back to top">
+  <svg aria-hidden="true" viewBox="0 0 24 24">
+    <path d="m18 15-6-6-6 6"></path>
+  </svg>
+</button>
+
+<script is:inline data-astro-rerun>
+  window.__paperBackToTopController?.abort?.();
+  const controller = new AbortController();
+  window.__paperBackToTopController = controller;
+
+  const backToTop = document.querySelector("[data-paper-back-to-top]");
+  if (backToTop) {
+    const toggleBackToTop = () => {
+      backToTop.dataset.visible = window.scrollY > 500 ? "true" : "false";
+    };
+
+    backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+    toggleBackToTop();
+    window.addEventListener("scroll", toggleBackToTop, { passive: true, signal: controller.signal });
+  }
+</script>

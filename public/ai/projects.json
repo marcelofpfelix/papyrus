@@ -1,0 +1,74 @@
+[
+  {
+    "title": "papyrus",
+    "description": "Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata.",
+    "href": "/docs/",
+    "links": [
+      {
+        "label": "features",
+        "href": "/docs/feature-map/"
+      },
+      {
+        "label": "docs",
+        "href": "/docs/"
+      },
+      {
+        "label": "website",
+        "href": "/"
+      },
+      {
+        "label": "repo",
+        "text": "marcelofpfelix/papyrus",
+        "href": "https://github.com/marcelofpfelix/papyrus"
+      }
+    ],
+    "repo": "https://github.com/marcelofpfelix/papyrus",
+    "language": "Astro",
+    "status": "active",
+    "pinned": true,
+    "url": "https://papyrus.marcelofelix.com/docs/",
+    "id": "project:papyrus",
+    "type": "project"
+  },
+  {
+    "title": "CV profile components",
+    "description": "Mobile profile, timeline, and A4 CV components using one normalized profile data source.",
+    "href": "/profile/",
+    "image": "/demo/demo-profile-avatar.svg",
+    "links": [
+      {
+        "label": "components",
+        "href": "/profile/"
+      },
+      {
+        "label": "data",
+        "href": "/posts/cv-profile/"
+      }
+    ],
+    "language": "Astro",
+    "status": "reference",
+    "url": "https://papyrus.marcelofelix.com/profile/",
+    "id": "project:cv-profile-components",
+    "type": "project"
+  },
+  {
+    "title": "AI indexes",
+    "description": "Static JSON and llms.txt outputs for agents, site search, and graph features.",
+    "href": "/docs/ai-mobile/",
+    "links": [
+      {
+        "label": "docs",
+        "href": "/docs/ai-mobile/"
+      },
+      {
+        "label": "graph",
+        "href": "/ai/graph.json"
+      }
+    ],
+    "language": "Node",
+    "status": "reference",
+    "url": "https://papyrus.marcelofelix.com/docs/ai-mobile/",
+    "id": "project:ai-indexes",
+    "type": "project"
+  }
+]

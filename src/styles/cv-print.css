@@ -1,0 +1,97 @@
+body {
+  background: var(--cv-print-page-bg, #d4d4d8);
+}
+
+.cv-download {
+  align-items: center;
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 6px auto;
+  width: min(190mm, calc(100% - 24px));
+}
+
+.cv-download button,
+.cv-download > a,
+.cv-source-menu summary,
+.cv-source-links a {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--profile-print-color, currentColor);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 700;
+  gap: 5px;
+  min-height: 32px;
+  padding: 4px 8px;
+  text-decoration: none;
+}
+
+.cv-source-menu {
+  position: relative;
+}
+
+.cv-source-menu summary {
+  list-style: none;
+}
+
+.cv-source-menu summary::-webkit-details-marker {
+  display: none;
+}
+
+.cv-source-links {
+  background: #fff;
+  border: 1px solid #d4d4d8;
+  box-shadow: 0 8px 24px rgb(24 24 27 / 0.14);
+  display: grid;
+  min-width: 120px;
+  padding: 4px;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: 2;
+}
+
+.cv-action-status {
+  color: #3f3f46;
+  font-size: 8.5pt;
+  min-width: 22mm;
+}
+
+.cv-download button svg,
+.cv-download > a svg,
+.cv-source-menu summary svg {
+  fill: none;
+  height: 1em;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 1em;
+}
+
+.cv-download button:hover,
+.cv-download button:focus-visible,
+.cv-download > a:hover,
+.cv-download > a:focus-visible,
+.cv-source-menu summary:hover,
+.cv-source-menu summary:focus-visible,
+.cv-source-links a:hover,
+.cv-source-links a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media print {
+  body {
+    background: #fff;
+  }
+
+  .no-print,
+  .cv-download {
+    display: none !important;
+  }
+}

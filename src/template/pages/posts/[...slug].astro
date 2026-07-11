@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from "astro:content";
+import { PaperPostLayout } from "../../../components";
+import { getAdjacentPosts, postSlug, postTags, publishedPosts, readingTime, routablePosts } from "../../../utils";
+import { getTemplateSite } from "../../site";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+  const posts = routablePosts(allPosts);
+  const adjacentPosts = publishedPosts(allPosts);
+  return posts.map((post) => ({
+    params: { slug: postSlug(post) },
+    props: { post, adjacent: getAdjacentPosts(adjacentPosts, post.id) },
+  }));
+}
+
+const site = await getTemplateSite();
+const { post, adjacent } = Astro.props;
+const { Content, headings } = await render(post);
+---
+
+<PaperPostLayout title={post.data.title} description={post.data.description} pubDatetime={post.data.pubDatetime} modDatetime={post.data.modDatetime} cover={post.data.cover} tags={postTags(post)} readingTime={readingTime(post.body)} headings={headings} showToc={true} previous={adjacent.previous} next={adjacent.next} robots={post.data.hidden ? "noindex, follow" : undefined} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+  <Content />
+</PaperPostLayout>

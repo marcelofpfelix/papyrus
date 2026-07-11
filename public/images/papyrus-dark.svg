@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Papyrus dark mode and search</title>
+  <desc id="desc">A dark blog screen with a search field and filtered post results.</desc>
+  <rect width="960" height="540" fill="#0b0b10"/>
+  <rect x="158" y="42" width="644" height="456" rx="20" fill="#101014" stroke="#27272a"/>
+  <rect x="208" y="82" width="154" height="16" rx="8" fill="#f4f4f5"/>
+  <circle cx="706" cy="90" r="13" fill="#18181b" stroke="#3f3f46"/>
+  <path d="m701 90 4 4 8-9" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="208" y="138" width="304" height="34" rx="8" fill="#f4f4f5"/>
+  <rect x="208" y="194" width="544" height="46" rx="10" fill="#18181b" stroke="#3f3f46"/>
+  <circle cx="232" cy="217" r="8" fill="none" stroke="#a1a1aa" stroke-width="3"/>
+  <path d="m238 223 8 8" stroke="#a1a1aa" stroke-width="3" stroke-linecap="round"/>
+  <rect x="260" y="211" width="188" height="12" rx="6" fill="#71717a"/>
+  <g transform="translate(208 286)">
+    <rect width="544" height="1" fill="#27272a"/>
+    <rect y="28" width="312" height="18" rx="9" fill="#f4f4f5"/>
+    <rect y="60" width="448" height="10" rx="5" fill="#71717a"/>
+    <rect y="82" width="382" height="10" rx="5" fill="#71717a"/>
+    <rect y="114" width="72" height="22" rx="11" fill="#172554" stroke="#2563eb"/>
+    <rect x="86" y="114" width="82" height="22" rx="11" fill="#18181b" stroke="#3f3f46"/>
+  </g>
+  <g transform="translate(208 456)">
+    <rect width="544" height="1" fill="#27272a"/>
+    <rect y="24" width="154" height="10" rx="5" fill="#71717a"/>
+  </g>
+</svg>

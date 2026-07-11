@@ -1,0 +1,41 @@
+---
+import type { PaperCvUser } from "../utils/cv";
+import { cvHref } from "../utils/cv";
+
+const { user, kicker = "profile" } = Astro.props as {
+  user: PaperCvUser;
+  kicker?: string;
+};
+
+const extraMeta = [
+  user.born ? `born ${user.born.slice(0, 10)}` : undefined,
+  user.nationality?.length ? user.nationality.map((item) => item.name).join(", ") : undefined,
+  user.languages?.length ? user.languages.map((item) => item.name).join(", ") : undefined,
+  user.pages ? `${user.pages} page${user.pages === 1 ? "" : "s"}` : undefined,
+].filter(Boolean);
+const userHref = cvHref(user.url);
+---
+
+<header class="paper-cv-hero">
+  {user.avatar && <img class="paper-cv-avatar" src={user.avatar} alt="" loading="lazy" />}
+  <div>
+    <p class="paper-cv-kicker">{kicker}</p>
+    <h1>{user.name}</h1>
+    {user.bio && <p class="paper-cv-bio">{user.bio}</p>}
+    <div class="paper-cv-meta">
+      {user.location && <span>{user.location}</span>}
+      {user.email && <a href={`mailto:${user.email}`}>{user.email}</a>}
+      {userHref && <a href={userHref}>website</a>}
+    </div>
+    {user.roles && user.roles.length > 0 && (
+      <ul class="paper-cv-roles" aria-label="Roles">
+        {user.roles.map((role) => <li>{role}</li>)}
+      </ul>
+    )}
+    {extraMeta.length > 0 && (
+      <ul class="paper-cv-facts" aria-label="CV facts">
+        {extraMeta.map((item) => <li>{item}</li>)}
+      </ul>
+    )}
+  </div>
+</header>

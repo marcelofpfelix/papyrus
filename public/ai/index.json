@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-07-10T21:28:29.902Z",
+  "contentDir": "src/content/posts",
+  "postCount": 5,
+  "tagCount": 16,
+  "projectCount": 3,
+  "noteCount": 3,
+  "cvCount": 1,
+  "files": {
+    "posts": "posts.json",
+    "tags": "tags.json",
+    "projects": "projects.json",
+    "notes": "notes.json",
+    "cv": "cv.json",
+    "search": "search.json",
+    "graph": "graph.json"
+  }
+}

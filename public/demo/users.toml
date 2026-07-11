@@ -1,0 +1,138 @@
+[user]
+name = "Mira Lee"
+avatar = "demo/demo-profile-avatar.svg"
+bio = "Documentation engineer for content systems"
+url = "github.com/marcelofpfelix/papyrus"
+email_user = "mira"
+email_domain = "site.test"
+links = ["linkedin", "github", "telegram", "keybase"]
+print_links = ["email", "linkedin", "github", "website"]
+link = "github.com/marcelofpfelix/papyrus"
+location = "Remote"
+born = "1991-04-18T00:00:00"
+nationality = ["nat_web"]
+languages = ["lan_en"]
+roles = ["Docs engineer", "Frontend maintainer"]
+pages = 1
+sections = ["about", "experience", "education", "skills", "interests"]
+
+[user.telegram]
+name = "papyrus-theme"
+url = "https://t.me/"
+icon = "telegram"
+
+[user.github]
+name = "papyrus-theme"
+url = "https://github.com/"
+icon = "github"
+
+[user.linkedin]
+name = "papyrus-theme"
+url = "https://www.linkedin.com/in/"
+icon = "linkedin"
+
+[user.keybase]
+name = "papyrus-theme"
+url = "https://keybase.io/"
+icon = "keybase"
+
+[user.nat_web]
+name = "Open web"
+flag = "earth"
+
+[user.lan_en]
+name = "English"
+flag = "gb"
+
+[user.data.about]
+title = "Profile"
+icon = "user"
+page = 1
+groups = ["profile"]
+
+[user.data.about.profile]
+items = ["profile"]
+
+[user.data.about.profile.profile]
+description = "Mira maintains a content-heavy Astro site and uses Papyrus to keep posts, documentation, projects, and profile pages visually consistent. This public fixture shows the CV data shape without exposing a private resume."
+
+[user.data.experience]
+title = "Professional Experience"
+icon = "briefcase"
+page = 1
+groups = ["papyrus", "pure"]
+
+[user.data.experience.range]
+a = "2022-01-01T00:00:00"
+b = "2026-07-01T00:00:00"
+
+[user.data.experience.papyrus]
+ententy = "Papyrus Theme"
+url = "https://github.com/marcelofpfelix/papyrus"
+items = ["maintainer"]
+
+[user.data.experience.papyrus.maintainer]
+title = "Theme maintainer"
+dates = "2024 - Present"
+location = "Remote"
+description = "Designs reusable Astro pages, docs, post layouts, profile templates, search, tag pages, and RSS guidance so consuming sites can stay focused on their own content."
+
+[user.data.experience.papyrus.maintainer.range]
+a = "2024-01-01T00:00:00"
+
+[user.data.experience.pure]
+ententy = "Pure-style content system"
+url = "https://astro.build/"
+items = ["docs"]
+
+[user.data.experience.pure.docs]
+title = "Documentation engineer"
+dates = "2022 - 2024"
+location = "Remote"
+description = "Built markdown-first guides, code examples, accessibility checks, content indexes, and release notes for a small technical publishing site."
+
+[user.data.experience.pure.docs.range]
+a = "2022-01-01T00:00:00"
+b = "2024-01-01T00:00:00"
+
+[user.data.education]
+title = "Education"
+icon = "school"
+page = 1
+groups = ["academy"]
+
+[user.data.education.academy]
+ententy = "Open Web Academy"
+url = "https://developer.mozilla.org/"
+items = ["frontend"]
+
+[user.data.education.academy.frontend]
+title = "Frontend documentation and accessibility"
+location = "Online"
+description = "Studied semantic HTML, accessible navigation, structured content, responsive layouts, and maintainable documentation systems."
+
+[user.data.skills]
+title = "Skills"
+icon = "tools"
+page = 1
+groups = ["skills"]
+
+[user.data.skills.skills]
+items = ["skills"]
+
+[user.data.skills.skills.skills]
+description = """-- Astro content collections, routes, layouts, and static builds.<br>
+-- Markdown rendering, callouts, code blocks, diagrams, tables, and copy actions.<br>
+-- Theme tokens, dark mode, responsive typography, accessibility, and SEO metadata."""
+
+[user.data.interests]
+title = "Interests"
+icon = "mountain"
+page = 1
+groups = ["interests"]
+
+[user.data.interests.interests]
+items = ["interests"]
+
+[user.data.interests.interests.interests]
+description = "Readable docs, small design systems, accessible publishing, static search, and content that explains why each theme feature exists."

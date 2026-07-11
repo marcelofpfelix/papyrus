@@ -1,0 +1,98 @@
+---
+import ComputerIcon from "../assets/icons/computer.svg";
+import FontIcon from "../assets/icons/font.svg";
+import GithubIcon from "../assets/icons/github.svg";
+import MoonIcon from "../assets/icons/moon.svg";
+import OpenSourceIcon from "../assets/icons/open-source.svg";
+import PaletteIcon from "../assets/icons/palette.svg";
+import RssIcon from "../assets/icons/rss.svg";
+import SunIcon from "../assets/icons/sun.svg";
+import { withBase } from "../utils/withBase";
+
+interface Props {
+  title: string;
+  links?: Array<{ href: string; label: string }>;
+  socialLinks?: Array<{ href: string; label: string; icon?: string }>;
+  rssHref?: string;
+  poweredBy?: boolean;
+  themeControls?: boolean;
+}
+
+const {
+  title,
+  links = [],
+  socialLinks = [],
+  rssHref = "/rss.xml",
+  poweredBy = true,
+  themeControls = true,
+} = Astro.props;
+const year = new Date().getFullYear();
+
+const socialIconComponents = {
+  github: GithubIcon,
+};
+---
+
+<footer class="paper-footer">
+  <div class="paper-footer-meta">
+    {poweredBy && (
+      <p class="paper-powered-by">
+        <OpenSourceIcon aria-hidden="true" />
+        <span>Powered by <a href="https://github.com/marcelofpfelix/papyrus">papyrus</a> and <a href="https://astro.build/">astro</a></span>
+        {" "}
+        <span>&copy; {year} {title}</span>
+      </p>
+    )}
+    {!poweredBy && <p>&copy; {year} {title}</p>}
+  </div>
+  <div class="paper-footer-actions">
+    {themeControls && <div class="paper-theme-controls" aria-label="Theme controls">
+      <button class="paper-icon-button paper-theme-mode-button" type="button" data-paper-theme-toggle aria-label="Toggle color mode" title="Color mode">
+        <ComputerIcon class="paper-mode-icon paper-mode-system" aria-hidden="true" />
+        <SunIcon class="paper-mode-icon paper-mode-light" aria-hidden="true" />
+        <MoonIcon class="paper-mode-icon paper-mode-dark" aria-hidden="true" />
+      </button>
+      <details class="paper-control-menu">
+        <summary class="paper-icon-button" aria-label="Theme profile" title="Theme profile">
+          <PaletteIcon aria-hidden="true" />
+        </summary>
+        <div class="paper-control-popover">
+          <button type="button" data-paper-theme-profile-value="catppuccin">Catppuccin</button>
+          <button type="button" data-paper-theme-profile-value="tokyo-night">Tokyo Night</button>
+          <button type="button" data-paper-theme-profile-value="kanagawa">Kanagawa</button>
+          <button type="button" data-paper-theme-profile-value="rose-pine">Rosé Pine</button>
+          <button type="button" data-paper-theme-profile-value="everforest">Everforest</button>
+          <button type="button" data-paper-theme-profile-value="dracula">Dracula</button>
+          <button type="button" data-paper-theme-profile-value="gruvbox">Gruvbox</button>
+          <button type="button" data-paper-theme-profile-value="nord">Nord</button>
+          <button type="button" data-paper-theme-profile-value="pure">Pure</button>
+        </div>
+      </details>
+      <button class="paper-icon-button paper-font-profile-button" type="button" data-paper-font-profile-toggle aria-label="Font profile" title="Font profile">
+        <FontIcon aria-hidden="true" />
+      </button>
+    </div>}
+    <nav class="paper-footer-social" aria-label="Social links">
+      {socialLinks.map(link => {
+        const Icon = socialIconComponents[link.icon as keyof typeof socialIconComponents] ?? GithubIcon;
+        return (
+          <a class="paper-icon-button" href={withBase(link.href)} aria-label={link.label} title={link.label}>
+            <Icon aria-hidden="true" />
+          </a>
+        );
+      })}
+      {rssHref && (
+        <a class="paper-icon-button" href={withBase(rssHref)} aria-label="RSS" title="RSS">
+          <RssIcon aria-hidden="true" />
+        </a>
+      )}
+    </nav>
+    {
+      links.length > 0 && (
+        <nav class="paper-footer-links" aria-label="Footer links">
+          {links.map(link => <a href={withBase(link.href)}>{link.label}</a>)}
+        </nav>
+      )
+    }
+  </div>
+</footer>

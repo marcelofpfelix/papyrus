@@ -1,0 +1,47 @@
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
+
+const posts = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/posts" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    slug: z.string().optional(),
+    pubDatetime: z.coerce.date(),
+    modDatetime: z.coerce.date().optional(),
+    draft: z.boolean().optional().default(false),
+    hidden: z.boolean().optional().default(false),
+    robots: z.string().optional(),
+    pinned: z.union([z.boolean(), z.number()]).optional().default(false),
+    cover: z.string().optional(),
+    category: z.string().optional(),
+    tags: z.array(z.string()).optional().default([]),
+    featured: z.boolean().optional().default(false),
+    docs: z.union([
+      z.boolean(),
+      z.object({
+        title: z.string().optional(),
+        description: z.string().optional(),
+        section: z.string().optional(),
+        order: z.number().optional(),
+      }),
+    ]).optional().default(false),
+  }),
+});
+
+const docs = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/docs" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    sections: z.array(z.object({
+      id: z.string(),
+      title: z.string(),
+      description: z.string().optional(),
+      order: z.number().optional(),
+    })).optional().default([]),
+  }),
+});
+
+export const collections = { docs, posts };

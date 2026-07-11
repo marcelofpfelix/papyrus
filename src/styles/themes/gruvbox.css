@@ -1,0 +1,28 @@
+:root[data-paper-theme="gruvbox"] {
+  color-scheme: light;
+  --paper-bg: #f9f5d7;
+  --paper-fg: #654735;
+  --paper-muted: #928374;
+  --paper-panel: #f2e5bc;
+  --paper-border: #d5c4a1;
+  --paper-accent: #d8a657;
+  --paper-code-bg: #f2e5bc;
+  --paper-code-fg: #654735;
+  --paper-theme-color: #f9f5d7;
+  --paper-font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --paper-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+:root[data-paper-theme="gruvbox"].dark,
+html[data-paper-theme="gruvbox"].dark {
+  color-scheme: dark;
+  --paper-bg: #1d2021;
+  --paper-fg: #f5edca;
+  --paper-muted: #c4bda1;
+  --paper-panel: #282828;
+  --paper-border: #3c3836;
+  --paper-accent: #dfb778;
+  --paper-code-bg: #141617;
+  --paper-code-fg: #f5edca;
+  --paper-theme-color: #1d2021;
+}

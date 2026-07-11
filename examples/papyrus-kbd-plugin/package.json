@@ -1,0 +1,13 @@
+{
+  "name": "@example/papyrus-kbd",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "peerDependencies": {
+    "astro": ">=6.0.0",
+    "astro-theme-papyrus": "*"
+  }
+}

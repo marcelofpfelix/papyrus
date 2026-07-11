@@ -1,0 +1,98 @@
+[
+  {
+    "feature": "rust-code",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "```rust title=\"src/main.rs\"",
+    "selector": ".astro-code[data-language=\"rust\"]",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "diff-code",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "/* [!code ++] */",
+    "selector": ".astro-code.has-diff[data-language=\"css\"]",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "console-code",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "```console",
+    "selector": ".astro-code[data-language=\"console\"]",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "highlight-code",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "// [!code highlight]",
+    "selector": ".astro-code.has-highlighted[data-language=\"c\"]",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "collapsible-code",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "```rust title=\"src/server.rs\"",
+    "selector": ".astro-code.collapsed .collapse-toggle",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "obsidian-callouts",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "> [!NOTE]",
+    "selector": ".callout[data-callout=\"note\"], .callout[data-callout=\"tip\"], .callout[data-callout=\"important\"], .callout[data-callout=\"warning\"], .callout[data-callout=\"caution\"]",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "task-list",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "- [x] Keep feature walkthroughs explicit",
+    "selector": ".task-list-item input[type=\"checkbox\"]",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "table",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "| Feature | Expected behavior |",
+    "selector": ".paper-prose table",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "mermaid-fence",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "```mermaid",
+    "selector": ".paper-mermaid svg",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "image-zoom",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "/demo/demo-profile-avatar.svg",
+    "selector": "img[src=\"/demo/demo-profile-avatar.svg\"]",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "artifact-links",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "/demo/call-flow.puml",
+    "selector": ".paper-artifact-card",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  },
+  {
+    "feature": "unsupported-github-edge-cases",
+    "route": "/docs/code-demo/",
+    "source": "src/pages/docs/code-demo.md",
+    "sourceNeedle": "Fallback rendering",
+    "selector": ".paper-prose table",
+    "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
+  }
+]

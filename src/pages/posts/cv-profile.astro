@@ -1,0 +1,29 @@
+---
+import PaperPostLayout from "../../layouts/PaperPostLayout.astro";
+import { demoNav, demoSocialLinks } from "../../data/demo-nav";
+import { readingTime } from "../../utils/posts";
+
+const body = [
+  "The CV/profile flow keeps one normalized data model and renders it through multiple public routes.",
+  "Start with src/data/profile.toml or an Astro data collection, normalize it once, then choose web, timeline, print, Markdown, and JSON outputs per route.",
+  "The experimental CV component and data-source demos have moved to the v2 worktree for redesign.",
+].join("\n\n");
+---
+
+<PaperPostLayout
+  title="Profile and CV"
+  description="Profile data, reusable CV components, timeline views, and print routes from one normalized source."
+  siteTitle="papyrus"
+  pubDatetime="2026-07-01T10:00:00.000Z"
+  tags={["profile", "cv"]}
+  readingTime={readingTime(body)}
+  canonicalUrl="/posts/cv-profile/"
+  nav={demoNav}
+  socialLinks={demoSocialLinks}
+>
+  <p>The CV/profile flow keeps one normalized data model and renders it through multiple public routes. This lets a consuming site publish a web profile, timeline view, print CV, Markdown export, and JSON export without maintaining separate resume files.</p>
+
+  <p>Start with <code>src/data/profile.toml</code> or an Astro data collection, normalize it once, then choose the route shape that fits each audience: a readable web page for visitors, a print route for PDF export, and machine-readable outputs for repository review or AI tools. The build can export the same source to <code>/cv/profile.json</code> and <code>/cv/profile.md</code>.</p>
+
+  <p>The experimental CV component and data-source docs have moved to the <code>v2</code> worktree for redesign. The public package site keeps the stable profile routes while that UX is reworked.</p>
+</PaperPostLayout>

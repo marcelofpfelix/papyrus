@@ -1,0 +1,172 @@
+---
+interface Props {
+  artifactLinks?: boolean;
+  imageZoom?: boolean;
+  mermaid?: boolean;
+}
+
+const {
+  artifactLinks = true,
+  imageZoom = true,
+  mermaid = true,
+} = Astro.props as Props;
+
+const runtimeConfig = JSON.stringify({ artifactLinks, imageZoom, mermaid });
+---
+
+<script is:inline type="application/json" data-paper-media-runtime set:html={runtimeConfig} />
+
+<script>
+  const mediaConfigElement = document.querySelector<HTMLScriptElement>("[data-paper-media-runtime]");
+  const mediaConfig = JSON.parse(mediaConfigElement?.textContent ?? "{}") as {
+    artifactLinks?: boolean;
+    imageZoom?: boolean;
+    mermaid?: boolean;
+  };
+  const artifactLinksEnabled = mediaConfig.artifactLinks !== false;
+  const imageZoomEnabled = mediaConfig.imageZoom !== false;
+  const mermaidEnabled = mediaConfig.mermaid !== false;
+
+  function bindImageZoom() {
+    let overlay = document.querySelector<HTMLButtonElement>("[data-paper-image-zoom]");
+    if (!overlay) {
+      const createdOverlay = document.createElement("button");
+      createdOverlay.type = "button";
+      createdOverlay.className = "paper-image-zoom-overlay";
+      createdOverlay.dataset.paperImageZoom = "";
+      createdOverlay.setAttribute("aria-label", "Close image preview");
+      document.body.append(createdOverlay);
+      createdOverlay.addEventListener("click", () => {
+        createdOverlay.dataset.open = "false";
+        createdOverlay.replaceChildren();
+      });
+      overlay = createdOverlay;
+    }
+    const zoomOverlay = overlay;
+
+    if (!imageZoomEnabled) return;
+
+    document.querySelectorAll<HTMLElement>(".paper-prose img, .paper-mermaid svg").forEach(element => {
+      if (element.dataset.paperZoomBound) return;
+      element.dataset.paperZoomBound = "true";
+      element.style.cursor = "zoom-in";
+      element.addEventListener("click", () => {
+        const clone = element.cloneNode(true) as HTMLElement;
+        clone.removeAttribute("style");
+        zoomOverlay.replaceChildren(clone);
+        zoomOverlay.dataset.open = "true";
+      });
+    });
+  }
+
+  async function hydrateArtifactLinks() {
+    const links = Array.from(document.querySelectorAll<HTMLAnchorElement>(".paper-artifact-link[data-artifact-type]"));
+
+    await Promise.all(
+      links.map(async (link) => {
+        if (link.dataset.paperArtifactBound) return;
+        link.dataset.paperArtifactBound = "true";
+        const type = link.dataset.artifactType;
+
+        if (type !== "mermaid") {
+          const note = document.createElement("small");
+          note.className = "paper-artifact-status";
+          note.textContent = type === "plantuml"
+            ? "PlantUML needs a local or server renderer before papyrus can show SVG inline."
+            : "Excalidraw needs an Excalidraw renderer before papyrus can show the drawing inline.";
+          link.querySelector("span")?.append(note);
+          return;
+        }
+
+        try {
+          const response = await fetch(link.href);
+          if (!response.ok) return;
+          const source = await response.text();
+          const diagram = document.createElement("div");
+          diagram.className = "paper-mermaid";
+          diagram.textContent = source.trim();
+          link.after(diagram);
+        } catch {
+          const note = document.createElement("small");
+          note.className = "paper-artifact-status";
+          note.textContent = "Could not load Mermaid source.";
+          link.querySelector("span")?.append(note);
+        }
+      }),
+    );
+  }
+
+  if (artifactLinksEnabled) await hydrateArtifactLinks();
+
+  let mermaidRenderCounter = 0;
+  let mermaidModulePromise: Promise<typeof import("mermaid/dist/mermaid.esm.mjs")> | undefined;
+
+  function mermaidThemeConfig() {
+    const styles = getComputedStyle(document.documentElement);
+    const bg = styles.getPropertyValue("--paper-bg").trim();
+    const panel = styles.getPropertyValue("--paper-panel").trim();
+    const fg = styles.getPropertyValue("--paper-fg").trim();
+    const muted = styles.getPropertyValue("--paper-muted").trim();
+    const accent = styles.getPropertyValue("--paper-accent").trim();
+
+    return {
+      theme: "base" as const,
+      themeVariables: {
+        background: bg,
+        mainBkg: panel,
+        primaryColor: accent,
+        primaryTextColor: fg,
+        primaryBorderColor: accent,
+        lineColor: muted,
+        textColor: fg,
+        darkMode: document.documentElement.classList.contains("dark"),
+      },
+    };
+  }
+
+  async function renderPaperMermaidDiagrams() {
+    if (!mermaidEnabled) return;
+
+    const mermaidBlocks = Array.from(document.querySelectorAll<HTMLElement>(".paper-mermaid"));
+    if (mermaidBlocks.length === 0) return;
+
+    mermaidModulePromise ??= import("mermaid/dist/mermaid.esm.mjs");
+    const { default: mermaid } = await mermaidModulePromise;
+
+    mermaid.initialize({
+      securityLevel: "strict",
+      startOnLoad: false,
+      ...mermaidThemeConfig(),
+    });
+
+    await Promise.all(
+      mermaidBlocks.map(async (block, index) => {
+        const source = block.dataset.paperMermaidSource ?? block.textContent?.trim() ?? "";
+        if (!source) return;
+        block.dataset.paperMermaidSource = source;
+        const id = `paper-mermaid-${Date.now()}-${mermaidRenderCounter++}-${index}`;
+
+        try {
+          const { svg } = await mermaid.render(id, source);
+          block.innerHTML = svg;
+          block.removeAttribute("role");
+          block.dataset.error = "false";
+        } catch (error) {
+          block.setAttribute("data-error", "true");
+          console.error("Failed to render Mermaid diagram", error);
+        }
+      }),
+    );
+
+    if (imageZoomEnabled) bindImageZoom();
+  }
+
+  if (mermaidEnabled) {
+    await renderPaperMermaidDiagrams();
+    document.addEventListener("paper:theme-change", () => {
+      renderPaperMermaidDiagrams();
+    });
+  }
+
+  if (imageZoomEnabled) bindImageZoom();
+</script>
