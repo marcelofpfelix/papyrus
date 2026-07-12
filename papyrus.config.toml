@@ -39,12 +39,12 @@ href = "/posts/"
 label = "Posts"
 
 [[nav]]
-href = "/docs/"
-label = "Docs"
-
-[[nav]]
 href = "/projects/"
 label = "Projects"
+
+[[nav]]
+href = "/collections/"
+label = "Collections"
 
 [[nav]]
 href = "/profile/"

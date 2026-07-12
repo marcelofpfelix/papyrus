@@ -25,7 +25,6 @@ can be installed by another Astro site.
    ```sh
    pnpm run verify:package
    pnpm run verify:readme
-   pnpm run verify:docs
    pnpm run build
    ```
 

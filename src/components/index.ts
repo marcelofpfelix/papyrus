@@ -14,7 +14,7 @@ export { default as PapyrusPluginList } from "./PapyrusPluginList.astro";
 export { default as PapyrusGiscusComments } from "./PapyrusGiscusComments.astro";
 export { default as PapyrusRemotePostStats } from "./PapyrusRemotePostStats.astro";
 export { default as PapyrusContentIndex } from "./PapyrusContentIndex.astro";
-export { default as PapyrusSectionMenu } from "./PapyrusSectionMenu.astro";
+export { default as PapyrusCollectionIndex } from "./PapyrusCollectionIndex.astro";
 export { default as PapyrusArtifactLink } from "./PapyrusArtifactLink.astro";
 export { default as PapyrusGithubCard } from "./PapyrusGithubCard.astro";
 export { default as PapyrusLinkPreview } from "./PapyrusLinkPreview.astro";

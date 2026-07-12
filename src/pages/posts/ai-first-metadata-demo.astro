@@ -8,7 +8,7 @@ const body = [
   "That keeps readers, crawlers, and AI tools pointed at the same canonical pages.",
   "llms.txt is the short map: routes, titles, descriptions, and source paths. llms-full.txt is the longer corpus: the important public text from posts and docs, plus code examples that help agents understand how to use the theme.",
   "A consuming site runs the same command against its own content during build.",
-  'pnpm papyrus-llms src/content/posts public "$SITE_URL" src/pages/docs',
+  'pnpm papyrus-llms src/content/posts public "$SITE_URL"',
   "Use the deployed site origin for SITE_URL so generated links match RSS, sitemap, robots.txt, canonical URLs, and social metadata.",
   "When the site needs structured data for search or graph views, generate JSON indexes from the same source set, including /ai/graph.json.",
   'pnpm papyrus-ai-indexes src/content/posts public/ai "$SITE_URL" public/demo/site-data.json',
@@ -34,7 +34,7 @@ const body = [
   <p>Papyrus can generate <code>llms.txt</code>, <code>llms-full.txt</code>, JSON indexes, and graph data from the same public content set used by posts, tags, RSS, sitemap, and search. That keeps readers, crawlers, and AI tools pointed at the same canonical pages.</p>
   <p><code>llms.txt</code> is the short map: routes, titles, descriptions, and source paths. <code>llms-full.txt</code> is the longer corpus: the important public text from posts and docs, plus code examples that help agents understand how to use the theme.</p>
   <p>A consuming site runs the same command against its own content during build.</p>
-  <pre><code>pnpm papyrus-llms src/content/posts public "$SITE_URL" src/pages/docs</code></pre>
+  <pre><code>pnpm papyrus-llms src/content/posts public "$SITE_URL"</code></pre>
   <p>Use the deployed site origin for <code>SITE_URL</code> so generated links match RSS, sitemap, robots.txt, canonical URLs, and social metadata.</p>
   <p>When the site needs structured data for search or graph views, generate JSON indexes from the same source set, including <code>/ai/graph.json</code>:</p>
   <pre><code>pnpm papyrus-ai-indexes src/content/posts public/ai "$SITE_URL" public/demo/site-data.json</code></pre>

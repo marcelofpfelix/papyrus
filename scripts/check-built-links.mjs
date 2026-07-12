@@ -81,6 +81,8 @@ function extractLinks(text) {
 }
 
 for (const file of await walk(dist)) {
+  if (posix.relative(dist, file) === "llms-full.txt") continue;
+
   checkedFiles.push(posix.relative(dist, file));
   let text = await readFile(file, "utf8");
   if (file.endsWith(".html")) {

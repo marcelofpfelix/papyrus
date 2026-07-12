@@ -1,0 +1,51 @@
+---
+import PapyrusContentIndex from "./PapyrusContentIndex.astro";
+import { collectionPostHref, collectionPostsForSection, collectionSectionId, type PapyrusCollection } from "../utils/collections";
+import { postSlug } from "../utils/posts";
+
+interface Props {
+  collection: PapyrusCollection;
+  basePath?: string;
+  showDescriptions?: boolean;
+  currentSlug?: string;
+}
+
+const { collection, basePath = `/collections/${collection.slug}`, showDescriptions = true, currentSlug } = Astro.props as Props;
+
+const sectionPostIds = new Set<string>();
+const sectionItems = collection.sections.map(section => {
+  const posts = collectionPostsForSection(collection, section.name);
+  posts.forEach(post => sectionPostIds.add(post.id));
+
+  return {
+    id: collectionSectionId(section.name),
+    title: section.name,
+    description: showDescriptions ? section.description : undefined,
+    children: posts.map(post => ({
+      title: post.data.title,
+      href: collectionPostHref(collection, post, basePath),
+      description: showDescriptions ? post.data.description : undefined,
+      source: "post" as const,
+      current: postSlug(post) === currentSlug,
+    })),
+  };
+});
+const loosePosts = collection.posts.filter(post => !sectionPostIds.has(post.id));
+const items = loosePosts.length > 0
+  ? [
+      ...sectionItems,
+      {
+        title: "Posts",
+        children: loosePosts.map(post => ({
+          title: post.data.title,
+          href: collectionPostHref(collection, post, basePath),
+          description: showDescriptions ? post.data.description : undefined,
+          source: "post" as const,
+          current: postSlug(post) === currentSlug,
+        })),
+      },
+    ]
+  : sectionItems;
+---
+
+<PapyrusContentIndex items={items} />

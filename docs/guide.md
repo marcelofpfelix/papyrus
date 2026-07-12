@@ -345,7 +345,7 @@ fn main() {
 ```
 ````
 
-The package demo includes `/docs/code-demo/`, which exercises Rust titles, line
+The package demo includes `/collections/docs/code-demo/`, which exercises Rust titles, line
 numbers, language labels, Pure copy buttons, diff notation, highlight notation,
 console fences, and collapsed long code through the current Astro markdown
 pipeline. Browser behavior and visual quality are tracked separately in
@@ -651,7 +651,7 @@ Supported capability kinds:
 - `route`
 - `data`
 
-The docs demo includes `/docs/features/` with copyable examples and a rendered
+The docs collection includes `/collections/docs/features/` with copyable examples and a rendered
 plugin capability list.
 
 The repository also ships a tiny external package fixture at
@@ -931,7 +931,7 @@ const user = normalizeJekyllCvUser(parse(source));
 <PapyrusCvA4Page user={user} template="classic" />
 ```
 
-The package demo includes `/demo/users.toml` and `/docs/cv-data/` to show the
+The package demo includes `/demo/users.toml` and profile routes to show the
 input style. The rendered demo uses the same
 upstream-shaped sample content so the component examples exercise long prose,
 dated ranges, logos, links, section pages, profile facts, and A4 output.

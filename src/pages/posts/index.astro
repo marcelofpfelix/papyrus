@@ -10,6 +10,7 @@ import { withBase } from "../../utils/withBase";
 const posts = sortPostsWithPinned(publishedPosts(demoPosts));
 const archivedPosts = hiddenPosts(demoPosts);
 const visiblePosts = posts.slice(0, demoSite.postListLimit);
+const hasMorePosts = posts.length > visiblePosts.length;
 const postListProps = {
   showTags: demoSite.post_card.tags,
   showReadTime: demoSite.post_card.read_time,
@@ -72,8 +73,13 @@ function icon(name: string) {
       view="list"
       {...postListProps}
     />
-    <p class="papyrus-section-more">
-      <a href={withBase("/posts/timeline/")}>view all</a>
-    </p>
+    {
+      hasMorePosts && (
+        <p class="papyrus-section-more papyrus-section-more-with-count">
+          <span>{visiblePosts.length} of {posts.length} posts</span>
+          <a href={withBase("/posts/timeline/")}>show all</a>
+        </p>
+      )
+    }
   </section>
 </PapyrusBaseLayout>

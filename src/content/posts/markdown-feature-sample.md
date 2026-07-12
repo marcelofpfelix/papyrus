@@ -12,11 +12,6 @@ tags:
   - theme
   - authoring
   - custom
-docs:
-  section: authoring
-  order: 20
-  title: Markdown authoring guide
-  description: Post-as-doc guide for Markdown, callouts, task lists, tables, media, diagrams, and link previews.
 ---
 
 Papyrus keeps authoring close to regular Astro Markdown. A post stays readable
@@ -186,7 +181,7 @@ Shell:
 ```sh
 pnpm install
 pnpm build
-pnpm papyrus-llms src/content/posts public "$SITE_URL" src/pages/docs
+pnpm papyrus-llms src/content/posts public "$SITE_URL"
 ```
 
 ## Mermaid

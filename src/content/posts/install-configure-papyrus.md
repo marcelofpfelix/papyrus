@@ -10,11 +10,6 @@ tags:
   - papyrus
   - astro
   - docs
-docs:
-  section: start
-  order: 5
-  title: Install and configure Papyrus
-  description: Template-first setup for a Papyrus site.
 ---
 
 The recommended way to start a Papyrus site is to use `papyrus-template`. The

@@ -37,6 +37,516 @@
     "draft": false
   },
   {
+    "id": "post:code-demo",
+    "type": "post",
+    "slug": "code-demo",
+    "url": "https://papyrus.marcelofelix.com/posts/code-demo/",
+    "sourcePath": "src/content/posts/docs/authoring/10-code-demo.md",
+    "title": "Markdown code guide",
+    "description": "Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.",
+    "excerpt": "This route is a compact rendering reference for Markdown-heavy posts. It shows how callouts, code fences, tables, diagrams, media, and fallback artifact links look inside the same article layout used by regular Papyrus posts. Obsidian callout syntax > [!NOTE] > Notes render as th",
+    "tags": [
+      "authoring",
+      "markdown",
+      "code"
+    ],
+    "license": "",
+    "created": "2026-07-01T13:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:content-structure",
+    "type": "post",
+    "slug": "content-structure",
+    "url": "https://papyrus.marcelofelix.com/posts/content-structure/",
+    "sourcePath": "src/content/posts/docs/authoring/11-content-structure.md",
+    "title": "Generated content structure",
+    "description": "How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.",
+    "excerpt": "Use folder metadata when a site needs nested notes, guides, or knowledge-base pages without turning source paths into fragile public URLs. What gets generated Papyrus can read a folder tree, combine explicit frontmatter with folder-level labels, and render a public index that sti",
+    "tags": [
+      "papyrus",
+      "docs",
+      "content"
+    ],
+    "license": "",
+    "created": "2026-07-01T13:10:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:deploy",
+    "type": "post",
+    "slug": "deploy",
+    "url": "https://papyrus.marcelofelix.com/posts/deploy/",
+    "sourcePath": "src/content/posts/docs/deploy/30-deploy.md",
+    "title": "Deploy Papyrus",
+    "description": "Static hosting, build settings, metadata URLs, and base-path notes for a Papyrus site.",
+    "excerpt": "Papyrus builds to static Astro output, so a consuming site can publish the generated `dist` directory to any static host. Local preview Use the local development server while editing content, routes, and theme configuration. For a production-shaped preview, build first and serve ",
+    "tags": [
+      "deploy",
+      "docs",
+      "astro"
+    ],
+    "license": "",
+    "created": "2026-07-01T15:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:feature-map",
+    "type": "post",
+    "slug": "feature-map",
+    "url": "https://papyrus.marcelofelix.com/posts/feature-map/",
+    "sourcePath": "src/content/posts/docs/references/20-feature-map.md",
+    "title": "Feature map",
+    "description": "Route-by-route guide to public Papyrus features.",
+    "excerpt": "Every public feature has a route that shows how a consuming site can use it. Start here when exploring Papyrus. Feature map - [Install and configure Papyrus](/posts/install-configure-papyrus/) covers the template-first setup flow. - [Layout, header, footer, and theme controls](/)",
+    "tags": [
+      "papyrus",
+      "docs",
+      "reference"
+    ],
+    "license": "",
+    "created": "2026-07-01T14:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:ai-mobile",
+    "type": "post",
+    "slug": "ai-mobile",
+    "url": "https://papyrus.marcelofelix.com/posts/ai-mobile/",
+    "sourcePath": "src/content/posts/docs/references/21-ai-mobile.md",
+    "title": "AI and mobile readiness",
+    "description": "AI metadata, generated indexes, and mobile-ready defaults in a Papyrus site.",
+    "excerpt": "Papyrus ships useful agent-readable metadata, generated indexes, and responsive UI defaults for small content sites. AI-first primitives - Package-level `llms.txt` and `llms-full.txt` generation for agent-readable site summaries. - Static RSS feeds per tag. - Static JSON indexes ",
+    "tags": [
+      "ai",
+      "mobile",
+      "docs"
+    ],
+    "license": "",
+    "created": "2026-07-01T14:10:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:papyrus-docs",
+    "type": "post",
+    "slug": "papyrus-docs",
+    "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/",
+    "sourcePath": "src/content/posts/docs/start/00-papyrus-docs.md",
+    "title": "Papyrus docs",
+    "description": "Package docs for installing, composing, and extending Papyrus without copying a full theme into every site.",
+    "excerpt": "Papyrus keeps consuming sites focused on content and config. The theme package owns reusable layouts, post rendering, collections, generated metadata, search, RSS, project cards, and profile/CV surfaces. Start points - [Install and configure Papyrus](/posts/install-configure-papy",
+    "tags": [
+      "papyrus",
+      "docs",
+      "astro"
+    ],
+    "license": "",
+    "created": "2026-07-01T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:features",
+    "type": "post",
+    "slug": "features",
+    "url": "https://papyrus.marcelofelix.com/posts/features/",
+    "sourcePath": "src/content/posts/docs/start/01-features.md",
+    "title": "Feature config",
+    "description": "Grouped feature toggles for Papyrus layouts.",
+    "excerpt": "Use one typed config object to disable optional layout and post features without copying theme components. Base layout Post layout SEO and social metadata Papyrus layouts emit the metadata a small public site normally needs: titles, descriptions, canonical URLs, Open Graph, Twitt",
+    "tags": [
+      "papyrus",
+      "docs",
+      "config"
+    ],
+    "license": "",
+    "created": "2026-07-01T09:10:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:choco-frito",
+    "type": "post",
+    "slug": "choco-frito",
+    "url": "https://papyrus.marcelofelix.com/posts/choco-frito/",
+    "sourcePath": "src/content/posts/food/fish/00-choco-frito.md",
+    "title": "Choco Frito",
+    "description": "Setubal-style fried cuttlefish strips served with lemon, fries, and salad.",
+    "excerpt": "Choco Frito is crisp fried cuttlefish, strongly associated with Setubal. Ingredients - Cuttlefish strips - Garlic, bay leaf, and lemon - Flour or cornmeal - Oil for frying - Fries and salad Method Season the cuttlefish, coat lightly, fry until crisp, and serve with lemon and simp",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-10-20T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:bacalhau-a-bras",
+    "type": "post",
+    "slug": "bacalhau-a-bras",
+    "url": "https://papyrus.marcelofelix.com/posts/bacalhau-a-bras/",
+    "sourcePath": "src/content/posts/food/fish/01-bacalhau-a-bras.md",
+    "title": "Bacalhau a Bras",
+    "description": "Shredded salt cod folded with onions, matchstick potatoes, eggs, olives, and parsley.",
+    "excerpt": "Bacalhau a Bras is one of the most familiar Portuguese cod dishes. Ingredients - Desalted shredded cod - Onion and garlic - Matchstick potatoes - Eggs - Black olives and parsley Method Soften the onion, add cod and potatoes, then fold in beaten eggs off direct heat so the mixture",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-01-20T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:ameijoas-a-bulhao-pato",
+    "type": "post",
+    "slug": "ameijoas-a-bulhao-pato",
+    "url": "https://papyrus.marcelofelix.com/posts/ameijoas-a-bulhao-pato/",
+    "sourcePath": "src/content/posts/food/fish/02-ameijoas-a-bulhao-pato.md",
+    "title": "Ameijoas a Bulhao Pato",
+    "description": "Clams cooked quickly with garlic, olive oil, white wine, coriander, and lemon.",
+    "excerpt": "Ameijoas a Bulhao Pato is a fast clam dish with a bright garlic-coriander sauce. Ingredients - Fresh clams - Garlic - Olive oil - White wine - Coriander and lemon Method Cook garlic in olive oil, add clams and wine, cover until opened, then finish with coriander and lemon.",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-09-20T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:bacalhau-com-natas",
+    "type": "post",
+    "slug": "bacalhau-com-natas",
+    "url": "https://papyrus.marcelofelix.com/posts/bacalhau-com-natas/",
+    "sourcePath": "src/content/posts/food/fish/03-bacalhau-com-natas.md",
+    "title": "Bacalhau com Natas",
+    "description": "Salt cod baked with potatoes, onion, cream, and a golden breadcrumb top.",
+    "excerpt": "Bacalhau com Natas is a creamy baked cod dish with potatoes and onion. Ingredients - Desalted cod flakes - Potatoes - Onion and garlic - Cream or bechamel - Breadcrumbs Method Layer cod, potatoes, and onion in a baking dish, cover with cream sauce, and bake until bubbling and gol",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-02-20T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:cataplana-de-peixe",
+    "type": "post",
+    "slug": "cataplana-de-peixe",
+    "url": "https://papyrus.marcelofelix.com/posts/cataplana-de-peixe/",
+    "sourcePath": "src/content/posts/food/fish/04-cataplana-de-peixe.md",
+    "title": "Cataplana de Peixe",
+    "description": "Fish and shellfish steamed with tomato, pepper, onion, herbs, and white wine.",
+    "excerpt": "Cataplana de Peixe uses a sealed pan to steam fish with vegetables and wine. Ingredients - Firm white fish - Clams or prawns - Tomato, pepper, onion, and garlic - White wine - Coriander and olive oil Method Layer everything in the cataplana, close it, and cook until the fish is j",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-08-20T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:bacalhau-a-gomes-de-sa",
+    "type": "post",
+    "slug": "bacalhau-a-gomes-de-sa",
+    "url": "https://papyrus.marcelofelix.com/posts/bacalhau-a-gomes-de-sa/",
+    "sourcePath": "src/content/posts/food/fish/05-bacalhau-a-gomes-de-sa.md",
+    "title": "Bacalhau a Gomes de Sa",
+    "description": "Oven-baked cod with potatoes, onions, eggs, olives, parsley, and olive oil.",
+    "excerpt": "Bacalhau a Gomes de Sa is a Porto cod classic with potatoes and plenty of olive oil. Ingredients - Desalted cod - Potatoes - Onion and garlic - Hard-boiled eggs - Olives, parsley, and olive oil Method Bake cod, sliced potatoes, and onions together, then finish with eggs, olives, ",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-03-20T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:polvo-a-lagareiro",
+    "type": "post",
+    "slug": "polvo-a-lagareiro",
+    "url": "https://papyrus.marcelofelix.com/posts/polvo-a-lagareiro/",
+    "sourcePath": "src/content/posts/food/fish/06-polvo-a-lagareiro.md",
+    "title": "Polvo a Lagareiro",
+    "description": "Tender octopus roasted with punched potatoes, garlic, olive oil, and greens.",
+    "excerpt": "Polvo a Lagareiro is tender octopus with roasted potatoes and generous olive oil. Ingredients - Octopus - Small potatoes - Garlic - Olive oil - Greens for serving Method Simmer the octopus until tender, roast it with crushed potatoes and garlic, then finish with plenty of hot oli",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-07-20T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:sardinhas-assadas",
+    "type": "post",
+    "slug": "sardinhas-assadas",
+    "url": "https://papyrus.marcelofelix.com/posts/sardinhas-assadas/",
+    "sourcePath": "src/content/posts/food/fish/07-sardinhas-assadas.md",
+    "title": "Sardinhas Assadas",
+    "description": "Grilled sardines served with roasted peppers, potatoes, bread, and olive oil.",
+    "excerpt": "Sardinhas Assadas are simple grilled sardines, especially popular in summer. Ingredients - Fresh sardines - Coarse salt - Roasted peppers - Boiled potatoes - Bread and olive oil Method Salt the sardines, grill over high heat, and serve immediately with potatoes, peppers, bread, a",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-04-20T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:arroz-de-marisco",
+    "type": "post",
+    "slug": "arroz-de-marisco",
+    "url": "https://papyrus.marcelofelix.com/posts/arroz-de-marisco/",
+    "sourcePath": "src/content/posts/food/fish/08-arroz-de-marisco.md",
+    "title": "Arroz de Marisco",
+    "description": "Brothy seafood rice with prawns, clams, mussels, tomato, coriander, and stock.",
+    "excerpt": "Arroz de Marisco is saucy seafood rice, served loose rather than dry. Ingredients - Short-grain rice - Prawns, clams, and mussels - Tomato, onion, garlic, and pepper - Seafood stock - Coriander Method Cook the rice in seafood stock and tomato base, then add shellfish near the end",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-06-20T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:caldeirada-de-peixe",
+    "type": "post",
+    "slug": "caldeirada-de-peixe",
+    "url": "https://papyrus.marcelofelix.com/posts/caldeirada-de-peixe/",
+    "sourcePath": "src/content/posts/food/fish/09-caldeirada-de-peixe.md",
+    "title": "Caldeirada de Peixe",
+    "description": "Layered fish stew with potatoes, peppers, tomatoes, onions, herbs, and olive oil.",
+    "excerpt": "Caldeirada de Peixe is a layered fisherman's stew built without much stirring. Ingredients - Mixed firm fish - Potatoes - Tomato, pepper, onion, and garlic - White wine - Parsley, coriander, and olive oil Method Layer vegetables and fish in a pot, season well, cover, and simmer g",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-05-20T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:cozido-a-portuguesa",
+    "type": "post",
+    "slug": "cozido-a-portuguesa",
+    "url": "https://papyrus.marcelofelix.com/posts/cozido-a-portuguesa/",
+    "sourcePath": "src/content/posts/food/meat/10-cozido-a-portuguesa.md",
+    "title": "Cozido a Portuguesa",
+    "description": "A slow Portuguese meat and vegetable stew with cabbage, potatoes, sausages, and beef.",
+    "excerpt": "Cozido a Portuguesa is a generous one-pot meal built from meats, smoked sausages, cabbage, potatoes, carrots, and turnips. Ingredients - Beef shank or brisket - Pork ribs or belly - Chourico and farinheira - Cabbage, potatoes, carrots, and turnips - Salt, pepper, and bay leaf Met",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-01-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:leitao-a-bairrada",
+    "type": "post",
+    "slug": "leitao-a-bairrada",
+    "url": "https://papyrus.marcelofelix.com/posts/leitao-a-bairrada/",
+    "sourcePath": "src/content/posts/food/meat/11-leitao-a-bairrada.md",
+    "title": "Leitao a Bairrada",
+    "description": "Crisp roast suckling pig seasoned with garlic, pepper, lard, and salt.",
+    "excerpt": "Leitao a Bairrada is famous for crisp skin, peppery seasoning, and juicy meat. Ingredients - Suckling pig - Garlic, coarse salt, pepper, and lard - Bay leaf - Orange slices for serving - Simple salad or chips Method Rub the pig with seasoning, roast until the skin is crisp, and s",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-10-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:carne-de-porco-a-alentejana",
+    "type": "post",
+    "slug": "carne-de-porco-a-alentejana",
+    "url": "https://papyrus.marcelofelix.com/posts/carne-de-porco-a-alentejana/",
+    "sourcePath": "src/content/posts/food/meat/12-carne-de-porco-a-alentejana.md",
+    "title": "Carne de Porco a Alentejana",
+    "description": "Marinated pork cubes cooked with clams, fried potatoes, coriander, and pickles.",
+    "excerpt": "Carne de Porco a Alentejana pairs paprika-marinated pork with clams and crisp potatoes. Ingredients - Pork shoulder, cut into cubes - Garlic, paprika, bay leaf, and white wine - Clams - Potatoes for frying - Coriander and pickled vegetables Method Marinate the pork, brown it, the",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-02-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:prego-no-prato",
+    "type": "post",
+    "slug": "prego-no-prato",
+    "url": "https://papyrus.marcelofelix.com/posts/prego-no-prato/",
+    "sourcePath": "src/content/posts/food/meat/13-prego-no-prato.md",
+    "title": "Prego no Prato",
+    "description": "Garlic steak served on a plate with fries, rice, egg, salad, and mustard.",
+    "excerpt": "Prego no Prato is the plated version of the Portuguese garlic steak sandwich. Ingredients - Thin beef steak - Garlic, butter, and bay leaf - Fried egg - Rice, fries, and salad - Mustard Method Sear the steak in garlic butter, fry the egg, and serve with the classic sides and a sp",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-09-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:francesinha",
+    "type": "post",
+    "slug": "francesinha",
+    "url": "https://papyrus.marcelofelix.com/posts/francesinha/",
+    "sourcePath": "src/content/posts/food/meat/14-francesinha.md",
+    "title": "Francesinha",
+    "description": "Porto's layered sandwich with steak, sausage, ham, melted cheese, and beer-tomato sauce.",
+    "excerpt": "Francesinha is a rich Porto sandwich covered with melted cheese and a spicy beer-tomato sauce. Ingredients - Thick bread slices - Steak, fresh sausage, and ham - Sliced cheese - Tomato, beer, stock, and piri-piri for the sauce - Fries for serving Method Grill the meats, stack the",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-03-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:feijoada-a-transmontana",
+    "type": "post",
+    "slug": "feijoada-a-transmontana",
+    "url": "https://papyrus.marcelofelix.com/posts/feijoada-a-transmontana/",
+    "sourcePath": "src/content/posts/food/meat/15-feijoada-a-transmontana.md",
+    "title": "Feijoada a Transmontana",
+    "description": "Northern bean stew with pork, smoked sausages, cabbage, and rice.",
+    "excerpt": "Feijoada a Transmontana is a rich bean stew from the north, usually served with rice. Ingredients - Red or white beans - Pork ribs, ear, or belly - Chourico and morcela - Cabbage - Onion, garlic, paprika, and bay leaf Method Cook the beans and meats until soft, add cabbage near t",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-08-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:bitoque",
+    "type": "post",
+    "slug": "bitoque",
+    "url": "https://papyrus.marcelofelix.com/posts/bitoque/",
+    "sourcePath": "src/content/posts/food/meat/16-bitoque.md",
+    "title": "Bitoque",
+    "description": "A simple steak plate with fried egg, rice, fries, and a quick garlic pan sauce.",
+    "excerpt": "Bitoque is a weekday classic: thin steak, fried egg, rice, fries, and a savory pan sauce. Ingredients - Thin beef steaks - Garlic, bay leaf, and butter - Eggs - Rice and fries - Mustard or white wine for the sauce Method Sear the steaks quickly, loosen the pan with wine or mustar",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-04-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:tripas-a-moda-do-porto",
+    "type": "post",
+    "slug": "tripas-a-moda-do-porto",
+    "url": "https://papyrus.marcelofelix.com/posts/tripas-a-moda-do-porto/",
+    "sourcePath": "src/content/posts/food/meat/17-tripas-a-moda-do-porto.md",
+    "title": "Tripas a Moda do Porto",
+    "description": "Porto-style tripe stew with beans, smoked meats, carrot, and cumin.",
+    "excerpt": "Tripas a Moda do Porto is a hearty stew of tripe, beans, sausage, and aromatic spices. Ingredients - Cleaned tripe - White beans - Chourico and smoked meats - Onion, carrot, garlic, and bay leaf - Cumin and pepper Method Cook the tripe until tender, then stew it with beans and sm",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-07-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:arroz-de-pato",
+    "type": "post",
+    "slug": "arroz-de-pato",
+    "url": "https://papyrus.marcelofelix.com/posts/arroz-de-pato/",
+    "sourcePath": "src/content/posts/food/meat/18-arroz-de-pato.md",
+    "title": "Arroz de Pato",
+    "description": "Duck rice baked with broth, chourico, and a crisp golden top.",
+    "excerpt": "Arroz de Pato turns tender duck and its broth into a baked rice dish topped with chourico. Ingredients - Duck legs - Onion, garlic, bay leaf, and carrot - Rice - Chourico slices - Parsley Method Poach the duck, shred the meat, cook rice in the broth, then bake with chourico until",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-05-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:cabrito-assado",
+    "type": "post",
+    "slug": "cabrito-assado",
+    "url": "https://papyrus.marcelofelix.com/posts/cabrito-assado/",
+    "sourcePath": "src/content/posts/food/meat/19-cabrito-assado.md",
+    "title": "Cabrito Assado",
+    "description": "Roast kid goat with garlic, white wine, bay leaf, potatoes, and paprika.",
+    "excerpt": "Cabrito Assado is a celebratory roast, often served with potatoes and greens. Ingredients - Kid goat pieces - Garlic, bay leaf, paprika, and white wine - Olive oil - Potatoes - Parsley and lemon Method Marinate overnight, roast slowly with potatoes, and baste until the meat is te",
+    "tags": [
+      "recipe",
+      "portuguese-food"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2024-06-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:folder-tags-demo",
+    "type": "post",
+    "slug": "folder-tags-demo",
+    "url": "https://papyrus.marcelofelix.com/posts/folder-tags-demo/",
+    "sourcePath": "src/content/posts/guides/content-model/folder-tags.md",
+    "title": "Folder tags for nested posts",
+    "description": "Content-model guide showing stable slugs with automatic tags from source folders.",
+    "excerpt": "This post lives in `src/content/posts/guides/content-model/` to show how a nested source folder can add metadata without changing the public URL. The public URL uses the explicit `slug`, so the route stays stable even if the file moves later. Because it is not hidden, it appears ",
+    "tags": [
+      "astro"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2026-06-30T11:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
     "id": "post:install-configure-papyrus",
     "type": "post",
     "slug": "install-configure-papyrus",

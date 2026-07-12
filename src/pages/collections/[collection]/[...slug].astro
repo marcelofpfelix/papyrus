@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from "astro:content";
+import { PapyrusCollectionIndex } from "../../../components";
+import { demoNav, demoSocialLinks } from "../../../data/demo-nav";
+import PapyrusPostLayout from "../../../layouts/PapyrusPostLayout.astro";
+import { collectionOrderedPosts, collectionTocLinks, getPostCollections } from "../../../utils/collections";
+import { postSlug, postTags, readingTime } from "../../../utils/posts";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("posts");
+  const postsBySlug = new Map(allPosts.map(post => [postSlug(post), post]));
+  const collections = await getPostCollections("src/content/posts", allPosts);
+
+  return collections.flatMap(collection => collectionOrderedPosts(collection).flatMap((collectionPost, index, orderedPosts) => {
+    const slug = postSlug(collectionPost);
+    const post = postsBySlug.get(slug);
+    if (!post) return [];
+
+    return {
+      params: {
+        collection: collection.slug,
+        slug,
+      },
+      props: {
+        post,
+        collection,
+        adjacent: {
+          previous: index > 0 ? orderedPosts[index - 1] : undefined,
+          next: index < orderedPosts.length - 1 ? orderedPosts[index + 1] : undefined,
+        },
+      },
+    };
+  }));
+}
+
+const { post, collection, adjacent } = Astro.props;
+const { Content, headings } = await render(post);
+const slug = postSlug(post);
+const collectionBasePath = `/collections/${collection.slug}`;
+const sourcePath = post.filePath?.replace(/^.*?(src\/content\/posts\/)/, "$1") ?? `src/content/posts/${post.id}`;
+const sourceLinkUrl = `https://github.com/marcelofpfelix/papyrus/blob/main/${sourcePath}`;
+const sourceUrl = `https://raw.githubusercontent.com/marcelofpfelix/papyrus/main/${sourcePath}`;
+const showCollectionFooter = collection.settings.postFooter !== "none";
+const collectionFooterCollapsible = collection.settings.postFooterCollapsible;
+const collectionLinks = [
+  { href: collection.href, title: "View collection", depth: 2 },
+  ...collectionTocLinks(collection, collectionBasePath),
+];
+---
+
+<PapyrusPostLayout
+  title={post.data.title}
+  description={post.data.description}
+  siteTitle="papyrus"
+  pubDatetime={post.data.pubDatetime}
+  modDatetime={post.data.modDatetime}
+  cover={post.data.cover}
+  tags={postTags(post)}
+  readingTime={readingTime(post.body)}
+  headings={headings}
+  tocLinks={collectionLinks}
+  showToc={true}
+  canonicalUrl={`${collectionBasePath}/${slug}/`}
+  sourceUrl={sourceUrl}
+  sourceLinkUrl={sourceLinkUrl}
+  robots={post.data.robots}
+  previous={adjacent.previous}
+  next={adjacent.next}
+  adjacentBasePath={collectionBasePath}
+  backHref={`${collectionBasePath}/`}
+  morePostsHref={`${collectionBasePath}/`}
+  nav={demoNav}
+  socialLinks={demoSocialLinks}
+>
+  <Content />
+
+  {showCollectionFooter && (
+  <Fragment slot="after">
+    <section id="collection-posts" class="papyrus-section papyrus-collection-footer">
+      {collectionFooterCollapsible ? (
+        <details class="papyrus-collection-footer-details">
+          <summary><h2>{collection.name}</h2></summary>
+          <PapyrusCollectionIndex collection={collection} basePath={collectionBasePath} showDescriptions={false} currentSlug={slug} />
+        </details>
+      ) : (
+        <>
+          <h2>{collection.name}</h2>
+          <PapyrusCollectionIndex collection={collection} basePath={collectionBasePath} showDescriptions={false} currentSlug={slug} />
+        </>
+      )}
+    </section>
+  </Fragment>
+  )}
+</PapyrusPostLayout>

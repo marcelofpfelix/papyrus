@@ -17,12 +17,6 @@ export interface PapyrusPostEntry {
     category?: string;
     tags?: string[];
     editUrl?: string;
-    docs?: boolean | {
-      title?: string;
-      description?: string;
-      section?: string;
-      order?: number;
-    };
   };
   body?: string;
 }

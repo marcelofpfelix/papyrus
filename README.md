@@ -70,10 +70,10 @@ dependency during theme development.
 
 ## Documentation
 
-Open `/docs/` in the public Papyrus site. Package docs live at `/docs/`.
+Open `/collections/docs/` in the public Papyrus site. Package docs live as a post collection.
 `/posts/install-configure-papyrus/` explains the template-first setup,
-`/docs/feature-map/` links each public feature route, `/docs/code-demo/` and `/posts/markdown-feature-sample/` document authoring, and
-`/docs/features/` covers feature flags, SEO, accessibility, search, sitemap,
+`/collections/docs/feature-map/` links each public feature route, `/collections/docs/code-demo/` and `/posts/markdown-feature-sample/` document authoring, and
+`/collections/docs/features/` covers feature flags, SEO, accessibility, search, sitemap,
 robots.txt, and plugin-shaped extension points.
 
 `docs/guide.md` contains development reference material, `.agents/status-roadmap.md`

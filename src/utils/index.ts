@@ -1,5 +1,4 @@
 export * from "./posts";
-export * from "./docs";
 export * from "./cv";
 export * from "./cv-icons";
 export * from "./cv-profile-data";

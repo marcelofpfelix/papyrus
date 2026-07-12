@@ -5,18 +5,65 @@
   Updated: 2026-07-01T12:00:00.000Z
 - [Dark mode and search in Papyrus](https://papyrus.marcelofelix.com/posts/dark-mode-and-search/) - The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.
   Updated: 2026-06-30T11:15:00.000Z
+- [Markdown code guide](https://papyrus.marcelofelix.com/posts/code-demo/) - Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.
+  Updated: 2026-07-01T13:00:00.000Z
+- [Generated content structure](https://papyrus.marcelofelix.com/posts/content-structure/) - How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.
+  Updated: 2026-07-01T13:10:00.000Z
+- [Deploy Papyrus](https://papyrus.marcelofelix.com/posts/deploy/) - Static hosting, build settings, metadata URLs, and base-path notes for a Papyrus site.
+  Updated: 2026-07-01T15:00:00.000Z
+- [Feature map](https://papyrus.marcelofelix.com/posts/feature-map/) - Route-by-route guide to public Papyrus features.
+  Updated: 2026-07-01T14:00:00.000Z
+- [AI and mobile readiness](https://papyrus.marcelofelix.com/posts/ai-mobile/) - AI metadata, generated indexes, and mobile-ready defaults in a Papyrus site.
+  Updated: 2026-07-01T14:10:00.000Z
+- [Papyrus docs](https://papyrus.marcelofelix.com/posts/papyrus-docs/) - Package docs for installing, composing, and extending Papyrus without copying a full theme into every site.
+  Updated: 2026-07-01T09:00:00.000Z
+- [Feature config](https://papyrus.marcelofelix.com/posts/features/) - Grouped feature toggles for Papyrus layouts.
+  Updated: 2026-07-01T09:10:00.000Z
+- [Choco Frito](https://papyrus.marcelofelix.com/posts/choco-frito/) - Setubal-style fried cuttlefish strips served with lemon, fries, and salad.
+  Updated: 2024-10-20T09:00:00.000Z
+- [Bacalhau a Bras](https://papyrus.marcelofelix.com/posts/bacalhau-a-bras/) - Shredded salt cod folded with onions, matchstick potatoes, eggs, olives, and parsley.
+  Updated: 2024-01-20T09:00:00.000Z
+- [Ameijoas a Bulhao Pato](https://papyrus.marcelofelix.com/posts/ameijoas-a-bulhao-pato/) - Clams cooked quickly with garlic, olive oil, white wine, coriander, and lemon.
+  Updated: 2024-09-20T09:00:00.000Z
+- [Bacalhau com Natas](https://papyrus.marcelofelix.com/posts/bacalhau-com-natas/) - Salt cod baked with potatoes, onion, cream, and a golden breadcrumb top.
+  Updated: 2024-02-20T09:00:00.000Z
+- [Cataplana de Peixe](https://papyrus.marcelofelix.com/posts/cataplana-de-peixe/) - Fish and shellfish steamed with tomato, pepper, onion, herbs, and white wine.
+  Updated: 2024-08-20T09:00:00.000Z
+- [Bacalhau a Gomes de Sa](https://papyrus.marcelofelix.com/posts/bacalhau-a-gomes-de-sa/) - Oven-baked cod with potatoes, onions, eggs, olives, parsley, and olive oil.
+  Updated: 2024-03-20T09:00:00.000Z
+- [Polvo a Lagareiro](https://papyrus.marcelofelix.com/posts/polvo-a-lagareiro/) - Tender octopus roasted with punched potatoes, garlic, olive oil, and greens.
+  Updated: 2024-07-20T09:00:00.000Z
+- [Sardinhas Assadas](https://papyrus.marcelofelix.com/posts/sardinhas-assadas/) - Grilled sardines served with roasted peppers, potatoes, bread, and olive oil.
+  Updated: 2024-04-20T09:00:00.000Z
+- [Arroz de Marisco](https://papyrus.marcelofelix.com/posts/arroz-de-marisco/) - Brothy seafood rice with prawns, clams, mussels, tomato, coriander, and stock.
+  Updated: 2024-06-20T09:00:00.000Z
+- [Caldeirada de Peixe](https://papyrus.marcelofelix.com/posts/caldeirada-de-peixe/) - Layered fish stew with potatoes, peppers, tomatoes, onions, herbs, and olive oil.
+  Updated: 2024-05-20T09:00:00.000Z
+- [Cozido a Portuguesa](https://papyrus.marcelofelix.com/posts/cozido-a-portuguesa/) - A slow Portuguese meat and vegetable stew with cabbage, potatoes, sausages, and beef.
+  Updated: 2024-01-10T09:00:00.000Z
+- [Leitao a Bairrada](https://papyrus.marcelofelix.com/posts/leitao-a-bairrada/) - Crisp roast suckling pig seasoned with garlic, pepper, lard, and salt.
+  Updated: 2024-10-10T09:00:00.000Z
+- [Carne de Porco a Alentejana](https://papyrus.marcelofelix.com/posts/carne-de-porco-a-alentejana/) - Marinated pork cubes cooked with clams, fried potatoes, coriander, and pickles.
+  Updated: 2024-02-10T09:00:00.000Z
+- [Prego no Prato](https://papyrus.marcelofelix.com/posts/prego-no-prato/) - Garlic steak served on a plate with fries, rice, egg, salad, and mustard.
+  Updated: 2024-09-10T09:00:00.000Z
+- [Francesinha](https://papyrus.marcelofelix.com/posts/francesinha/) - Porto's layered sandwich with steak, sausage, ham, melted cheese, and beer-tomato sauce.
+  Updated: 2024-03-10T09:00:00.000Z
+- [Feijoada a Transmontana](https://papyrus.marcelofelix.com/posts/feijoada-a-transmontana/) - Northern bean stew with pork, smoked sausages, cabbage, and rice.
+  Updated: 2024-08-10T09:00:00.000Z
+- [Bitoque](https://papyrus.marcelofelix.com/posts/bitoque/) - A simple steak plate with fried egg, rice, fries, and a quick garlic pan sauce.
+  Updated: 2024-04-10T09:00:00.000Z
+- [Tripas a Moda do Porto](https://papyrus.marcelofelix.com/posts/tripas-a-moda-do-porto/) - Porto-style tripe stew with beans, smoked meats, carrot, and cumin.
+  Updated: 2024-07-10T09:00:00.000Z
+- [Arroz de Pato](https://papyrus.marcelofelix.com/posts/arroz-de-pato/) - Duck rice baked with broth, chourico, and a crisp golden top.
+  Updated: 2024-05-10T09:00:00.000Z
+- [Cabrito Assado](https://papyrus.marcelofelix.com/posts/cabrito-assado/) - Roast kid goat with garlic, white wine, bay leaf, potatoes, and paprika.
+  Updated: 2024-06-10T09:00:00.000Z
+- [Folder tags for nested posts](https://papyrus.marcelofelix.com/posts/folder-tags-demo/) - Content-model guide showing stable slugs with automatic tags from source folders.
+  Updated: 2026-06-30T11:00:00.000Z
 - [Install and configure Papyrus](https://papyrus.marcelofelix.com/posts/install-configure-papyrus/) - Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides.
   Updated: 2026-07-10T09:00:00.000Z
 - [Markdown authoring guide](https://papyrus.marcelofelix.com/posts/markdown-feature-sample/) - A practical guide showing how Papyrus renders Markdown, callouts, code, media, diagrams, and source actions.
   Updated: 2026-06-30T10:00:00.000Z
 - [Papyrus package shape](https://papyrus.marcelofelix.com/posts/papyrus-package-shape/) - Package-boundary guide showing how Papyrus keeps repeated blog UI in reusable theme exports.
   Updated: 2026-06-30T11:00:00.000Z
-
-# Documentation URLs
-- [AI and mobile readiness](https://papyrus.marcelofelix.com/docs/ai-mobile/)
-- [Markdown code guide](https://papyrus.marcelofelix.com/docs/code-demo/)
-- [Generated content structure](https://papyrus.marcelofelix.com/docs/content-structure/)
-- [Deploy Papyrus](https://papyrus.marcelofelix.com/docs/deploy/)
-- [Feature map](https://papyrus.marcelofelix.com/docs/feature-map/)
-- [Feature config](https://papyrus.marcelofelix.com/docs/features/)
-- [Docs](https://papyrus.marcelofelix.com/docs/)

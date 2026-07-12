@@ -1,24 +1,75 @@
 ---
+import PapyrusTocHeading, { type TocItem } from "./PapyrusTocHeading.astro";
+
 interface Heading {
   depth: number;
   slug: string;
   text: string;
 }
 
+interface TocLink {
+  href: string;
+  title: string;
+  depth?: number;
+}
+
 interface Props {
   headings?: Heading[];
+  links?: TocLink[];
   title?: string;
+  panelTitle?: string;
+  linksTitle?: string;
   collapsed?: boolean;
 }
 
-const { headings = [], title = "On this page", collapsed = true } = Astro.props;
+const {
+  headings = [],
+  links = [],
+  title = "On this page",
+  panelTitle = "Table of contents",
+  linksTitle = "Sections",
+  collapsed = true,
+} = Astro.props;
 const visibleHeadings = headings.filter(heading => heading.depth > 1 && heading.depth <= 3);
+const headingItems = visibleHeadings.map(heading => ({
+  href: `#${heading.slug}`,
+  title: heading.text,
+  depth: heading.depth,
+}));
+const sectionItems = links.map(link => ({
+  href: link.href,
+  title: link.title,
+  depth: link.depth ?? 2,
+}));
+
+function generateToc(items: Array<{ href: string; title: string; depth: number }>): TocItem[] {
+  const root: TocItem = { depth: 0, href: "#", title: "Root", subheadings: [] };
+  const stack: TocItem[] = [root];
+
+  items.forEach(item => {
+    const heading: TocItem = { ...item, subheadings: [] };
+
+    while ((stack.at(-1)?.depth ?? 0) >= heading.depth) {
+      stack.pop();
+    }
+
+    stack.at(-1)?.subheadings.push(heading);
+    stack.push(heading);
+  });
+
+  return root.subheadings;
+}
+
+const tocItems = generateToc(headingItems);
+const sectionTocItems = generateToc(sectionItems);
+const hasHeadings = headingItems.length > 0;
+const hasSections = sectionItems.length > 0;
 ---
 
 {
-  visibleHeadings.length > 0 && (
-    <details class="papyrus-toc papyrus-floating-toc" open={!collapsed}>
-      <summary aria-label={title} title={title}>
+  (hasHeadings || hasSections) && (
+    <papyrus-toc-runtime class="papyrus-toc" data-open={collapsed ? "false" : "true"}>
+      <button class="papyrus-toc-toggle" type="button" aria-label={title} aria-expanded={collapsed ? "false" : "true"} title={title} data-papyrus-toc-toggle>
         <svg aria-hidden="true" viewBox="0 0 24 24">
           <path d="M8 6h13"></path>
           <path d="M8 12h13"></path>
@@ -28,17 +79,113 @@ const visibleHeadings = headings.filter(heading => heading.depth > 1 && heading.
           <path d="M3 18h.01"></path>
         </svg>
         <span class="papyrus-toc-label">{title}</span>
-      </summary>
-      <div class="papyrus-toc-panel">
-        <p class="papyrus-toc-title">Table of contents</p>
-        <ol>
-          {visibleHeadings.map(heading => (
-            <li style={`--papyrus-toc-depth: ${heading.depth - 2}`}>
-              <a href={`#${heading.slug}`}>{heading.text}</a>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </details>
+      </button>
+      <button class="papyrus-toc-shade" type="button" aria-label="Close table of contents" data-papyrus-toc-close></button>
+      <aside class="papyrus-toc-panel" aria-label={title} data-papyrus-toc-panel>
+        {hasHeadings && (
+          <>
+            <p class="papyrus-toc-title">{panelTitle}</p>
+            <ol>
+              {tocItems.map(item => <PapyrusTocHeading heading={item} />)}
+            </ol>
+          </>
+        )}
+        {hasSections && (
+          <>
+            <p class:list={["papyrus-toc-title", hasHeadings && "papyrus-toc-title--spaced"]}>{linksTitle}</p>
+            <ol>
+              {sectionTocItems.map(item => <PapyrusTocHeading heading={item} />)}
+            </ol>
+          </>
+        )}
+      </aside>
+    </papyrus-toc-runtime>
   )
 }
+
+<script>
+  class PapyrusTocRuntime extends HTMLElement {
+    headings: HTMLElement[] = [];
+    tocLinks: Array<{ element: HTMLAnchorElement; progressBar: HTMLElement; slug: string }> = [];
+    headingProgress: Record<string, { inView: boolean; progress: number }> = {};
+
+    connectedCallback() {
+      const toggle = this.querySelector("[data-papyrus-toc-toggle]");
+      const close = this.querySelector("[data-papyrus-toc-close]");
+      const setOpen = (open: boolean) => {
+        this.dataset.open = open ? "true" : "false";
+        toggle?.setAttribute("aria-expanded", open ? "true" : "false");
+      };
+
+      toggle?.addEventListener("click", () => setOpen(this.dataset.open !== "true"));
+      close?.addEventListener("click", () => setOpen(false));
+
+      this.headings = Array.from(document.querySelectorAll("article h1, article h2, article h3, article h4, article h5, article h6, main section[id] > h2, main .papyrus-content-index li[id]"))
+        .filter((heading): heading is HTMLElement => heading instanceof HTMLElement && Boolean(heading.id || heading.parentElement?.id));
+      this.tocLinks = Array.from(this.querySelectorAll("a[href^='#']")).flatMap(link => {
+        if (!(link instanceof HTMLAnchorElement)) return [];
+        const progressBar = link.previousElementSibling;
+        if (!(progressBar instanceof HTMLElement)) return [];
+
+        return [{
+          element: link,
+          progressBar,
+          slug: (link.getAttribute("href") ?? "").slice(1),
+        }];
+      });
+
+      this.tocLinks.forEach(link => {
+        link.element.addEventListener("click", event => {
+          const target = document.getElementById(link.slug);
+          if (!target) return;
+
+          event.preventDefault();
+          history.pushState(null, target.textContent ?? "", link.element.getAttribute("href"));
+          setOpen(false);
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+
+      this.updatePositionAndStyle();
+      window.addEventListener("scroll", this.updatePositionAndStyle, { passive: true });
+    }
+
+    disconnectedCallback() {
+      window.removeEventListener("scroll", this.updatePositionAndStyle);
+    }
+
+    updatePositionAndStyle = () => {
+      const windowHeight = window.innerHeight;
+
+      this.headings.forEach((heading, index) => {
+        const id = heading.id || heading.parentElement?.id;
+        if (!id) return;
+
+        const nextHeading = this.headings[index + 1];
+        const top = heading.getBoundingClientRect().top;
+        const nextTop = nextHeading?.getBoundingClientRect().top ?? document.body.getBoundingClientRect().bottom;
+        const range = Math.max(nextTop - top, 1);
+        const progress = (windowHeight - top) / range;
+
+        this.headingProgress[id] = {
+          inView: top < windowHeight * 0.4 && nextTop > 80,
+          progress: Math.max(0, Math.min(1, progress)),
+        };
+      });
+
+      this.tocLinks.forEach(({ element, progressBar, slug }) => {
+        const heading = this.headingProgress[slug];
+        if (!heading) return;
+
+        element.classList.toggle("is-active", heading.inView);
+        progressBar.classList.toggle("is-read", !heading.inView && heading.progress === 1);
+        progressBar.classList.toggle("is-active", heading.inView);
+        progressBar.style.setProperty("--papyrus-toc-progress", `${heading.progress * 90}%`);
+      });
+    };
+  }
+
+  if (!customElements.get("papyrus-toc-runtime")) {
+    customElements.define("papyrus-toc-runtime", PapyrusTocRuntime);
+  }
+</script>

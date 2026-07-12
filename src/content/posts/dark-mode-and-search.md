@@ -8,11 +8,6 @@ tags:
   - astro
   - search
   - dark-mode
-docs:
-  section: authoring
-  order: 40
-  title: Dark mode and search
-  description: Post-as-doc guide covering theme mode switching and the search entry point.
 ---
 
 The light and dark backgrounds stay close to the default Pure theme: neutral, quiet, and readable. Papyrus keeps color accents restrained so the content remains the main surface.

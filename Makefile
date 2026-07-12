@@ -32,7 +32,6 @@ pre:
 	pnpm run precommit
 	pnpm run check
 	pnpm run verify:readme
-	pnpm run verify:docs
 	pnpm run verify:package
 	pnpm run verify:release
 

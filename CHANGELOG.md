@@ -11,6 +11,15 @@
 - Add TOML-first site configuration, injected template pages, Pagefind-ready
   search, generated 404/robots/sitemap support, tag pages, and profile/CV
   print/AST exports for consuming sites.
+- Replace standalone docs routes with collection-backed docs posts and add
+  collection routes that preserve section order, collection-aware post
+  navigation, and compact collection membership links on normal post pages.
+- Add a Portuguese food recipe collection fixture with nested post folders,
+  collection TOML metadata, generated tag RSS feeds, and filename-ordered
+  collection navigation.
+- Align post index, timeline, tag, share/source, table-of-contents, and archive
+  behavior with the current Papyrus demo contract while keeping Lighthouse
+  category scores at 100 across generated routes.
 - Move consuming sites toward the published `astro-theme-papyrus` package
   instead of local `file:` dependencies.
 

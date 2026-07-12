@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>#config posts</title>
+    <link>/</link>
+    <description>Posts tagged #config</description>
+    <lastBuildDate>Wed, 01 Jul 2026 09:10:00 GMT</lastBuildDate>
+    <atom:link href="/rss/tags/config.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Feature config</title>
+      <link>/posts/features/</link>
+      <guid>/posts/features/</guid>
+      <pubDate>Wed, 01 Jul 2026 09:10:00 GMT</pubDate>
+      <description>Grouped feature toggles for Papyrus layouts.</description>
+    </item>
+  </channel>
+</rss>

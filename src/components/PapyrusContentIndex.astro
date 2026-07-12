@@ -2,10 +2,12 @@
 import { withBase } from "../utils/withBase";
 
 interface ContentIndexItem {
+  id?: string;
   title: string;
   href?: string;
   description?: string;
   source?: "doc" | "post";
+  current?: boolean;
   children?: ContentIndexItem[];
 }
 
@@ -28,11 +30,11 @@ function icon(name: string) {
 <ul class="papyrus-content-index">
   {
     items.map(item => (
-      <li>
+      <li id={item.id} class:list={{ "is-current": item.current }}>
         <div class="papyrus-content-index-row">
           <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon(item.children?.length ? "folder" : "file")} />
           <span>
-            {item.href ? <a href={withBase(item.href)}>{item.title}</a> : item.title}
+            {item.href ? <a href={withBase(item.href)} aria-current={item.current ? "page" : undefined}>{item.title}</a> : item.title}
             {item.description && <small>{item.description}</small>}
           </span>
         </div>

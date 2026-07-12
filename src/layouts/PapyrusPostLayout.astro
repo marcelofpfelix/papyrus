@@ -16,6 +16,12 @@ interface Heading {
   text: string;
 }
 
+interface TocLink {
+  href: string;
+  title: string;
+  depth?: number;
+}
+
 interface Props {
   title: string;
   description?: string;
@@ -33,6 +39,7 @@ interface Props {
   tags?: string[];
   readingTime?: string;
   headings?: Heading[];
+  tocLinks?: TocLink[];
   showToc?: boolean;
   tocCollapsed?: boolean;
   cover?: string;
@@ -52,6 +59,7 @@ interface Props {
   morePostsLabel?: string;
   previous?: { id: string; data: { title: string } };
   next?: { id: string; data: { title: string } };
+  adjacentBasePath?: string;
   nav?: Array<{ href: string; label: string }>;
   socialLinks?: Array<{ href: string; label: string; icon?: string }>;
   features?: PapyrusFeatureConfig;
@@ -83,6 +91,7 @@ const {
   tags = [],
   readingTime,
   headings = [],
+  tocLinks = [],
   showToc = false,
   tocCollapsed = true,
   cover,
@@ -102,6 +111,7 @@ const {
   morePostsLabel = "more posts",
   previous,
   next,
+  adjacentBasePath = "/posts",
   nav = [],
   socialLinks = [],
   features,
@@ -184,7 +194,7 @@ function icon(name: string) {
       <h1 transition:name={toTransitionName(title)}>{title}</h1>
       {description && <p class="papyrus-description">{description}</p>}
     </header>
-    {resolvedFeatures.toc && <PapyrusToc headings={headings} collapsed={tocCollapsed} />}
+    {resolvedFeatures.toc && <PapyrusToc headings={headings} links={tocLinks} collapsed={tocCollapsed} />}
     <div class="papyrus-prose">
       <slot />
     </div>
@@ -298,7 +308,7 @@ function icon(name: string) {
         </footer>
       )
     }
-    {resolvedFeatures.adjacentPosts && <PapyrusAdjacentPosts previous={previous} next={next} />}
+    {resolvedFeatures.adjacentPosts && <PapyrusAdjacentPosts previous={previous} next={next} basePath={adjacentBasePath} />}
   </article>
   {((resolvedFeatures.sourceActions && (sourceUrl || resolvedSourceLinkUrl)) || resolvedFeatures.share) && <PapyrusPostActionsRuntime />}
   {(resolvedFeatures.artifactLinks || resolvedFeatures.imageZoom || resolvedFeatures.mermaid) && (

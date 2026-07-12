@@ -1,9 +1,9 @@
 ---
-layout: ../../layouts/PapyrusPostLayout.astro
 title: Markdown code guide
 description: Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.
-siteTitle: papyrus
+slug: code-demo
 pubDatetime: 2026-07-01T13:00:00.000Z
+category: Docs
 tags:
   - authoring
   - markdown
@@ -27,46 +27,16 @@ look inside the same article layout used by regular Papyrus posts.
 > Important callouts use their own icon and color so they are distinct from tips.
 
 > [!WARNING]
-> Warning, tip, important, and caution variants use theme tokens instead
-> of hardcoded colors.
+> Warning variants use warning tokens instead of hardcoded colors.
 
 > [!CAUTION]
 > Caution callouts stay readable in light and dark modes.
-
-> [!INFO]
-> Neutral context can use the broader Obsidian callout set, not only the
-> GitHub five alert variants.
-
-> [!SUCCESS]
-> Success callouts render with their own icon and color.
-
-> [!WARNING]- Collapsed warning
-> This content starts collapsed without any client-side JavaScript.
-
-> [!TIP]+ Expanded tip
-> This content starts open and can be collapsed.
 
 ## Code title
 
 ```rust title="src/main.rs"
 fn main() {
     println!("papyrus");
-}
-```
-
-## Rust block
-
-```rust
-struct ThemeProfile {
-    name: &'static str,
-    dark_mode: bool,
-}
-
-fn active_profile() -> ThemeProfile {
-    ThemeProfile {
-        name: "gruvbox",
-        dark_mode: true,
-    }
 }
 ```
 
@@ -99,40 +69,11 @@ site# pnpm build
 site> pnpm preview
 ```
 
-## Collapsed block
-
-```rust title="src/server.rs"
-fn boot() {
-    println!("line 1");
-    println!("line 2");
-    println!("line 3");
-    println!("line 4");
-    println!("line 5");
-    println!("line 6");
-    println!("line 7");
-    println!("line 8");
-    println!("line 9");
-    println!("line 10");
-    println!("line 11");
-    println!("line 12");
-    println!("line 13");
-    println!("line 14");
-    println!("line 15");
-    println!("line 16");
-}
-```
-
 ## Task list
 
 - [x] Keep feature walkthroughs explicit
 - [ ] Document the source files beside rendered artifacts
 - [ ] Choose a renderer before embedding external diagram formats
-
-## GitHub-style inline Markdown
-
-Autolinks like https://github.com/marcelofpfelix/papyrus stay
-clickable, `inline code` keeps code styling, and ~~strikethrough~~ stays
-visible when the markdown pipeline supports it.
 
 ## Table
 
@@ -166,10 +107,3 @@ flowchart LR
 Some GitHub-style or diagram-adjacent formats need a site-owned plugin or
 renderer. Papyrus keeps the source visible so authors can choose the right
 integration for their site.
-
-| Case | Theme behavior |
-| --- | --- |
-| PlantUML inline rendering | Keep as a file link until a renderer is configured. |
-| Excalidraw inline rendering | Keep as a file link until an export or render path is configured. |
-| Wiki links like `[[topic]]` | Keep as plain text unless a backlink plugin is added. |
-| Footnotes like `[^1]` | Render when a consuming site adds a footnote plugin. |

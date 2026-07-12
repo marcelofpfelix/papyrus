@@ -12,11 +12,6 @@ tags:
   - papyrus
   - changelog
 featured: true
-docs:
-  section: start
-  order: 30
-  title: Theme package shape
-  description: Post-as-doc overview of the package boundary between site content and reusable Papyrus UI.
 ---
 
 Papyrus is meant to keep the site repo focused. The consuming site owns content,
