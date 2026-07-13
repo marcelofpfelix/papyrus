@@ -40,11 +40,5 @@ jobs:
 
       - name: Verify package and docs
         run: |
-          pnpm run verify:readme
-          pnpm run verify:docs
-          pnpm run verify:package
+          make pre
           pnpm run verify:config
-          pnpm run verify:markdown
-          pnpm run verify:pure-parity
-          pnpm run verify:public-content
-          pnpm run verify:release
