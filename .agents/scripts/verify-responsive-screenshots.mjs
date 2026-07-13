@@ -10,11 +10,11 @@ const dist = join(root, "dist");
 const outputDir = join(root, ".screenshots", "responsive");
 
 const routes = [
-  { name: "home", path: "/", required: [".paper-header", ".paper-footer", ".paper-post-list"] },
-  { name: "posts", path: "/posts/", required: [".paper-header", ".paper-footer", ".paper-post-list"] },
-  { name: "code-demo", path: "/docs/code-demo/", required: [".paper-header", ".paper-footer", ".astro-code"] },
-  { name: "cv-profile", path: "/posts/cv-profile/", required: [".paper-header", ".paper-footer", ".paper-link-preview"] },
-  { name: "cv-demo", path: "/docs/cv-demo/", required: [".paper-header", ".paper-footer", ".paper-cv-controls", ".paper-cv"] },
+  { name: "home", path: "/", required: [".papyrus-header", ".papyrus-footer", ".papyrus-post-list"] },
+  { name: "posts", path: "/posts/", required: [".papyrus-header", ".papyrus-footer", ".papyrus-post-list"] },
+  { name: "code-demo", path: "/docs/code-demo/", required: [".papyrus-header", ".papyrus-footer", ".astro-code"] },
+  { name: "cv-profile", path: "/posts/cv-profile/", required: [".papyrus-header", ".papyrus-footer", ".papyrus-link-preview"] },
+  { name: "cv-demo", path: "/docs/cv-demo/", required: [".papyrus-header", ".papyrus-footer", ".papyrus-cv-controls", ".papyrus-cv"] },
 ];
 
 const viewports = [
@@ -100,15 +100,15 @@ async function pageState(page, requiredSelectors) {
     const body = document.body;
     const html = document.documentElement;
     const controls = Array.from(document.querySelectorAll([
-      ".paper-header a",
-      ".paper-header button",
-      ".paper-header summary",
-      ".paper-footer button",
-      ".paper-footer summary",
-      ".paper-mobile-nav a",
-      ".paper-post-tools button",
-      ".paper-share-button",
-      ".paper-cv-controls button",
+      ".papyrus-header a",
+      ".papyrus-header button",
+      ".papyrus-header summary",
+      ".papyrus-footer button",
+      ".papyrus-footer summary",
+      ".papyrus-mobile-nav a",
+      ".papyrus-post-tools button",
+      ".papyrus-share-button",
+      ".papyrus-cv-controls button",
     ].join(", ")));
     const smallTargets = controls
       .map((element) => {
@@ -123,8 +123,8 @@ async function pageState(page, requiredSelectors) {
 
     return {
       bodyTextLength: body.innerText.trim().length,
-      headerVisible: Boolean(document.querySelector(".paper-header")?.getBoundingClientRect().height),
-      footerVisible: Boolean(document.querySelector(".paper-footer")?.getBoundingClientRect().height),
+      headerVisible: Boolean(document.querySelector(".papyrus-header")?.getBoundingClientRect().height),
+      footerVisible: Boolean(document.querySelector(".papyrus-footer")?.getBoundingClientRect().height),
       mainVisible: Boolean(main?.getBoundingClientRect().height),
       missingSelectors: selectors.filter((selector) => !document.querySelector(selector)),
       overflowX: Math.max(body.scrollWidth, html.scrollWidth) - window.innerWidth,

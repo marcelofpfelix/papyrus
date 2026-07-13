@@ -1,0 +1,57 @@
+---
+interface Props {
+  enabled?: boolean;
+  repo?: string;
+  repoId?: string;
+  category?: string;
+  categoryId?: string;
+  mapping?: "pathname" | "url" | "title" | "og:title" | "specific" | "number";
+  reactionsEnabled?: boolean;
+  emitMetadata?: boolean;
+  inputPosition?: "top" | "bottom";
+  lang?: string;
+  fallbackText?: string;
+}
+
+const {
+  enabled = true,
+  repo,
+  repoId,
+  category,
+  categoryId,
+  mapping = "pathname",
+  reactionsEnabled = true,
+  emitMetadata = true,
+  inputPosition = "bottom",
+  lang = "en",
+  fallbackText = "Comments are disabled until the site configures its Giscus repository and category IDs.",
+} = Astro.props;
+
+const isConfigured = enabled && repo && repoId && category && categoryId;
+---
+
+<section class="papyrus-comments" aria-label="Comments">
+  {
+    isConfigured ? (
+      <script
+        is:inline
+        src="https://giscus.app/client.js"
+        data-repo={repo}
+        data-repo-id={repoId}
+        data-category={category}
+        data-category-id={categoryId}
+        data-mapping={mapping}
+        data-strict="0"
+        data-reactions-enabled={reactionsEnabled ? "1" : "0"}
+        data-emit-metadata={emitMetadata ? "1" : "0"}
+        data-input-position={inputPosition}
+        data-theme="preferred_color_scheme"
+        data-lang={lang}
+        crossorigin="anonymous"
+        async
+      />
+    ) : (
+      <p class="papyrus-comments-placeholder">{fallbackText}</p>
+    )
+  }
+</section>

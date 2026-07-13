@@ -31,13 +31,13 @@ function terminalLogo(value) {
   const width = Math.max(96, value.length * 34);
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} 96" role="img" aria-label="${escapedText}">
   <style>
-    text { fill: var(--paper-fg, ${tokens["--paper-fg"]}); font: 700 48px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    text { fill: var(--papyrus-fg, ${tokens["--papyrus-fg"]}); font: 700 48px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
     .cursor { animation: blink 1.1s steps(1, end) infinite; }
-    svg:hover text { fill: var(--paper-accent, currentColor); }
+    svg:hover text { fill: var(--papyrus-accent, currentColor); }
     @keyframes blink { 50% { opacity: 0; } }
     @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
   </style>
-  <rect width="100%" height="100%" fill="var(--paper-bg, ${tokens["--paper-bg"]})"/>
+  <rect width="100%" height="100%" fill="var(--papyrus-bg, ${tokens["--papyrus-bg"]})"/>
   <text x="12" y="62">${escapedText}<tspan class="cursor">_</tspan></text>
 </svg>
 `;
@@ -48,11 +48,11 @@ function twinkleLogo() {
   <style>
     path {
       animation: twinkle 2.6s ease-in-out infinite;
-      fill: var(--paper-fg, ${tokens["--paper-fg"]});
+      fill: var(--papyrus-fg, ${tokens["--papyrus-fg"]});
       transform-box: fill-box;
       transform-origin: center;
     }
-    svg:hover path { fill: var(--paper-accent, currentColor); }
+    svg:hover path { fill: var(--papyrus-accent, currentColor); }
     @keyframes twinkle {
       0%, 100% { opacity: 1; transform: scale(1) rotate(0deg); }
       45% { opacity: .72; transform: scale(.92) rotate(-7deg); }
@@ -60,7 +60,7 @@ function twinkleLogo() {
     }
     @media (prefers-reduced-motion: reduce) { path { animation: none; } }
   </style>
-  <rect x="-5" y="-10" width="110" height="110" fill="var(--paper-bg, ${tokens["--paper-bg"]})"/>
+  <rect x="-5" y="-10" width="110" height="110" fill="var(--papyrus-bg, ${tokens["--papyrus-bg"]})"/>
   <path d="m61.383 45.285 10.68-14.574c0.36719-0.50391-0.19531-1.1562-0.74609-0.86328l-16.598 8.7695-4.1328-31.031c-0.089844-0.67969-1.0703-0.67969-1.1641 0l-4.1328 31.031-14.621-8.7578c-0.52344-0.3125-1.1172 0.28125-0.80469 0.80469l8.7578 14.621-31.031 4.1328c-0.67969 0.089843-0.67969 1.0703 0 1.1641l31.031 4.1328-8.7578 14.621c-0.3125 0.52344 0.28125 1.1172 0.80469 0.80469l14.621-8.7578 4.1328 31.031c0.089844 0.67969 1.0703 0.67969 1.1641 0l4.1328-31.031 14.621 8.7578c0.52344 0.3125 1.1172-0.28125 0.80469-0.80469l-8.7578-14.621 31.031-4.1328c0.67969-0.089843 0.67969-1.0703 0-1.1641l-31.031-4.1328z"/>
 </svg>
 `;

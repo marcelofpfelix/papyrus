@@ -1,0 +1,24 @@
+---
+import { tagHref } from "../utils/posts";
+
+interface Props {
+  tags: string[];
+  basePath?: string;
+  counts?: Record<string, number>;
+}
+
+const { tags, basePath = "/tag", counts = {} } = Astro.props;
+---
+
+<ul class="papyrus-tag-list">
+  {
+    tags.map(tag => (
+      <li>
+        <a href={tagHref(tag, basePath)}>
+          <span>#{tag}</span>
+          {counts[tag] && <small>{counts[tag]}</small>}
+        </a>
+      </li>
+    ))
+  }
+</ul>

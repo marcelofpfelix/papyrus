@@ -1,0 +1,150 @@
+---
+import { withBase } from "../utils/withBase";
+
+export interface PapyrusNotFoundItem {
+  title: string;
+  href: string;
+  description?: string;
+  tags?: string[];
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  items: PapyrusNotFoundItem[];
+  searchHref?: string;
+  homeHref?: string;
+}
+
+const {
+  title = "Page not found",
+  description = "The page may have moved. Try one of the closest matches or search the site.",
+  items,
+  searchHref = "/search/",
+  homeHref = "/",
+} = Astro.props;
+const resolvedItems = items.map(item => ({ ...item, href: withBase(item.href) }));
+const visibleItems = resolvedItems.slice(0, 6);
+---
+
+<section class="papyrus-not-found">
+  <div class="papyrus-not-found-copy">
+    <p class="papyrus-not-found-code">404</p>
+    <h1>{title}</h1>
+    <p class="papyrus-description">{description}</p>
+  </div>
+
+  <form class="papyrus-not-found-search" action={withBase(searchHref)} method="get" data-papyrus-404-form>
+    <label>
+      Search the site
+      <input type="search" name="q" placeholder="Search posts, docs, projects..." data-papyrus-404-search />
+    </label>
+    <button type="submit">Search</button>
+  </form>
+
+  <section class="papyrus-not-found-results" aria-labelledby="papyrus-404-heading">
+    <h2 id="papyrus-404-heading">Closest matches</h2>
+    <ul class="papyrus-post-list" data-papyrus-404-results>
+      {
+        visibleItems.map((item) => (
+          <li class="papyrus-post-item">
+            <a href={item.href}>
+              <span class="papyrus-post-title">{item.title}</span>
+              {item.description && <span class="papyrus-post-description">{item.description}</span>}
+              {item.tags?.length ? <span class="papyrus-post-meta">{item.tags.map(tag => `#${tag}`).join(", ")}</span> : null}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <p class="papyrus-not-found-home">
+    <a href={withBase(homeHref)}>Back home</a>
+  </p>
+</section>
+
+<script is:inline define:vars={{ items: resolvedItems }}>
+  const input = document.querySelector("[data-papyrus-404-search]");
+  const results = document.querySelector("[data-papyrus-404-results]");
+  const form = document.querySelector("[data-papyrus-404-form]");
+  const params = new URLSearchParams(window.location.search);
+
+  function words(value) {
+    let decoded = value;
+    try {
+      decoded = decodeURIComponent(value);
+    } catch {
+      decoded = value;
+    }
+
+    return decoded
+      .replace(/https?:\/\//g, " ")
+      .replace(/[^a-z0-9]+/gi, " ")
+      .trim()
+      .toLowerCase()
+      .split(/\s+/)
+      .filter((word) => word.length > 1);
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function scoreItem(item, queryWords) {
+    const href = item.href.toLowerCase();
+    const title = item.title.toLowerCase();
+    const tags = (item.tags ?? []).join(" ").toLowerCase();
+    const haystack = [item.title, item.description, item.href, ...(item.tags ?? [])].join(" ").toLowerCase();
+
+    return queryWords.reduce((score, word) => {
+      if (href.includes(word)) score += 5;
+      if (title.includes(word)) score += 4;
+      if (tags.includes(word)) score += 3;
+      if (haystack.includes(word)) score += 1;
+      return score;
+    }, 0);
+  }
+
+  function render(query) {
+    const queryWords = words(query);
+    const ranked = [...items]
+      .map((item, index) => ({ item, index, score: scoreItem(item, queryWords) }))
+      .sort((a, b) => b.score - a.score || a.index - b.index)
+      .slice(0, 6)
+      .map(({ item }) => item);
+
+    if (!results) return;
+
+    results.innerHTML = ranked.length
+      ? ranked.map((item) => {
+          const tags = item.tags?.length
+            ? `<span class="papyrus-post-meta">${item.tags.map((tag) => `#${escapeHtml(tag)}`).join(", ")}</span>`
+            : "";
+
+          return `
+            <li class="papyrus-post-item">
+              <a href="${escapeHtml(item.href)}">
+                <span class="papyrus-post-title">${escapeHtml(item.title)}</span>
+                ${item.description ? `<span class="papyrus-post-description">${escapeHtml(item.description)}</span>` : ""}
+                ${tags}
+              </a>
+            </li>
+          `;
+        }).join("")
+      : `<li class="papyrus-search-empty">No close matches found.</li>`;
+  }
+
+  const pathQuery = words(window.location.pathname).join(" ");
+  const initialQuery = params.get("q") ?? pathQuery;
+
+  if (input) input.value = initialQuery;
+  form?.addEventListener("submit", () => {
+    if (input && !input.value.trim()) input.value = pathQuery;
+  });
+  render(initialQuery);
+</script>

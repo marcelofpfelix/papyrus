@@ -39,7 +39,7 @@ export default function remarkArtifactLinks() {
           const description = node.title || `${type} source file`;
           parent.children[index] = {
             type: "html",
-            value: `<a class="paper-artifact-link" href="${escapeHtml(node.url)}" data-artifact-type="${type}"><span><strong>${escapeHtml(label)}</strong><small>${escapeHtml(description)}</small></span></a>`,
+            value: `<a class="papyrus-artifact-link" href="${escapeHtml(node.url)}" data-artifact-type="${type}"><span><strong>${escapeHtml(label)}</strong><small>${escapeHtml(description)}</small></span></a>`,
           };
           return;
         }

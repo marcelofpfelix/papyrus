@@ -104,8 +104,8 @@ try {
   assert(full.includes("Open the Markdown guide to review code, alerts, diagrams, artifact links, and Markdown behavior."), "llms-full.txt missing public docs index copy");
   assert(full.includes("Deploy Papyrus"), "llms-full.txt missing public deploy docs copy");
   assert(full.includes("Every public feature has a route"), "llms-full.txt missing public feature-map docs copy");
-  assert(full.includes('<PaperPostList posts={posts} view="list" />'), "llms-full.txt should preserve fenced Astro component examples");
-  assert(full.includes('<PaperBaseLayout title="Posts" description="All posts.">'), "llms-full.txt should preserve fenced layout examples");
+  assert(full.includes('<PapyrusPostList posts={posts} view="list" />'), "llms-full.txt should preserve fenced Astro component examples");
+  assert(full.includes('<PapyrusBaseLayout title="Posts" description="All posts.">'), "llms-full.txt should preserve fenced layout examples");
   assert(!full.includes("Folder tags for nested posts"), "llms-full.txt should exclude hidden posts");
   assert(!full.includes('import { demoNav }'), "llms-full.txt should not expose Astro docs implementation imports");
   assert(!full.includes("const demoPlugins"), "llms-full.txt should not expose Astro docs implementation constants");
@@ -156,10 +156,10 @@ try {
   await compareGenerated("rss/tags/ai.xml");
   await compareGenerated("rss/tags/authoring.xml");
 
-  const metadataComponent = await readFile("src/components/PaperAiMetadata.astro", "utf8");
-  const postLayout = await readFile("src/layouts/PaperPostLayout.astro", "utf8");
-  assert(metadataComponent.includes('"@id": stableId'), "PaperAiMetadata should emit JSON-LD @id");
-  assert(postLayout.includes('id={canonicalUrl ? `${canonicalUrl.replace(/#.*$/, "")}#post` : undefined}'), "PaperPostLayout should pass a stable post JSON-LD id");
+  const metadataComponent = await readFile("src/components/PapyrusAiMetadata.astro", "utf8");
+  const postLayout = await readFile("src/layouts/PapyrusPostLayout.astro", "utf8");
+  assert(metadataComponent.includes('"@id": stableId'), "PapyrusAiMetadata should emit JSON-LD @id");
+  assert(postLayout.includes('id={canonicalUrl ? `${canonicalUrl.replace(/#.*$/, "")}#post` : undefined}'), "PapyrusPostLayout should pass a stable post JSON-LD id");
 
   console.log("Verified llms files with all docs URLs, stable AI JSON indexes, search index, graph export, metadata validation, and tag RSS feeds.");
 } finally {

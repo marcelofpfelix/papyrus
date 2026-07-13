@@ -1,0 +1,22 @@
+name = "Papyrus docs"
+description = "Package docs for installing, composing, and extending Papyrus without copying a full theme into every site."
+
+[settings]
+post_footer = "collection"
+post_footer_collapsible = true
+
+[[sections]]
+name = "Start"
+description = "Getting started, feature configuration, and the core Papyrus content model."
+
+[[sections]]
+name = "Authoring"
+description = "Markdown, code blocks, nested content, and generated content structure."
+
+[[sections]]
+name = "References"
+description = "Feature maps, AI metadata, mobile behavior, and reusable route references."
+
+[[sections]]
+name = "Deploy"
+description = "Static hosting, production previews, and base-path deploy guidance."

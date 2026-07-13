@@ -4,17 +4,17 @@ import { join, resolve } from "node:path";
 
 const root = resolve(new URL("..", import.meta.url).pathname);
 const requiredTokens = [
-  "--paper-bg",
-  "--paper-fg",
-  "--paper-muted",
-  "--paper-panel",
-  "--paper-border",
-  "--paper-accent",
-  "--paper-code-bg",
-  "--paper-code-fg",
-  "--paper-theme-color",
-  "--paper-font-sans",
-  "--paper-font-mono",
+  "--papyrus-bg",
+  "--papyrus-fg",
+  "--papyrus-muted",
+  "--papyrus-panel",
+  "--papyrus-border",
+  "--papyrus-accent",
+  "--papyrus-code-bg",
+  "--papyrus-code-fg",
+  "--papyrus-theme-color",
+  "--papyrus-font-sans",
+  "--papyrus-font-mono",
 ];
 
 const args = process.argv.slice(2).filter((arg) => arg !== "--");
@@ -27,15 +27,15 @@ function fail(message) {
 }
 
 function extractProfileName(css, file) {
-  const match = css.match(/data-paper-theme="([^"]+)"/);
-  if (!match) fail(`${file} does not declare data-paper-theme`);
+  const match = css.match(/data-papyrus-theme="([^"]+)"/);
+  if (!match) fail(`${file} does not declare data-papyrus-theme`);
   return match[1];
 }
 
 function validateTheme(css, file, name) {
   const missing = [];
-  if (!css.includes(`data-paper-theme="${name}"`)) missing.push(`light selector for ${name}`);
-  if (!css.includes(`data-paper-theme="${name}"].dark`)) missing.push(`dark selector for ${name}`);
+  if (!css.includes(`data-papyrus-theme="${name}"`)) missing.push(`light selector for ${name}`);
+  if (!css.includes(`data-papyrus-theme="${name}"].dark`)) missing.push(`dark selector for ${name}`);
   for (const token of requiredTokens) {
     if (!css.includes(token)) missing.push(token);
   }

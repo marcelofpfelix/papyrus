@@ -1,7 +1,7 @@
-import { definePaperPlugin } from "astro-theme-papyrus/utils";
+import { definePapyrusPlugin } from "astro-theme-papyrus/utils";
 
-export const paperPureKbdPlugin = definePaperPlugin({
-  name: "paper-kbd",
+export const papyrusPureKbdPlugin = definePapyrusPlugin({
+  name: "papyrus-kbd",
   description: "Example plugin that could add keyboard-shortcut markdown and matching prose styles.",
   packageName: "@example/papyrus-kbd",
   docsUrl: "https://example.com/papyrus-kbd",
@@ -30,4 +30,4 @@ export const paperPureKbdPlugin = definePaperPlugin({
   },
 });
 
-export default paperPureKbdPlugin;
+export default papyrusPureKbdPlugin;

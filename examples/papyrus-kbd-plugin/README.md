@@ -4,10 +4,10 @@ Tiny external plugin fixture for papyrus community plugin support. It shows
 the intended package shape without making papyrus depend on this plugin.
 
 ```ts
-import paperPureKbdPlugin from "@example/papyrus-kbd";
-import { resolvePaperPluginConfig } from "astro-theme-papyrus/utils";
+import papyrusPureKbdPlugin from "@example/papyrus-kbd";
+import { resolvePapyrusPluginConfig } from "astro-theme-papyrus/utils";
 
-const config = resolvePaperPluginConfig([paperPureKbdPlugin], {
+const config = resolvePapyrusPluginConfig([papyrusPureKbdPlugin], {
   rss: false,
 });
 ```

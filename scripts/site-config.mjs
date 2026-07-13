@@ -2,10 +2,6 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parse } from "smol-toml";
 
-function stringField(text, key) {
-  return text.match(new RegExp(`${key}:\\s*["']([^"']+)["']`))?.[1];
-}
-
 function asRecord(value) {
   return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
@@ -15,7 +11,7 @@ function stringValue(value) {
 }
 
 async function tomlConfig(cwd) {
-  const text = await readFile(resolve(cwd, "paper.config.toml"), "utf8");
+  const text = await readFile(resolve(cwd, "papyrus.config.toml"), "utf8");
   const parsed = asRecord(parse(text));
   const site = asRecord(parsed.site);
   const brand = asRecord(parsed.brand);
@@ -41,20 +37,6 @@ async function tomlConfig(cwd) {
 export async function siteConfig(cwd = process.cwd()) {
   try {
     return await tomlConfig(cwd);
-  } catch {
-    // Fall back to the legacy TS config shape while consuming sites migrate.
-  }
-
-  try {
-    const text = await readFile(resolve(cwd, "src/site.config.ts"), "utf8");
-    return {
-      title: stringField(text, "title"),
-      headerTitle: stringField(text, "headerTitle"),
-      defaultThemeProfile: stringField(text, "defaultThemeProfile"),
-      defaultFontProfile: stringField(text, "defaultFontProfile"),
-      brandTitle: stringField(text, "brandTitle"),
-      brandMark: stringField(text, "brandMark"),
-    };
   } catch {
     return {};
   }

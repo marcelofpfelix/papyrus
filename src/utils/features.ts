@@ -1,4 +1,4 @@
-export type PaperFeatureConfig = {
+export type PapyrusFeatureConfig = {
   header?: boolean;
   footer?: boolean;
   scrollHeader?: boolean;
@@ -29,7 +29,7 @@ export type PaperFeatureConfig = {
   sectionMenu?: boolean;
 };
 
-export const defaultPaperFeatures = {
+export const defaultPapyrusFeatures = {
   header: true,
   footer: true,
   scrollHeader: true,
@@ -58,11 +58,11 @@ export const defaultPaperFeatures = {
   linkPreviews: true,
   contentIndex: true,
   sectionMenu: true,
-} satisfies Required<PaperFeatureConfig>;
+} satisfies Required<PapyrusFeatureConfig>;
 
-export function resolvePaperFeatures(features: PaperFeatureConfig = {}) {
+export function resolvePapyrusFeatures(features: PapyrusFeatureConfig = {}) {
   return {
-    ...defaultPaperFeatures,
+    ...defaultPapyrusFeatures,
     ...features,
   };
 }

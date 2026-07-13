@@ -18,30 +18,7 @@ const posts = defineCollection({
     category: z.string().optional(),
     tags: z.array(z.string()).optional().default([]),
     featured: z.boolean().optional().default(false),
-    docs: z.union([
-      z.boolean(),
-      z.object({
-        title: z.string().optional(),
-        description: z.string().optional(),
-        section: z.string().optional(),
-        order: z.number().optional(),
-      }),
-    ]).optional().default(false),
   }),
 });
 
-const docs = defineCollection({
-  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/docs" }),
-  schema: z.object({
-    title: z.string(),
-    description: z.string().optional(),
-    sections: z.array(z.object({
-      id: z.string(),
-      title: z.string(),
-      description: z.string().optional(),
-      order: z.number().optional(),
-    })).optional().default([]),
-  }),
-});
-
-export const collections = { docs, posts };
+export const collections = { posts };

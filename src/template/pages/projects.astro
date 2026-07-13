@@ -1,14 +1,14 @@
 ---
-import { PaperBaseLayout, PaperProjectList } from "../../components";
+import { PapyrusBaseLayout, PapyrusProjectList } from "../../components";
 import { getTemplateSite } from "../site";
 
 const site = await getTemplateSite();
 ---
 
-<PaperBaseLayout title="Projects" description="Selected projects." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
-  <section class="paper-hero">
+<PapyrusBaseLayout title="Projects" description="Selected projects." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+  <section class="papyrus-hero">
     <h1>Projects</h1>
-    <p class="paper-description">Two project cards configured in <code>paper.config.toml</code>.</p>
+    <p class="papyrus-description">Two project cards configured in <code>papyrus.config.toml</code>.</p>
   </section>
-  <PaperProjectList projects={site.projects.slice(0, 2)} />
-</PaperBaseLayout>
+  <PapyrusProjectList projects={site.projects.slice(0, 2)} />
+</PapyrusBaseLayout>

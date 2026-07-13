@@ -1,0 +1,287 @@
+---
+interface Props {
+  defaultThemeProfile?: string;
+  defaultFontProfile?: string;
+}
+
+const {
+  defaultThemeProfile = "gruvbox",
+  defaultFontProfile = "readable",
+} = Astro.props;
+---
+
+<script
+  is:inline
+  data-default-theme-profile={defaultThemeProfile}
+  data-default-font-profile={defaultFontProfile}
+>
+  const PAPYRUS_THEME_PROFILES = ["pure", "catppuccin", "tokyo-night", "kanagawa", "rose-pine", "everforest", "dracula", "gruvbox", "nord"];
+  const PAPYRUS_FONT_PROFILES = ["theme", "readable", "code"];
+  const PAPYRUS_INLINE_SCRIPT = document.currentScript;
+  const PAPYRUS_INLINE_DEFAULT_THEME_PROFILE = PAPYRUS_INLINE_SCRIPT?.dataset.defaultThemeProfile ?? "gruvbox";
+  const PAPYRUS_INLINE_DEFAULT_FONT_PROFILE = PAPYRUS_INLINE_SCRIPT?.dataset.defaultFontProfile ?? "readable";
+  const PAPYRUS_MODE_STORAGE_KEY = "papyrus-mode";
+  const PAPYRUS_PROFILE_STORAGE_KEY = "papyrus-theme";
+  const PAPYRUS_FONT_STORAGE_KEY = "papyrus-font";
+
+  function papyrusPureStoredMode() {
+    return localStorage.getItem(PAPYRUS_MODE_STORAGE_KEY) ?? localStorage.getItem("theme");
+  }
+
+  function papyrusPureStoredProfile() {
+    return localStorage.getItem(PAPYRUS_PROFILE_STORAGE_KEY) ?? PAPYRUS_INLINE_DEFAULT_THEME_PROFILE;
+  }
+
+  function papyrusPureStoredFont() {
+    return localStorage.getItem(PAPYRUS_FONT_STORAGE_KEY) ?? PAPYRUS_INLINE_DEFAULT_FONT_PROFILE;
+  }
+
+  function papyrusPureResolvedMode(mode) {
+    if (!mode || mode === "system") {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+
+    return mode;
+  }
+
+  function papyrusPureApplyTheme(mode, profile) {
+    const targetMode = papyrusPureResolvedMode(mode);
+    const targetProfile = PAPYRUS_THEME_PROFILES.includes(profile) ? profile : "pure";
+    const targetFont = PAPYRUS_FONT_PROFILES.includes(papyrusPureStoredFont()) ? papyrusPureStoredFont() : "theme";
+
+    document.documentElement.classList.toggle("dark", targetMode === "dark");
+    document.documentElement.dataset.papyrusTheme = targetProfile;
+    document.documentElement.dataset.papyrusFont = targetFont;
+
+    requestAnimationFrame(() => {
+      const themeColor = getComputedStyle(document.documentElement).getPropertyValue("--papyrus-theme-color").trim();
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColor || (targetMode === "dark" ? "#0B0B10" : "#FCFCFD"));
+      document.dispatchEvent(new CustomEvent("papyrus:theme-change", {
+        detail: { mode: targetMode, profile: targetProfile },
+      }));
+    });
+  }
+
+  function papyrusPureSetInitialTheme() {
+    papyrusPureApplyTheme(papyrusPureStoredMode() ?? "system", papyrusPureStoredProfile());
+  }
+
+  papyrusPureSetInitialTheme();
+  document.addEventListener("astro:page-load", () => papyrusPureSetInitialTheme());
+</script>
+
+<script
+  is:inline
+  data-default-theme-profile={defaultThemeProfile}
+  data-default-font-profile={defaultFontProfile}
+>
+  const PAPYRUS_RUNTIME_SCRIPT = document.currentScript;
+  const PAPYRUS_RUNTIME_DEFAULT_THEME_PROFILE = PAPYRUS_RUNTIME_SCRIPT?.dataset.defaultThemeProfile ?? "gruvbox";
+  const PAPYRUS_RUNTIME_DEFAULT_FONT_PROFILE = PAPYRUS_RUNTIME_SCRIPT?.dataset.defaultFontProfile ?? "readable";
+
+  function getTheme() {
+    return localStorage.getItem("papyrus-mode") ?? localStorage.getItem("theme");
+  }
+
+  function getThemeProfile() {
+    return localStorage.getItem("papyrus-theme") ?? PAPYRUS_RUNTIME_DEFAULT_THEME_PROFILE;
+  }
+
+  function getFontProfile() {
+    return localStorage.getItem("papyrus-font") ?? PAPYRUS_RUNTIME_DEFAULT_FONT_PROFILE;
+  }
+
+  function setTheme(theme, save = false) {
+    const themes = ["system", "dark", "light"];
+    if (theme) {
+      if (!themes.includes(theme)) return theme;
+      if (save) localStorage.setItem("papyrus-mode", theme);
+    } else {
+      theme = getTheme() ?? "system";
+      if (save) {
+        theme = themes[(themes.indexOf(theme) + 1) % themes.length];
+        localStorage.setItem("papyrus-mode", theme);
+      }
+    }
+
+    applyTheme(theme, getThemeProfile());
+
+    return theme;
+  }
+
+  function applyTheme(mode, profile) {
+    const targetMode = mode === "system" || !mode
+      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : mode;
+    const targetProfile = profile && ["pure", "catppuccin", "tokyo-night", "kanagawa", "rose-pine", "everforest", "dracula", "gruvbox", "nord"].includes(profile) ? profile : "pure";
+
+    document.documentElement.classList.toggle("dark", targetMode === "dark");
+    document.documentElement.dataset.papyrusTheme = targetProfile;
+
+    requestAnimationFrame(() => {
+      const themeColor = getComputedStyle(document.documentElement).getPropertyValue("--papyrus-theme-color").trim();
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColor || (targetMode === "dark" ? "#0B0B10" : "#FCFCFD"));
+      document.dispatchEvent(new CustomEvent("papyrus:theme-change", {
+        detail: { mode: targetMode, profile: targetProfile },
+      }));
+    });
+  }
+
+  function applyFontProfile(profile) {
+    const profiles = ["theme", "readable", "code"];
+    const targetProfile = profile && profiles.includes(profile) ? profile : "theme";
+    document.documentElement.dataset.papyrusFont = targetProfile;
+    return targetProfile;
+  }
+
+  function setThemeProfile(profile, save = false) {
+    const profiles = ["pure", "catppuccin", "tokyo-night", "kanagawa", "rose-pine", "everforest", "dracula", "gruvbox", "nord"];
+    const requestedProfile = profile;
+    profile = profile && profiles.includes(profile) ? profile : getThemeProfile();
+
+    if (save && !requestedProfile) {
+      profile = profiles[(profiles.indexOf(profile) + 1) % profiles.length];
+    }
+
+    if (save) localStorage.setItem("papyrus-theme", profile);
+    applyTheme(getTheme() ?? "system", profile);
+
+    return profile;
+  }
+
+  function setFontProfile(profile, save = false) {
+    const profiles = ["theme", "readable", "code"];
+    const toggleProfiles = ["readable", "code"];
+    const requestedProfile = profile;
+    profile = profile && profiles.includes(profile) ? profile : getFontProfile();
+
+    if (save && !requestedProfile) {
+      const currentIndex = toggleProfiles.indexOf(profile);
+      profile = toggleProfiles[(currentIndex + 1) % toggleProfiles.length];
+    }
+
+    if (save) localStorage.setItem("papyrus-font", profile);
+    applyFontProfile(profile);
+
+    return profile;
+  }
+
+  function syncThemeControls() {
+    const mode = getTheme() ?? "system";
+    const profile = getThemeProfile();
+    const font = getFontProfile();
+
+    document.querySelectorAll("[data-papyrus-theme-set]").forEach(button => {
+      button.dataset.active = button.dataset.papyrusThemeSet === mode ? "true" : "false";
+    });
+    document.querySelectorAll("[data-papyrus-theme-toggle]").forEach(button => {
+      button.dataset.theme = mode;
+      button.setAttribute("aria-label", `Color mode: ${mode}`);
+    });
+    document.querySelectorAll("[data-papyrus-theme-profile-select]").forEach(select => {
+      select.value = profile;
+    });
+    document.querySelectorAll("[data-papyrus-font-profile-select]").forEach(select => {
+      select.value = font;
+    });
+    document.querySelectorAll("[data-papyrus-font-profile-toggle]").forEach(button => {
+      button.dataset.font = font;
+      button.setAttribute("aria-label", `Font profile: ${font}`);
+    });
+    document.querySelectorAll("[data-papyrus-theme-profile-value]").forEach(button => {
+      button.dataset.active = button.dataset.papyrusThemeProfileValue === profile ? "true" : "false";
+    });
+    document.querySelectorAll("[data-papyrus-font-profile-value]").forEach(button => {
+      button.dataset.active = button.dataset.papyrusFontProfileValue === font ? "true" : "false";
+    });
+  }
+
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", event => {
+    const theme = getTheme();
+    if (!theme || theme === "system") setTheme(event.matches ? "dark" : "light");
+  });
+
+  function bindThemeControls() {
+    syncThemeControls();
+
+    document.querySelectorAll("[data-papyrus-theme-toggle]").forEach(button => {
+      if (button instanceof HTMLElement && button.dataset.papyrusBound) return;
+      if (button instanceof HTMLElement) button.dataset.papyrusBound = "true";
+      button.addEventListener("click", () => {
+        setTheme(undefined, true);
+        syncThemeControls();
+      });
+    });
+    document.querySelectorAll("[data-papyrus-theme-set]").forEach(button => {
+      if (button.dataset.papyrusBound) return;
+      button.dataset.papyrusBound = "true";
+      button.addEventListener("click", () => {
+        setTheme(button.dataset.papyrusThemeSet, true);
+        syncThemeControls();
+      });
+    });
+    document.querySelectorAll("[data-papyrus-theme-profile]").forEach(button => {
+      if (button instanceof HTMLElement && button.dataset.papyrusBound) return;
+      if (button instanceof HTMLElement) button.dataset.papyrusBound = "true";
+      button.addEventListener("click", () => {
+        setThemeProfile(undefined, true);
+        syncThemeControls();
+      });
+    });
+    document.querySelectorAll("[data-papyrus-theme-profile-select]").forEach(select => {
+      if (select.dataset.papyrusBound) return;
+      select.dataset.papyrusBound = "true";
+      select.addEventListener("change", () => {
+        setThemeProfile(select.value, true);
+        syncThemeControls();
+      });
+    });
+    document.querySelectorAll("[data-papyrus-theme-profile-value]").forEach(button => {
+      if (button.dataset.papyrusBound) return;
+      button.dataset.papyrusBound = "true";
+      button.addEventListener("click", () => {
+        setThemeProfile(button.dataset.papyrusThemeProfileValue, true);
+        button.closest("details")?.removeAttribute("open");
+        syncThemeControls();
+      });
+    });
+    document.querySelectorAll("[data-papyrus-font-profile-select]").forEach(select => {
+      if (select.dataset.papyrusBound) return;
+      select.dataset.papyrusBound = "true";
+      select.addEventListener("change", () => {
+        setFontProfile(select.value, true);
+        syncThemeControls();
+      });
+    });
+    document.querySelectorAll("[data-papyrus-font-profile-toggle]").forEach(button => {
+      if (button instanceof HTMLElement && button.dataset.papyrusBound) return;
+      if (button instanceof HTMLElement) button.dataset.papyrusBound = "true";
+      button.addEventListener("click", () => {
+        setFontProfile(undefined, true);
+        syncThemeControls();
+      });
+    });
+    document.querySelectorAll("[data-papyrus-font-profile-value]").forEach(button => {
+      if (button.dataset.papyrusBound) return;
+      button.dataset.papyrusBound = "true";
+      button.addEventListener("click", () => {
+        setFontProfile(button.dataset.papyrusFontProfileValue, true);
+        button.closest("details")?.removeAttribute("open");
+        syncThemeControls();
+      });
+    });
+  }
+
+  function setupThemeControls() {
+    setFontProfile(getFontProfile());
+    bindThemeControls();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupThemeControls, { once: true });
+  } else {
+    setupThemeControls();
+  }
+
+  document.addEventListener("astro:page-load", setupThemeControls);
+</script>

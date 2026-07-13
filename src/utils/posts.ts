@@ -1,6 +1,6 @@
 import { withBase } from "./withBase";
 
-export interface PaperPostEntry {
+export interface PapyrusPostEntry {
   id: string;
   filePath?: string;
   data: {
@@ -17,25 +17,19 @@ export interface PaperPostEntry {
     category?: string;
     tags?: string[];
     editUrl?: string;
-    docs?: boolean | {
-      title?: string;
-      description?: string;
-      section?: string;
-      order?: number;
-    };
   };
   body?: string;
 }
 
-export function postDate(post: PaperPostEntry): Date {
+export function postDate(post: PapyrusPostEntry): Date {
   return new Date(post.data.pubDatetime ?? post.data.date ?? 0);
 }
 
-export function postUpdatedDate(post: PaperPostEntry): Date | undefined {
+export function postUpdatedDate(post: PapyrusPostEntry): Date | undefined {
   return post.data.modDatetime ? new Date(post.data.modDatetime) : undefined;
 }
 
-export function hasUpdatedDate(post: PaperPostEntry): boolean {
+export function hasUpdatedDate(post: PapyrusPostEntry): boolean {
   const updated = postUpdatedDate(post);
   if (!updated) return false;
 
@@ -52,11 +46,11 @@ export function isRecentDate(value?: Date | string, reference = new Date(), days
   return Number.isFinite(ageMs) && ageMs >= 0 && ageMs < windowMs;
 }
 
-export function isNewPost(post: PaperPostEntry, reference = new Date(), days = 30): boolean {
+export function isNewPost(post: PapyrusPostEntry, reference = new Date(), days = 30): boolean {
   return isRecentDate(postDate(post), reference, days);
 }
 
-export function hasFreshUpdate(post: PaperPostEntry, reference = new Date(), days = 30): boolean {
+export function hasFreshUpdate(post: PapyrusPostEntry, reference = new Date(), days = 30): boolean {
   const updated = postUpdatedDate(post);
   return hasUpdatedDate(post) && isRecentDate(updated, reference, days);
 }
@@ -76,16 +70,16 @@ export function formatPostDate(value?: Date | string, reference = new Date()): s
   return year === reference.getFullYear() ? monthDay : `${year} ${monthDay}`;
 }
 
-export function pinRank(post: PaperPostEntry): number {
+export function pinRank(post: PapyrusPostEntry): number {
   if (typeof post.data.pinned === "number") return post.data.pinned;
   return post.data.pinned ? 1 : 0;
 }
 
-export function postSlug(post: PaperPostEntry): string {
+export function postSlug(post: PapyrusPostEntry): string {
   return post.data.slug ?? post.id.replace(/\.(md|mdx)$/, "");
 }
 
-export function folderTags(post: PaperPostEntry): string[] {
+export function folderTags(post: PapyrusPostEntry): string[] {
   const sourcePath = (post.filePath ?? post.id)
     .replace(/^.*?src\/content\/posts\//, "")
     .replace(/\.(md|mdx)$/, "");
@@ -93,7 +87,7 @@ export function folderTags(post: PaperPostEntry): string[] {
   return parts.map(part => part.trim()).filter(Boolean);
 }
 
-export function postTags(post: PaperPostEntry): string[] {
+export function postTags(post: PapyrusPostEntry): string[] {
   return Array.from(
     new Set([...(post.data.tags ?? []), ...folderTags(post)].map(tag => tag.trim()).filter(Boolean))
   );
@@ -107,11 +101,11 @@ export function tagHref(tag: string, basePath = "/tag"): string {
   return withBase(`${basePath}/${tagSlug(tag)}/`);
 }
 
-export function postCategory(post: PaperPostEntry): string | undefined {
+export function postCategory(post: PapyrusPostEntry): string | undefined {
   return post.data.category?.trim() || undefined;
 }
 
-export function postHref(post: PaperPostEntry, basePath = "/posts"): string {
+export function postHref(post: PapyrusPostEntry, basePath = "/posts"): string {
   return withBase(`${basePath}/${postSlug(post)}/`);
 }
 
@@ -131,44 +125,44 @@ export function toTransitionName(value: string): string {
   return /^\d/.test(normalized) ? `p-${normalized}` : normalized;
 }
 
-export function sortPosts<T extends PaperPostEntry>(posts: T[]): T[] {
+export function sortPosts<T extends PapyrusPostEntry>(posts: T[]): T[] {
   return [...posts].sort((a, b) => postDate(b).valueOf() - postDate(a).valueOf());
 }
 
-export function sortPostsWithPinned<T extends PaperPostEntry>(posts: T[]): T[] {
+export function sortPostsWithPinned<T extends PapyrusPostEntry>(posts: T[]): T[] {
   return [...posts].sort((a, b) => {
     const pinned = pinRank(b) - pinRank(a);
     return pinned || postDate(b).valueOf() - postDate(a).valueOf();
   });
 }
 
-export function routablePosts<T extends PaperPostEntry>(posts: T[]): T[] {
+export function routablePosts<T extends PapyrusPostEntry>(posts: T[]): T[] {
   return sortPosts(posts.filter(post => !post.data.draft));
 }
 
-export function publishedPosts<T extends PaperPostEntry>(posts: T[]): T[] {
+export function publishedPosts<T extends PapyrusPostEntry>(posts: T[]): T[] {
   return sortPosts(posts.filter(post => !post.data.draft && !post.data.hidden));
 }
 
-export function hiddenPosts<T extends PaperPostEntry>(posts: T[]): T[] {
+export function hiddenPosts<T extends PapyrusPostEntry>(posts: T[]): T[] {
   return sortPosts(posts.filter(post => !post.data.draft && post.data.hidden));
 }
 
-export function pinnedPosts<T extends PaperPostEntry>(posts: T[]): T[] {
+export function pinnedPosts<T extends PapyrusPostEntry>(posts: T[]): T[] {
   return sortPostsWithPinned(posts.filter(post => pinRank(post) > 0 && !post.data.draft && !post.data.hidden));
 }
 
-export function getAllTags<T extends PaperPostEntry>(posts: T[]): string[] {
+export function getAllTags<T extends PapyrusPostEntry>(posts: T[]): string[] {
   return Array.from(
     new Set(posts.flatMap(post => postTags(post)).map(tag => tag.trim()).filter(Boolean))
   ).sort((a, b) => a.localeCompare(b));
 }
 
-export function postsByTag<T extends PaperPostEntry>(posts: T[], tag: string): T[] {
+export function postsByTag<T extends PapyrusPostEntry>(posts: T[], tag: string): T[] {
   return sortPosts(posts.filter(post => postTags(post).includes(tag)));
 }
 
-export function getAdjacentPosts<T extends PaperPostEntry>(posts: T[], currentId: string) {
+export function getAdjacentPosts<T extends PapyrusPostEntry>(posts: T[], currentId: string) {
   const sorted = sortPosts(posts);
   const index = sorted.findIndex(post => post.id === currentId);
   return {

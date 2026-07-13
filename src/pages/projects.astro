@@ -1,10 +1,10 @@
 ---
 import { readFile } from "node:fs/promises";
-import { PaperBaseLayout, PaperProjectList } from "../components";
+import { PapyrusBaseLayout, PapyrusProjectList } from "../components";
 import { demoNav, demoSocialLinks } from "../data/demo-nav";
 
 const siteData = JSON.parse(await readFile("public/demo/site-data.json", "utf8")) as {
-  projects: Parameters<typeof PaperProjectList>[0]["projects"];
+  projects: Parameters<typeof PapyrusProjectList>[0]["projects"];
 };
 
 const projectDataExample = `{
@@ -13,35 +13,35 @@ const projectDataExample = `{
   "tags": ["Astro", "theme", "docs"],
   "pinned": true,
   "links": [
-    { "label": "features", "href": "/docs/feature-map/" },
-    { "label": "docs", "href": "/docs/" },
+    { "label": "features", "href": "/collections/docs/feature-map/" },
+    { "label": "docs", "href": "/collections/docs/" },
     { "label": "website", "href": "/" },
     { "label": "repo", "href": "https://github.com/marcelofpfelix/papyrus" }
   ]
 }`;
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Projects"
   description="Project list page for pinned projects, repository metadata, and explicit project links."
   siteTitle="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <section class="paper-hero">
+  <section class="papyrus-hero">
     <h1>Projects</h1>
-    <p class="paper-description">Use project cards for work that deserves more than a link in the footer: packages, apps, docs sites, or repositories that explain the site owner’s public work.</p>
+    <p class="papyrus-description">Use project cards for work that deserves more than a link in the footer: packages, apps, docs sites, or repositories that explain the site owner’s public work.</p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Project cards</h2>
     <p>Projects come from structured site data, so pinned homepage cards, the full project index, and AI metadata can all describe the same items without duplicating copy.</p>
-    <PaperProjectList projects={siteData.projects} />
+    <PapyrusProjectList projects={siteData.projects} />
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>Project data</h2>
     <p>Keep project copy in site data, not inside the card component. The same record can render homepage cards, project pages, and AI/project JSON.</p>
     <pre><code>{projectDataExample}</code></pre>
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>

@@ -1,0 +1,98 @@
+---
+import ComputerIcon from "../assets/icons/computer.svg";
+import FontIcon from "../assets/icons/font.svg";
+import GithubIcon from "../assets/icons/github.svg";
+import MoonIcon from "../assets/icons/moon.svg";
+import OpenSourceIcon from "../assets/icons/open-source.svg";
+import PaletteIcon from "../assets/icons/palette.svg";
+import RssIcon from "../assets/icons/rss.svg";
+import SunIcon from "../assets/icons/sun.svg";
+import { withBase } from "../utils/withBase";
+
+interface Props {
+  title: string;
+  links?: Array<{ href: string; label: string }>;
+  socialLinks?: Array<{ href: string; label: string; icon?: string }>;
+  rssHref?: string;
+  poweredBy?: boolean;
+  themeControls?: boolean;
+}
+
+const {
+  title,
+  links = [],
+  socialLinks = [],
+  rssHref = "/rss.xml",
+  poweredBy = true,
+  themeControls = true,
+} = Astro.props;
+const year = new Date().getFullYear();
+
+const socialIconComponents = {
+  github: GithubIcon,
+};
+---
+
+<footer class="papyrus-footer">
+  <div class="papyrus-footer-meta">
+    {poweredBy && (
+      <p class="papyrus-powered-by">
+        <OpenSourceIcon aria-hidden="true" />
+        <span>Powered by <a href="https://github.com/marcelofpfelix/papyrus">papyrus</a> and <a href="https://astro.build/">astro</a></span>
+        {" "}
+        <span>&copy; {year} {title}</span>
+      </p>
+    )}
+    {!poweredBy && <p>&copy; {year} {title}</p>}
+  </div>
+  <div class="papyrus-footer-actions">
+    {themeControls && <div class="papyrus-theme-controls" aria-label="Theme controls">
+      <button class="papyrus-icon-button papyrus-theme-mode-button" type="button" data-papyrus-theme-toggle aria-label="Toggle color mode" title="Color mode">
+        <ComputerIcon class="papyrus-mode-icon papyrus-mode-system" aria-hidden="true" />
+        <SunIcon class="papyrus-mode-icon papyrus-mode-light" aria-hidden="true" />
+        <MoonIcon class="papyrus-mode-icon papyrus-mode-dark" aria-hidden="true" />
+      </button>
+      <details class="papyrus-control-menu">
+        <summary class="papyrus-icon-button" aria-label="Theme profile" title="Theme profile">
+          <PaletteIcon aria-hidden="true" />
+        </summary>
+        <div class="papyrus-control-popover">
+          <button type="button" data-papyrus-theme-profile-value="catppuccin">Catppuccin</button>
+          <button type="button" data-papyrus-theme-profile-value="tokyo-night">Tokyo Night</button>
+          <button type="button" data-papyrus-theme-profile-value="kanagawa">Kanagawa</button>
+          <button type="button" data-papyrus-theme-profile-value="rose-pine">Rosé Pine</button>
+          <button type="button" data-papyrus-theme-profile-value="everforest">Everforest</button>
+          <button type="button" data-papyrus-theme-profile-value="dracula">Dracula</button>
+          <button type="button" data-papyrus-theme-profile-value="gruvbox">Gruvbox</button>
+          <button type="button" data-papyrus-theme-profile-value="nord">Nord</button>
+          <button type="button" data-papyrus-theme-profile-value="pure">Pure</button>
+        </div>
+      </details>
+      <button class="papyrus-icon-button papyrus-font-profile-button" type="button" data-papyrus-font-profile-toggle aria-label="Font profile" title="Font profile">
+        <FontIcon aria-hidden="true" />
+      </button>
+    </div>}
+    <nav class="papyrus-footer-social" aria-label="Social links">
+      {socialLinks.map(link => {
+        const Icon = socialIconComponents[link.icon as keyof typeof socialIconComponents] ?? GithubIcon;
+        return (
+          <a class="papyrus-icon-button" href={withBase(link.href)} aria-label={link.label} title={link.label}>
+            <Icon aria-hidden="true" />
+          </a>
+        );
+      })}
+      {rssHref && (
+        <a class="papyrus-icon-button" href={withBase(rssHref)} aria-label="RSS" title="RSS">
+          <RssIcon aria-hidden="true" />
+        </a>
+      )}
+    </nav>
+    {
+      links.length > 0 && (
+        <nav class="papyrus-footer-links" aria-label="Footer links">
+          {links.map(link => <a href={withBase(link.href)}>{link.label}</a>)}
+        </nav>
+      )
+    }
+  </div>
+</footer>

@@ -2,6 +2,7 @@ import type { AstroIntegration } from "astro";
 
 const defaultRoutes = [
   ["/", "astro-theme-papyrus/template/pages/index.astro"],
+  ["/about", "astro-theme-papyrus/template/pages/about.astro"],
   ["/posts", "astro-theme-papyrus/template/pages/posts/index.astro"],
   ["/posts/[...slug]", "astro-theme-papyrus/template/pages/posts/[...slug].astro"],
   ["/projects", "astro-theme-papyrus/template/pages/projects.astro"],

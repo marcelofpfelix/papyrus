@@ -2,15 +2,15 @@
   {
     "title": "papyrus",
     "description": "Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata.",
-    "href": "/docs/",
+    "href": "/collections/docs/",
     "links": [
       {
         "label": "features",
-        "href": "/docs/feature-map/"
+        "href": "/collections/docs/feature-map/"
       },
       {
         "label": "docs",
-        "href": "/docs/"
+        "href": "/collections/docs/"
       },
       {
         "label": "website",
@@ -26,7 +26,7 @@
     "language": "Astro",
     "status": "active",
     "pinned": true,
-    "url": "https://papyrus.marcelofelix.com/docs/",
+    "url": "https://papyrus.marcelofelix.com/collections/docs/",
     "id": "project:papyrus",
     "type": "project"
   },
@@ -54,11 +54,11 @@
   {
     "title": "AI indexes",
     "description": "Static JSON and llms.txt outputs for agents, site search, and graph features.",
-    "href": "/docs/ai-mobile/",
+    "href": "/collections/docs/ai-mobile/",
     "links": [
       {
         "label": "docs",
-        "href": "/docs/ai-mobile/"
+        "href": "/collections/docs/ai-mobile/"
       },
       {
         "label": "graph",
@@ -67,7 +67,7 @@
     ],
     "language": "Node",
     "status": "reference",
-    "url": "https://papyrus.marcelofelix.com/docs/ai-mobile/",
+    "url": "https://papyrus.marcelofelix.com/collections/docs/ai-mobile/",
     "id": "project:ai-indexes",
     "type": "project"
   }

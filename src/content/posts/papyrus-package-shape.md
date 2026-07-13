@@ -12,11 +12,6 @@ tags:
   - papyrus
   - changelog
 featured: true
-docs:
-  section: start
-  order: 30
-  title: Theme package shape
-  description: Post-as-doc overview of the package boundary between site content and reusable Papyrus UI.
 ---
 
 Papyrus is meant to keep the site repo focused. The consuming site owns content,
@@ -39,11 +34,11 @@ A content site usually needs the same core pieces on several routes:
 - generated metadata for RSS, sitemap, robots, search, and AI indexes
 
 The package boundary stays explicit. Papyrus reuses Pure as the foundation,
-adds Paper-style publishing features, exposes a stable public API through
+adds Papyrus-style publishing features, exposes a stable public API through
 package exports, and lets the site override content, config, and routes.
 
 ```ts
-import { PaperBaseLayout, PaperPostList } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts } from "astro-theme-papyrus/utils";
 ```
 
@@ -55,15 +50,15 @@ handled in one package.
 The public posts page uses the standard list view so the archive stays easy to scan:
 
 ```astro title="src/pages/posts/index.astro"
-<PaperPostList posts={posts} view="list" />
+<PapyrusPostList posts={posts} view="list" />
 ```
 
 The same component can still render denser or card-like post groups inside
 documentation references, landing pages, or custom sections:
 
 ```astro title="post-list-view-reference.astro"
-<PaperPostList posts={posts} view="compact" />
-<PaperPostList posts={posts} view="cards" />
+<PapyrusPostList posts={posts} view="compact" />
+<PapyrusPostList posts={posts} view="cards" />
 ```
 
 Keeping these alternatives inside a post leaves `/posts/` focused on the main

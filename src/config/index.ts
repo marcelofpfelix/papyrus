@@ -1,20 +1,20 @@
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parse } from "smol-toml";
-import { defaultPaperFeatures, type PaperFeatureConfig } from "../utils/features.ts";
+import { defaultPapyrusFeatures, type PapyrusFeatureConfig } from "../utils/features.ts";
 
-export type PaperLinkConfig = {
+export type PapyrusLinkConfig = {
   href: string;
   label: string;
   icon?: string;
 };
 
-export type PaperProjectConfig = {
+export type PapyrusProjectConfig = {
   title: string;
   description: string;
   href?: string;
   image?: string;
-  links?: Array<PaperLinkConfig & { text?: string }>;
+  links?: Array<PapyrusLinkConfig & { text?: string }>;
   status?: string;
   repo?: string;
   language?: string;
@@ -22,7 +22,7 @@ export type PaperProjectConfig = {
   pinned?: boolean | number;
 };
 
-export type PaperPostCardConfig = {
+export type PapyrusPostCardConfig = {
   tags: boolean;
   readTime: boolean;
   freshIndicators: boolean;
@@ -31,7 +31,7 @@ export type PaperPostCardConfig = {
   limit?: number;
 };
 
-export type PaperSiteConfig = {
+export type PapyrusSiteConfig = {
   title: string;
   description?: string;
   site?: string;
@@ -45,19 +45,19 @@ export type PaperSiteConfig = {
   showBrandTitle: boolean;
   defaultThemeProfile: string;
   defaultFontProfile: string;
-  nav: PaperLinkConfig[];
-  socialLinks: PaperLinkConfig[];
-  projects: PaperProjectConfig[];
-  features: Required<PaperFeatureConfig>;
-  postCard: PaperPostCardConfig;
+  nav: PapyrusLinkConfig[];
+  socialLinks: PapyrusLinkConfig[];
+  projects: PapyrusProjectConfig[];
+  features: Required<PapyrusFeatureConfig>;
+  postCard: PapyrusPostCardConfig;
 };
 
-export type PaperConfigInput = Partial<Omit<PaperSiteConfig, "features" | "postCard" | "nav" | "socialLinks">> & {
-  features?: PaperFeatureConfig;
-  postCard?: Partial<PaperPostCardConfig>;
-  nav?: PaperLinkConfig[];
-  socialLinks?: PaperLinkConfig[];
-  projects?: PaperProjectConfig[];
+export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "nav" | "socialLinks">> & {
+  features?: PapyrusFeatureConfig;
+  postCard?: Partial<PapyrusPostCardConfig>;
+  nav?: PapyrusLinkConfig[];
+  socialLinks?: PapyrusLinkConfig[];
+  projects?: PapyrusProjectConfig[];
 };
 
 const defaultPostCard = {
@@ -66,7 +66,7 @@ const defaultPostCard = {
   freshIndicators: true,
   freshIndicatorText: true,
   updatedDateOnly: false,
-} satisfies PaperPostCardConfig;
+} satisfies PapyrusPostCardConfig;
 
 const defaultConfig = {
   title: "papyrus",
@@ -79,9 +79,9 @@ const defaultConfig = {
   nav: [],
   socialLinks: [],
   projects: [],
-  features: defaultPaperFeatures,
+  features: defaultPapyrusFeatures,
   postCard: defaultPostCard,
-} satisfies PaperSiteConfig;
+} satisfies PapyrusSiteConfig;
 
 function asRecord(value: unknown): Record<string, unknown> {
   return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
@@ -99,7 +99,7 @@ function asNumber(value: unknown): number | undefined {
   return typeof value === "number" && Number.isFinite(value) ? value : undefined;
 }
 
-function asLinks(value: unknown): PaperLinkConfig[] {
+function asLinks(value: unknown): PapyrusLinkConfig[] {
   if (!Array.isArray(value)) return [];
 
   return value.flatMap((item) => {
@@ -112,7 +112,7 @@ function asLinks(value: unknown): PaperLinkConfig[] {
   });
 }
 
-function asProjectLinks(value: unknown): Array<PaperLinkConfig & { text?: string }> {
+function asProjectLinks(value: unknown): Array<PapyrusLinkConfig & { text?: string }> {
   return asLinks(value).map((link, index) => {
     const record = Array.isArray(value) ? asRecord(value[index]) : {};
     return {
@@ -122,7 +122,7 @@ function asProjectLinks(value: unknown): Array<PaperLinkConfig & { text?: string
   });
 }
 
-function asProjects(value: unknown): PaperProjectConfig[] {
+function asProjects(value: unknown): PapyrusProjectConfig[] {
   if (!Array.isArray(value)) return [];
 
   return value.flatMap((item) => {
@@ -146,16 +146,16 @@ function asProjects(value: unknown): PaperProjectConfig[] {
   });
 }
 
-function readFeatureConfig(record: Record<string, unknown>): PaperFeatureConfig {
+function readFeatureConfig(record: Record<string, unknown>): PapyrusFeatureConfig {
   return Object.fromEntries(
-    Object.keys(defaultPaperFeatures).flatMap((key) => {
+    Object.keys(defaultPapyrusFeatures).flatMap((key) => {
       const value = asBoolean(record[key]);
       return value === undefined ? [] : [[key, value]];
     })
-  ) as PaperFeatureConfig;
+  ) as PapyrusFeatureConfig;
 }
 
-function readPostCardConfig(record: Record<string, unknown>): Partial<PaperPostCardConfig> {
+function readPostCardConfig(record: Record<string, unknown>): Partial<PapyrusPostCardConfig> {
   return {
     ...(asBoolean(record.tags) !== undefined ? { tags: asBoolean(record.tags) } : {}),
     ...(asBoolean(record.readTime ?? record.read_time) !== undefined ? { readTime: asBoolean(record.readTime ?? record.read_time) } : {}),
@@ -166,11 +166,11 @@ function readPostCardConfig(record: Record<string, unknown>): Partial<PaperPostC
   };
 }
 
-export function definePaperConfig(config: PaperConfigInput): PaperSiteConfig {
-  return resolvePaperConfig(config);
+export function definePapyrusConfig(config: PapyrusConfigInput): PapyrusSiteConfig {
+  return resolvePapyrusConfig(config);
 }
 
-export function resolvePaperConfig(config: PaperConfigInput = {}): PaperSiteConfig {
+export function resolvePapyrusConfig(config: PapyrusConfigInput = {}): PapyrusSiteConfig {
   return {
     ...defaultConfig,
     ...config,
@@ -178,7 +178,7 @@ export function resolvePaperConfig(config: PaperConfigInput = {}): PaperSiteConf
     socialLinks: config.socialLinks ?? defaultConfig.socialLinks,
     projects: config.projects ?? defaultConfig.projects,
     features: {
-      ...defaultPaperFeatures,
+      ...defaultPapyrusFeatures,
       ...(config.features ?? {}),
     },
     postCard: {
@@ -188,19 +188,19 @@ export function resolvePaperConfig(config: PaperConfigInput = {}): PaperSiteConf
   };
 }
 
-export function parsePaperConfigToml(source: string): PaperSiteConfig {
+export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
   const parsed = asRecord(parse(source));
   const site = asRecord(parsed.site);
   const brand = asRecord(parsed.brand);
   const theme = asRecord(parsed.theme);
   const seo = asRecord(parsed.seo);
 
-  return resolvePaperConfig({
+  return resolvePapyrusConfig({
     title: asString(site.title ?? parsed.title),
     description: asString(site.description ?? parsed.description),
     site: asString(site.url ?? site.site ?? parsed.site),
     lang: asString(site.lang ?? parsed.lang),
-    dir: (asString(site.dir ?? parsed.dir) as PaperSiteConfig["dir"] | undefined),
+    dir: (asString(site.dir ?? parsed.dir) as PapyrusSiteConfig["dir"] | undefined),
     timezone: asString(site.timezone ?? parsed.timezone),
     googleVerification: asString(seo.googleVerification ?? seo.google_verification ?? parsed.googleVerification ?? parsed.google_verification),
     brandTitle: asString(brand.title ?? parsed.brandTitle ?? parsed.brand_title),
@@ -217,7 +217,15 @@ export function parsePaperConfigToml(source: string): PaperSiteConfig {
   });
 }
 
-export async function loadPaperConfig(path = "paper.config.toml", cwd = process.cwd()): Promise<PaperSiteConfig> {
-  const source = await readFile(resolve(cwd, path), "utf8");
-  return parsePaperConfigToml(source);
+export async function loadPapyrusConfig(path = "papyrus.config.toml", cwd = process.cwd()): Promise<PapyrusSiteConfig> {
+  let source: string;
+  try {
+    source = await readFile(resolve(cwd, path), "utf8");
+  } catch (error) {
+    if (error && typeof error === "object" && "code" in error && error.code === "ENOENT") {
+      return resolvePapyrusConfig();
+    }
+    throw error;
+  }
+  return parsePapyrusConfigToml(source);
 }

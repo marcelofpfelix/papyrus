@@ -1,5 +1,5 @@
 ---
-import { PaperBaseLayout, PaperNotFound } from "../components";
+import { PapyrusBaseLayout, PapyrusNotFound } from "../components";
 import { demoNav, demoSocialLinks } from "../data/demo-nav";
 import { demoPosts } from "../data/demo-posts";
 import { postHref, postTags, publishedPosts, sortPosts } from "../utils/posts";
@@ -26,13 +26,13 @@ const staticItems = [
   {
     title: "Docs",
     description: "Install guide, feature map, authoring docs, content model, and generated metadata.",
-    href: "/docs/",
+    href: "/collections/docs/",
     tags: ["docs"],
   },
   {
     title: "Content structure",
     description: "How Papyrus maps content into routes and metadata.",
-    href: "/docs/content-structure/",
+    href: "/collections/docs/content-structure/",
     tags: ["docs", "content"],
   },
   {
@@ -57,15 +57,15 @@ const postItems = sortPosts(publishedPosts(demoPosts)).map((post) => ({
 const items = [...postItems, ...staticItems];
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Page not found"
   description="Find a matching Papyrus page, post, tag, project, or documentation route."
   siteTitle="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <PaperNotFound
+  <PapyrusNotFound
     items={items}
     description="The route may have moved or the URL may be incomplete. Search the generated page index or choose one of the closest matching posts, docs, projects, tags, or profile routes."
   />
-</PaperBaseLayout>
+</PapyrusBaseLayout>

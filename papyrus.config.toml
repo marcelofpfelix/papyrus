@@ -1,0 +1,60 @@
+[site]
+title = "papyrus"
+description = "Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata."
+url = "https://papyrus.marcelofelix.com"
+lang = "en"
+dir = "ltr"
+timezone = "Europe/Lisbon"
+
+[brand]
+title = "papyrus"
+mark = "twinkle"
+show_title = true
+
+[theme]
+profile = "gruvbox"
+font_profile = "readable"
+
+[features]
+search = true
+rss = true
+themeControls = true
+share = true
+toc = true
+postTags = true
+aiMetadata = true
+sourceActions = true
+backToTop = true
+
+[post_card]
+tags = false
+read_time = false
+fresh_indicators = true
+fresh_indicator_text = true
+updated_date_only = true
+limit = 20
+
+[[nav]]
+href = "/posts/"
+label = "Posts"
+
+[[nav]]
+href = "/projects/"
+label = "Projects"
+
+[[nav]]
+href = "/collections/"
+label = "Collections"
+
+[[nav]]
+href = "/profile/"
+label = "Profile"
+
+[[nav]]
+href = "/about/"
+label = "About"
+
+[[social]]
+href = "https://github.com/marcelofpfelix/papyrus"
+label = "GitHub"
+icon = "github"

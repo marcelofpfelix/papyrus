@@ -1,0 +1,85 @@
+---
+interface Props {
+  endpoint: string;
+  slug: string;
+  commentsCount?: number;
+  viewsCount?: number;
+  trackView?: boolean;
+}
+
+const {
+  endpoint,
+  slug,
+  commentsCount,
+  viewsCount,
+  trackView = false,
+} = Astro.props;
+
+const initialViews = viewsCount === undefined ? "" : String(viewsCount);
+const initialComments = commentsCount === undefined ? "" : String(commentsCount);
+---
+
+<p
+  class="papyrus-post-stats"
+  data-papyrus-remote-stats
+  data-endpoint={endpoint}
+  data-slug={slug}
+  data-track-view={trackView ? "true" : "false"}
+>
+  <span data-papyrus-stat="views">{initialViews ? `${initialViews} views` : "views"}</span>
+  <span data-papyrus-stat="comments">{initialComments ? `${initialComments} comments` : "comments"}</span>
+</p>
+
+<script>
+  type Stats = {
+    views?: number;
+    comments?: number;
+  };
+
+  type StatsPayload = Stats | Record<string, Stats>;
+
+  function formatCount(value: unknown, label: string) {
+    return typeof value === "number" && Number.isFinite(value) ? `${value} ${label}` : label;
+  }
+
+  function endpointUrl(endpoint: string, slug: string) {
+    const url = new URL(endpoint, window.location.href);
+    url.searchParams.set("slug", slug);
+    return url;
+  }
+
+  function statsForSlug(payload: StatsPayload, slug: string): Stats {
+    if ("views" in payload || "comments" in payload) return payload;
+    return (payload as Record<string, Stats>)[slug] ?? {};
+  }
+
+  function renderStats(root: HTMLElement, stats: Stats) {
+    const views = root.querySelector<HTMLElement>('[data-papyrus-stat="views"]');
+    const comments = root.querySelector<HTMLElement>('[data-papyrus-stat="comments"]');
+    if (views) views.textContent = formatCount(stats.views, "views");
+    if (comments) comments.textContent = formatCount(stats.comments, "comments");
+  }
+
+  async function loadStats(root: HTMLElement) {
+    const endpoint = root.dataset.endpoint;
+    const slug = root.dataset.slug;
+    if (!endpoint || !slug) return;
+
+    const url = endpointUrl(endpoint, slug);
+    const trackView = root.dataset.trackView === "true";
+    const response = await fetch(url, trackView ? { method: "POST" } : undefined);
+    if (!response.ok) return;
+    renderStats(root, statsForSlug(await response.json(), slug));
+  }
+
+  function bindRemoteStats() {
+    document.querySelectorAll<HTMLElement>("[data-papyrus-remote-stats]").forEach((root) => {
+      if (root.dataset.papyrusBound) return;
+      root.dataset.papyrusBound = "true";
+      loadStats(root).catch(() => {});
+    });
+  }
+
+  bindRemoteStats();
+  document.addEventListener("astro:page-load", bindRemoteStats);
+</script>

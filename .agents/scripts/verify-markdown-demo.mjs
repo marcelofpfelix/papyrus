@@ -34,7 +34,7 @@ const featureCoverage = JSON.parse(await text(".agents/fixtures/markdown-feature
 
 includes(astroConfig, "remarkArtifactLinks", "artifact-link remark plugin");
 includes(astroConfig, "rehypeCallouts", "rehype-callouts plugin");
-includes(astroConfig, "rehype-callouts", "AstroPaper-style callouts dependency import");
+includes(astroConfig, "rehype-callouts", "AstroPapyrus-style callouts dependency import");
 includes(astroConfig, "remarkMermaidBlocks", "Mermaid fence remark plugin");
 includes(astroConfig, "shikiConfig", "Astro Shiki config");
 includes(astroConfig, 'theme: "css-variables"', "Pure-style css-variables Shiki theme");
@@ -49,7 +49,7 @@ includes(astroConfig, "addCollapse(15)", "Pure-style Shiki collapse transformer"
 includes(astroConfig, "./src/shiki/index.mjs", "local Pure Shiki transformer copy");
 excludes(astroConfig, "@shikijs/transformers", "direct custom Shiki transformer package");
 excludes(astroConfig, "remarkCodeMeta", "custom code metadata wrapper");
-excludes(astroConfig, "rehypePaperCode", "custom code block wrapper");
+excludes(astroConfig, "rehypePapyrusCode", "custom code block wrapper");
 
 const codeDemoChecks = [
   ['```rust title="src/main.rs"', "Rust titled code fence"],

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Markdown feature cover" viewBox="0 0 640 360">
-  <rect width="640" height="360" rx="24" fill="var(--paper-bg, #f9f5d7)"/>
-  <path d="M92 104h456M92 168h300M92 232h386" stroke="var(--paper-accent, #d8a657)" stroke-width="22" stroke-linecap="round"/>
-  <path d="m442 139 52 41-52 41M198 139l-52 41 52 41" fill="none" stroke="var(--paper-fg, #654735)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="640" height="360" rx="24" fill="var(--papyrus-bg, #f9f5d7)"/>
+  <path d="M92 104h456M92 168h300M92 232h386" stroke="var(--papyrus-accent, #d8a657)" stroke-width="22" stroke-linecap="round"/>
+  <path d="m442 139 52 41-52 41M198 139l-52 41 52 41" fill="none" stroke="var(--papyrus-fg, #654735)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

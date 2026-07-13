@@ -19,7 +19,7 @@ docs, plus code examples that help agents understand how to use the theme.
 A consuming site runs the same command against its own content during build:
 
 ```sh
-pnpm papyrus-llms src/content/posts public "$SITE_URL" src/pages/docs
+pnpm papyrus-llms src/content/posts public "$SITE_URL"
 ```
 
 Use the deployed site origin for `SITE_URL` so generated links match RSS,
@@ -41,7 +41,7 @@ make sure feeds, sitemap, search, AI indexes, and graph generation all use the
 same hidden-content rule.
 ## Dark mode and search in Papyrus
 URL: https://papyrus.marcelofelix.com/posts/dark-mode-and-search/
-Summary: The theme keeps a Pure-like neutral background, then adds a small Paper-style search flow.
+Summary: The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.
 Updated: 2026-06-30T11:15:00.000Z
 Source: src/content/posts/dark-mode-and-search.md
 The light and dark backgrounds stay close to the default Pure theme: neutral, quiet, and readable. Papyrus keeps color accents restrained so the content remains the main surface.
@@ -52,19 +52,838 @@ The public Papyrus site builds a Pagefind index from generated static HTML. A sm
 
 ```astro
 ---
-import { PaperBaseLayout } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Search"
   description="Static search for posts, tags, and archive entries."
   searchHref="/search/"
 >
   <p>The header search icon opens the site-owned search page.</p>
-</PaperBaseLayout>
+</PapyrusBaseLayout>
 ```
 
 That is the important boundary. The icon and layout affordance belong to the theme. The index strategy belongs to the site.
+## Markdown code guide
+URL: https://papyrus.marcelofelix.com/posts/code-demo/
+Summary: Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.
+Updated: 2026-07-01T13:00:00.000Z
+Source: src/content/posts/docs/authoring/10-code-demo.md
+This route is a compact rendering reference for Markdown-heavy posts. It shows
+how callouts, code fences, tables, diagrams, media, and fallback artifact links
+look inside the same article layout used by regular Papyrus posts.
+
+## Obsidian callout syntax
+
+> [!NOTE]
+> Notes render as theme-aware callouts while keeping the original Markdown
+> readable in source form.
+
+> [!TIP]
+> Tips use the same callout component shape with a different token mix.
+
+> [!IMPORTANT]
+> Important callouts use their own icon and color so they are distinct from tips.
+
+> [!WARNING]
+> Warning variants use warning tokens instead of hardcoded colors.
+
+> [!CAUTION]
+> Caution callouts stay readable in light and dark modes.
+
+## Code title
+
+```rust title="src/main.rs"
+fn main() {
+    println!("papyrus");
+}
+```
+
+## Diff fence
+
+```css title="diff.css"
+.papyrus-card {
+  background: var(--papyrus-panel); /* [!code --] */
+  background: transparent; /* [!code ++] */
+  color: var(--papyrus-accent); /* [!code ++] */
+}
+```
+
+## Highlighted lines
+
+```c title="highlight.c"
+#include <stdio.h>
+
+int main(void) {
+  puts("papyrus"); // [!code highlight]
+  return 0;
+}
+```
+
+## Console fences
+
+```console
+site$ pnpm install
+site# pnpm build
+site> pnpm preview
+```
+
+## Task list
+
+- [x] Keep feature walkthroughs explicit
+- [ ] Document the source files beside rendered artifacts
+- [ ] Choose a renderer before embedding external diagram formats
+
+## Table
+
+| Feature | Expected behavior |
+| --- | --- |
+| Code title | Render a compact title bar |
+| Diff | Style added and removed lines |
+| Table | Stay readable without heavy borders |
+
+## Mermaid fence
+
+```mermaid
+flowchart LR
+  Markdown --> Code
+  Markdown --> Alerts
+  Markdown --> Diagrams
+```
+
+## Image zoom
+
+## Artifact links
+
+- [Mermaid source](/demo/theme-flow.mmd "Hydrated Mermaid source")
+- [PlantUML source](/demo/call-flow.puml "PlantUML source")
+- [Excalidraw source](/demo/sketch.excalidraw "Excalidraw source")
+
+## Fallback rendering
+
+Some GitHub-style or diagram-adjacent formats need a site-owned plugin or
+renderer. Papyrus keeps the source visible so authors can choose the right
+integration for their site.
+## Generated content structure
+URL: https://papyrus.marcelofelix.com/posts/content-structure/
+Summary: How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.
+Updated: 2026-07-01T13:10:00.000Z
+Source: src/content/posts/docs/authoring/11-content-structure.md
+Use folder metadata when a site needs nested notes, guides, or knowledge-base
+pages without turning source paths into fragile public URLs.
+
+## What gets generated
+
+Papyrus can read a folder tree, combine explicit frontmatter with folder-level
+labels, and render a public index that still feels hand-authored. The package
+fixture in `public/demo/content-tree` generates `public/demo/content-structure.md`.
+
+## How to use it
+
+Keep canonical slugs in frontmatter when a page has a permanent URL. Use folders
+for organization, inherited tags, and section labels. This lets authors move
+files while the published route, RSS item, search result, and AI metadata stay
+stable.
+
+```console
+pnpm papyrus-content-outline public/demo/content-tree public/demo/content-structure.md
+```
+
+- Use folder names for broad groups such as `guides`, `notes`, or `reference`.
+- Use an index file or folder metadata to name a section for readers.
+- Mark draft, private, or internal posts with `hidden: true` when they need a direct route but should stay out of public lists, feeds, sitemaps, search, and AI exports.
+- Add explicit `robots` frontmatter only when the direct page itself should be blocked from indexing.
+
+## Public boundary
+
+User-facing docs now live as regular posts under `src/content/posts/docs`.
+Development-only notes stay under the repository `docs/` folder or `.agents/`
+and are not linked from the demo navigation unless they are intentionally
+rewritten as user documentation.
+
+## Source artifact
+
+The generated Markdown outline remains available as a public fixture at
+[`/demo/content-structure.md`](/demo/content-structure.md).
+## Deploy Papyrus
+URL: https://papyrus.marcelofelix.com/posts/deploy/
+Summary: Static hosting, build settings, metadata URLs, and base-path notes for a Papyrus site.
+Updated: 2026-07-01T15:00:00.000Z
+Source: src/content/posts/docs/deploy/30-deploy.md
+Papyrus builds to static Astro output, so a consuming site can publish the
+generated `dist` directory to any static host.
+
+## Local preview
+
+Use the local development server while editing content, routes, and theme
+configuration. For a production-shaped preview, build first and serve the
+generated output.
+
+```console
+pnpm install
+pnpm dev
+pnpm build
+pnpm preview
+```
+
+## Static hosting
+
+The deployment artifact is the Astro `dist` directory. Cloudflare Pages,
+Netlify, Vercel static output, GitHub Pages, and any static file server can host
+it as long as the configured site URL matches the final domain.
+
+- Set the production site URL before generating sitemap, robots, RSS, social metadata, and AI indexes.
+- Keep secret token lookup and host-specific deploy wrappers outside the reusable theme package.
+- Check `/robots.txt`, `/sitemap-index.xml`, `/rss.xml`, `/search/`, `/posts/`, and `/collections/` after publishing.
+
+## Build settings
+
+Most static hosts need only the package manager, build command, output
+directory, and production URL. Keep the URL in one environment variable so
+generated metadata agrees across sitemap, robots, RSS, social previews, search,
+and AI files.
+
+```text
+package manager: pnpm
+build command: SITE_URL="https://example.test" pnpm build
+output directory: dist
+```
+
+If the consuming site uses pnpm, keep `minimumReleaseAge` in
+`pnpm-workspace.yaml` so production builds do not pick up packages published
+only minutes ago.
+
+## Subdirectory deploys
+
+When the site is published under a base path, route links go through Papyrus
+base-path helpers or Astro route helpers instead of hardcoded root-relative
+strings. Asset URLs use the same base-aware helper used by the layout. Configure
+the Astro `base` option in the consuming site, then keep internal links on
+helpers such as `withBase()` or `getRelativeLocaleUrl()`.
+## Feature map
+URL: https://papyrus.marcelofelix.com/posts/feature-map/
+Summary: Route-by-route guide to public Papyrus features.
+Updated: 2026-07-01T14:00:00.000Z
+Source: src/content/posts/docs/references/20-feature-map.md
+Every public feature has a route that shows how a consuming site can use it.
+Start here when exploring Papyrus.
+
+## Feature map
+
+- [Install and configure Papyrus](/posts/install-configure-papyrus/) covers the template-first setup flow.
+- [Layout, header, footer, and theme controls](/) are visible on the home page.
+- [Post layout and actions](/metadata-demo/) show covers, dates, tags, reading time, adjacent links, source/copy/share actions, table of contents, and optional back links.
+- [Markdown authoring guide](/collections/docs/code-demo/) shows Pure-style Astro/Shiki code blocks, alerts, task lists, tables, Mermaid SVG, artifacts, and zoom hooks.
+- [Posts index and tags](/posts/) show pinned ordering, list-only archive view, tag links, compact metadata, timeline link, and small covers.
+- [Search and tag filters](/search/) work with tag filters, standalone tag pages, and generated RSS feeds for individual tags.
+- [Collections](/collections/) list folder-backed post collections detected from TOML files.
+- [CV/profile templates](/profile/) use normalized CV data across resume, timeline, projects, A4 links, and print routes.
+- [Projects and GitHub cards](/projects/) show pinned projects, project list cards, and Pure-inspired GitHub repository preview cards.
+- [Feature flags and plugin contract](/collections/docs/features/) document configurable feature flags, comments, plugins, and typed plugin configuration.
+- [Content structure helpers](/collections/docs/content-structure/) explain nested folders, folder metadata, folder-derived tags, stable slugs, and generated content outlines.
+- [Deploy and local preview](/collections/docs/deploy/) covers local dev, production preview, static hosting, base-path deploys, and deploy guidance.
+- [AI and mobile readiness](/collections/docs/ai-mobile/) covers generated metadata, AI indexes, responsive primitives, and mobile authoring guidance.
+
+## How to use it
+
+Use this map as an orientation page when adding Papyrus to another Astro site.
+Each linked route shows the content, component, or generated artifact in
+context. Repository-only implementation notes stay outside visitor-facing docs.
+## AI and mobile readiness
+URL: https://papyrus.marcelofelix.com/posts/ai-mobile/
+Summary: AI metadata, generated indexes, and mobile-ready defaults in a Papyrus site.
+Updated: 2026-07-01T14:10:00.000Z
+Source: src/content/posts/docs/references/21-ai-mobile.md
+Papyrus ships useful agent-readable metadata, generated indexes, and responsive
+UI defaults for small content sites.
+
+## AI-first primitives
+
+- Package-level `llms.txt` and `llms-full.txt` generation for agent-readable site summaries.
+- Static RSS feeds per tag.
+- Static JSON indexes for posts, tags, projects, notes, and CV summary data.
+- Static graph data export connecting posts, tags, projects, notes, and CV sections.
+- Stable machine IDs in generated JSON indexes, graph nodes, graph edges, and search records.
+- Reusable static search index for local agents.
+- Per-post JSON-LD metadata for schema.org types.
+- Post layout support for canonical URL, source Markdown URL, author metadata, copy Markdown, and copy citation.
+
+Generated files include [`llms.txt`](/llms.txt), [`llms-full.txt`](/llms-full.txt),
+[`posts.json`](/ai/posts.json), [`tags.json`](/ai/tags.json),
+[`cv.json`](/ai/cv.json), and [`graph.json`](/ai/graph.json).
+
+## Site-specific AI extensions
+
+- Add extra source links when a post depends on diagrams, notebooks, or external datasets.
+- Add JSON-LD types for people, projects, software source code, or breadcrumbs on site-specific pages.
+- Generate backlinks or related posts from Markdown links when the content model needs a knowledge graph.
+- Store explicit license metadata for images, code snippets, and diagrams when licensing matters.
+- Publish diagram source beside rendered SVG output for Mermaid, PlantUML, or Excalidraw workflows.
+
+## Mobile-first primitives
+
+- Safe-area padding for phones with notches or rounded display edges.
+- 44px coarse-pointer hit targets for core icon, copy, post action, tag, TOC, and back-to-top controls.
+- Responsive post lists with stable cover dimensions and compact metadata.
+- Collapsible table of contents and back-to-top controls designed for small screens.
+- Image, SVG, and Mermaid zoom behavior that works with touch input.
+- Reduced-motion handling for cursor, logo, header, dropdown, and page-transition effects.
+- Profile and CV routes that share one data source across web, timeline, and print layouts.
+- Static Pagefind search and generated tag pages, so mobile search does not require a server.
+
+## Mobile authoring tips
+
+Keep post descriptions short enough to scan in list views, prefer real cover
+images or generated covers with stable aspect ratios, use headings in order, and
+preview layout-heavy changes on desktop and phone-sized screens before
+publishing.
+## Papyrus docs
+URL: https://papyrus.marcelofelix.com/posts/papyrus-docs/
+Summary: Package docs for installing, composing, and extending Papyrus without copying a full theme into every site.
+Updated: 2026-07-01T09:00:00.000Z
+Source: src/content/posts/docs/start/00-papyrus-docs.md
+Papyrus keeps consuming sites focused on content and config. The theme package
+owns reusable layouts, post rendering, collections, generated metadata, search,
+RSS, project cards, and profile/CV surfaces.
+
+## Start points
+
+- [Install and configure Papyrus](/posts/install-configure-papyrus/) explains the template-first workflow.
+- [Feature config](/collections/docs/features/) shows grouped layout and post toggles.
+- [Feature map](/collections/docs/feature-map/) maps the public routes to reusable theme features.
+- [Markdown code guide](/collections/docs/code-demo/) shows Markdown, code, callouts, diagrams, media, and artifacts.
+
+## Theme profiles
+
+Each theme profile defines one light token set and one dark token set. Runtime
+mode defaults to system, while the default color profile is Gruvbox and the
+default font profile is readable. Included profiles are Catppuccin, Tokyo Night,
+Kanagawa, Rose Pine, Everforest, Dracula, Gruvbox, Nord, and Pure.
+
+```css
+:root[data-papyrus-theme="custom"] {
+  --papyrus-bg: #fbf7ef;
+  --papyrus-fg: #1f2933;
+  --papyrus-muted: #6b7280;
+  --papyrus-panel: #ffffff;
+  --papyrus-border: #d8d0bf;
+  --papyrus-accent: #7c3aed;
+  --papyrus-code-bg: #f4efe5;
+  --papyrus-code-fg: #111827;
+  --papyrus-theme-color: #fbf7ef;
+}
+```
+
+Use `pnpm papyrus-theme list` to inspect installed profiles and
+`pnpm papyrus-theme validate` to check that every profile file has the required
+light and dark selectors and tokens.
+
+## Content model
+
+Papyrus uses `src/content/posts` as the public content source. A folder can add a
+TOML file to become a collection, and the collection route reads posts in
+filename order. Regular blog/archive pages can still sort the same posts by
+date.
+
+Repo-only notes stay under the repository `docs/` or `.agents/` folders unless
+they are intentionally rewritten as public posts.
+## Feature config
+URL: https://papyrus.marcelofelix.com/posts/features/
+Summary: Grouped feature toggles for Papyrus layouts.
+Updated: 2026-07-01T09:10:00.000Z
+Source: src/content/posts/docs/start/01-features.md
+Use one typed config object to disable optional layout and post features without
+copying theme components.
+
+## Base layout
+
+```astro
+---
+import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
+
+const features = {
+  header: true,
+  footer: true,
+  scrollHeader: true,
+  search: false,
+  rss: false,
+  themeControls: true,
+  poweredBy: true,
+};
+---
+
+<PapyrusBaseLayout title="Minimal page" features={features}>
+  <p>No search icon and no RSS icon on this page.</p>
+</PapyrusBaseLayout>
+```
+
+## Post layout
+
+```astro
+---
+import { PapyrusPostLayout } from "astro-theme-papyrus/components";
+
+const features = {
+  share: false,
+  toc: false,
+  postTags: true,
+  aiMetadata: true,
+  sourceActions: false,
+  postStats: false,
+  postSideLinks: false,
+  adjacentPosts: false,
+  backToTop: false,
+};
+---
+
+<PapyrusPostLayout title="Minimal post" siteTitle="My site" features={features}>
+  <p>Rendered without share, TOC, source actions, stats, or adjacent links.</p>
+</PapyrusPostLayout>
+```
+
+## SEO and social metadata
+
+Papyrus layouts emit the metadata a small public site normally needs: titles,
+descriptions, canonical URLs, Open Graph, Twitter cards, RSS discovery, and post
+JSON-LD. Hidden posts stay out of public discovery surfaces. Use explicit
+`robots` frontmatter when a direct page should emit directives such as
+`noindex, follow`.
+
+## Base path deploys
+
+Internal URLs in shared layouts and list components go through `withBase()` and
+related helpers such as `stripBase()`, `stripLocale()`, `getAssetPath()`, and
+`getRelativeLocaleUrl()`. This keeps navigation, post links, RSS links, favicon
+assets, covers, tags, collection links, adjacent posts, project cards, and 404
+suggestions working when Astro is deployed under a subdirectory.
+
+## Search, tags, sitemap, and robots
+
+Public posts can be found through Pagefind search, tag pages, and optional
+per-tag RSS feeds. Regenerate the sitemap during every build so new posts, tag
+pages, profile pages, project pages, and collection routes are included
+automatically. Papyrus also includes a dynamic `robots.txt` route that reads the
+site URL, keeps crawl rules near site config, and points crawlers to the sitemap
+index.
+
+## Plugin contract
+
+Community plugins stay small: they declare capabilities, optional feature
+defaults, and site-owned integration points. They do not mutate Papyrus
+internals. Routes stay native Astro pages in the consuming app unless a plugin
+explicitly documents a route capability.
+## Choco Frito
+URL: https://papyrus.marcelofelix.com/posts/choco-frito/
+Summary: Setubal-style fried cuttlefish strips served with lemon, fries, and salad.
+Updated: 2024-10-20T09:00:00.000Z
+Source: src/content/posts/food/fish/00-choco-frito.md
+Choco Frito is crisp fried cuttlefish, strongly associated with Setubal.
+
+## Ingredients
+
+- Cuttlefish strips
+- Garlic, bay leaf, and lemon
+- Flour or cornmeal
+- Oil for frying
+- Fries and salad
+
+## Method
+
+Season the cuttlefish, coat lightly, fry until crisp, and serve with lemon and
+simple sides.
+## Bacalhau a Bras
+URL: https://papyrus.marcelofelix.com/posts/bacalhau-a-bras/
+Summary: Shredded salt cod folded with onions, matchstick potatoes, eggs, olives, and parsley.
+Updated: 2024-01-20T09:00:00.000Z
+Source: src/content/posts/food/fish/01-bacalhau-a-bras.md
+Bacalhau a Bras is one of the most familiar Portuguese cod dishes.
+
+## Ingredients
+
+- Desalted shredded cod
+- Onion and garlic
+- Matchstick potatoes
+- Eggs
+- Black olives and parsley
+
+## Method
+
+Soften the onion, add cod and potatoes, then fold in beaten eggs off direct heat
+so the mixture stays creamy.
+## Ameijoas a Bulhao Pato
+URL: https://papyrus.marcelofelix.com/posts/ameijoas-a-bulhao-pato/
+Summary: Clams cooked quickly with garlic, olive oil, white wine, coriander, and lemon.
+Updated: 2024-09-20T09:00:00.000Z
+Source: src/content/posts/food/fish/02-ameijoas-a-bulhao-pato.md
+Ameijoas a Bulhao Pato is a fast clam dish with a bright garlic-coriander sauce.
+
+## Ingredients
+
+- Fresh clams
+- Garlic
+- Olive oil
+- White wine
+- Coriander and lemon
+
+## Method
+
+Cook garlic in olive oil, add clams and wine, cover until opened, then finish
+with coriander and lemon.
+## Bacalhau com Natas
+URL: https://papyrus.marcelofelix.com/posts/bacalhau-com-natas/
+Summary: Salt cod baked with potatoes, onion, cream, and a golden breadcrumb top.
+Updated: 2024-02-20T09:00:00.000Z
+Source: src/content/posts/food/fish/03-bacalhau-com-natas.md
+Bacalhau com Natas is a creamy baked cod dish with potatoes and onion.
+
+## Ingredients
+
+- Desalted cod flakes
+- Potatoes
+- Onion and garlic
+- Cream or bechamel
+- Breadcrumbs
+
+## Method
+
+Layer cod, potatoes, and onion in a baking dish, cover with cream sauce, and bake
+until bubbling and golden.
+## Cataplana de Peixe
+URL: https://papyrus.marcelofelix.com/posts/cataplana-de-peixe/
+Summary: Fish and shellfish steamed with tomato, pepper, onion, herbs, and white wine.
+Updated: 2024-08-20T09:00:00.000Z
+Source: src/content/posts/food/fish/04-cataplana-de-peixe.md
+Cataplana de Peixe uses a sealed pan to steam fish with vegetables and wine.
+
+## Ingredients
+
+- Firm white fish
+- Clams or prawns
+- Tomato, pepper, onion, and garlic
+- White wine
+- Coriander and olive oil
+
+## Method
+
+Layer everything in the cataplana, close it, and cook until the fish is just done
+and the broth is aromatic.
+## Bacalhau a Gomes de Sa
+URL: https://papyrus.marcelofelix.com/posts/bacalhau-a-gomes-de-sa/
+Summary: Oven-baked cod with potatoes, onions, eggs, olives, parsley, and olive oil.
+Updated: 2024-03-20T09:00:00.000Z
+Source: src/content/posts/food/fish/05-bacalhau-a-gomes-de-sa.md
+Bacalhau a Gomes de Sa is a Porto cod classic with potatoes and plenty of olive
+oil.
+
+## Ingredients
+
+- Desalted cod
+- Potatoes
+- Onion and garlic
+- Hard-boiled eggs
+- Olives, parsley, and olive oil
+
+## Method
+
+Bake cod, sliced potatoes, and onions together, then finish with eggs, olives,
+parsley, and more olive oil.
+## Polvo a Lagareiro
+URL: https://papyrus.marcelofelix.com/posts/polvo-a-lagareiro/
+Summary: Tender octopus roasted with punched potatoes, garlic, olive oil, and greens.
+Updated: 2024-07-20T09:00:00.000Z
+Source: src/content/posts/food/fish/06-polvo-a-lagareiro.md
+Polvo a Lagareiro is tender octopus with roasted potatoes and generous olive
+oil.
+
+## Ingredients
+
+- Octopus
+- Small potatoes
+- Garlic
+- Olive oil
+- Greens for serving
+
+## Method
+
+Simmer the octopus until tender, roast it with crushed potatoes and garlic, then
+finish with plenty of hot olive oil.
+## Sardinhas Assadas
+URL: https://papyrus.marcelofelix.com/posts/sardinhas-assadas/
+Summary: Grilled sardines served with roasted peppers, potatoes, bread, and olive oil.
+Updated: 2024-04-20T09:00:00.000Z
+Source: src/content/posts/food/fish/07-sardinhas-assadas.md
+Sardinhas Assadas are simple grilled sardines, especially popular in summer.
+
+## Ingredients
+
+- Fresh sardines
+- Coarse salt
+- Roasted peppers
+- Boiled potatoes
+- Bread and olive oil
+
+## Method
+
+Salt the sardines, grill over high heat, and serve immediately with potatoes,
+peppers, bread, and olive oil.
+## Arroz de Marisco
+URL: https://papyrus.marcelofelix.com/posts/arroz-de-marisco/
+Summary: Brothy seafood rice with prawns, clams, mussels, tomato, coriander, and stock.
+Updated: 2024-06-20T09:00:00.000Z
+Source: src/content/posts/food/fish/08-arroz-de-marisco.md
+Arroz de Marisco is saucy seafood rice, served loose rather than dry.
+
+## Ingredients
+
+- Short-grain rice
+- Prawns, clams, and mussels
+- Tomato, onion, garlic, and pepper
+- Seafood stock
+- Coriander
+
+## Method
+
+Cook the rice in seafood stock and tomato base, then add shellfish near the end
+so it stays tender.
+## Caldeirada de Peixe
+URL: https://papyrus.marcelofelix.com/posts/caldeirada-de-peixe/
+Summary: Layered fish stew with potatoes, peppers, tomatoes, onions, herbs, and olive oil.
+Updated: 2024-05-20T09:00:00.000Z
+Source: src/content/posts/food/fish/09-caldeirada-de-peixe.md
+Caldeirada de Peixe is a layered fisherman's stew built without much stirring.
+
+## Ingredients
+
+- Mixed firm fish
+- Potatoes
+- Tomato, pepper, onion, and garlic
+- White wine
+- Parsley, coriander, and olive oil
+
+## Method
+
+Layer vegetables and fish in a pot, season well, cover, and simmer gently until
+the potatoes and fish are cooked.
+## Cozido a Portuguesa
+URL: https://papyrus.marcelofelix.com/posts/cozido-a-portuguesa/
+Summary: A slow Portuguese meat and vegetable stew with cabbage, potatoes, sausages, and beef.
+Updated: 2024-01-10T09:00:00.000Z
+Source: src/content/posts/food/meat/10-cozido-a-portuguesa.md
+Cozido a Portuguesa is a generous one-pot meal built from meats, smoked
+sausages, cabbage, potatoes, carrots, and turnips.
+
+## Ingredients
+
+- Beef shank or brisket
+- Pork ribs or belly
+- Chourico and farinheira
+- Cabbage, potatoes, carrots, and turnips
+- Salt, pepper, and bay leaf
+
+## Method
+
+Simmer the meats first, then add the vegetables in stages so everything finishes
+tender. Serve the broth, meats, and vegetables together on a wide platter.
+## Leitao a Bairrada
+URL: https://papyrus.marcelofelix.com/posts/leitao-a-bairrada/
+Summary: Crisp roast suckling pig seasoned with garlic, pepper, lard, and salt.
+Updated: 2024-10-10T09:00:00.000Z
+Source: src/content/posts/food/meat/11-leitao-a-bairrada.md
+Leitao a Bairrada is famous for crisp skin, peppery seasoning, and juicy meat.
+
+## Ingredients
+
+- Suckling pig
+- Garlic, coarse salt, pepper, and lard
+- Bay leaf
+- Orange slices for serving
+- Simple salad or chips
+
+## Method
+
+Rub the pig with seasoning, roast until the skin is crisp, and serve in slices
+with a bright, simple garnish.
+## Carne de Porco a Alentejana
+URL: https://papyrus.marcelofelix.com/posts/carne-de-porco-a-alentejana/
+Summary: Marinated pork cubes cooked with clams, fried potatoes, coriander, and pickles.
+Updated: 2024-02-10T09:00:00.000Z
+Source: src/content/posts/food/meat/12-carne-de-porco-a-alentejana.md
+Carne de Porco a Alentejana pairs paprika-marinated pork with clams and crisp
+potatoes.
+
+## Ingredients
+
+- Pork shoulder, cut into cubes
+- Garlic, paprika, bay leaf, and white wine
+- Clams
+- Potatoes for frying
+- Coriander and pickled vegetables
+
+## Method
+
+Marinate the pork, brown it, then steam the clams in the pan juices. Fold in the
+fried potatoes and finish with coriander and pickles.
+## Prego no Prato
+URL: https://papyrus.marcelofelix.com/posts/prego-no-prato/
+Summary: Garlic steak served on a plate with fries, rice, egg, salad, and mustard.
+Updated: 2024-09-10T09:00:00.000Z
+Source: src/content/posts/food/meat/13-prego-no-prato.md
+Prego no Prato is the plated version of the Portuguese garlic steak sandwich.
+
+## Ingredients
+
+- Thin beef steak
+- Garlic, butter, and bay leaf
+- Fried egg
+- Rice, fries, and salad
+- Mustard
+
+## Method
+
+Sear the steak in garlic butter, fry the egg, and serve with the classic sides
+and a spoonful of sauce from the pan.
+## Francesinha
+URL: https://papyrus.marcelofelix.com/posts/francesinha/
+Summary: Porto's layered sandwich with steak, sausage, ham, melted cheese, and beer-tomato sauce.
+Updated: 2024-03-10T09:00:00.000Z
+Source: src/content/posts/food/meat/14-francesinha.md
+Francesinha is a rich Porto sandwich covered with melted cheese and a spicy
+beer-tomato sauce.
+
+## Ingredients
+
+- Thick bread slices
+- Steak, fresh sausage, and ham
+- Sliced cheese
+- Tomato, beer, stock, and piri-piri for the sauce
+- Fries for serving
+
+## Method
+
+Grill the meats, stack the sandwich, cover it with cheese, and bake until melted.
+Pour hot sauce over the sandwich just before serving.
+## Feijoada a Transmontana
+URL: https://papyrus.marcelofelix.com/posts/feijoada-a-transmontana/
+Summary: Northern bean stew with pork, smoked sausages, cabbage, and rice.
+Updated: 2024-08-10T09:00:00.000Z
+Source: src/content/posts/food/meat/15-feijoada-a-transmontana.md
+Feijoada a Transmontana is a rich bean stew from the north, usually served with
+rice.
+
+## Ingredients
+
+- Red or white beans
+- Pork ribs, ear, or belly
+- Chourico and morcela
+- Cabbage
+- Onion, garlic, paprika, and bay leaf
+
+## Method
+
+Cook the beans and meats until soft, add cabbage near the end, and serve with
+plain rice.
+## Bitoque
+URL: https://papyrus.marcelofelix.com/posts/bitoque/
+Summary: A simple steak plate with fried egg, rice, fries, and a quick garlic pan sauce.
+Updated: 2024-04-10T09:00:00.000Z
+Source: src/content/posts/food/meat/16-bitoque.md
+Bitoque is a weekday classic: thin steak, fried egg, rice, fries, and a savory
+pan sauce.
+
+## Ingredients
+
+- Thin beef steaks
+- Garlic, bay leaf, and butter
+- Eggs
+- Rice and fries
+- Mustard or white wine for the sauce
+
+## Method
+
+Sear the steaks quickly, loosen the pan with wine or mustard, and serve with the
+fried egg on top.
+## Tripas a Moda do Porto
+URL: https://papyrus.marcelofelix.com/posts/tripas-a-moda-do-porto/
+Summary: Porto-style tripe stew with beans, smoked meats, carrot, and cumin.
+Updated: 2024-07-10T09:00:00.000Z
+Source: src/content/posts/food/meat/17-tripas-a-moda-do-porto.md
+Tripas a Moda do Porto is a hearty stew of tripe, beans, sausage, and aromatic
+spices.
+
+## Ingredients
+
+- Cleaned tripe
+- White beans
+- Chourico and smoked meats
+- Onion, carrot, garlic, and bay leaf
+- Cumin and pepper
+
+## Method
+
+Cook the tripe until tender, then stew it with beans and smoked meats until the
+sauce is thick and savory.
+## Arroz de Pato
+URL: https://papyrus.marcelofelix.com/posts/arroz-de-pato/
+Summary: Duck rice baked with broth, chourico, and a crisp golden top.
+Updated: 2024-05-10T09:00:00.000Z
+Source: src/content/posts/food/meat/18-arroz-de-pato.md
+Arroz de Pato turns tender duck and its broth into a baked rice dish topped with
+chourico.
+
+## Ingredients
+
+- Duck legs
+- Onion, garlic, bay leaf, and carrot
+- Rice
+- Chourico slices
+- Parsley
+
+## Method
+
+Poach the duck, shred the meat, cook rice in the broth, then bake with chourico
+until the top is lightly crisp.
+## Cabrito Assado
+URL: https://papyrus.marcelofelix.com/posts/cabrito-assado/
+Summary: Roast kid goat with garlic, white wine, bay leaf, potatoes, and paprika.
+Updated: 2024-06-10T09:00:00.000Z
+Source: src/content/posts/food/meat/19-cabrito-assado.md
+Cabrito Assado is a celebratory roast, often served with potatoes and greens.
+
+## Ingredients
+
+- Kid goat pieces
+- Garlic, bay leaf, paprika, and white wine
+- Olive oil
+- Potatoes
+- Parsley and lemon
+
+## Method
+
+Marinate overnight, roast slowly with potatoes, and baste until the meat is
+tender and the potatoes are browned.
+## Folder tags for nested posts
+URL: https://papyrus.marcelofelix.com/posts/folder-tags-demo/
+Summary: Content-model guide showing stable slugs with automatic tags from source folders.
+Updated: 2026-06-30T11:00:00.000Z
+Source: src/content/posts/guides/content-model/folder-tags.md
+This post lives in `src/content/posts/guides/content-model/` to show how a
+nested source folder can add metadata without changing the public URL.
+
+The public URL uses the explicit `slug`, so the route stays stable even if the
+file moves later. Because it is not hidden, it appears in the normal post list
+while still keeping a short public route.
+
+The generated tags include:
+
+- `astro` from frontmatter
+- `guides` from the parent folder
+- `content-model` from the nested folder
+
+```console
+site$ pnpm content:outline
+site$ pnpm build
+```
 ## Install and configure Papyrus
 URL: https://papyrus.marcelofelix.com/posts/install-configure-papyrus/
 Summary: Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides.
@@ -95,7 +914,7 @@ The template depends on the npm package:
 ```json title="package.json"
 {
   "dependencies": {
-    "astro-theme-papyrus": "^0.1.0"
+    "astro-theme-papyrus": "^0.2.0"
   }
 }
 ```
@@ -105,13 +924,13 @@ The template enables Papyrus in Astro:
 ```js title="astro.config.mjs"
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
-import { loadPaperConfig } from "astro-theme-papyrus/config";
+import { loadPapyrusConfig } from "astro-theme-papyrus/config";
 import papyrus from "astro-theme-papyrus/integration";
 
-const paper = await loadPaperConfig();
+const papyrus = await loadPapyrusConfig();
 
 export default defineConfig({
-  site: paper.site,
+  site: papyrus.site,
   integrations: [papyrus(), sitemap()],
 });
 ```
@@ -129,7 +948,7 @@ Papyrus injects these standard routes from the package:
 | `/` | Home page with latest posts and project cards |
 | `/posts/` | Public post list |
 | `/posts/[...slug]/` | Post detail page |
-| `/projects/` | Project cards from `paper.config.toml` |
+| `/projects/` | Project cards from `papyrus.config.toml` |
 | `/profile/` | Profile page from `src/data/profile.toml` |
 | `/tag/` and `/tag/[tag]/` | Tag index and tag detail pages |
 | `/404.html` | Helpful not-found page |
@@ -141,7 +960,7 @@ Because the pages are injected by the package, the template does not need a
 
 ## Know `src` vs `public`
 
-Papyrus follows the same Astro convention used by Paper-style starter repos:
+Papyrus follows the same Astro convention used by Papyrus-style starter repos:
 `src/` is source, `public/` is static output input.
 
 Use `src/` for files Astro should read, transform, type-check, or route during
@@ -157,13 +976,13 @@ Use `public/` for files that should be copied to the deployed site as-is:
 
 - `public/logo.svg`, `public/favicon.svg`, and `public/site.webmanifest`
 - `public/images/*` for covers, avatars, and project images referenced by
-  frontmatter or `paper.config.toml`
+  frontmatter or `papyrus.config.toml`
 - generated artifacts such as `public/cv/profile.json`,
   `public/cv/profile.md`, `public/ai/*`, `public/rss/tags/*`, and
   `public/pagefind/*`
 
 Do not hand-edit generated files in `public/`. Edit the source in `src/`,
-`paper.config.toml`, or `src/data/profile.toml`, then regenerate the artifacts.
+`papyrus.config.toml`, or `src/data/profile.toml`, then regenerate the artifacts.
 
 ## Edit the right file
 
@@ -171,7 +990,7 @@ For normal site work, start with these files:
 
 | Goal | Edit |
 | --- | --- |
-| Site title, description, nav, social links, projects, theme, feature flags, and post-card defaults | `paper.config.toml` |
+| Site title, description, nav, social links, projects, theme, feature flags, and post-card defaults | `papyrus.config.toml` |
 | Add or edit posts | `src/content/posts/*.md` |
 | Add a page that Papyrus does not already inject | `src/pages/*.astro` |
 | Change the profile, CV, links, skills, dates, and print color | `src/data/profile.toml` |
@@ -190,10 +1009,10 @@ or docs content source.
 
 ## Edit the site config
 
-Most site behavior starts in `paper.config.toml`. The template keeps the system
+Most site behavior starts in `papyrus.config.toml`. The template keeps the system
 color preference as the default and uses the Everforest theme profile.
 
-```toml title="paper.config.toml"
+```toml title="papyrus.config.toml"
 [site]
 title = "My site"
 description = "Notes, projects, and profile."
@@ -307,7 +1126,7 @@ Keep visual identity in `public/`:
 - `public/site.webmanifest`
 - `public/images/cover.svg`
 - `public/images/avatar.svg`
-- project images referenced by `paper.config.toml`
+- project images referenced by `papyrus.config.toml`
 
 These are normal site assets. Papyrus supplies the components and theme CSS,
 while the consuming site supplies its own images and metadata.
@@ -319,7 +1138,7 @@ routes, import Papyrus components directly:
 
 ```astro
 ---
-import { PaperBaseLayout, PaperPostList } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts, routablePosts } from "astro-theme-papyrus/utils";
 
 const allPosts = await getCollection("posts");
@@ -328,9 +1147,9 @@ const routePosts = routablePosts(allPosts);
 const adjacentPosts = publishedPosts(allPosts);
 ---
 
-<PaperBaseLayout title="My site" description="Custom page.">
-  <PaperPostList posts={posts} />
-</PaperBaseLayout>
+<PapyrusBaseLayout title="My site" description="Custom page.">
+  <PapyrusPostList posts={posts} />
+</PapyrusBaseLayout>
 ```
 
 Use `routePosts` when creating static post detail paths. Use `adjacentPosts`
@@ -340,9 +1159,9 @@ routes without showing up in public navigation.
 In a post-detail route, pass folder-aware tags into the post layout:
 
 ```astro
-<PaperPostLayout post={post} tags={postTags(post)}>
+<PapyrusPostLayout post={post} tags={postTags(post)}>
   <Content />
-</PaperPostLayout>
+</PapyrusPostLayout>
 ```
 
 Keep the boundary clear: Papyrus owns reusable pages, components, styles, and
@@ -471,7 +1290,7 @@ Inline code like `pnpm build` keeps paragraph line-height calm.
 TypeScript with a title and highlighted lines:
 
 ```ts title="src/pages/posts/index.astro" {1,4}
-import { PaperBaseLayout, PaperPostList } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts } from "astro-theme-papyrus/utils";
 
 const posts = publishedPosts(await getCollection("posts"));
@@ -504,14 +1323,14 @@ fn main() {
 
 Diff with add/remove line styling:
 
-```diff title="paper.css"
-- .paper-icon-button:hover {
--   background: var(--paper-panel);
--   border-color: var(--paper-accent);
+```diff title="papyrus.css"
+- .papyrus-icon-button:hover {
+-   background: var(--papyrus-panel);
+-   border-color: var(--papyrus-accent);
 - }
-+ .paper-icon-button:hover {
++ .papyrus-icon-button:hover {
 +   background: transparent;
-+   color: var(--paper-accent);
++   color: var(--papyrus-accent);
 + }
 ```
 
@@ -520,7 +1339,7 @@ Shell:
 ```sh
 pnpm install
 pnpm build
-pnpm papyrus-llms src/content/posts public "$SITE_URL" src/pages/docs
+pnpm papyrus-llms src/content/posts public "$SITE_URL"
 ```
 
 ## Mermaid
@@ -529,7 +1348,7 @@ pnpm papyrus-llms src/content/posts public "$SITE_URL" src/pages/docs
 flowchart LR
   Site[Astro site] --> Theme[Papyrus]
   Theme --> Pure[astro-pure]
-  Theme --> Style[AstroPaper-like CSS]
+  Theme --> Style[Papyrus CSS]
   Site --> Content[Markdown posts]
 ```
 
@@ -606,11 +1425,11 @@ A content site usually needs the same core pieces on several routes:
 - generated metadata for RSS, sitemap, robots, search, and AI indexes
 
 The package boundary stays explicit. Papyrus reuses Pure as the foundation,
-adds Paper-style publishing features, exposes a stable public API through
+adds Papyrus-style publishing features, exposes a stable public API through
 package exports, and lets the site override content, config, and routes.
 
 ```ts
-import { PaperBaseLayout, PaperPostList } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts } from "astro-theme-papyrus/utils";
 ```
 
@@ -622,15 +1441,15 @@ handled in one package.
 The public posts page uses the standard list view so the archive stays easy to scan:
 
 ```astro title="src/pages/posts/index.astro"
-<PaperPostList posts={posts} view="list" />
+<PapyrusPostList posts={posts} view="list" />
 ```
 
 The same component can still render denser or card-like post groups inside
 documentation references, landing pages, or custom sections:
 
 ```astro title="post-list-view-reference.astro"
-<PaperPostList posts={posts} view="compact" />
-<PaperPostList posts={posts} view="cards" />
+<PapyrusPostList posts={posts} view="compact" />
+<PapyrusPostList posts={posts} view="cards" />
 ```
 
 Keeping these alternatives inside a post leaves `/posts/` focused on the main
@@ -649,333 +1468,3 @@ filtering after the fact:
 That is the practical RSS model for selective subscriptions: publish one feed
 per tag or site-owned section, then document the important subscription choices
 inside the relevant post.
-## AI and mobile readiness
-URL: https://papyrus.marcelofelix.com/docs/ai-mobile/
-Source: src/pages/docs/ai-mobile.astro
-AI and mobile readiness
-
-AI metadata, generated indexes, and mobile-ready defaults in a Papyrus site.
-
-AI and mobile readiness Papyrus ships useful agent-readable metadata, generated indexes, and responsive UI defaults for small content sites.
-
-AI-first primitives
-
-Generated files: llms.txt, llms-full.txt, #ai RSS, posts.json, tags.json, projects.json, notes.json, cv.json, and graph.json.
-
-Site-specific AI extensions
-
-Mobile-first primitives
-
-Mobile authoring tips
-## Markdown code guide
-URL: https://papyrus.marcelofelix.com/docs/code-demo/
-Source: src/pages/docs/code-demo.md
-This route is a compact rendering reference for Markdown-heavy posts. It shows
-how callouts, code fences, tables, diagrams, media, and fallback artifact links
-look inside the same article layout used by regular Papyrus posts.
-
-## Obsidian callout syntax
-
-> [!NOTE]
-> Notes render as theme-aware callouts while keeping the original Markdown
-> readable in source form.
-
-> [!TIP]
-> Tips use the same callout component shape with a different token mix.
-
-> [!IMPORTANT]
-> Important callouts use their own icon and color so they are distinct from tips.
-
-> [!WARNING]
-> Warning, tip, important, and caution variants use theme tokens instead
-> of hardcoded colors.
-
-> [!CAUTION]
-> Caution callouts stay readable in light and dark modes.
-
-> [!INFO]
-> Neutral context can use the broader Obsidian callout set, not only the
-> GitHub five alert variants.
-
-> [!SUCCESS]
-> Success callouts render with their own icon and color.
-
-> [!WARNING]- Collapsed warning
-> This content starts collapsed without any client-side JavaScript.
-
-> [!TIP]+ Expanded tip
-> This content starts open and can be collapsed.
-
-## Code title
-
-```rust title="src/main.rs"
-fn main() {
-    println!("papyrus");
-}
-```
-
-## Rust block
-
-```rust
-struct ThemeProfile {
-    name: &'static str,
-    dark_mode: bool,
-}
-
-fn active_profile() -> ThemeProfile {
-    ThemeProfile {
-        name: "gruvbox",
-        dark_mode: true,
-    }
-}
-```
-
-## Diff fence
-
-```css title="diff.css"
-.paper-card {
-  background: var(--paper-panel); /* [!code --] */
-  background: transparent; /* [!code ++] */
-  color: var(--paper-accent); /* [!code ++] */
-}
-```
-
-## Highlighted lines
-
-```c title="highlight.c"
-#include <stdio.h>
-
-int main(void) {
-  puts("papyrus"); // [!code highlight]
-  return 0;
-}
-```
-
-## Console fences
-
-```console
-site$ pnpm install
-site# pnpm build
-site> pnpm preview
-```
-
-## Collapsed block
-
-```rust title="src/server.rs"
-fn boot() {
-    println!("line 1");
-    println!("line 2");
-    println!("line 3");
-    println!("line 4");
-    println!("line 5");
-    println!("line 6");
-    println!("line 7");
-    println!("line 8");
-    println!("line 9");
-    println!("line 10");
-    println!("line 11");
-    println!("line 12");
-    println!("line 13");
-    println!("line 14");
-    println!("line 15");
-    println!("line 16");
-}
-```
-
-## Task list
-
-- [x] Keep feature walkthroughs explicit
-- [ ] Document the source files beside rendered artifacts
-- [ ] Choose a renderer before embedding external diagram formats
-
-## GitHub-style inline Markdown
-
-Autolinks like https://github.com/marcelofpfelix/papyrus stay
-clickable, `inline code` keeps code styling, and ~~strikethrough~~ stays
-visible when the markdown pipeline supports it.
-
-## Table
-
-| Feature | Expected behavior |
-| --- | --- |
-| Code title | Render a compact title bar |
-| Diff | Style added and removed lines |
-| Table | Stay readable without heavy borders |
-
-## Mermaid fence
-
-```mermaid
-flowchart LR
-  Markdown --> Code
-  Markdown --> Alerts
-  Markdown --> Diagrams
-```
-
-## Image zoom
-
-## Artifact links
-
-- [Mermaid source](/demo/theme-flow.mmd "Hydrated Mermaid source")
-- [PlantUML source](/demo/call-flow.puml "PlantUML source")
-- [Excalidraw source](/demo/sketch.excalidraw "Excalidraw source")
-
-## Fallback rendering
-
-Some GitHub-style or diagram-adjacent formats need a site-owned plugin or
-renderer. Papyrus keeps the source visible so authors can choose the right
-integration for their site.
-
-| Case | Theme behavior |
-| --- | --- |
-| PlantUML inline rendering | Keep as a file link until a renderer is configured. |
-| Excalidraw inline rendering | Keep as a file link until an export or render path is configured. |
-| Wiki links like `[[topic]]` | Keep as plain text unless a backlink plugin is added. |
-| Footnotes like `[^1]` | Render when a consuming site adds a footnote plugin. |
-## Generated content structure
-URL: https://papyrus.marcelofelix.com/docs/content-structure/
-Source: src/pages/docs/content-structure.astro
-Generated content structure
-
-How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.
-
-Generated markdown outline
-
-Public Markdown outline generated from nested content folders and folder metadata.
-
-Generated content structure Use folder metadata when a site needs nested notes, guides, or knowledge-base pages without turning source paths into fragile public URLs.
-
-What gets generated
-
-Papyrus can read a folder tree, combine explicit frontmatter with folder-level labels, and render a public index that still feels hand-authored. The fixture below is generated from , which itself was produced from Markdown files under public/demo/content-tree.
-
-How to use it Keep canonical slugs in frontmatter when a page has a permanent URL. Use folders for organization, inherited tags, and section labels. This lets authors move files while the published route, RSS item, search result, and AI metadata stay stable.
-
-pnpm papyrus-content-outline public/demo/content-tree public/demo/content-structure.md  Use folder names for broad groups such as guides, notes, or reference. Use an index file or folder metadata to name a section for readers. Mark draft, private, or internal posts with hidden: true when they need a direct route but should stay out of public lists, feeds, sitemaps, search, and AI exports. Add explicit robots frontmatter only when the direct page itself should be blocked from indexing. Generate the outline during build when the content tree is meant to be visible to readers.    Public boundary This route is public because the demo content tree is a public fixture for content-outline generation. User-facing docs live in rendered routes such as src/pages/docs or posts that opt into the docs index with docs frontmatter. Development-only notes stay under docs/ and are not linked from the demo navigation unless they are intentionally rewritten as user documentation.
-
-Source artifact
-## Deploy Papyrus
-URL: https://papyrus.marcelofelix.com/docs/deploy/
-Source: src/pages/docs/deploy.astro
-Deploy Papyrus
-
-Static hosting, build settings, metadata URLs, and base-path notes for a Papyrus site.
-
-Deploy Papyrus Papyrus builds to static Astro output, so a consuming site can publish the generated dist directory to any static host.
-
-Local preview
-
-Use the local development server while editing content, routes, and theme configuration. For a production-shaped preview, build first and serve the generated output.
-
-pnpm install pnpm dev pnpm build pnpm preview   Static hosting The deployment artifact is the Astro dist directory. Cloudflare Pages, Netlify, Vercel static output, GitHub Pages, and any static file server can host it as long as the configured site URL matches the final domain.
-
-Set the production site URL before generating sitemap, robots, RSS, social metadata, and AI indexes.
-
-Keep secret token lookup and host-specific deploy wrappers outside the reusable theme package.
-
-Check /robots.txt, /sitemap-index.xml, /rss.xml, /search/, /posts/, and /docs/ after publishing.
-
-Build settings
-
-Most static hosts need only the package manager, build command, output directory, and production URL. Keep the URL in one environment variable so generated metadata agrees across sitemap, robots, RSS, social previews, search, and AI files.
-
-package manager: pnpm build command: SITE_URL="https://example.test" pnpm build output directory: dist If the consuming site uses pnpm, keep minimumReleaseAge in pnpm-workspace.yaml so production builds do not pick up packages published only minutes ago.
-
-Subdirectory deploys
-
-When the site is published under a base path, route links go through Papyrus base-path helpers or Astro route helpers instead of hardcoded root-relative strings. Asset URLs use the same base-aware helper used by the layout. Configure the Astro base option in the consuming site, then keep internal links on helpers such as withBase() or getRelativeLocaleUrl().
-## Feature map
-URL: https://papyrus.marcelofelix.com/docs/feature-map/
-Source: src/pages/docs/feature-map.astro
-Feature map
-
-Route-by-route guide to public Papyrus features.
-
-Feature map Every public feature has a route that shows how a consuming site can use it. Start here when exploring Papyrus.
-
-How to use it Use this map as an orientation page when adding Papyrus to another Astro site. Each linked route shows the content, component, or generated artifact in context.
-
-The public Papyrus site focuses on reusable routes, content patterns, and generated artifacts. Repository-only implementation notes stay outside the visitor-facing docs.
-## Feature config
-URL: https://papyrus.marcelofelix.com/docs/features/
-Source: src/pages/docs/features.astro
-Feature config
-
-Grouped feature toggles for papyrus layouts.
-
-Markdown code guide
-
-The Markdown guide uses enabled rendering features: Shiki, alerts, diagrams, tasks, tables, artifacts, and zoom.
-
-Feature config Use one typed config object to disable optional layout and post features without copying theme components.
-
-Base layout
-
-Post layout    Defaults  Existing explicit props still work. The config object is for reusable site defaults and per-page overrides.
-
-Comments
-
-Default comment choice: giscus. Comments stay optional and site-owned: consuming sites pass their public GitHub Discussions repo, category, and IDs, while this route renders the component in disabled mode so the package site stays static and credential-free.
-
-Post stats are separate from comments. Use static fixture counts for documentation posts, or PaperRemotePostStats.astro when a site has a real stats endpoint.
-
-SEO and social metadata
-
-Papyrus layouts emit the metadata a small public site normally needs: titles, descriptions, canonical URLs, Open Graph, Twitter cards, RSS discovery, and post JSON-LD. Public pages can be indexed by search engines, while hidden posts stay out of public discovery surfaces. Use explicit robots frontmatter when a direct page should emit directives such as noindex, follow. Shared links also get predictable preview titles, descriptions, URLs, and images because the social tags come from the same page data.
-
-Base path deploys
-
-Internal URLs in the shared layouts and list components go through withBase() and related helpers: stripBase(), stripLocale(), getAssetPath(), and getRelativeLocaleUrl(). This keeps navigation, post links, RSS links, favicon assets, covers, tags, archive links, adjacent posts, project cards, and 404 suggestions working when Astro is deployed under a subdirectory such as /astro-paper.
-
-Google site verification
-
-The preferred site-owned configuration is site.googleVerification. Pass that value to PaperBaseLayout or PaperPostLayout as googleVerification, and the layout emits the google-site-verification meta tag only when the value is configured.
-
-Sitemap and robots
-
-Regenerate the sitemap during every build so new posts, tag pages, profile pages, project pages, and docs routes are included automatically. Papyrus includes a dynamic robots.txt route that reads the site URL, keeps crawl rules near the site config, and always points crawlers to the sitemap index. Hidden posts are intentionally excluded from the sitemap and public discovery surfaces; direct route robots directives stay explicit per post.
-
-Keyboard accessibility
-
-Readers can navigate the public Papyrus site with a keyboard: header links, search entry points, theme controls, post actions, profile template controls, and footer links all expose focusable controls. Papyrus uses semantic landmarks, ordered headings, descriptive labels, decorative icons marked with aria-hidden, meaningful image alt text where images carry content, and ARIA attributes only where they clarify interactive controls.
-
-Search and tags
-
-Public posts can be found through the Pagefind search route, tag pages, and optional per-tag RSS feeds. The search page accepts tag-prefilled links, while tag pages such as /tag/theme/ give readers a direct archive for one topic. Sites that want categories can model them as explicit tags or add site-owned facets without changing Papyrus post components.
-
-Plugin contract
-
-Community plugins stay small: they declare capabilities, optional feature defaults, and site-owned integration points. They do not mutate papyrus internals. Routes stay native Astro pages in the consuming app unless a plugin explicitly documents a route capability.
-
-The resolved plugin config disables RSS and registers plugin capabilities.
-
-Related guide
-## Docs
-URL: https://papyrus.marcelofelix.com/docs/
-Source: src/pages/docs/index.astro
-papyrus docs
-
-Markdown code guide
-
-Open the Markdown guide to review code, alerts, diagrams, artifact links, and Markdown behavior.
-
-AI and mobile readiness
-
-See generated metadata, AI indexes, responsive defaults, and mobile authoring guidance.
-
-Docs
-
-Index
-
-Theme profiles Each theme profile defines one light token set and one dark token set. Runtime mode defaults to system, while the default color profile is Gruvbox and the default font profile is readable. Included profiles are Catppuccin, Tokyo Night, Kanagawa, Rosé Pine, Everforest, Dracula, Gruvbox, Nord, and Pure.
-
-{`:root[data-paper-theme="custom"] :root[data-paper-theme="custom"].dark, html[data-paper-theme="custom"].dark `} Use pnpm papyrus-theme list to inspect installed profiles and pnpm papyrus-theme validate to check that every profile file has the required light/dark selectors and tokens.
-
-Markdown
-
-The package owns markdown presentation for plain Astro/Shiki code blocks, alerts, task lists, tables, Mermaid blocks, artifact cards, and optional TOC rendering.
-
-AI metadata Post pages can emit JSON-LD, canonical URLs, source Markdown links, copy-source actions, copy-citation actions, and generated agent indexes.
-
-Content model Consuming sites keep content and config. papyrus provides components and helpers for nested posts, folder tags, stable slugs, generated docs indexes, pinned posts, project cards, and profile/CV pages.
-
-The docs index follows the Starlight-style shape: section metadata lives in src/content/docs/index.md, docs entries use explicit order values, and posts can opt into docs with docs frontmatter because docs and posts are built from the same content source.

@@ -71,12 +71,12 @@ function brandSvg() {
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="${escapeXml(title)}">
   <style>
-    rect.bg { fill: var(--paper-bg, ${tokens["--paper-bg"]}); }
-    text { fill: var(--paper-fg, ${tokens["--paper-fg"]}); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .brand { fill: var(--paper-accent, ${tokens["--paper-accent"]}); font-size: 38px; font-weight: 700; }
-    .brand-mark { fill: var(--paper-accent, ${tokens["--paper-accent"]}); }
+    rect.bg { fill: var(--papyrus-bg, ${tokens["--papyrus-bg"]}); }
+    text { fill: var(--papyrus-fg, ${tokens["--papyrus-fg"]}); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .brand { fill: var(--papyrus-accent, ${tokens["--papyrus-accent"]}); font-size: 38px; font-weight: 700; }
+    .brand-mark { fill: var(--papyrus-accent, ${tokens["--papyrus-accent"]}); }
     .title { font-size: 62px; font-weight: 800; letter-spacing: 0; }
-    .desc { fill: var(--paper-muted, ${tokens["--paper-muted"]}); font-size: 30px; }
+    .desc { fill: var(--papyrus-muted, ${tokens["--papyrus-muted"]}); font-size: 30px; }
   </style>
   <rect class="bg" width="1200" height="630" rx="0"/>
   ${brandSvg()}

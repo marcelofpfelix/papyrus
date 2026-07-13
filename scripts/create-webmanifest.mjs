@@ -34,8 +34,8 @@ const manifest = {
       purpose: "any maskable",
     },
   ],
-  theme_color: tokens["--paper-bg"],
-  background_color: tokens["--paper-bg"],
+  theme_color: tokens["--papyrus-bg"],
+  background_color: tokens["--papyrus-bg"],
   display: "standalone",
 };
 

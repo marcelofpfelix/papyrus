@@ -1,6 +1,6 @@
 ---
 import { cvSections, printProfileLinks, profile, profilePages } from "../../data/profile";
-import { PaperCvActions } from "../../components";
+import { PapyrusCvActions } from "../../components";
 import { cvIconSvg, cvLinkIcon } from "../../utils/cv-icons";
 import { compactDurationLabel, profileLinkKindLabel } from "../../utils/cv-profile-data";
 import { shouldShowCvItemTitle } from "../../utils/cv";
@@ -46,7 +46,7 @@ function cvIcon(name: string) {
     <title>{profile.name} - Printable CV</title>
   </head>
   <body style={`--profile-print-color: ${profile.printColor};`}>
-    <PaperCvActions
+    <PapyrusCvActions
       backHref={withBase("/profile/")}
       print
       markdownHref={cvMarkdownHref}

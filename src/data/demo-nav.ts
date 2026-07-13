@@ -1,6 +1,6 @@
-import source from "../../paper.config.toml?raw";
-import { parsePaperConfigToml } from "../config";
+import source from "../../papyrus.config.toml?raw";
+import { parsePapyrusConfigToml } from "../config";
 
-export const demoPaperConfig = parsePaperConfigToml(source);
-export const demoNav = demoPaperConfig.nav;
-export const demoSocialLinks = demoPaperConfig.socialLinks;
+export const demoPapyrusConfig = parsePapyrusConfigToml(source);
+export const demoNav = demoPapyrusConfig.nav;
+export const demoSocialLinks = demoPapyrusConfig.socialLinks;

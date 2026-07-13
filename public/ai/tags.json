@@ -2,26 +2,50 @@
   {
     "id": "tag:ai",
     "tag": "ai",
-    "count": 1,
+    "count": 2,
     "posts": [
       {
         "id": "post:ai-first-metadata-demo",
         "slug": "ai-first-metadata-demo",
         "title": "AI-first metadata",
         "url": "https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/"
+      },
+      {
+        "id": "post:ai-mobile",
+        "slug": "ai-mobile",
+        "title": "AI and mobile readiness",
+        "url": "https://papyrus.marcelofelix.com/posts/ai-mobile/"
       }
     ]
   },
   {
     "id": "tag:astro",
     "tag": "astro",
-    "count": 3,
+    "count": 6,
     "posts": [
       {
         "id": "post:dark-mode-and-search",
         "slug": "dark-mode-and-search",
         "title": "Dark mode and search in Papyrus",
         "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/"
+      },
+      {
+        "id": "post:deploy",
+        "slug": "deploy",
+        "title": "Deploy Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/deploy/"
+      },
+      {
+        "id": "post:papyrus-docs",
+        "slug": "papyrus-docs",
+        "title": "Papyrus docs",
+        "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/"
+      },
+      {
+        "id": "post:folder-tags-demo",
+        "slug": "folder-tags-demo",
+        "title": "Folder tags for nested posts",
+        "url": "https://papyrus.marcelofelix.com/posts/folder-tags-demo/"
       },
       {
         "id": "post:install-configure-papyrus",
@@ -40,8 +64,14 @@
   {
     "id": "tag:authoring",
     "tag": "authoring",
-    "count": 1,
+    "count": 2,
     "posts": [
+      {
+        "id": "post:code-demo",
+        "slug": "code-demo",
+        "title": "Markdown code guide",
+        "url": "https://papyrus.marcelofelix.com/posts/code-demo/"
+      },
       {
         "id": "post:markdown-feature-sample",
         "slug": "markdown-feature-sample",
@@ -66,8 +96,41 @@
   {
     "id": "tag:code",
     "tag": "code",
-    "count": 0,
-    "posts": []
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:code-demo",
+        "slug": "code-demo",
+        "title": "Markdown code guide",
+        "url": "https://papyrus.marcelofelix.com/posts/code-demo/"
+      }
+    ]
+  },
+  {
+    "id": "tag:config",
+    "tag": "config",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:features",
+        "slug": "features",
+        "title": "Feature config",
+        "url": "https://papyrus.marcelofelix.com/posts/features/"
+      }
+    ]
+  },
+  {
+    "id": "tag:content",
+    "tag": "content",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:content-structure",
+        "slug": "content-structure",
+        "title": "Generated content structure",
+        "url": "https://papyrus.marcelofelix.com/posts/content-structure/"
+      }
+    ]
   },
   {
     "id": "tag:custom",
@@ -108,10 +171,59 @@
     "posts": []
   },
   {
-    "id": "tag:docs",
-    "tag": "docs",
+    "id": "tag:deploy",
+    "tag": "deploy",
     "count": 1,
     "posts": [
+      {
+        "id": "post:deploy",
+        "slug": "deploy",
+        "title": "Deploy Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/deploy/"
+      }
+    ]
+  },
+  {
+    "id": "tag:docs",
+    "tag": "docs",
+    "count": 7,
+    "posts": [
+      {
+        "id": "post:content-structure",
+        "slug": "content-structure",
+        "title": "Generated content structure",
+        "url": "https://papyrus.marcelofelix.com/posts/content-structure/"
+      },
+      {
+        "id": "post:deploy",
+        "slug": "deploy",
+        "title": "Deploy Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/deploy/"
+      },
+      {
+        "id": "post:feature-map",
+        "slug": "feature-map",
+        "title": "Feature map",
+        "url": "https://papyrus.marcelofelix.com/posts/feature-map/"
+      },
+      {
+        "id": "post:ai-mobile",
+        "slug": "ai-mobile",
+        "title": "AI and mobile readiness",
+        "url": "https://papyrus.marcelofelix.com/posts/ai-mobile/"
+      },
+      {
+        "id": "post:papyrus-docs",
+        "slug": "papyrus-docs",
+        "title": "Papyrus docs",
+        "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/"
+      },
+      {
+        "id": "post:features",
+        "slug": "features",
+        "title": "Feature config",
+        "url": "https://papyrus.marcelofelix.com/posts/features/"
+      },
       {
         "id": "post:install-configure-papyrus",
         "slug": "install-configure-papyrus",
@@ -123,8 +235,14 @@
   {
     "id": "tag:markdown",
     "tag": "markdown",
-    "count": 1,
+    "count": 2,
     "posts": [
+      {
+        "id": "post:code-demo",
+        "slug": "code-demo",
+        "title": "Markdown code guide",
+        "url": "https://papyrus.marcelofelix.com/posts/code-demo/"
+      },
       {
         "id": "post:markdown-feature-sample",
         "slug": "markdown-feature-sample",
@@ -147,10 +265,47 @@
     ]
   },
   {
+    "id": "tag:mobile",
+    "tag": "mobile",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:ai-mobile",
+        "slug": "ai-mobile",
+        "title": "AI and mobile readiness",
+        "url": "https://papyrus.marcelofelix.com/posts/ai-mobile/"
+      }
+    ]
+  },
+  {
     "id": "tag:papyrus",
     "tag": "papyrus",
-    "count": 2,
+    "count": 6,
     "posts": [
+      {
+        "id": "post:content-structure",
+        "slug": "content-structure",
+        "title": "Generated content structure",
+        "url": "https://papyrus.marcelofelix.com/posts/content-structure/"
+      },
+      {
+        "id": "post:feature-map",
+        "slug": "feature-map",
+        "title": "Feature map",
+        "url": "https://papyrus.marcelofelix.com/posts/feature-map/"
+      },
+      {
+        "id": "post:papyrus-docs",
+        "slug": "papyrus-docs",
+        "title": "Papyrus docs",
+        "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/"
+      },
+      {
+        "id": "post:features",
+        "slug": "features",
+        "title": "Feature config",
+        "url": "https://papyrus.marcelofelix.com/posts/features/"
+      },
       {
         "id": "post:install-configure-papyrus",
         "slug": "install-configure-papyrus",
@@ -162,6 +317,273 @@
         "slug": "papyrus-package-shape",
         "title": "Papyrus package shape",
         "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/"
+      }
+    ]
+  },
+  {
+    "id": "tag:portuguese-food",
+    "tag": "portuguese-food",
+    "count": 20,
+    "posts": [
+      {
+        "id": "post:choco-frito",
+        "slug": "choco-frito",
+        "title": "Choco Frito",
+        "url": "https://papyrus.marcelofelix.com/posts/choco-frito/"
+      },
+      {
+        "id": "post:bacalhau-a-bras",
+        "slug": "bacalhau-a-bras",
+        "title": "Bacalhau a Bras",
+        "url": "https://papyrus.marcelofelix.com/posts/bacalhau-a-bras/"
+      },
+      {
+        "id": "post:ameijoas-a-bulhao-pato",
+        "slug": "ameijoas-a-bulhao-pato",
+        "title": "Ameijoas a Bulhao Pato",
+        "url": "https://papyrus.marcelofelix.com/posts/ameijoas-a-bulhao-pato/"
+      },
+      {
+        "id": "post:bacalhau-com-natas",
+        "slug": "bacalhau-com-natas",
+        "title": "Bacalhau com Natas",
+        "url": "https://papyrus.marcelofelix.com/posts/bacalhau-com-natas/"
+      },
+      {
+        "id": "post:cataplana-de-peixe",
+        "slug": "cataplana-de-peixe",
+        "title": "Cataplana de Peixe",
+        "url": "https://papyrus.marcelofelix.com/posts/cataplana-de-peixe/"
+      },
+      {
+        "id": "post:bacalhau-a-gomes-de-sa",
+        "slug": "bacalhau-a-gomes-de-sa",
+        "title": "Bacalhau a Gomes de Sa",
+        "url": "https://papyrus.marcelofelix.com/posts/bacalhau-a-gomes-de-sa/"
+      },
+      {
+        "id": "post:polvo-a-lagareiro",
+        "slug": "polvo-a-lagareiro",
+        "title": "Polvo a Lagareiro",
+        "url": "https://papyrus.marcelofelix.com/posts/polvo-a-lagareiro/"
+      },
+      {
+        "id": "post:sardinhas-assadas",
+        "slug": "sardinhas-assadas",
+        "title": "Sardinhas Assadas",
+        "url": "https://papyrus.marcelofelix.com/posts/sardinhas-assadas/"
+      },
+      {
+        "id": "post:arroz-de-marisco",
+        "slug": "arroz-de-marisco",
+        "title": "Arroz de Marisco",
+        "url": "https://papyrus.marcelofelix.com/posts/arroz-de-marisco/"
+      },
+      {
+        "id": "post:caldeirada-de-peixe",
+        "slug": "caldeirada-de-peixe",
+        "title": "Caldeirada de Peixe",
+        "url": "https://papyrus.marcelofelix.com/posts/caldeirada-de-peixe/"
+      },
+      {
+        "id": "post:cozido-a-portuguesa",
+        "slug": "cozido-a-portuguesa",
+        "title": "Cozido a Portuguesa",
+        "url": "https://papyrus.marcelofelix.com/posts/cozido-a-portuguesa/"
+      },
+      {
+        "id": "post:leitao-a-bairrada",
+        "slug": "leitao-a-bairrada",
+        "title": "Leitao a Bairrada",
+        "url": "https://papyrus.marcelofelix.com/posts/leitao-a-bairrada/"
+      },
+      {
+        "id": "post:carne-de-porco-a-alentejana",
+        "slug": "carne-de-porco-a-alentejana",
+        "title": "Carne de Porco a Alentejana",
+        "url": "https://papyrus.marcelofelix.com/posts/carne-de-porco-a-alentejana/"
+      },
+      {
+        "id": "post:prego-no-prato",
+        "slug": "prego-no-prato",
+        "title": "Prego no Prato",
+        "url": "https://papyrus.marcelofelix.com/posts/prego-no-prato/"
+      },
+      {
+        "id": "post:francesinha",
+        "slug": "francesinha",
+        "title": "Francesinha",
+        "url": "https://papyrus.marcelofelix.com/posts/francesinha/"
+      },
+      {
+        "id": "post:feijoada-a-transmontana",
+        "slug": "feijoada-a-transmontana",
+        "title": "Feijoada a Transmontana",
+        "url": "https://papyrus.marcelofelix.com/posts/feijoada-a-transmontana/"
+      },
+      {
+        "id": "post:bitoque",
+        "slug": "bitoque",
+        "title": "Bitoque",
+        "url": "https://papyrus.marcelofelix.com/posts/bitoque/"
+      },
+      {
+        "id": "post:tripas-a-moda-do-porto",
+        "slug": "tripas-a-moda-do-porto",
+        "title": "Tripas a Moda do Porto",
+        "url": "https://papyrus.marcelofelix.com/posts/tripas-a-moda-do-porto/"
+      },
+      {
+        "id": "post:arroz-de-pato",
+        "slug": "arroz-de-pato",
+        "title": "Arroz de Pato",
+        "url": "https://papyrus.marcelofelix.com/posts/arroz-de-pato/"
+      },
+      {
+        "id": "post:cabrito-assado",
+        "slug": "cabrito-assado",
+        "title": "Cabrito Assado",
+        "url": "https://papyrus.marcelofelix.com/posts/cabrito-assado/"
+      }
+    ]
+  },
+  {
+    "id": "tag:recipe",
+    "tag": "recipe",
+    "count": 20,
+    "posts": [
+      {
+        "id": "post:choco-frito",
+        "slug": "choco-frito",
+        "title": "Choco Frito",
+        "url": "https://papyrus.marcelofelix.com/posts/choco-frito/"
+      },
+      {
+        "id": "post:bacalhau-a-bras",
+        "slug": "bacalhau-a-bras",
+        "title": "Bacalhau a Bras",
+        "url": "https://papyrus.marcelofelix.com/posts/bacalhau-a-bras/"
+      },
+      {
+        "id": "post:ameijoas-a-bulhao-pato",
+        "slug": "ameijoas-a-bulhao-pato",
+        "title": "Ameijoas a Bulhao Pato",
+        "url": "https://papyrus.marcelofelix.com/posts/ameijoas-a-bulhao-pato/"
+      },
+      {
+        "id": "post:bacalhau-com-natas",
+        "slug": "bacalhau-com-natas",
+        "title": "Bacalhau com Natas",
+        "url": "https://papyrus.marcelofelix.com/posts/bacalhau-com-natas/"
+      },
+      {
+        "id": "post:cataplana-de-peixe",
+        "slug": "cataplana-de-peixe",
+        "title": "Cataplana de Peixe",
+        "url": "https://papyrus.marcelofelix.com/posts/cataplana-de-peixe/"
+      },
+      {
+        "id": "post:bacalhau-a-gomes-de-sa",
+        "slug": "bacalhau-a-gomes-de-sa",
+        "title": "Bacalhau a Gomes de Sa",
+        "url": "https://papyrus.marcelofelix.com/posts/bacalhau-a-gomes-de-sa/"
+      },
+      {
+        "id": "post:polvo-a-lagareiro",
+        "slug": "polvo-a-lagareiro",
+        "title": "Polvo a Lagareiro",
+        "url": "https://papyrus.marcelofelix.com/posts/polvo-a-lagareiro/"
+      },
+      {
+        "id": "post:sardinhas-assadas",
+        "slug": "sardinhas-assadas",
+        "title": "Sardinhas Assadas",
+        "url": "https://papyrus.marcelofelix.com/posts/sardinhas-assadas/"
+      },
+      {
+        "id": "post:arroz-de-marisco",
+        "slug": "arroz-de-marisco",
+        "title": "Arroz de Marisco",
+        "url": "https://papyrus.marcelofelix.com/posts/arroz-de-marisco/"
+      },
+      {
+        "id": "post:caldeirada-de-peixe",
+        "slug": "caldeirada-de-peixe",
+        "title": "Caldeirada de Peixe",
+        "url": "https://papyrus.marcelofelix.com/posts/caldeirada-de-peixe/"
+      },
+      {
+        "id": "post:cozido-a-portuguesa",
+        "slug": "cozido-a-portuguesa",
+        "title": "Cozido a Portuguesa",
+        "url": "https://papyrus.marcelofelix.com/posts/cozido-a-portuguesa/"
+      },
+      {
+        "id": "post:leitao-a-bairrada",
+        "slug": "leitao-a-bairrada",
+        "title": "Leitao a Bairrada",
+        "url": "https://papyrus.marcelofelix.com/posts/leitao-a-bairrada/"
+      },
+      {
+        "id": "post:carne-de-porco-a-alentejana",
+        "slug": "carne-de-porco-a-alentejana",
+        "title": "Carne de Porco a Alentejana",
+        "url": "https://papyrus.marcelofelix.com/posts/carne-de-porco-a-alentejana/"
+      },
+      {
+        "id": "post:prego-no-prato",
+        "slug": "prego-no-prato",
+        "title": "Prego no Prato",
+        "url": "https://papyrus.marcelofelix.com/posts/prego-no-prato/"
+      },
+      {
+        "id": "post:francesinha",
+        "slug": "francesinha",
+        "title": "Francesinha",
+        "url": "https://papyrus.marcelofelix.com/posts/francesinha/"
+      },
+      {
+        "id": "post:feijoada-a-transmontana",
+        "slug": "feijoada-a-transmontana",
+        "title": "Feijoada a Transmontana",
+        "url": "https://papyrus.marcelofelix.com/posts/feijoada-a-transmontana/"
+      },
+      {
+        "id": "post:bitoque",
+        "slug": "bitoque",
+        "title": "Bitoque",
+        "url": "https://papyrus.marcelofelix.com/posts/bitoque/"
+      },
+      {
+        "id": "post:tripas-a-moda-do-porto",
+        "slug": "tripas-a-moda-do-porto",
+        "title": "Tripas a Moda do Porto",
+        "url": "https://papyrus.marcelofelix.com/posts/tripas-a-moda-do-porto/"
+      },
+      {
+        "id": "post:arroz-de-pato",
+        "slug": "arroz-de-pato",
+        "title": "Arroz de Pato",
+        "url": "https://papyrus.marcelofelix.com/posts/arroz-de-pato/"
+      },
+      {
+        "id": "post:cabrito-assado",
+        "slug": "cabrito-assado",
+        "title": "Cabrito Assado",
+        "url": "https://papyrus.marcelofelix.com/posts/cabrito-assado/"
+      }
+    ]
+  },
+  {
+    "id": "tag:reference",
+    "tag": "reference",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:feature-map",
+        "slug": "feature-map",
+        "title": "Feature map",
+        "url": "https://papyrus.marcelofelix.com/posts/feature-map/"
       }
     ]
   },

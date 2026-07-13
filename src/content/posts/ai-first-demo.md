@@ -5,11 +5,6 @@ slug: ai-first-metadata-demo
 tags: [ai, metadata]
 pubDatetime: 2026-07-01T12:00:00.000Z
 license: CC-BY-4.0
-docs:
-  section: references
-  order: 55
-  title: AI-first metadata
-  description: Post-as-doc guide for llms.txt, AI JSON indexes, graph data, and public/private content boundaries.
 ---
 
 # AI-first metadata
@@ -25,7 +20,7 @@ docs, plus code examples that help agents understand how to use the theme.
 A consuming site runs the same command against its own content during build:
 
 ```sh
-pnpm papyrus-llms src/content/posts public "$SITE_URL" src/pages/docs
+pnpm papyrus-llms src/content/posts public "$SITE_URL"
 ```
 
 Use the deployed site origin for `SITE_URL` so generated links match RSS,

@@ -59,10 +59,10 @@ assert(existsSync(join(root, "CHANGELOG.md")), "CHANGELOG.md file missing");
 assert(existsSync(join(root, "docs/release.md")), "docs/release.md file missing");
 
 for (const phrase of [
-  "pnpm add github:marcelofpfelix/papyrus",
+  "\"astro-theme-papyrus\": \"^0.2.0\"",
   "astro-theme-papyrus/components",
   "astro-theme-papyrus/utils",
-  "astro-theme-papyrus/paper.css",
+  "astro-theme-papyrus/papyrus.css",
 ]) {
   assert(readme.includes(phrase), `README missing install/import phrase: ${phrase}`);
 }
@@ -71,7 +71,7 @@ for (const phrase of ["MIT License", "Permission is hereby granted", "Marcelo Fe
   assert(license.includes(phrase), `LICENSE missing phrase: ${phrase}`);
 }
 
-for (const phrase of ["## Unreleased", "## 0.1.0", "astro-theme-papyrus"]) {
+for (const phrase of ["## 0.2.0", "## 0.1.0", "astro-theme-papyrus"]) {
   assert(changelog.includes(phrase), `CHANGELOG missing phrase: ${phrase}`);
 }
 
@@ -126,9 +126,9 @@ try {
       "docs/release.md",
       "package.json",
       "src/index.ts",
-      "src/components/PaperPostList.astro",
-      "src/layouts/PaperPostLayout.astro",
-      "src/styles/paper.css",
+      "src/components/PapyrusPostList.astro",
+      "src/layouts/PapyrusPostLayout.astro",
+      "src/styles/papyrus.css",
       "examples/papyrus-kbd-plugin/package.json",
       "public/llms.txt",
     ]) {
@@ -181,7 +181,7 @@ export default defineConfig({
   site: "https://example.test",
 });
 `);
-    await writeFile(join(smokeDir, "paper.config.toml"), `[site]
+    await writeFile(join(smokeDir, "papyrus.config.toml"), `[site]
 title = "Smoke site"
 description = "Tarball install smoke test."
 
@@ -190,20 +190,20 @@ href = "/"
 label = "Home"
 `);
     await writeFile(join(smokeDir, "src/pages/index.astro"), `---
-import { PaperBaseLayout, PaperPostList } from "astro-theme-papyrus/components";
-import { loadPaperConfig } from "astro-theme-papyrus/config";
-import "astro-theme-papyrus/paper.css";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
+import { loadPapyrusConfig } from "astro-theme-papyrus/config";
+import "astro-theme-papyrus/papyrus.css";
 
-const config = await loadPaperConfig();
+const config = await loadPapyrusConfig();
 ---
 
-<PaperBaseLayout title={config.title} description={config.description} nav={config.nav}>
-  <section class="paper-hero">
+<PapyrusBaseLayout title={config.title} description={config.description} nav={config.nav}>
+  <section class="papyrus-hero">
     <h1>{config.title}</h1>
-    <p class="paper-description">{config.description}</p>
+    <p class="papyrus-description">{config.description}</p>
   </section>
-  <PaperPostList posts={[]} />
-</PaperBaseLayout>
+  <PapyrusPostList posts={[]} />
+</PapyrusBaseLayout>
 `);
 
     const install = spawnSync("pnpm", ["install", "--ignore-scripts"], {

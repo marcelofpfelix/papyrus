@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import { PapyrusBaseLayout, PapyrusCollectionIndex, PapyrusToc } from "../../components";
+import { demoNav, demoSocialLinks } from "../../data/demo-nav";
+import { collectionTocLinks, getPostCollections } from "../../utils/collections";
+import { withBase } from "../../utils/withBase";
+
+export async function getStaticPaths() {
+  const collections = await getPostCollections("src/content/posts", await getCollection("posts"));
+
+  return collections.map(collection => ({
+    params: { slug: collection.slug },
+    props: { collection },
+  }));
+}
+
+const { collection } = Astro.props;
+const sectionLinks = collectionTocLinks(collection);
+---
+
+<PapyrusBaseLayout
+  title={collection.name}
+  description={collection.description || `Posts in the ${collection.name} collection.`}
+  siteTitle="papyrus"
+  nav={demoNav}
+  socialLinks={demoSocialLinks}
+>
+  <PapyrusToc links={sectionLinks} title="Sections" linksTitle="Sections" />
+
+  <section class="papyrus-hero">
+    <p class="papyrus-post-back">
+      <a href={withBase("/collections/")}>
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M19 12H5"></path>
+          <path d="m12 19-7-7 7-7"></path>
+        </svg>
+        <span>Back</span>
+      </a>
+    </p>
+    <h1>{collection.name}</h1>
+    {collection.description && <p class="papyrus-description">{collection.description}</p>}
+  </section>
+
+  <section id="posts" class="papyrus-section">
+    <h2>Posts by section</h2>
+    {collection.posts.length > 0 ? (
+      <PapyrusCollectionIndex collection={collection} />
+    ) : (
+      <p>No posts found in this collection folder.</p>
+    )}
+  </section>
+</PapyrusBaseLayout>

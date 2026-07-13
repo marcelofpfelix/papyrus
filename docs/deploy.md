@@ -77,4 +77,4 @@ wrap the command locally, for example with `cloudflare-token` from dotfiles.
 
 Open the published URL, confirm the generated routes load, and check that
 `/robots.txt`, `/sitemap-index.xml`, `/rss.xml`, `/search/`, `/posts/`, and
-`/docs/` match the site URL configured for that deployment.
+`/collections/docs/` match the site URL configured for that deployment.

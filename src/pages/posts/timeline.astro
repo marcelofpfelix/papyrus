@@ -1,5 +1,5 @@
 ---
-import { PaperArchiveList, PaperBaseLayout } from "../../components";
+import { PapyrusArchiveList, PapyrusBaseLayout } from "../../components";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
 import { demoPosts } from "../../data/demo-posts";
 import { publishedPosts } from "../../utils/posts";
@@ -8,20 +8,20 @@ const posts = publishedPosts(demoPosts);
 
 ---
 
-<PaperBaseLayout
+<PapyrusBaseLayout
   title="Timeline"
   description="Chronological archive view for Papyrus posts."
   siteTitle="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <section class="paper-hero">
+  <section class="papyrus-hero">
     <h1>Timeline</h1>
-    <p class="paper-description">A timeline gives readers a compact chronological archive without changing the primary posts index. Papyrus can keep the index focused and link to this view for readers who want everything by date.</p>
+    <p class="papyrus-description">A timeline gives readers a compact chronological archive without changing the primary posts index. Papyrus can keep the index focused and link to this view for readers who want everything by date.</p>
   </section>
 
-  <section class="paper-section">
+  <section class="papyrus-section">
     <h2>All posts by date</h2>
-    <PaperArchiveList posts={posts} />
+    <PapyrusArchiveList posts={posts} />
   </section>
-</PaperBaseLayout>
+</PapyrusBaseLayout>

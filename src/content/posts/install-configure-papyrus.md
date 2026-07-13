@@ -10,11 +10,6 @@ tags:
   - papyrus
   - astro
   - docs
-docs:
-  section: start
-  order: 5
-  title: Install and configure Papyrus
-  description: Template-first setup for a Papyrus site.
 ---
 
 The recommended way to start a Papyrus site is to use `papyrus-template`. The
@@ -42,7 +37,7 @@ The template depends on the npm package:
 ```json title="package.json"
 {
   "dependencies": {
-    "astro-theme-papyrus": "^0.1.0"
+    "astro-theme-papyrus": "^0.2.0"
   }
 }
 ```
@@ -52,13 +47,13 @@ The template enables Papyrus in Astro:
 ```js title="astro.config.mjs"
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
-import { loadPaperConfig } from "astro-theme-papyrus/config";
+import { loadPapyrusConfig } from "astro-theme-papyrus/config";
 import papyrus from "astro-theme-papyrus/integration";
 
-const paper = await loadPaperConfig();
+const papyrus = await loadPapyrusConfig();
 
 export default defineConfig({
-  site: paper.site,
+  site: papyrus.site,
   integrations: [papyrus(), sitemap()],
 });
 ```
@@ -76,7 +71,7 @@ Papyrus injects these standard routes from the package:
 | `/` | Home page with latest posts and project cards |
 | `/posts/` | Public post list |
 | `/posts/[...slug]/` | Post detail page |
-| `/projects/` | Project cards from `paper.config.toml` |
+| `/projects/` | Project cards from `papyrus.config.toml` |
 | `/profile/` | Profile page from `src/data/profile.toml` |
 | `/tag/` and `/tag/[tag]/` | Tag index and tag detail pages |
 | `/404.html` | Helpful not-found page |
@@ -88,7 +83,7 @@ Because the pages are injected by the package, the template does not need a
 
 ## Know `src` vs `public`
 
-Papyrus follows the same Astro convention used by Paper-style starter repos:
+Papyrus follows the same Astro convention used by Papyrus-style starter repos:
 `src/` is source, `public/` is static output input.
 
 Use `src/` for files Astro should read, transform, type-check, or route during
@@ -104,13 +99,13 @@ Use `public/` for files that should be copied to the deployed site as-is:
 
 - `public/logo.svg`, `public/favicon.svg`, and `public/site.webmanifest`
 - `public/images/*` for covers, avatars, and project images referenced by
-  frontmatter or `paper.config.toml`
+  frontmatter or `papyrus.config.toml`
 - generated artifacts such as `public/cv/profile.json`,
   `public/cv/profile.md`, `public/ai/*`, `public/rss/tags/*`, and
   `public/pagefind/*`
 
 Do not hand-edit generated files in `public/`. Edit the source in `src/`,
-`paper.config.toml`, or `src/data/profile.toml`, then regenerate the artifacts.
+`papyrus.config.toml`, or `src/data/profile.toml`, then regenerate the artifacts.
 
 ## Edit the right file
 
@@ -118,7 +113,7 @@ For normal site work, start with these files:
 
 | Goal | Edit |
 | --- | --- |
-| Site title, description, nav, social links, projects, theme, feature flags, and post-card defaults | `paper.config.toml` |
+| Site title, description, nav, social links, projects, theme, feature flags, and post-card defaults | `papyrus.config.toml` |
 | Add or edit posts | `src/content/posts/*.md` |
 | Add a page that Papyrus does not already inject | `src/pages/*.astro` |
 | Change the profile, CV, links, skills, dates, and print color | `src/data/profile.toml` |
@@ -137,10 +132,10 @@ or docs content source.
 
 ## Edit the site config
 
-Most site behavior starts in `paper.config.toml`. The template keeps the system
+Most site behavior starts in `papyrus.config.toml`. The template keeps the system
 color preference as the default and uses the Everforest theme profile.
 
-```toml title="paper.config.toml"
+```toml title="papyrus.config.toml"
 [site]
 title = "My site"
 description = "Notes, projects, and profile."
@@ -254,7 +249,7 @@ Keep visual identity in `public/`:
 - `public/site.webmanifest`
 - `public/images/cover.svg`
 - `public/images/avatar.svg`
-- project images referenced by `paper.config.toml`
+- project images referenced by `papyrus.config.toml`
 
 These are normal site assets. Papyrus supplies the components and theme CSS,
 while the consuming site supplies its own images and metadata.
@@ -266,7 +261,7 @@ routes, import Papyrus components directly:
 
 ```astro
 ---
-import { PaperBaseLayout, PaperPostList } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts, routablePosts } from "astro-theme-papyrus/utils";
 
 const allPosts = await getCollection("posts");
@@ -275,9 +270,9 @@ const routePosts = routablePosts(allPosts);
 const adjacentPosts = publishedPosts(allPosts);
 ---
 
-<PaperBaseLayout title="My site" description="Custom page.">
-  <PaperPostList posts={posts} />
-</PaperBaseLayout>
+<PapyrusBaseLayout title="My site" description="Custom page.">
+  <PapyrusPostList posts={posts} />
+</PapyrusBaseLayout>
 ```
 
 Use `routePosts` when creating static post detail paths. Use `adjacentPosts`
@@ -287,9 +282,9 @@ routes without showing up in public navigation.
 In a post-detail route, pass folder-aware tags into the post layout:
 
 ```astro
-<PaperPostLayout post={post} tags={postTags(post)}>
+<PapyrusPostLayout post={post} tags={postTags(post)}>
   <Content />
-</PaperPostLayout>
+</PapyrusPostLayout>
 ```
 
 Keep the boundary clear: Papyrus owns reusable pages, components, styles, and

@@ -4,7 +4,7 @@ import { access, readFile } from "node:fs/promises";
 const readme = await readFile("README.md", "utf8");
 const statusRoadmap = await readFile(".agents/status-roadmap.md", "utf8");
 const requestAudit = await readFile(".agents/request-audit.md", "utf8");
-const astroPaperParity = await readFile(".agents/astropaper-parity.md", "utf8");
+const astroPapyrusParity = await readFile(".agents/astropapyrus-parity.md", "utf8");
 const docsIndex = await readFile("src/pages/docs/index.astro", "utf8");
 const contentConfig = await readFile("src/content.config.ts", "utf8");
 const docsIndexContent = await readFile("src/content/docs/index.md", "utf8");
@@ -76,7 +76,7 @@ for (const phrase of [
 }
 
 const repoOnlyDocs = [
-  "astropaper-parity",
+  "astropapyrus-parity",
   "cv-source-comparison",
   "guide",
   "pure-parity",
@@ -94,17 +94,17 @@ for (const slug of repoOnlyDocs) {
 
 assert(docsIndex.includes("/docs/deploy/"), "public deploy guide should remain linked from docs index");
 for (const phrase of [
-  "Papyrus should not claim AstroPaper feature parity by default",
+  "Papyrus should not claim AstroPapyrus feature parity by default",
   "Typed central config resolver",
   "Dynamic OG image route",
   "Pagination and per-index config",
   "Language, direction, timezone, profile, and verification config",
-  "Before release notes claim AstroPaper parity",
+  "Before release notes claim AstroPapyrus parity",
 ]) {
-  assert(astroPaperParity.includes(phrase), `AstroPaper parity decisions missing phrase: ${phrase}`);
+  assert(astroPapyrusParity.includes(phrase), `AstroPapyrus parity decisions missing phrase: ${phrase}`);
 }
-assert(!astroPaperParity.includes("| Partial |"), "AstroPaper parity decisions should not keep ambiguous Partial rows");
-assert(!astroPaperParity.includes("Implement next"), "AstroPaper parity decisions should not keep open-ended Implement next rows");
+assert(!astroPapyrusParity.includes("| Partial |"), "AstroPapyrus parity decisions should not keep ambiguous Partial rows");
+assert(!astroPapyrusParity.includes("Implement next"), "AstroPapyrus parity decisions should not keep open-ended Implement next rows");
 assert(docsIndex.includes("Feature map"), "docs index missing Feature map link");
 assert(contentConfig.includes("const docs = defineCollection"), "content config missing docs collection");
 assert(docsIndexContent.includes("sections:"), "src/content/docs/index.md missing section metadata");

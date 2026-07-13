@@ -6,12 +6,12 @@ import { siteConfig } from "./site-config.mjs";
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 
 const tokenFallbacks = {
-  "--paper-bg": "#f9f5d7",
-  "--paper-fg": "#654735",
-  "--paper-muted": "#928374",
-  "--paper-panel": "#f2e5bc",
-  "--paper-border": "#d5c4a1",
-  "--paper-accent": "#d8a657",
+  "--papyrus-bg": "#f9f5d7",
+  "--papyrus-fg": "#654735",
+  "--papyrus-muted": "#928374",
+  "--papyrus-panel": "#f2e5bc",
+  "--papyrus-border": "#d5c4a1",
+  "--papyrus-accent": "#d8a657",
 };
 
 export async function themeTokens(profile = process.env.PAPYRUS_THEME, mode = process.env.PAPYRUS_THEME_MODE ?? "light") {
@@ -20,8 +20,8 @@ export async function themeTokens(profile = process.env.PAPYRUS_THEME, mode = pr
   const file = resolve(packageRoot, "src/styles/themes", `${profile}.css`);
   const css = await readFile(file, "utf8");
   const selector = mode === "dark"
-    ? new RegExp(`(?:html|:root)\\[data-paper-theme="${profile}"\\]\\.dark\\s*\\{([\\s\\S]*?)\\}`, "m")
-    : new RegExp(`:root\\[data-paper-theme="${profile}"\\]\\s*\\{([\\s\\S]*?)\\}`, "m");
+    ? new RegExp(`(?:html|:root)\\[data-papyrus-theme="${profile}"\\]\\.dark\\s*\\{([\\s\\S]*?)\\}`, "m")
+    : new RegExp(`:root\\[data-papyrus-theme="${profile}"\\]\\s*\\{([\\s\\S]*?)\\}`, "m");
   const block = css.match(selector)?.[1] ?? "";
   const tokens = { ...tokenFallbacks };
 

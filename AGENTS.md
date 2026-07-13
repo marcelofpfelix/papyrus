@@ -51,7 +51,7 @@ When work is done:
 - For content utility behavior such as folder tags, stable slugs, pinned
   ordering, adjacent posts, reading time, stable route/backlink policy, and
   content-outline folder metadata, use `make verify-content`.
-- For `paper.config.toml`, the package config loader, demo config wiring, and
+- For `papyrus.config.toml`, the package config loader, demo config wiring, and
   script fallback behavior, use `make verify-config`.
 - For built-in feature flags, local plugin helper behavior, documented
   Starlight plugin idea comparisons, and the Starlight component/plugin/sidebar
@@ -106,7 +106,7 @@ When implementing a feature or component, check reference projects in this order
 
 1. Starlight
 2. AstroWind
-3. AstroPaper
+3. AstroPapyrus
 4. Cactus
 
 If Starlight exposes reusable components, plugin APIs, markdown styles, or

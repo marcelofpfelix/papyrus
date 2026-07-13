@@ -1,0 +1,33 @@
+---
+export interface TocItem {
+  depth: number;
+  href: string;
+  title: string;
+  subheadings: TocItem[];
+}
+
+interface Props {
+  heading: TocItem;
+}
+
+const { heading } = Astro.props as Props;
+---
+
+<li>
+  <div class="papyrus-toc-item-frame">
+    <span class="papyrus-toc-progress" aria-hidden="true"></span>
+    <a
+      class="papyrus-toc-item"
+      style={`--papyrus-toc-depth: ${Math.max(heading.depth - 2, 0)}`}
+      aria-label={`Scroll to section: ${heading.title}`}
+      href={heading.href}
+    >
+      {heading.title}
+    </a>
+  </div>
+  {heading.subheadings.length > 0 && (
+    <ol>
+      {heading.subheadings.map(subheading => <Astro.self heading={subheading} />)}
+    </ol>
+  )}
+</li>

@@ -1,5 +1,5 @@
 ---
-import { PaperBaseLayout, PaperNotFound } from "../../components";
+import { PapyrusBaseLayout, PapyrusNotFound } from "../../components";
 import { getTemplateSite } from "../site";
 
 const site = await getTemplateSite();
@@ -10,6 +10,6 @@ const items = [
 ];
 ---
 
-<PaperBaseLayout title="Not found" description="Find a nearby page." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
-  <PaperNotFound items={items} searchHref="/posts/" />
-</PaperBaseLayout>
+<PapyrusBaseLayout title="Not found" description="Find a nearby page." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+  <PapyrusNotFound items={items} searchHref="/posts/" />
+</PapyrusBaseLayout>

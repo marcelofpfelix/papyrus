@@ -1,28 +1,28 @@
-:root[data-paper-theme="kanagawa"] {
+:root[data-papyrus-theme="kanagawa"] {
   color-scheme: light;
-  --paper-bg: #f2ecbc;
-  --paper-fg: #545464;
-  --paper-muted: #8a8980;
-  --paper-panel: #e6ddb0;
-  --paper-border: #d5cea3;
-  --paper-accent: #5d57a3;
-  --paper-code-bg: #e6ddb0;
-  --paper-code-fg: #545464;
-  --paper-theme-color: #f2ecbc;
-  --paper-font-sans: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-  --paper-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  --papyrus-bg: #f2ecbc;
+  --papyrus-fg: #545464;
+  --papyrus-muted: #8a8980;
+  --papyrus-panel: #e6ddb0;
+  --papyrus-border: #d5cea3;
+  --papyrus-accent: #5d57a3;
+  --papyrus-code-bg: #e6ddb0;
+  --papyrus-code-fg: #545464;
+  --papyrus-theme-color: #f2ecbc;
+  --papyrus-font-sans: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --papyrus-font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
 }
 
-:root[data-paper-theme="kanagawa"].dark,
-html[data-paper-theme="kanagawa"].dark {
+:root[data-papyrus-theme="kanagawa"].dark,
+html[data-papyrus-theme="kanagawa"].dark {
   color-scheme: dark;
-  --paper-bg: #1f1f28;
-  --paper-fg: #dcd7ba;
-  --paper-muted: #938aa9;
-  --paper-panel: #2a2a37;
-  --paper-border: #54546d;
-  --paper-accent: #7e9cd8;
-  --paper-code-bg: #16161d;
-  --paper-code-fg: #dcd7ba;
-  --paper-theme-color: #1f1f28;
+  --papyrus-bg: #1f1f28;
+  --papyrus-fg: #dcd7ba;
+  --papyrus-muted: #938aa9;
+  --papyrus-panel: #2a2a37;
+  --papyrus-border: #54546d;
+  --papyrus-accent: #7e9cd8;
+  --papyrus-code-bg: #16161d;
+  --papyrus-code-fg: #dcd7ba;
+  --papyrus-theme-color: #1f1f28;
 }

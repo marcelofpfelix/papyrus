@@ -1,4 +1,4 @@
-export type PaperCvItem = {
+export type PapyrusCvItem = {
   title?: string;
   dates?: string;
   location?: string;
@@ -10,14 +10,14 @@ export type PaperCvItem = {
   };
 };
 
-export type PaperCvGroup = {
+export type PapyrusCvGroup = {
   title?: string;
   url?: string;
   logo?: string;
-  items?: PaperCvItem[];
+  items?: PapyrusCvItem[];
 };
 
-export type PaperCvSection = {
+export type PapyrusCvSection = {
   id?: string;
   title: string;
   icon?: string;
@@ -26,39 +26,39 @@ export type PaperCvSection = {
     start?: string;
     end?: string;
   };
-  groups?: PaperCvGroup[];
+  groups?: PapyrusCvGroup[];
 };
 
-export type PaperCvSectionVariant = "default" | "compact" | "highlight" | "timeline" | string;
+export type PapyrusCvSectionVariant = "default" | "compact" | "highlight" | "timeline" | string;
 
-export type PaperCvSectionOverride = {
+export type PapyrusCvSectionOverride = {
   title?: string;
   icon?: string;
-  variant?: PaperCvSectionVariant;
+  variant?: PapyrusCvSectionVariant;
   hidden?: boolean;
 };
 
-export type PaperCvSectionOverrides = Record<string, PaperCvSectionOverride>;
+export type PapyrusCvSectionOverrides = Record<string, PapyrusCvSectionOverride>;
 
-export type PaperCvLink = {
+export type PapyrusCvLink = {
   label: string;
   href?: string;
   icon?: string;
-  emailParts?: PaperCvEmailParts;
+  emailParts?: PapyrusCvEmailParts;
 };
 
-export type PaperCvEmailParts = {
+export type PapyrusCvEmailParts = {
   user: string;
   domain: string;
   domainParts: string[];
 };
 
-export type PaperCvNamedFlag = {
+export type PapyrusCvNamedFlag = {
   name: string;
   flag?: string;
 };
 
-export type PaperCvUser = {
+export type PapyrusCvUser = {
   name: string;
   handle?: string;
   avatar?: string;
@@ -70,16 +70,16 @@ export type PaperCvUser = {
   location?: string;
   url?: string;
   email?: string;
-  emailParts?: PaperCvEmailParts;
+  emailParts?: PapyrusCvEmailParts;
   printColor?: string;
   printLinks?: string[];
   born?: string;
   pages?: number;
-  nationality?: PaperCvNamedFlag[];
-  languages?: PaperCvNamedFlag[];
+  nationality?: PapyrusCvNamedFlag[];
+  languages?: PapyrusCvNamedFlag[];
   roles?: string[];
-  links?: PaperCvLink[];
-  sections?: PaperCvSection[];
+  links?: PapyrusCvLink[];
+  sections?: PapyrusCvSection[];
 };
 
 type JekyllCvRecord = Record<string, unknown>;
@@ -117,14 +117,14 @@ function colorValue(value: unknown): string | undefined {
   return /^(#[0-9a-f]{3,8}|(?:rgb|hsl)a?\([0-9%.,\s-]+\))$/i.test(color) ? color : undefined;
 }
 
-function rangeFrom(value: unknown): PaperCvItem["range"] | undefined {
+function rangeFrom(value: unknown): PapyrusCvItem["range"] | undefined {
   const range = record(value);
   const start = stringValue(range.a);
   const end = stringValue(range.b);
   return start || end ? { start, end } : undefined;
 }
 
-function linkFor(user: JekyllCvRecord, key: string): PaperCvLink | undefined {
+function linkFor(user: JekyllCvRecord, key: string): PapyrusCvLink | undefined {
   const link = record(user[key]);
   const account = stringValue(link.name) ?? key;
   const label = account;
@@ -139,7 +139,7 @@ function linkFor(user: JekyllCvRecord, key: string): PaperCvLink | undefined {
   };
 }
 
-function namedFlagFor(user: JekyllCvRecord, key: string): PaperCvNamedFlag | undefined {
+function namedFlagFor(user: JekyllCvRecord, key: string): PapyrusCvNamedFlag | undefined {
   const item = record(user[key]);
   const name = stringValue(item.name);
   if (!name) return undefined;
@@ -149,10 +149,10 @@ function namedFlagFor(user: JekyllCvRecord, key: string): PaperCvNamedFlag | und
   };
 }
 
-function normalizeGroup(section: JekyllCvRecord, groupKey: string): PaperCvGroup | undefined {
+function normalizeGroup(section: JekyllCvRecord, groupKey: string): PapyrusCvGroup | undefined {
   const group = record(section[groupKey]);
   const itemKeys = stringList(group.items);
-  const items: PaperCvItem[] = [];
+  const items: PapyrusCvItem[] = [];
 
   itemKeys.forEach((itemKey) => {
       const item = record(group[itemKey]);
@@ -185,7 +185,7 @@ function normalizeGroup(section: JekyllCvRecord, groupKey: string): PaperCvGroup
   return { title, url, logo, items };
 }
 
-export function normalizeJekyllCvUser(input: unknown): PaperCvUser {
+export function normalizeJekyllCvUser(input: unknown): PapyrusCvUser {
   const root = record(input);
   const user = record(root.user ?? input);
   const emailUser = stringValue(user.email_user);
@@ -216,18 +216,18 @@ export function normalizeJekyllCvUser(input: unknown): PaperCvUser {
     pages: numberValue(user.pages),
     nationality: stringList(user.nationality)
       .map((key) => namedFlagFor(user, key))
-      .filter((item): item is PaperCvNamedFlag => Boolean(item)),
+      .filter((item): item is PapyrusCvNamedFlag => Boolean(item)),
     languages: stringList(user.languages)
       .map((key) => namedFlagFor(user, key))
-      .filter((item): item is PaperCvNamedFlag => Boolean(item)),
+      .filter((item): item is PapyrusCvNamedFlag => Boolean(item)),
     roles: stringList(user.roles),
-    links: linkKeys.map((key) => linkFor(user, key)).filter((link): link is PaperCvLink => Boolean(link)),
+    links: linkKeys.map((key) => linkFor(user, key)).filter((link): link is PapyrusCvLink => Boolean(link)),
     sections: stringList(user.sections)
       .map((sectionKey) => {
         const section = record(record(user.data)[sectionKey]);
         const groups = stringList(section.groups)
           .map((groupKey) => normalizeGroup(section, groupKey))
-          .filter((group): group is PaperCvGroup => Boolean(group));
+          .filter((group): group is PapyrusCvGroup => Boolean(group));
 
         return {
           id: sectionKey,
@@ -242,7 +242,7 @@ export function normalizeJekyllCvUser(input: unknown): PaperCvUser {
   };
 }
 
-export function cvToJson(user: PaperCvUser): string {
+export function cvToJson(user: PapyrusCvUser): string {
   return JSON.stringify(user, null, 2);
 }
 
@@ -251,9 +251,9 @@ function sameTitle(a: string | undefined, b: string | undefined): boolean {
 }
 
 export function shouldShowCvItemTitle(
-  section: Pick<PaperCvSection, "id" | "title">,
+  section: Pick<PapyrusCvSection, "id" | "title">,
   group: { title?: string; entity?: string; items?: unknown[] },
-  item: Pick<PaperCvItem, "title">
+  item: Pick<PapyrusCvItem, "title">
 ): boolean {
   if (!item.title) return false;
   if (
@@ -265,7 +265,7 @@ export function shouldShowCvItemTitle(
   return true;
 }
 
-function shouldShowMarkdownItemTitle(section: PaperCvSection, group: PaperCvGroup, item: PaperCvItem): boolean {
+function shouldShowMarkdownItemTitle(section: PapyrusCvSection, group: PapyrusCvGroup, item: PapyrusCvItem): boolean {
   return shouldShowCvItemTitle(section, group, item);
 }
 
@@ -282,7 +282,7 @@ function markdownText(value: string): string {
     .trim();
 }
 
-export function cvToMarkdown(user: PaperCvUser): string {
+export function cvToMarkdown(user: PapyrusCvUser): string {
   const lines = [`# ${user.name}`, ""];
   const emailDisplay = user.emailParts ? `${user.emailParts.user}＠${user.emailParts.domain}` : user.email?.replace("@", "＠");
 

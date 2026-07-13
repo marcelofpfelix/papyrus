@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: papyrus-pre
+        name: Papyrus pre-commit checks
+        entry: make pre
+        language: system
+        pass_filenames: false

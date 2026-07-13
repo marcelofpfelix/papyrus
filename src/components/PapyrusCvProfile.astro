@@ -1,0 +1,33 @@
+---
+import PapyrusCvHero from "./PapyrusCvHero.astro";
+import PapyrusCvLinks from "./PapyrusCvLinks.astro";
+import PapyrusCvSections from "./PapyrusCvSections.astro";
+import type { PapyrusCvSectionOverrides, PapyrusCvUser } from "../utils/cv";
+
+const {
+  user,
+  variant = "terminal",
+  showSource = false,
+  sourceHref = "/demo/users.toml",
+  sectionOverrides = {},
+} = Astro.props as {
+  user: PapyrusCvUser;
+  variant?: "terminal" | "timeline" | "a4" | "cards" | string;
+  showSource?: boolean;
+  sourceHref?: string;
+  sectionOverrides?: PapyrusCvSectionOverrides;
+};
+---
+
+<section class:list={["papyrus-cv", `papyrus-cv--${variant}`]}>
+  <PapyrusCvHero user={user} />
+  <PapyrusCvLinks links={user.links} />
+
+  {showSource && (
+    <p class="papyrus-cv-source">
+      Profile data source: <a href={sourceHref}>normalized CV users.toml</a>
+    </p>
+  )}
+
+  <PapyrusCvSections sections={user.sections} sectionOverrides={sectionOverrides} />
+</section>

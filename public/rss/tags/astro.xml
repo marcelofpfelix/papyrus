@@ -14,11 +14,32 @@
       <description>Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides.</description>
     </item>
     <item>
+      <title>Deploy Papyrus</title>
+      <link>/posts/deploy/</link>
+      <guid>/posts/deploy/</guid>
+      <pubDate>Wed, 01 Jul 2026 15:00:00 GMT</pubDate>
+      <description>Static hosting, build settings, metadata URLs, and base-path notes for a Papyrus site.</description>
+    </item>
+    <item>
+      <title>Papyrus docs</title>
+      <link>/posts/papyrus-docs/</link>
+      <guid>/posts/papyrus-docs/</guid>
+      <pubDate>Wed, 01 Jul 2026 09:00:00 GMT</pubDate>
+      <description>Package docs for installing, composing, and extending Papyrus without copying a full theme into every site.</description>
+    </item>
+    <item>
       <title>Dark mode and search in Papyrus</title>
       <link>/posts/dark-mode-and-search/</link>
       <guid>/posts/dark-mode-and-search/</guid>
       <pubDate>Tue, 30 Jun 2026 11:15:00 GMT</pubDate>
-      <description>The theme keeps a Pure-like neutral background, then adds a small Paper-style search flow.</description>
+      <description>The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.</description>
+    </item>
+    <item>
+      <title>Folder tags for nested posts</title>
+      <link>/posts/folder-tags-demo/</link>
+      <guid>/posts/folder-tags-demo/</guid>
+      <pubDate>Tue, 30 Jun 2026 11:00:00 GMT</pubDate>
+      <description>Content-model guide showing stable slugs with automatic tags from source folders.</description>
     </item>
     <item>
       <title>Papyrus package shape</title>

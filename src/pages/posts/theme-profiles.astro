@@ -1,5 +1,5 @@
 ---
-import PaperPostLayout from "../../layouts/PaperPostLayout.astro";
+import PapyrusPostLayout from "../../layouts/PapyrusPostLayout.astro";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
 import { readingTime } from "../../utils/posts";
 
@@ -18,7 +18,7 @@ const body = [
 ].join("\n\n");
 ---
 
-<PaperPostLayout
+<PapyrusPostLayout
   title="Theme profiles"
   description="Light/dark profiles, font profile switching, and token-driven colors."
   siteTitle="papyrus"
@@ -46,4 +46,4 @@ const body = [
 
   <h2>Fonts</h2>
   <p>Font profiles are independent from color profiles so a consuming site can change type without rewriting color tokens.</p>
-</PaperPostLayout>
+</PapyrusPostLayout>

@@ -1,0 +1,22 @@
+---
+import PapyrusCvHero from "./PapyrusCvHero.astro";
+import PapyrusCvLinks from "./PapyrusCvLinks.astro";
+import PapyrusCvSections from "./PapyrusCvSections.astro";
+import type { PapyrusCvSectionOverrides, PapyrusCvUser } from "../utils/cv";
+
+const {
+  user,
+  template = "classic",
+  sectionOverrides = {},
+} = Astro.props as {
+  user: PapyrusCvUser;
+  template?: "classic" | "compact" | string;
+  sectionOverrides?: PapyrusCvSectionOverrides;
+};
+---
+
+<article class:list={["papyrus-cv-a4-page", `papyrus-cv-a4-page--${template}`]}>
+  <PapyrusCvHero user={user} kicker="cv" />
+  <PapyrusCvLinks links={user.links} />
+  <PapyrusCvSections sections={user.sections} sectionOverrides={sectionOverrides} />
+</article>

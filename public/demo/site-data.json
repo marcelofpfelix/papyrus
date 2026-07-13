@@ -3,10 +3,10 @@
     {
       "title": "papyrus",
       "description": "Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata.",
-      "href": "/docs/",
+      "href": "/collections/docs/",
       "links": [
-        { "label": "features", "href": "/docs/feature-map/" },
-        { "label": "docs", "href": "/docs/" },
+        { "label": "features", "href": "/collections/docs/feature-map/" },
+        { "label": "docs", "href": "/collections/docs/" },
         { "label": "website", "href": "/" },
         { "label": "repo", "text": "marcelofpfelix/papyrus", "href": "https://github.com/marcelofpfelix/papyrus" }
       ],
@@ -30,9 +30,9 @@
     {
       "title": "AI indexes",
       "description": "Static JSON and llms.txt outputs for agents, site search, and graph features.",
-      "href": "/docs/ai-mobile/",
+      "href": "/collections/docs/ai-mobile/",
       "links": [
-        { "label": "docs", "href": "/docs/ai-mobile/" },
+        { "label": "docs", "href": "/collections/docs/ai-mobile/" },
         { "label": "graph", "href": "/ai/graph.json" }
       ],
       "language": "Node",
