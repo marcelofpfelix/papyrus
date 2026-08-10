@@ -449,6 +449,10 @@ a {
   margin: 0 0 16px;
 }
 
+.papyrus-home-hero h1 {
+  margin-bottom: 26px;
+}
+
 .papyrus-description {
   color: var(--papyrus-muted);
   font-size: 1.1rem;
@@ -871,7 +875,7 @@ a {
   display: block;
   margin: 0;
   position: relative;
-  width: min(28vw, 260px);
+  width: auto;
   z-index: 40;
 }
 
@@ -942,7 +946,7 @@ a {
   position: absolute;
   right: 0;
   top: calc(100% + 10px);
-  width: 100%;
+  width: min(28vw, 260px);
 }
 
 .papyrus-toc[data-open="true"] .papyrus-toc-panel {
@@ -1161,13 +1165,6 @@ a {
   color: var(--papyrus-accent);
 }
 
-.papyrus-search-browse-label {
-  color: var(--papyrus-muted);
-  font-family: var(--papyrus-font-mono);
-  font-size: 0.82rem;
-  margin: 6px 0 -6px;
-}
-
 .papyrus-search-tags {
   display: flex;
   flex-wrap: wrap;
@@ -1179,7 +1176,7 @@ a {
   align-items: center;
   appearance: none;
   background: transparent;
-  border: 1px solid var(--papyrus-border);
+  border: 0;
   border-radius: 999px;
   color: var(--papyrus-muted);
   cursor: pointer;
@@ -1196,7 +1193,6 @@ a {
 .papyrus-search-tags button:focus-visible,
 .papyrus-search-tags a:hover,
 .papyrus-search-tags a:focus-visible {
-  border-color: var(--papyrus-accent);
   color: var(--papyrus-accent);
   outline: none;
 }
@@ -1866,7 +1862,7 @@ a {
 
 .papyrus-tag-list a {
   align-items: center;
-  border: 1px solid var(--papyrus-border);
+  border: 0;
   border-radius: 999px;
   display: inline-flex;
   font-size: 0.95rem;
@@ -1877,7 +1873,6 @@ a {
 }
 
 .papyrus-tag-list a:hover {
-  border-color: var(--papyrus-accent);
   color: var(--papyrus-accent);
 }
 

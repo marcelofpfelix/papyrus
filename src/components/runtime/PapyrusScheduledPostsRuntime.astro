@@ -1,0 +1,47 @@
+<script is:inline>
+  (() => {
+    if (window.__papyrusScheduledPostsRuntime) return;
+    window.__papyrusScheduledPostsRuntime = true;
+
+    function refreshArchiveCounts() {
+      document.querySelectorAll("[data-papyrus-archive-year]").forEach((year) => {
+        const count = year.querySelector("[data-papyrus-archive-count]");
+        if (!count) return;
+        const visibleItems = year.querySelectorAll("li:not([hidden])").length;
+        count.textContent = String(visibleItems);
+        year.hidden = visibleItems === 0;
+      });
+    }
+
+    function refreshScheduledPosts() {
+      const now = Date.now();
+      let nextPublishAt = 0;
+
+      document.querySelectorAll("[data-papyrus-publish-at]").forEach((item) => {
+        const publishAt = Number(item.getAttribute("data-papyrus-publish-at"));
+        if (!Number.isFinite(publishAt)) return;
+
+        if (publishAt <= now) {
+          item.hidden = false;
+          item.removeAttribute("data-papyrus-publish-at");
+          return;
+        }
+
+        item.hidden = true;
+        nextPublishAt = nextPublishAt ? Math.min(nextPublishAt, publishAt) : publishAt;
+      });
+
+      refreshArchiveCounts();
+
+      if (nextPublishAt) {
+        window.setTimeout(refreshScheduledPosts, Math.min(nextPublishAt - now, 2147483647));
+      }
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", refreshScheduledPosts, { once: true });
+    } else {
+      refreshScheduledPosts();
+    }
+  })();
+</script>

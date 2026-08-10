@@ -1,7 +1,6 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
 import { parse } from "smol-toml";
-import { demoPosts } from "../data/demo-posts";
 import { postSlug, type PapyrusPostEntry } from "./posts";
 import { withBase } from "./withBase";
 
@@ -157,7 +156,7 @@ async function findTomlFiles(dir: string): Promise<string[]> {
   return files.flat();
 }
 
-export async function getPostCollections(postsDir = "src/content/posts", sourcePosts: PapyrusPostEntry[] = demoPosts as PapyrusPostEntry[]): Promise<PapyrusCollection[]> {
+export async function getPostCollections(postsDir = "src/content/posts", sourcePosts: PapyrusPostEntry[] = []): Promise<PapyrusCollection[]> {
   const collectionSourcePosts = sourcePosts;
   const collectionFiles = await findTomlFiles(postsDir);
   const collections = await Promise.all(collectionFiles.map(async path => {

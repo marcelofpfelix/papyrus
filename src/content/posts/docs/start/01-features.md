@@ -4,6 +4,7 @@ description: Grouped feature toggles for Papyrus layouts.
 slug: features
 pubDatetime: 2026-07-01T09:10:00.000Z
 category: Docs
+hidden: true
 tags:
   - papyrus
   - docs
@@ -63,7 +64,7 @@ const features = {
 
 Papyrus layouts emit the metadata a small public site normally needs: titles,
 descriptions, canonical URLs, Open Graph, Twitter cards, RSS discovery, and post
-JSON-LD. Hidden posts stay out of public discovery surfaces. Use explicit
+JSON-LD. Hidden posts stay out of public indexes. Use explicit
 `robots` frontmatter when a direct page should emit directives such as
 `noindex, follow`.
 

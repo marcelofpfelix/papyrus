@@ -188,6 +188,8 @@ const printMenuLabel = profile ? "PDF / Print" : versionLabel;
 </style>
 
 <script>
+  import { copyPapyrusText } from "./runtime/papyrusClipboard";
+
   function initPapyrusCvActions() {
     const actions = document.querySelector<HTMLElement>("[data-cv-actions]");
     if (!actions || actions.dataset.cvActionsBound) return;
@@ -202,22 +204,13 @@ const printMenuLabel = profile ? "PDF / Print" : versionLabel;
       }, 2200);
     }
 
-    async function copyText(text: string) {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-        return true;
-      }
-      window.prompt("Copy CV markdown", text);
-      return false;
-    }
-
     actions.querySelector("[data-cv-copy-markdown]")?.addEventListener("click", async () => {
       const url = actions.dataset.cvMarkdownUrl;
       if (!url) return;
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error("CV Markdown is not available.");
-        await copyText(await response.text());
+        await copyPapyrusText(await response.text(), "Copy CV markdown");
         setStatus("Markdown copied");
       } catch {
         setStatus("Copy failed");
@@ -234,7 +227,7 @@ const printMenuLabel = profile ? "PDF / Print" : versionLabel;
           });
           return;
         }
-        await copyText(window.location.href);
+        await copyPapyrusText(window.location.href, "Copy link");
         setStatus("Link copied");
       } catch {
         setStatus("Share failed");

@@ -84,9 +84,12 @@
     "./template/pages/index.astro": "./src/template/pages/index.astro",
     "./template/pages/about.astro": "./src/template/pages/about.astro",
     "./template/pages/posts/index.astro": "./src/template/pages/posts/index.astro",
+    "./template/pages/posts/timeline.astro": "./src/template/pages/posts/timeline.astro",
     "./template/pages/posts/[...slug].astro": "./src/template/pages/posts/[...slug].astro",
     "./template/pages/projects.astro": "./src/template/pages/projects.astro",
     "./template/pages/profile/index.astro": "./src/template/pages/profile/index.astro",
+    "./template/pages/profile/print.astro": "./src/template/pages/profile/print.astro",
+    "./template/pages/profile/ast.astro": "./src/template/pages/profile/ast.astro",
     "./template/pages/collections.astro": "./src/template/pages/collections.astro",
     "./template/pages/collections/[slug].astro": "./src/template/pages/collections/[slug].astro",
     "./template/pages/collections/[collection]/[...slug].astro": "./src/template/pages/collections/[collection]/[...slug].astro",
@@ -127,9 +130,9 @@
     "LICENSE",
     "CHANGELOG.md",
     "src",
+    "public",
     "scripts",
-    "examples",
-    "public"
+    "examples"
   ],
   "scripts": {
     "check": "astro check",

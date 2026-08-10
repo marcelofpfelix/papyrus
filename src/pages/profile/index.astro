@@ -1,14 +1,16 @@
 ---
 import PapyrusProfilePage from "../../components/PapyrusProfilePage.astro";
+import { githubSourceUrl, loadPapyrusConfig } from "../../config";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
 import { cvSections, profile, profileLinks, profileProjects, timelineEvents } from "../../data/profile";
 import { withBase } from "../../utils/withBase";
 
+const site = await loadPapyrusConfig();
 const sourceLinks = [
-  { label: "TOML", href: "https://github.com/marcelofpfelix/papyrus/blob/main/src/data/profile.toml" },
-  { label: "JSON", href: "https://github.com/marcelofpfelix/papyrus/blob/main/public/cv/profile.json" },
-  { label: "Markdown", href: "https://github.com/marcelofpfelix/papyrus/blob/main/public/cv/profile.md" },
-];
+  { label: "TOML", href: githubSourceUrl(site, "src/data/profile.toml") },
+  { label: "JSON", href: githubSourceUrl(site, "public/cv/profile.json") },
+  { label: "Markdown", href: githubSourceUrl(site, "public/cv/profile.md") },
+].filter((link): link is { label: string; href: string } => Boolean(link.href));
 const versionLinks = [
   { label: "Modern", href: withBase("/profile/print/") },
   { label: "Classic", href: withBase("/profile/ast/") },

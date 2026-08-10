@@ -52,11 +52,7 @@ const skillTags = Array.from(new Set(
     .map(tag => tag.trim())
     .filter(Boolean)
 )).map(tag => ({ label: `#${tag}`, href: withBase(`/tag/${tag}/`) }));
-const profileSourceLinks = sourceLinks ?? [
-  { label: "TOML", href: "https://github.com/marcelofpfelix/papyrus/blob/main/src/data/profile.toml" },
-  { label: "JSON", href: "https://github.com/marcelofpfelix/papyrus/blob/main/public/cv/profile.json" },
-  { label: "Markdown", href: "https://github.com/marcelofpfelix/papyrus/blob/main/public/cv/profile.md" },
-];
+const profileSourceLinks = sourceLinks ?? [];
 const profileVersionLinks = versionLinks ?? [
   { label: "Modern", href: withBase("/profile/print/") },
   { label: "Classic", href: withBase("/profile/ast/") },

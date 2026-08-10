@@ -4,6 +4,7 @@ description: Markdown route showing Pure-style Astro/Shiki code blocks, callouts
 slug: code-demo
 pubDatetime: 2026-07-01T13:00:00.000Z
 category: Docs
+hidden: true
 tags:
   - authoring
   - markdown

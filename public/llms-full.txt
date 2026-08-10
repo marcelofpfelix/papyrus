@@ -1,172 +1,16 @@
 # Full content corpus
 
-## Markdown code guide
-URL: https://papyrus.marcelofelix.com/posts/code-demo/
-Summary: Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.
-Updated: 2026-07-01T13:00:00.000Z
-Source: src/content/posts/docs/authoring/10-code-demo.md
-This route is a compact rendering reference for Markdown-heavy posts. It shows
-how callouts, code fences, tables, diagrams, media, and fallback artifact links
-look inside the same article layout used by regular Papyrus posts.
-
-## Obsidian callout syntax
-
-> [!NOTE]
-> Notes render as theme-aware callouts while keeping the original Markdown
-> readable in source form.
-
-> [!TIP]
-> Tips use the same callout component shape with a different token mix.
-
-> [!IMPORTANT]
-> Important callouts use their own icon and color so they are distinct from tips.
-
-> [!WARNING]
-> Warning variants use warning tokens instead of hardcoded colors.
-
-> [!CAUTION]
-> Caution callouts stay readable in light and dark modes.
-
-## Code title
-
-```rust title="src/main.rs"
-fn main() {
-    println!("papyrus");
-}
-```
-
-## Diff fence
-
-```css title="diff.css"
-.papyrus-card {
-  background: var(--papyrus-panel); /* [!code --] */
-  background: transparent; /* [!code ++] */
-  color: var(--papyrus-accent); /* [!code ++] */
-}
-```
-
-## Highlighted lines
-
-```c title="highlight.c"
-#include <stdio.h>
-
-int main(void) {
-  puts("papyrus"); // [!code highlight]
-  return 0;
-}
-```
-
-## Console fences
-
-```console
-site$ pnpm install
-site# pnpm build
-site> pnpm preview
-```
-
-## Kamailio fences
-
-```kamailio title="kamailio.cfg"
-#!KAMAILIO
-listen=udp:127.0.0.2:5060
-loadmodule "sl.so"
-modparam("sl", "bind_tm", 0)
-
-request_route {
-  if (is_method("INVITE")) {
-    xlog("L_INFO", "call from $si to $ru\n");
-    sl_send_reply("100", "Trying");
-  }
-}
-```
-
-## Task list
-
-- [x] Keep feature walkthroughs explicit
-- [ ] Document the source files beside rendered artifacts
-- [ ] Choose a renderer before embedding external diagram formats
-
-## Table
-
-| Feature | Expected behavior |
-| --- | --- |
-| Code title | Render a compact title bar |
-| Diff | Style added and removed lines |
-| Table | Stay readable without heavy borders |
-
-## Mermaid fence
-
-```mermaid
-flowchart LR
-  Markdown --> Code
-  Markdown --> Alerts
-  Markdown --> Diagrams
-```
-
-## Image zoom
-
-## Artifact links
-
-- [Mermaid source](/demo/theme-flow.mmd "Hydrated Mermaid source")
-- [PlantUML source](/demo/call-flow.puml "PlantUML source")
-- [Excalidraw source](/demo/sketch.excalidraw "Excalidraw source")
-
-## Fallback rendering
-
-Some GitHub-style or diagram-adjacent formats need a site-owned plugin or
-renderer. Papyrus keeps the source visible so authors can choose the right
-integration for their site.
-## Generated content structure
-URL: https://papyrus.marcelofelix.com/posts/content-structure/
-Summary: How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.
-Updated: 2026-07-01T13:10:00.000Z
-Source: src/content/posts/docs/authoring/11-content-structure.md
-Use folder metadata when a site needs nested notes, guides, or knowledge-base
-pages without turning source paths into fragile public URLs.
-
-## What gets generated
-
-Papyrus can read a folder tree, combine explicit frontmatter with folder-level
-labels, and render a public index that still feels hand-authored. The package
-fixture in `public/demo/content-tree` generates `public/demo/content-structure.md`.
-
-## How to use it
-
-Keep canonical slugs in frontmatter when a page has a permanent URL. Use folders
-for organization, inherited tags, and section labels. This lets authors move
-files while the published route, RSS item, search result, and AI metadata stay
-stable.
-
-```console
-pnpm papyrus-content-outline public/demo/content-tree public/demo/content-structure.md
-```
-
-- Use folder names for broad groups such as `guides`, `notes`, or `reference`.
-- Use an index file or folder metadata to name a section for readers.
-- Mark draft, private, or internal posts with `hidden: true` when they need a direct route but should stay out of public lists, feeds, sitemaps, search, and AI exports.
-- Add explicit `robots` frontmatter only when the direct page itself should be blocked from indexing.
-
-## Public boundary
-
-User-facing docs now live as regular posts under `src/content/posts/docs`.
-Development-only notes stay under `.agents/` and are not linked from navigation
-unless they are intentionally rewritten as user documentation.
-
-## Source artifact
-
-The generated Markdown outline remains available as a public fixture at
-[`/demo/content-structure.md`](/demo/content-structure.md).
 ## Markdown authoring guide
 URL: https://papyrus.marcelofelix.com/posts/markdown-feature-sample/
 Summary: A practical guide showing how Papyrus renders Markdown, callouts, code, media, diagrams, and source actions.
 Updated: 2026-06-30T10:00:00.000Z
 Source: src/content/posts/docs/authoring/12-markdown-feature-sample.md
-Papyrus keeps authoring close to regular Astro Markdown. A post stays readable
-as plain text, builds into a clean article page, and can expose source, share,
-tag, table-of-contents, and metadata features when the site enables them.
+Papyrus uses regular Astro Markdown. A post stays readable as plain text and
+builds into an article page with source, share, tag, table-of-contents, and
+metadata actions when the site enables them.
 
-Use this page as a compact authoring reference when templating a new site. Every
-section below shows a Markdown feature in the same shape a real post can use.
+This page is a quick rendering reference. Every section below is ordinary
+Markdown that a real post can use.
 
 ## Headings
 
@@ -389,35 +233,13 @@ Public posts can double as useful documentation. Readers see how authoring
 features work, and maintainers get one page that covers headings, prose, images,
 lists, callouts, code, diagrams, artifact links, link previews, footnotes,
 definition lists, and raw HTML details.
-## Folder tags for nested posts
-URL: https://papyrus.marcelofelix.com/posts/folder-tags-demo/
-Summary: Content-model guide showing stable slugs with automatic tags from source folders.
-Updated: 2026-06-30T11:00:00.000Z
-Source: src/content/posts/docs/authoring/13-folder-tags.md
-This post lives in `src/content/posts/guides/content-model/` to show how a
-nested source folder can add metadata without changing the public URL.
-
-The public URL uses the explicit `slug`, so the route stays stable even if the
-file moves later. Because it is not hidden, it appears in the normal post list
-while still keeping a short public route.
-
-The generated tags include:
-
-- `astro` from frontmatter
-- `guides` from the parent folder
-- `content-model` from the nested folder
-
-```console
-site$ pnpm content:outline
-site$ pnpm build
-```
 ## Deploy Papyrus
 URL: https://papyrus.marcelofelix.com/posts/deploy/
 Summary: Static hosting, build settings, metadata URLs, and base-path notes for a Papyrus site.
 Updated: 2026-07-01T15:00:00.000Z
 Source: src/content/posts/docs/deploy/30-deploy.md
-Papyrus builds to static Astro output, so a consuming site can publish the
-generated `dist` directory to any static host.
+Papyrus builds static Astro output. Publish the generated `dist` directory to
+any static host.
 
 ## Local preview
 
@@ -432,14 +254,13 @@ pnpm build
 pnpm preview
 ```
 
-For a LAN-safe static preview of the built package demo, use the package
-Makefile:
+For a static preview of the built package demo, use the package Makefile:
 
 ```sh
 make serve
 ```
 
-The default LAN preview URL is `http://192.168.1.102:4326/`.
+The default preview URL is printed by the command.
 
 ## Docker preview
 
@@ -464,7 +285,7 @@ Netlify, Vercel static output, GitHub Pages, and any static file server can host
 it as long as the configured site URL matches the final domain.
 
 - Set the production site URL before generating sitemap, robots, RSS, social metadata, and AI indexes.
-- Keep secret token lookup and host-specific deploy wrappers outside the reusable theme package.
+- Keep secret lookup and host-specific deploy wrappers outside the reusable theme package.
 - Check `/robots.txt`, `/sitemap-index.xml`, `/rss.xml`, `/search/`, `/posts/`, and `/collections/` after publishing.
 
 ## Build settings
@@ -480,7 +301,7 @@ build command: SITE_URL="https://example.test" pnpm build
 output directory: dist
 ```
 
-If the consuming site uses pnpm, keep `minimumReleaseAge` in
+If the site uses pnpm, keep `minimumReleaseAge` in
 `pnpm-workspace.yaml` so production builds do not pick up packages published
 only minutes ago.
 
@@ -507,128 +328,63 @@ The target is repeatable because it updates the same Pages project:
 make deploy-demo PAGES_PROJECT=papyrus
 ```
 
-Do not put personal token lookup helpers in this package. Consuming machines can
-wrap the command locally.
+Do not put personal token lookup helpers in this package. Wrap the command
+locally when a machine needs its own secret manager.
 
 ## Subdirectory deploys
 
-When the site is published under a base path, route links go through Papyrus
-base-path helpers or Astro route helpers instead of hardcoded root-relative
-strings. Asset URLs use the same base-aware helper used by the layout. Configure
-the Astro `base` option in the consuming site, then keep internal links on
-helpers such as `withBase()` or `getRelativeLocaleUrl()`.
+When the site is published under a base path, use Papyrus base-path helpers or
+Astro route helpers instead of hardcoded root-relative strings. Configure
+Astro's `base` option in the site, then keep internal links on helpers such as
+`withBase()` or `getRelativeLocaleUrl()`.
 
 ## After deploy
 
 Open the published URL and confirm the generated routes load. At minimum, check
 that `/robots.txt`, `/sitemap-index.xml`, `/rss.xml`, `/search/`, `/posts/`, and
 `/collections/docs/` match the configured site URL.
-## Release checklist
-URL: https://papyrus.marcelofelix.com/posts/release-checklist/
-Summary: Package metadata, verification, smoke install, and npm publishing checks for Papyrus releases.
-Updated: 2026-07-14T08:30:00.000Z
-Source: src/content/posts/docs/deploy/31-release-checklist.md
-Papyrus publishes as `astro-theme-papyrus`. Do not reserve or publish an empty package name.
-A release must ship usable exports, docs, styles, scripts, and examples that
-can be installed by another Astro site.
-
-## Before publish
-
-1. Update `CHANGELOG.md` with the target version and user-facing changes.
-2. Confirm `package.json` has the real package name, repository, homepage,
-   bugs URL, keywords, `license`, `files`, public `publishConfig`, exports, and
-   bin entries.
-3. Confirm `pnpm-workspace.yaml` keeps the mature-release install gate:
-   `minimumReleaseAge: 10080` and `minimumReleaseAgeStrict: true`.
-   This blocks registry packages published in the last seven days, including
-   transitive dependencies.
-4. Run the focused release gate:
-
-   
-```sh
-   pnpm run verify:release
-   ```
-
-5. Run the broader package gate:
-
-   
-```sh
-   pnpm run verify:package
-   pnpm run verify:readme
-   pnpm run build
-   ```
-
-6. For a commit/release gate only, run Lighthouse:
-
-   
-```sh
-   pnpm run verify:lighthouse
-   ```
-
-7. Smoke install the packed tarball in a clean temporary Astro fixture before publishing.
-   The fixture should import `astro-theme-papyrus/components`,
-   `astro-theme-papyrus/config`, and `astro-theme-papyrus/papyrus.css`.
-8. Publish only from an npm account with 2FA enabled. Keep
-   `publishConfig.provenance` enabled so supported CI releases attach npm
-   provenance.
-
-## Pack check
-
-`pnpm run verify:release` runs `npm pack --dry-run --json` with a temporary npm
-cache, then checks that the tarball includes `README.md`, `LICENSE`,
-`CHANGELOG.md`, public exports, scripts, examples, styles, and release docs.
-It also packs a real tarball, installs it in a temporary Astro fixture, imports
-Papyrus components/config/styles from that tarball, and runs `astro build`.
-The temporary fixture also uses the seven-day pnpm mature-release gate so
-release smoke installs do not accidentally accept freshly published registry
-packages.
-It does not publish, create a git tag, or mutate the npm registry.
 ## Feature map
 URL: https://papyrus.marcelofelix.com/posts/feature-map/
 Summary: Route-by-route guide to public Papyrus features.
 Updated: 2026-07-01T14:00:00.000Z
 Source: src/content/posts/docs/references/20-feature-map.md
-Every public feature has a route that shows how a consuming site can use it.
-Start here when exploring Papyrus.
+This is a map of the demo site. Each link points to a route or doc
+that shows the feature in context.
 
 ## Feature map
 
-- [Install and configure Papyrus](/collections/docs/install-configure-papyrus/) covers the template-first setup flow.
+- [Install and configure Papyrus](/collections/docs/install-configure-papyrus/) covers the template setup flow.
 - [Layout, header, footer, and theme controls](/) are visible on the home page.
-- [Post layout and actions](/metadata-demo/) show covers, dates, tags, reading time, adjacent links, source/copy/share actions, table of contents, and optional back links.
-- [Markdown authoring guide](/collections/docs/code-demo/) shows Pure-style Astro/Shiki code blocks, alerts, task lists, tables, Mermaid SVG, artifacts, and zoom hooks.
+- [Site config](/collections/docs/site-config/) shows identity, navigation, projects, feature flags, and post-list defaults.
+- [Markdown authoring guide](/collections/docs/markdown-feature-sample/) shows Pure-style Astro/Shiki code blocks, alerts, task lists, tables, Mermaid SVG, artifacts, and zoom hooks.
 - [Posts index and tags](/posts/) show pinned ordering, list-only archive view, tag links, compact metadata, timeline link, and small covers.
 - [Search and tag filters](/search/) work with tag filters, standalone tag pages, and generated RSS feeds for individual tags.
 - [Collections](/collections/docs/collections/) explains folder-backed post collections detected from TOML files.
 - [CV/profile templates](/collections/docs/profile/) use normalized CV data across resume, timeline, projects, A4 links, and print routes.
-- [Site config](/collections/docs/site-config/) explains site identity, navigation, projects, feature flags, and post-list defaults.
-- [Projects and GitHub cards](/projects/) show pinned projects, project list cards, and Pure-inspired GitHub repository preview cards.
-- [Feature flags and plugin contract](/collections/docs/features/) document configurable feature flags, comments, plugins, and typed plugin configuration.
-- [Content structure helpers](/collections/docs/content-structure/) explain nested folders, folder metadata, folder-derived tags, stable slugs, and generated content outlines.
+- [Projects and GitHub cards](/projects/) show the Papyrus theme and Papyrus template repositories.
+- [Papyrus package shape](/collections/docs/papyrus-package-shape/) explains `src` vs `public`, package exports, post list views, and RSS feed choices.
 - [Deploy and local preview](/collections/docs/deploy/) covers local dev, production preview, static hosting, base-path deploys, and deploy guidance.
-- [AI and mobile readiness](/collections/docs/ai-mobile/) covers generated metadata, AI indexes, responsive primitives, and mobile authoring guidance.
+- [AI and mobile readiness](/collections/docs/ai-mobile/) covers generated metadata, search, responsive layout, and mobile authoring guidance.
 
 ## How to use it
 
-Use this map as an orientation page when adding Papyrus to another Astro site.
-Each linked route shows the content, component, or generated artifact in
-context. Repository-only implementation notes stay outside visitor-facing docs.
+Repository-only implementation notes stay outside visitor-facing docs.
 ## AI and mobile readiness
 URL: https://papyrus.marcelofelix.com/posts/ai-mobile/
 Summary: AI metadata, generated indexes, and mobile-ready defaults in a Papyrus site.
 Updated: 2026-07-01T14:10:00.000Z
 Source: src/content/posts/docs/references/21-ai-mobile.md
-Papyrus ships useful agent-readable metadata, generated indexes, and responsive
-UI defaults for small content sites.
+Papyrus builds static metadata and search files alongside the site. The same
+build also keeps the main layouts usable on small screens.
 
-## AI-first primitives
+## Generated files
 
-- Package-level `llms.txt` and `llms-full.txt` generation for agent-readable site summaries.
+- `llms.txt` and `llms-full.txt` for agent-readable site summaries.
 - Static RSS feeds per tag.
 - Static JSON indexes for posts, tags, projects, notes, and CV summary data.
 - Static graph data export connecting posts, tags, projects, notes, and CV sections.
-- Stable machine IDs in generated JSON indexes, graph nodes, graph edges, and search records.
-- Reusable static search index for local agents.
+- Stable IDs in generated JSON indexes, graph nodes, graph edges, and search records.
+- Static search data for local tools and Pagefind.
 - Per-post JSON-LD metadata for schema.org types.
 - Post layout support for canonical URL, source Markdown URL, author metadata, copy Markdown, and copy citation.
 
@@ -636,7 +392,7 @@ Generated files include [`llms.txt`](/llms.txt), [`llms-full.txt`](/llms-full.tx
 [`posts.json`](/ai/posts.json), [`tags.json`](/ai/tags.json),
 [`cv.json`](/ai/cv.json), and [`graph.json`](/ai/graph.json).
 
-## Site-specific AI extensions
+## Site-specific metadata
 
 - Add extra source links when a post depends on diagrams, notebooks, or external datasets.
 - Add JSON-LD types for people, projects, software source code, or breadcrumbs on site-specific pages.
@@ -644,7 +400,7 @@ Generated files include [`llms.txt`](/llms.txt), [`llms-full.txt`](/llms-full.tx
 - Store explicit license metadata for images, code snippets, and diagrams when licensing matters.
 - Publish diagram source beside rendered SVG output for Mermaid, PlantUML, or Excalidraw workflows.
 
-## Mobile-first primitives
+## Mobile defaults
 
 - Safe-area padding for phones with notches or rounded display edges.
 - 44px coarse-pointer hit targets for core icon, copy, post action, tag, TOC, and back-to-top controls.
@@ -661,41 +417,15 @@ Keep post descriptions short enough to scan in list views, prefer real cover
 images or generated covers with stable aspect ratios, use headings in order, and
 preview layout-heavy changes on desktop and phone-sized screens before
 publishing.
-## Dark mode and search in Papyrus
-URL: https://papyrus.marcelofelix.com/posts/dark-mode-and-search/
-Summary: The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.
-Updated: 2026-06-30T11:15:00.000Z
-Source: src/content/posts/docs/references/22-dark-mode-and-search.md
-The light and dark backgrounds stay close to the default Pure theme: neutral, quiet, and readable. Papyrus keeps color accents restrained so the content remains the main surface.
-
-The header has a search icon. It links to the site-owned `/search/` page. That keeps the package generic: Papyrus exposes the header control and search UI patterns, while the consuming site decides which index to build.
-
-The public Papyrus site builds a Pagefind index from generated static HTML. A smaller site can still use a simple client-side filter, but the public contract stays the same: keep the search URL stable and let the site own the indexing strategy.
-
-```astro
----
-import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
----
-
-<PapyrusBaseLayout
-  title="Search"
-  description="Static search for posts, tags, and archive entries."
-  searchHref="/search/"
->
-  <p>The header search icon opens the site-owned search page.</p>
-</PapyrusBaseLayout>
-```
-
-That is the important boundary. The icon and layout affordance belong to the theme. The index strategy belongs to the site.
 ## Papyrus package shape
 URL: https://papyrus.marcelofelix.com/posts/papyrus-package-shape/
 Summary: Package-boundary guide showing how Papyrus keeps repeated blog UI in reusable theme exports.
 Updated: 2026-06-30T11:00:00.000Z
 Source: src/content/posts/docs/references/24-papyrus-package-shape.md
-Papyrus is meant to keep the site repo focused. The consuming site owns content,
-configuration, route choices, and deployment. The theme package owns reusable
-UI: base layout, post layout, header, footer, post lists, tags, archive helpers,
-profile/CV components, generated metadata helpers, and shared CSS.
+Papyrus keeps site repos focused on content and config. The site owns posts,
+profile data, assets, and deployment. The package owns shared UI: layouts,
+headers, footers, post lists, tags, archive helpers, profile/CV components,
+metadata helpers, and CSS.
 
 ![Papyrus centered layout](/images/papyrus-layout.svg)
 
@@ -711,37 +441,45 @@ A content site usually needs the same core pieces on several routes:
 - a search entry point in the header
 - generated metadata for RSS, sitemap, robots, search, and AI indexes
 
-The package boundary stays explicit. Papyrus reuses Pure as the foundation,
-adds Papyrus-style publishing features, exposes a stable public API through
-package exports, and lets the site override content, config, and routes.
+The package boundary stays explicit. Papyrus builds on Pure, adds publishing
+features, exports components and helpers, and lets the site override content,
+config, and routes.
 
 ```ts
 import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts } from "astro-theme-papyrus/utils";
 ```
 
-That is the intended shape: small imports, low local code, and theme updates
-handled in one package.
+The goal is small imports, little local code, and theme updates in one package.
+
+## Site files
+
+In a site repo, `src/` is source and `public/` is deployed static input.
+
+- Put posts, collections, custom pages, profile data, and content config in `src/`.
+- Put logos, favicons, covers, avatars, and generated static artifacts in `public/`.
+- Keep site copy in Markdown, TOML, or data files instead of hardcoding it in theme components.
+
+If a site needs a custom route, add that route in the site. If the route is
+generic enough for every Papyrus site, it belongs in the theme package.
 
 ## Post list views
 
-The public posts page uses the standard list view so the archive stays easy to scan:
+The public posts page uses the standard list view so the archive stays scannable:
 
 ```astro title="src/pages/posts/index.astro"
 <PapyrusPostList posts={posts} view="list" />
 ```
 
-The same component can still render denser or card-like post groups inside
-documentation references, landing pages, or custom sections:
+The same component can render denser or card-like post groups inside custom
+sections:
 
 ```astro title="post-list-view-reference.astro"
 <PapyrusPostList posts={posts} view="compact" />
 <PapyrusPostList posts={posts} view="cards" />
 ```
 
-Keeping these alternatives inside a post leaves `/posts/` focused on the main
-archive while documenting every supported display mode where readers can inspect
-it as content.
+Keeping these examples inside a doc keeps `/posts/` focused on the main archive.
 
 ## RSS feed choices
 
@@ -752,17 +490,15 @@ filtering after the fact:
 - [`/rss/tags/custom.xml`](/rss/tags/custom.xml) follows posts tagged with custom authoring features.
 - [`/rss/tags/changelog.xml`](/rss/tags/changelog.xml) follows release and package-change notes.
 
-That is the practical RSS model for selective subscriptions: publish one feed
-per tag or site-owned section, then document the important subscription choices
-inside the relevant post.
+For selective subscriptions, publish one feed per tag or section and link to the
+useful ones from the relevant post.
 ## Collections
 URL: https://papyrus.marcelofelix.com/posts/collections/
 Summary: What Papyrus collections are and how folder-backed collection routes work.
 Updated: 2026-07-13T08:10:00.000Z
 Source: src/content/posts/docs/references/25-collections.md
-A collection is a folder of posts with a TOML file that describes the public
-collection page. It is useful when readers need to follow posts in a deliberate
-order instead of the normal date-based blog order.
+A collection is a folder of posts with a TOML file. Use one when readers should
+follow posts in a fixed order instead of normal blog date order.
 
 The same Markdown post can appear in the regular `/posts/` archive and in a
 collection route. The archive sorts by publishing metadata; the collection sorts
@@ -834,8 +570,8 @@ Collection post pages receive collection-aware navigation:
 - the table of contents can include collection sections
 - the footer can show the current collection, collapsed by default
 
-Use collection routes when context and sequence matter. Use normal post routes
-when date order and discovery are the main concern.
+Use collection routes when sequence matters. Use normal post routes when date
+order is enough.
 
 ## Hiding collection posts
 
@@ -847,12 +583,12 @@ URL: https://papyrus.marcelofelix.com/posts/profile/
 Summary: What the Papyrus profile data file controls and how profile, print, and export routes share it.
 Updated: 2026-07-13T08:20:00.000Z
 Source: src/content/posts/docs/references/26-profile.md
-The profile system is driven by `src/data/profile.toml`. The same source data is
-used by the web profile page, timeline view, print routes, generated Markdown,
-and generated JSON.
+The profile page reads `src/data/profile.toml`. The same data feeds the web
+profile page, timeline view, print routes, generated Markdown, and generated
+JSON.
 
 Keep personal data in this TOML file instead of hardcoding it in components.
-That makes a consuming site easier to template, review, export, and print.
+That makes the site easier to review, export, and print.
 
 ## User fields
 
@@ -915,8 +651,8 @@ a = "2022-01-01T00:00:00"
 b = "2026-07-01T00:00:00"
 
 [user.data.experience.company]
-ententy = "Company"
-url = "https://example.com/"
+entity = "Company"
+url = "https://github.com/marcelofpfelix/papyrus"
 items = ["role"]
 
 [user.data.experience.company.role]
@@ -953,742 +689,79 @@ Run the export command after editing profile data:
 pnpm run cv:export
 ```
 
-The command writes `public/cv/profile.json` and `public/cv/profile.md`. The web
-routes use the TOML source, while the generated artifacts are useful for sharing,
-source actions, and external review.
+The command writes `public/cv/profile.json` and `public/cv/profile.md`. Web
+routes use the TOML source. The generated files are useful for sharing, source
+actions, and external review.
 
 The profile page links to print routes. The modern print route and classic ATS
-route should use the same normalized data so the site does not maintain multiple
-resumes by hand.
-## Theme specification
-URL: https://papyrus.marcelofelix.com/posts/theme-spec/
-Summary: Public behavior contract for Papyrus features, configuration, posts, search, profile, SEO, accessibility, and quality gates.
-Updated: 2026-07-14T08:00:00.000Z
-Source: src/content/posts/docs/references/27-theme-spec.md
-This document defines the public behavior contract for `papyrus`.
-
-It is intended for two audiences:
-
-- maintainers reviewing whether the implementation still matches the agreed
-  theme behavior
-- users creating a site from the theme and deciding which features to enable,
-  customize, or replace
-
-The request audit remains the internal implementation tracker. This file is the
-public-facing product specification.
-
-## Goals
-
-`papyrus` is a reusable Astro theme package for content-heavy personal sites,
-blogs, profiles, and technical notes.
-
-The theme MUST:
-
-- stay a thin wrapper around Pure where Pure already provides a strong pattern
-- keep consuming sites focused on content, configuration, and small page
-  composition
-- provide reusable layout, post, search, RSS, profile, CV, markdown, and SEO
-  behavior from the package
-- remain fast, accessible, keyboard-friendly, SEO-friendly, and suitable for
-  static hosting
-- support generated machine-readable artifacts for search engines, AI tools,
-  feed readers, and source reviewers
-
-The theme SHOULD:
-
-- prefer existing upstream behavior from Pure before inventing a local version
-- prefer simple static output over client-heavy runtime code
-- keep public UI calm, readable, and compact
-- avoid visual borders and heavy card nesting unless a component genuinely needs
-  a framed surface
-- make configuration explicit instead of hardcoding site-specific behavior
-
-## Package boundary
-
-The package owns:
-
-- base and post layouts
-- shared post-list components
-- post metadata, source, copy, share, TOC, and adjacent-post controls
-- profile and CV components
-- markdown rendering behavior
-- theme tokens and theme/font controls
-- search, tag, archive, RSS, sitemap, robots, and AI index helpers
-- demo pages and reusable documentation
-
-Consuming sites own:
-
-- content files
-- site identity, social links, profile data, and project data
-- deployment configuration
-- site-specific page composition
-- private or production-only data
-
-Shared behavior MUST move into `papyrus` when more than one consuming site would
-otherwise copy it.
-
-## Configuration
-
-Site behavior MUST be configurable through site-owned config/data rather than
-hardcoded inside components.
-
-The supported post-card configuration includes:
-
-- `tags`: whether the post list shows clickable tag rows
-- `read_time`: whether the post list shows reading time
-- `fresh_indicators`: whether new or updated posts show an indicator
-- `fresh_indicator_text`: whether the new-post indicator includes a text label
-- `updated_date_only`: whether list cards prefer the updated date over the
-  original published date
-
-Home and `/posts/` MUST use the same post-list configuration path so those pages
-do not drift.
-
-The post list MUST support a configurable default count. The package default is
-20 posts for `/posts/`.
-
-Back links and other post controls MUST be configurable. A consuming site MAY
-disable the post back link.
-
-Google Site Verification MUST be configurable from site config and rendered as a
-standard `google-site-verification` meta tag when provided.
-
-Base-path and subdirectory deployments MUST be supported. Internal links and
-asset links SHOULD go through shared helpers so a site can deploy under a path
-such as `/astro-papyrus` without manual link rewrites.
-
-## Home page and posts index
-
-Home and `/posts/` MUST render posts through the same shared post-list
-component. Differences between the two pages should be limited to input data,
-limit, heading, and local page composition.
-
-The post list MUST support:
-
-- list view
-- compact view
-- card view
-- pinned posts
-- optional cover images
-- title
-- short description
-- date metadata
-- optional read-time metadata
-- optional tags
-- optional first-tag display when full tag rows are hidden
-- optional new indicator with text
-- accent-colored date metadata for recently updated posts
-
-Pinned posts MUST be visually distinguishable from normal posts. The pinned
-state should use a subtle background related to project-card surfaces and an
-icon without requiring label text.
-
-When `post_card.tags` is false:
-
-- home and `/posts/` MUST both hide the normal tag row
-- the first tag MAY appear inline with the date as plain, non-clickable context
-- the behavior MUST be consistent between home and `/posts/`
-
-When `post_card.read_time` is false:
-
-- reading time MUST be hidden from post-list cards
-- the post page MAY still show reading time if the post-page metadata feature is
-  enabled
-
-Dates in list and post metadata MUST use the compact public date style:
-
-- current-year dates omit the year
-- non-current-year dates include the year first
-- the month uses the short English month name
-- examples: `Jul 09`, `2025 Jul 09`
-
-Reading time labels MUST use compact text such as `1 min`, not `1 min read`.
-
-The `/posts/` page MUST expose icon links for related post browsing modes:
-
-- timeline
-- tags
-- archive, when hidden posts exist
-- RSS, using an icon next to the posts heading or equivalent title area
-
-These icon links SHOULD be borderless, aligned to the right where the layout
-allows, and use the same icon set and visual treatment across consuming sites.
-
-The `/posts/` page SHOULD avoid exposing multiple RSS examples in page chrome.
-Specialized RSS feeds, such as tag-specific feeds or changelog feeds, should be
-documented inside a demo post instead.
-
-## Timeline and archive
-
-The timeline MUST group posts by year.
-
-By default it SHOULD show the current year and previous year expanded, while
-older years are collapsed. Future implementations MAY lazy-load older year
-groups when the number of posts makes the full timeline expensive.
-
-The archive view MUST expose hidden posts when hidden posts exist. Hidden posts
-are defined by post frontmatter, not by file location.
-
-Archive links SHOULD be presented as an icon action from `/posts/`, not as a
-primary navigation item.
-
-## Tag and search behavior
-
-Tags MUST support dedicated `/tag//` pages for public post browsing.
-
-Search MUST support text search and tag filtering. A search URL MAY use query
-parameters such as `?tag=astro` for filtered search results.
-
-Tag links in public post metadata SHOULD point to tag pages when the tag page
-exists. Tags that do not have a public tag page, such as note-only tags, MAY
-fall back to search-filter URLs.
-
-Nested post folders SHOULD contribute automatic folder tags. Explicit
-frontmatter tags remain supported, and duplicates MUST be removed.
-
-Pagefind integration MUST be complete for searchable public pages. Pages marked
-`noindex` or otherwise excluded from public indexing SHOULD not be indexed by
-Pagefind.
-
-## Post page
-
-The post page header MUST prioritize reading:
-
-- title centered and larger than surrounding controls
-- short description centered and smaller than the title
-- sufficient vertical spacing between the title block and the post body
-- optional cover image above the post when configured
-
-The top of the post MAY include a configurable back link. When enabled, the link
-SHOULD be named `Back`, use a back arrow, and avoid colored button backgrounds.
-
-Post metadata, tags, source/copy/share actions, and top-link controls SHOULD
-live near the bottom of the article rather than above the reading content.
-
-Immediately after article content ends, the page SHOULD show:
-
-- a divider or line break
-- a `Back` link to the post index, using a back arrow and text
-- source/copy/share controls on the same line when space allows
-
-The source/copy/share controls MUST:
-
-- use consistent icon and text labels: `Copy`, `Source`, `Share`
-- use a copy icon for the copy action
-- avoid excess spacing between icon and text
-- avoid background-color treatments that do not match other icon links
-- use the same visual style across all posts
-
-The share action MUST use the Web Share API when available. It MUST fall back to
-the existing copy-link behavior when native sharing is unavailable or cannot
-share the current page.
-
-The source action MAY link to a GitHub source URL, JSON source, TOML source, or
-Markdown source when configured.
-
-The copy action for post source MUST copy Markdown content when Markdown source
-is available.
-
-Post tags MUST appear near the bottom of the post. Tag links SHOULD use
-`/tag//` where supported.
-
-The date line MUST stay close to the tags/actions area without creating a large
-vertical gap.
-
-The previous and next post links MUST be adjacent navigation, not primary page
-actions. On mobile, previous MUST align left and next MUST align right. The
-oldest and newest posts MUST still render the appropriate one-sided adjacent
-link when one adjacent post exists.
-
-Adjacent post data SHOULD be computed once in `getStaticPaths` and passed into
-the post layout. A post page SHOULD NOT fetch every post again just to compute
-previous and next links.
-
-Post pages SHOULD expose:
-
-- a floating table-of-contents button when headings exist
-- a back-to-top button on desktop, aligned with the metadata/tools row where
-  appropriate
-- a top progress bar on mobile while scrolling through a post
-
-The table-of-contents control MUST not wrap the `On this page` label on desktop.
-On mobile, the table-of-contents and back-to-top controls MUST use matching
-touch-target size and visual style.
-
-The table-of-contents open state SHOULD feel close to Pure: large enough to be
-usable, but not so large that it consumes most of the page.
-
-## Markdown and prose
-
-Markdown rendering MUST support:
-
-- Shiki/Pure-style code blocks
-- titles and language labels for code blocks
-- line numbers where configured
-- diff and highlight notation
-- code-copy buttons using Pure behavior
-- Mermaid fenced blocks rendered as diagrams
-- task lists
-- readable tables without boxed borders
-- image and SVG zoom behavior
-- artifact links for supported external files
-- GitHub-style alert syntax through the maintained callout pipeline
-
-GitHub-style alert/callout colors MUST distinguish variants:
-
-- tip: green
-- important: blue
-- warning: amber
-- caution: red
-
-Important and caution callouts MUST not reuse the exact same icon. Warning and
-caution MUST also be visually distinguishable.
-
-Unsupported markdown features SHOULD remain visibly documented in demos instead
-of silently pretending to work.
-
-## Theme and visual system
-
-Theme profiles MUST be token-driven CSS files with light and dark variants.
-
-Every theme profile MUST define:
-
-- `--papyrus-bg`
-- `--papyrus-fg`
-- `--papyrus-muted`
-- `--papyrus-panel`
-- `--papyrus-border`
-- `--papyrus-accent`
-- `--papyrus-code-bg`
-- `--papyrus-code-fg`
-- `--papyrus-theme-color`
-- font tokens
-
-The default package theme MAY differ from a consuming site's default theme.
-Consuming sites MUST be able to set their own default theme profile and font
-profile.
-
-Footer controls MUST expose:
-
-- mode control
-- theme profile control
-- font profile control
-
-Theme controls SHOULD be icon-first, compact, keyboard-accessible, and use
-dropdowns that open inside the viewport.
-
-The Gruvbox dark profile MUST use the updated accessible colors:
-
-- `#f5edca` instead of the old `#d4be98`
-- `#c4bda1` instead of the old `#928374`
-- `#dfb778` instead of the old `#d8a657`
-
-Icon links such as timeline, tags, archive, source, copy, share, and RSS SHOULD
-be borderless and avoid unnecessary background colors.
-
-Post cards SHOULD have no borders. Pinned post cards SHOULD keep a distinct
-surface background.
-
-Links in dense text areas SHOULD remain accessible without making the layout
-visually noisy. Bolder text and hover underlines are preferred over permanent
-underlines when contrast and affordance remain acceptable.
-
-## Profile and CV
-
-The profile system MUST use data-driven content. Links, emails, social accounts,
-location, role, title, sections, projects, and timelines MUST come from TOML,
-JSON, Astro content, or another site-owned data source, not from hardcoded
-component values.
-
-TOML is the preferred source format for bundled demos and simple consuming-site
-configuration.
-
-The normalized profile/CV model MUST support:
-
-- name
-- title or role
-- photo/avatar
-- location and other personal information
-- email parts
-- social links
-- section groups
-- professional experience
-- education and other CV sections
-- profile projects
-- printable pages
-
-Social links SHOULD use the same icon source as other theme icons where
-possible. Social labels should display the username or handle when available,
-not only the network name.
-
-Email display MUST avoid publishing a plain email address in the static HTML
-when the site chooses obfuscation. The supported public-data strategy is to
-store email parts such as user and server separately, optionally render a visual
-separator such as an `@` symbol, and assemble the real address only when needed.
-The goal is to avoid common low-effort scraping while accepting that determined
-parsers can reconstruct public parts.
-
-When printing or exporting a CV, the generated print view SHOULD be able to
-render the real email address if the site has enough public data to assemble it.
-
-The web profile page SHOULD center the photo, name, and title inside the profile
-summary box.
-
-The print CV view MUST be papyrus-like, centered, black-and-white friendly, and
-easy for recruiting software to parse. It SHOULD avoid decorative graphics,
-complex columns, low-contrast text, and link styling that makes the print output
-look uneven.
-
-The print view SHOULD:
-
-- use primary color for icons
-- keep left and right side treatment visually similar
-- remove unnecessary blue/bold link styling from usernames
-- keep social and personal-info spacing compact
-- provide print/save, share, copy, and source actions with icon styling
-- support JSON, TOML, and Markdown source links when configured
-
-Age and professional-experience duration calculations MUST be derived from data,
-not hardcoded. Calculations SHOULD follow the jekyllcv-style behavior used by
-the demo comparison.
-
-The package SHOULD provide a way to generate Markdown and JSON versions of the
-CV into the repository. This can be wired into a commit hook by the consuming
-site, but the package should not mutate files during a normal build unless the
-site explicitly opts in.
-
-## SEO, sharing, and indexing
-
-The theme MUST be SEO-friendly by default.
-
-Every public page SHOULD provide:
-
-- title
-- description
-- canonical URL
-- robots metadata when configured
-- Open Graph metadata
-- social sharing metadata
-- heading hierarchy without skipped levels
-- semantic HTML landmarks
-
-Pages shared to social media SHOULD render useful previews through properly
-configured Open Graph and social metadata, including preview images when
-available.
-
-Cover images and generated preview images SHOULD be supported for posts and
-profile pages. Missing preview images should be treated as a regression for
-public pages that advertise share previews.
-
-The sitemap MUST be generated dynamically so every public page, post, tag page,
-category-like page, and generated route can be included without manual updates.
-
-`robots.txt` MUST be generated dynamically. It MUST include the sitemap URL and
-allow sites to control search-engine indexing and crawling policy from config.
-
-The theme SHOULD expose machine-readable artifacts for AI and search tooling,
-including:
-
-- `llms.txt`
-- JSON indexes
-- search indexes
-- graph data
-- stable canonical IDs
-- post source links
-- citation/source actions
-
-## RSS
-
-The theme MUST provide a main RSS feed.
-
-The theme MUST support multiple RSS feeds, including tag-specific feeds. A site
-MAY expose custom feeds such as a changelog feed.
-
-RSS examples SHOULD be documented in content rather than overloading the main
-posts-page UI.
-
-Users who want to subscribe to only some tags SHOULD be able to use tag-specific
-feed URLs.
-
-## 404 behavior
-
-The theme MUST provide a real 404 page, not a blunt server error page.
-
-The 404 page SHOULD:
-
-- explain that the page was not found
-- offer search
-- automatically suggest similar public pages based on title, path, description,
-  and tags
-- link to common recovery destinations such as posts, search, docs, projects,
-  or profile when available
-
-The 404 page MUST work as a static route for static hosting.
-
-## Accessibility
-
-The theme MUST be fully keyboard navigable.
-
-Interactive controls MUST have:
-
-- reachable focus states
-- accessible names
-- label-in-name alignment where applicable
-- useful `aria` attributes where native HTML is not enough
-- touch targets suitable for mobile
-
-Images MUST have meaningful `alt` text or be marked decorative when appropriate.
-
-Headings MUST not skip levels in normal page flow.
-
-Tables, callouts, forms, search, TOC, theme controls, copy buttons, share
-buttons, and CV controls MUST remain understandable without a mouse.
-
-The theme SHOULD preserve Lighthouse accessibility score 100 unless a
-documented, reviewed exception is accepted.
-
-## Performance and quality gates
-
-The theme SHOULD keep Lighthouse scores at 100 for performance, accessibility,
-best practices, SEO, and agentic browsing on all generated public pages.
-
-Lighthouse is intentionally slow and SHOULD be run before commits or release
-review, not after every small edit.
-
-The default Lighthouse minimum score is 100. Route exclusions MUST be explicit
-and justified.
-
-Focused validation SHOULD be used during development:
-
-- docs checks for documentation changes
-- content checks for post/date/tag/routing changes
-- browser checks for UI behavior
-- responsive checks for layout and touch-target changes
-- Lighthouse before commits or release gates
-
-No feature should be marked complete only because the site builds. Visual
-behavior, clipboard behavior, Mermaid rendering, print/A4 layout, and responsive
-layout require targeted evidence.
-
-## Public demo expectations
-
-The demo site MUST illustrate the enabled package features using safe example
-content.
-
-The public demo SHOULD include examples for:
-
-- markdown/code/callout behavior
-- posts, tags, timeline, archive, and search
-- profile and CV data sources
-- print CV routes
-- RSS and tag-specific RSS
-- SEO and metadata behavior
-- 404 suggestions
-- theme and font controls
-- AI/search artifacts
-
-Internal request trackers and status audits SHOULD stay repository-only unless
-explicitly published.
-
-## Review checklist
-
-Use this checklist when reviewing whether code still respects the spec:
-
-- Home and `/posts/` use the same post-list component and config path.
-- Post list cards honor tag, read-time, fresh-indicator, pinned, and date
-  configuration consistently.
-- Post pages keep reading content first and move metadata/actions/tags toward
-  the bottom.
-- Share uses native Web Share when available and copy-link fallback otherwise.
-- Source/copy/share controls use consistent icon styling and labels.
-- Previous and next links are ordered correctly and align left/right on mobile.
-- Tags route to `/tag//` where supported.
-- Search and Pagefind indexes include the expected public pages.
-- Hidden posts are reachable through archive behavior when configured.
-- 404 is a real page with search and suggestions.
-- Sitemap and robots are generated and include canonical sitemap references.
-- SEO/social metadata exists on public pages.
-- Markdown callouts have distinct colors and icons.
-- Theme tokens, including Gruvbox dark colors, match the spec.
-- Profile and CV pages are data-driven and do not hardcode personal links.
-- Obfuscated email output avoids plain static email HTML when configured.
-- Print CV remains papyrus-like, readable, compact, and parser-friendly.
-- Accessibility and keyboard behavior remain intact.
-- Lighthouse minimum remains 100 before commit/release gates.
+route use the same data, so the site does not maintain multiple resumes by hand.
 ## Papyrus docs
 URL: https://papyrus.marcelofelix.com/posts/papyrus-docs/
-Summary: Package docs for installing, composing, and extending Papyrus without copying a full theme into every site.
+Summary: Start with papyrus-template, then edit config, Markdown, profile data, and assets.
 Updated: 2026-07-01T09:00:00.000Z
 Source: src/content/posts/docs/start/00-papyrus-docs.md
-Papyrus keeps consuming sites focused on content and config. The theme package
-owns reusable layouts, post rendering, collections, generated metadata, search,
-RSS, project cards, and profile/CV surfaces.
+Papyrus is a reusable Astro theme for personal sites, technical notes, project
+pages, and profile/CV pages. Start from `papyrus-template`, keep your content
+in that site, and let `astro-theme-papyrus` provide the shared routes and
+components.
 
-## Start points
+## Read first
 
-- [Install and configure Papyrus](/collections/docs/install-configure-papyrus/) explains the template-first workflow.
-- [Feature config](/collections/docs/features/) shows grouped layout and post toggles.
-- [Site config](/collections/docs/site-config/) explains `papyrus.config.toml`.
-- [Collections](/collections/docs/collections/) explains folder-backed collection routes.
-- [Profile and CV](/collections/docs/profile/) explains `src/data/profile.toml`.
-- [Feature map](/collections/docs/feature-map/) maps the public routes to reusable theme features.
-- [Markdown code guide](/collections/docs/code-demo/) shows Markdown, code, callouts, diagrams, media, and artifacts.
+- [Install and configure Papyrus](/collections/docs/install-configure-papyrus/) explains the template workflow.
+- [Site config](/collections/docs/site-config/) shows what belongs in `papyrus.config.toml`.
+- [Markdown authoring guide](/collections/docs/markdown-feature-sample/) shows posts, code blocks, callouts, media, and source actions.
+- [Collections](/collections/docs/collections/) explains ordered docs or guide sections.
+- [Profile and CV](/collections/docs/profile/) explains the TOML-driven profile, print routes, and exports.
 
-## Theme profiles
+## For developers
 
-Each theme profile defines one light token set and one dark token set. Runtime
-mode defaults to system, while the default color profile is Gruvbox and the
-default font profile is readable. Included profiles are Catppuccin, Tokyo Night,
-Kanagawa, Rose Pine, Everforest, Dracula, Gruvbox, Nord, and Pure.
+- [Papyrus package shape](/collections/docs/papyrus-package-shape/) explains what stays in the theme package and what stays in a site.
+- [Feature map](/collections/docs/feature-map/) maps public routes to reusable features.
+- [AI and mobile readiness](/collections/docs/ai-mobile/) covers search, generated metadata, mobile layout, and agent-readable files.
+- [Deploy Papyrus](/collections/docs/deploy/) covers static hosting and production builds.
 
-```css
-:root[data-papyrus-theme="custom"] {
-  --papyrus-bg: #fbf7ef;
-  --papyrus-fg: #1f2933;
-  --papyrus-muted: #6b7280;
-  --papyrus-panel: #ffffff;
-  --papyrus-border: #d8d0bf;
-  --papyrus-accent: #7c3aed;
-  --papyrus-code-bg: #f4efe5;
-  --papyrus-code-fg: #111827;
-  --papyrus-theme-color: #fbf7ef;
-}
-```
+## What to edit
 
-Use `pnpm papyrus-theme list` to inspect installed profiles and
-`pnpm papyrus-theme validate` to check that every profile file has the required
-light and dark selectors and tokens.
+Most sites only need these files:
 
-## Content model
+- `papyrus.config.toml` for site identity, navigation, projects, theme, and feature flags
+- `src/content/posts/` for posts, docs, and collections
+- `src/data/profile.toml` for profile and CV data
+- `public/` for images, logos, favicons, and static files
 
-Papyrus uses `src/content/posts` as the public content source. A folder can add a
-TOML file to become a collection, and the collection route reads posts in
-filename order. Regular blog/archive pages can still sort the same posts by
-date.
-
-Repo-only notes stay under `.agents/` unless they are intentionally rewritten as
-public posts.
-## Feature config
-URL: https://papyrus.marcelofelix.com/posts/features/
-Summary: Grouped feature toggles for Papyrus layouts.
-Updated: 2026-07-01T09:10:00.000Z
-Source: src/content/posts/docs/start/01-features.md
-Use one typed config object to disable optional layout and post features without
-copying theme components.
-
-## Base layout
-
-```astro
----
-import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
-
-const features = {
-  header: true,
-  footer: true,
-  scrollHeader: true,
-  search: false,
-  rss: false,
-  themeControls: true,
-  poweredBy: true,
-};
----
-
-<PapyrusBaseLayout title="Minimal page" features={features}>
-  <p>No search icon and no RSS icon on this page.</p>
-</PapyrusBaseLayout>
-```
-
-## Post layout
-
-```astro
----
-import { PapyrusPostLayout } from "astro-theme-papyrus/components";
-
-const features = {
-  share: false,
-  toc: false,
-  postTags: true,
-  aiMetadata: true,
-  sourceActions: false,
-  postStats: false,
-  postSideLinks: false,
-  adjacentPosts: false,
-  backToTop: false,
-};
----
-
-<PapyrusPostLayout title="Minimal post" siteTitle="My site" features={features}>
-  <p>Rendered without share, TOC, source actions, stats, or adjacent links.</p>
-</PapyrusPostLayout>
-```
-
-## SEO and social metadata
-
-Papyrus layouts emit the metadata a small public site normally needs: titles,
-descriptions, canonical URLs, Open Graph, Twitter cards, RSS discovery, and post
-JSON-LD. Hidden posts stay out of public discovery surfaces. Use explicit
-`robots` frontmatter when a direct page should emit directives such as
-`noindex, follow`.
-
-## Base path deploys
-
-Internal URLs in shared layouts and list components go through `withBase()` and
-related helpers such as `stripBase()`, `stripLocale()`, `getAssetPath()`, and
-`getRelativeLocaleUrl()`. This keeps navigation, post links, RSS links, favicon
-assets, covers, tags, collection links, adjacent posts, project cards, and 404
-suggestions working when Astro is deployed under a subdirectory.
-
-## Search, tags, sitemap, and robots
-
-Public posts can be found through Pagefind search, tag pages, and optional
-per-tag RSS feeds. Regenerate the sitemap during every build so new posts, tag
-pages, profile pages, project pages, and collection routes are included
-automatically. Papyrus also includes a dynamic `robots.txt` route that reads the
-site URL, keeps crawl rules near site config, and points crawlers to the sitemap
-index.
-
-## Plugin contract
-
-Community plugins stay small: they declare capabilities, optional feature
-defaults, and site-owned integration points. They do not mutate Papyrus
-internals. Routes stay native Astro pages in the consuming app unless a plugin
-explicitly documents a route capability.
+The package repo has more files because it is the theme. A site made from
+`papyrus-template` should stay much smaller.
 ## Install and configure Papyrus
 URL: https://papyrus.marcelofelix.com/posts/install-configure-papyrus/
 Summary: Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides.
 Updated: 2026-07-10T09:00:00.000Z
 Source: src/content/posts/docs/start/02-install-configure-papyrus.md
-The recommended way to start a Papyrus site is to use `papyrus-template`. The
-template keeps site-owned files small: one site config, one profile config, one
-example post, and a few asset overrides. Papyrus provides the layouts,
-standard pages, content collection, RSS route, robots route, post UI, profile
-components, and theme CSS through the published `astro-theme-papyrus` package.
+Start with
+[`papyrus-template`](https://github.com/marcelofpfelix/papyrus-template).
+The template keeps the site repo small: config, profile data, posts, and
+assets. The package provides the routes, layouts, post UI, collections, RSS,
+robots, search hooks, profile pages, and theme CSS.
 
 ## Start from the template
 
-Create a new repository from `papyrus-template`, then install dependencies:
+Create a repository from `papyrus-template`, then install dependencies:
 
 ```sh
 pnpm install
 pnpm dev
 ```
 
-The package repo uses pnpm's mature-release guard:
-`minimumReleaseAge: 10080` and `minimumReleaseAgeStrict: true`. That seven-day
-gate makes installs fail instead of silently falling back when a dependency was
-published too recently.
-
-The template depends on the npm package:
+The template depends on the package:
 
 ```json title="package.json"
 {
   "dependencies": {
-    "astro-theme-papyrus": "^0.2.0"
+    "astro-theme-papyrus": "^0.2.1"
   }
 }
 ```
 
-The template enables Papyrus in Astro:
+It enables Papyrus in Astro:
 
 ```js title="astro.config.mjs"
 import sitemap from "@astrojs/sitemap";
@@ -1696,10 +769,10 @@ import { defineConfig } from "astro/config";
 import { loadPapyrusConfig } from "astro-theme-papyrus/config";
 import papyrus from "astro-theme-papyrus/integration";
 
-const papyrus = await loadPapyrusConfig();
+const site = await loadPapyrusConfig();
 
 export default defineConfig({
-  site: papyrus.site,
+  site: site.site,
   integrations: [papyrus(), sitemap()],
 });
 ```
@@ -1710,7 +783,7 @@ It also reuses the Papyrus content collection:
 export { collections } from "astro-theme-papyrus/content";
 ```
 
-Papyrus injects these standard routes from the package:
+Papyrus adds these routes:
 
 | Route | Source |
 | --- | --- |
@@ -1718,40 +791,38 @@ Papyrus injects these standard routes from the package:
 | `/posts/` | Public post list |
 | `/posts/[...slug]/` | Post detail page |
 | `/projects/` | Project cards from `papyrus.config.toml` |
-| `/profile/` | Profile page from `src/data/profile.toml` |
+| `/profile/`, `/profile/print/`, `/profile/ast/` | Profile and CV pages from `src/data/profile.toml` |
 | `/tag/` and `/tag/[tag]/` | Tag index and tag detail pages |
 | `/404.html` | Helpful not-found page |
 | `/rss.xml` | Main RSS feed |
 | `/robots.txt` | Robots file with sitemap URL |
 
-Because the pages are injected by the package, the template does not need a
-`src/pages` tree.
+The template does not need a `src/pages` tree unless your site adds custom
+routes.
 
 ## Know `src` vs `public`
 
-Papyrus follows the same Astro convention used by Papyrus-style starter repos:
-`src/` is source, `public/` is static output input.
+Papyrus follows Astro's normal file boundary: `src/` is source, and `public/`
+is copied to the deployed site as-is.
 
 Use `src/` for files Astro should read, transform, type-check, or route during
 the build:
 
 - `src/content/posts/*.md` for posts
+- `src/content/posts/**/folder.toml` for ordered collections
 - `src/content.config.ts` for the Papyrus content collection export
 - `src/data/profile.toml` for the profile and CV source
-- `src/pages/*.astro` only when a consuming site needs custom routes that the
-  package does not already provide
+- `src/pages/*.astro` only when you need a custom route
 
-Use `public/` for files that should be copied to the deployed site as-is:
+Use `public/` for files that should keep the same URL and contents after build:
 
 - `public/logo.svg`, `public/favicon.svg`, and `public/site.webmanifest`
-- `public/images/*` for covers, avatars, and project images referenced by
-  frontmatter or `papyrus.config.toml`
-- generated artifacts such as `public/cv/profile.json`,
-  `public/cv/profile.md`, `public/ai/*`, `public/rss/tags/*`, and
-  `public/pagefind/*`
+- `public/images/*` for covers, avatars, and project images
+- generated artifacts such as `public/cv/profile.json`, `public/cv/profile.md`,
+  `public/ai/*`, `public/rss/tags/*`, and `public/pagefind/*`
 
 Do not hand-edit generated files in `public/`. Edit the source in `src/`,
-`papyrus.config.toml`, or `src/data/profile.toml`, then regenerate the artifacts.
+`papyrus.config.toml`, or `src/data/profile.toml`, then regenerate artifacts.
 
 ## Edit the right file
 
@@ -1759,90 +830,15 @@ For normal site work, start with these files:
 
 | Goal | Edit |
 | --- | --- |
-| Site title, description, nav, social links, projects, theme, feature flags, and post-card defaults | `papyrus.config.toml` |
+| Site title, description, navigation, projects, theme, feature flags, and post-card defaults | `papyrus.config.toml` |
 | Add or edit posts | `src/content/posts/*.md` |
-| Add a page that Papyrus does not already inject | `src/pages/*.astro` |
+| Add ordered docs or guide sections | `src/content/posts//.toml` plus Markdown posts |
 | Change the profile, CV, links, skills, dates, and print color | `src/data/profile.toml` |
 | Change logos, favicons, covers, avatars, and project images | `public/` assets |
 
-The package repo has many files because it owns reusable components, injected
-routes, scripts, and demo fixtures. A consuming site should stay closer to the
+The package repo has many files because it owns the reusable components, routes,
+scripts, styles, and demo fixtures. A site repo should stay closer to the
 template shape: config, content, profile data, and assets.
-
-Long-lived site copy should live in Markdown, TOML, JSON, or other site-owned
-data. Components may keep generic fallback labels such as `Back`, `Share`,
-`Source`, or `On this page`, but site-specific text should not be hidden inside
-package code. Demo routes in this repository can contain route-local prose when
-they are examples; if that prose becomes user documentation, move it into a post
-or docs content source.
-
-## Edit the site config
-
-Most site behavior starts in `papyrus.config.toml`. The template keeps the system
-color preference as the default and uses the Everforest theme profile.
-
-```toml title="papyrus.config.toml"
-[site]
-title = "My site"
-description = "Notes, projects, and profile."
-url = "https://site.test"
-lang = "en"
-dir = "ltr"
-timezone = "Europe/Lisbon"
-
-[brand]
-title = "My site"
-mark = "twinkle"
-show_title = true
-
-[theme]
-profile = "everforest"
-font_profile = "readable"
-
-[features]
-graph = false
-search = false
-comments = false
-postStats = false
-
-[post_card]
-tags = true
-read_time = true
-fresh_indicators = true
-fresh_indicator_text = false
-updated_date_only = true
-limit = 20
-
-[[nav]]
-href = "/posts/"
-label = "Posts"
-
-[[nav]]
-href = "/projects/"
-label = "Projects"
-
-[[nav]]
-href = "/profile/"
-label = "Profile"
-
-[[project]]
-title = "My site"
-description = "The site built from papyrus-template."
-href = "/posts/welcome/"
-image = "/images/cover.svg"
-repo = "https://github.com/site-owner/site"
-pinned = true
-status = "active"
-
-  [[project.links]]
-  href = "https://github.com/site-owner/site"
-  label = "repo"
-  text = "site-owner/site"
-```
-
-Use exactly the project cards you want to publish. The starter keeps two
-projects to demonstrate local and upstream links without turning the template
-into a demo catalog.
 
 ## Add posts
 
@@ -1853,7 +849,7 @@ date, and optional tags.
 ---
 title: Publishing with Papyrus
 description: A short implementation note published from a Papyrus-powered site.
-pubDatetime: 2026-07-10T09:00:00.000Z
+date: 2026-07-10T09:00:00.000Z
 tags: [astro, papyrus]
 cover: /images/cover.svg
 ---
@@ -1861,8 +857,8 @@ cover: /images/cover.svg
 Write the post body in Markdown.
 ```
 
-Papyrus handles list pages, detail pages, adjacent post links, tags, reading
-time, cover images, RSS entries, and the generated route paths.
+Papyrus handles list pages, detail pages, adjacent links, tags, scheduled posts,
+reading time, cover images, RSS entries, and generated route paths.
 
 ## Edit the profile
 
@@ -1886,67 +882,23 @@ The same profile data can be exported to JSON and Markdown with:
 pnpm run cv:export
 ```
 
-## Override assets
+## Next steps
 
-Keep visual identity in `public/`:
-
-- `public/logo.svg`
-- `public/favicon.svg`
-- `public/site.webmanifest`
-- `public/images/cover.svg`
-- `public/images/avatar.svg`
-- project images referenced by `papyrus.config.toml`
-
-These are normal site assets. Papyrus supplies the components and theme CSS,
-while the consuming site supplies its own images and metadata.
-
-## Advanced composition
-
-The template is the recommended path. For a custom site that needs different
-routes, import Papyrus components directly:
-
-```astro
----
-import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
-import { publishedPosts, routablePosts } from "astro-theme-papyrus/utils";
-
-const allPosts = await getCollection("posts");
-const posts = publishedPosts(allPosts);
-const routePosts = routablePosts(allPosts);
-const adjacentPosts = publishedPosts(allPosts);
----
-
-<PapyrusBaseLayout title="My site" description="Custom page.">
-  <PapyrusPostList posts={posts} />
-</PapyrusBaseLayout>
-```
-
-Use `routePosts` when creating static post detail paths. Use `adjacentPosts`
-when computing previous/next links so hidden archive pages can still exist as
-routes without showing up in public navigation.
-
-In a post-detail route, pass folder-aware tags into the post layout:
-
-```astro
-<PapyrusPostLayout post={post} tags={postTags(post)}>
-  <Content />
-</PapyrusPostLayout>
-```
-
-Keep the boundary clear: Papyrus owns reusable pages, components, styles, and
-helpers. The consuming site owns content, TOML config, asset overrides, private
-data, analytics, and deployment settings.
+- Configure the site in [Site config](/collections/docs/site-config/).
+- Learn content features in [Markdown authoring guide](/collections/docs/markdown-feature-sample/).
+- Use ordered docs or guides with [Collections](/collections/docs/collections/).
+- Review the package boundary in [Papyrus package shape](/collections/docs/papyrus-package-shape/).
 ## Site config
 URL: https://papyrus.marcelofelix.com/posts/site-config/
 Summary: What papyrus.config.toml controls and how a site should edit it.
 Updated: 2026-07-13T08:00:00.000Z
 Source: src/content/posts/docs/start/03-site-config.md
-`papyrus.config.toml` is the site-level control file. It keeps the consuming
-site editable without copying theme code into `src/pages` or component files.
+`papyrus.config.toml` is the site control file. Edit this before copying theme
+code into `src/pages` or local components.
 
-Use it for public site identity, navigation, social links, project cards, theme
+Use it for site identity, navigation, social links, project cards, theme
 defaults, feature flags, and post-list behavior. Use frontmatter for per-post
-metadata, and use `src/data/profile.toml` for profile and CV data.
+metadata. Use `src/data/profile.toml` for profile and CV data.
 
 ## What it controls
 
@@ -1955,20 +907,22 @@ metadata, and use `src/data/profile.toml` for profile and CV data.
 | `[site]` | Site title, description, URL, language, text direction, and timezone |
 | `[brand]` | Header brand title, mark, and whether the text title is visible |
 | `[theme]` | Default color profile and font profile |
+| `[pages.]` | Optional text overrides for inherited page descriptions |
 | `[features]` | Optional UI, metadata, comments, search, graph, media, and profile features |
 | `[post_card]` | Post-list tags, read time, fresh indicators, updated-date behavior, and default limit |
 | `[[nav]]` | Header navigation links |
-| `[[social]]` | Social links used by header/footer surfaces |
+| `[[social]]` | Social links used by the header and footer |
 | `[[project]]` | Project cards shown by the project list components |
 
-Papyrus reads this file with `loadPapyrusConfig()`. If the file is missing,
-Papyrus falls back to package defaults so a minimal template can still build.
+Papyrus reads this file with `loadPapyrusConfig()`. If it is missing, package
+defaults are used so a minimal template can still build.
 
 ## Minimal config
 
 ```toml title="papyrus.config.toml"
 [site]
 title = "My site"
+home_title = "hello, world"
 description = "Notes, projects, and profile."
 url = "https://site.test"
 lang = "en"
@@ -1995,6 +949,55 @@ label = "Profile"
 
 Keep the URL set to the deployed origin. The same value is used for canonical
 metadata, RSS, sitemap, robots, social previews, and generated AI indexes.
+Use `home_title` only when the homepage heading should be different from the
+site title used by metadata, RSS, and shared layout chrome.
+
+## Source links
+
+Set the public GitHub source once so profile source links and post source
+actions can point at the right repository branch:
+
+```toml title="papyrus.config.toml"
+[source]
+repo = "site-owner/site-repo"
+branch = "main"
+```
+
+Papyrus uses that value for GitHub blob links and raw Markdown copy actions.
+The repo can be written as `owner/repo`, a GitHub URL, or an SSH GitHub remote.
+
+## Page descriptions
+
+Inherited routes ship with default intro descriptions. Override or hide those
+without copying route files:
+
+```toml title="papyrus.config.toml"
+[pages.posts]
+description = "Latest notes and release updates."
+
+[pages.projects]
+description = false
+```
+
+TOML does not support `null`. Use `description = false` when a route should not
+render a description or description meta tag. Omit the page entry to keep the
+Papyrus default.
+
+The inherited About page accepts longer paragraph content:
+
+```toml title="papyrus.config.toml"
+[pages.about]
+description = "Short About page intro."
+content = """
+Hey, I am Marcelo.
+
+I build and operate software around telecom, Linux, automation, and infrastructure.
+This site is where I keep technical notes, project logs, and occasional side interests.
+"""
+```
+
+Blank lines in `content` create separate paragraphs. The About page keeps this
+body focused and adds a profile link at the end.
 
 ## Feature flags
 
@@ -2008,9 +1011,8 @@ postStats = false
 graph = false
 ```
 
-The common rule is to disable features that need external setup. For example,
-turn off comments and remote post stats until the consuming site has configured
-those services.
+Disable features that need external setup. For example, turn off comments and
+remote post stats until the site has configured those services.
 
 ## Post-list defaults
 

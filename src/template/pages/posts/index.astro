@@ -1,17 +1,82 @@
 ---
 import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusPostList } from "../../../components";
-import { publishedPosts } from "../../../utils";
+import { pageDescription } from "../../../config";
+import { hiddenPosts, isScheduledPost, publishedPosts, scheduledListPosts, sortPostsWithPinned } from "../../../utils";
+import { withBase } from "../../../utils/withBase";
 import { getTemplateSite } from "../../site";
 
 const site = await getTemplateSite();
-const posts = publishedPosts(await getCollection("posts")).slice(0, site.postCard.limit ?? 20);
+const allPosts = await getCollection("posts");
+const posts = sortPostsWithPinned(publishedPosts(allPosts));
+const archivedPosts = hiddenPosts(allPosts);
+const postLimit = site.postCard.limit ?? 20;
+const visiblePosts = scheduledListPosts(posts, postLimit);
+const visiblePostCount = visiblePosts.filter(post => !isScheduledPost(post)).length;
+const currentPostCount = posts.filter(post => !isScheduledPost(post)).length;
+const hasMorePosts = currentPostCount > visiblePostCount;
+const description = pageDescription(site, "posts", "A posts index that keeps homepage highlights separate from the full archive view.");
+const postListProps = {
+  showTags: site.postCard.tags,
+  showReadTime: site.postCard.readTime,
+  showFreshIndicators: site.postCard.freshIndicators,
+  showFreshIndicatorText: site.postCard.freshIndicatorText,
+  showUpdatedDateOnly: site.postCard.updatedDateOnly,
+  showFirstTagWhenTagsHidden: !site.postCard.tags,
+};
+
+function icon(name: string) {
+  const icons: Record<string, string> = {
+    archive: `<rect x="3" y="4" width="18" height="5" rx="1"></rect><path d="M5 9v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9"></path><path d="M10 13h4"></path>`,
+    clock: `<circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path>`,
+    rss: `<path d="M4 5a15 15 0 0 1 15 15"></path><path d="M4 11a9 9 0 0 1 9 9"></path><circle cx="5" cy="19" r="1"></circle>`,
+    tag: `<path d="M20.6 13.1 13 20.7a2 2 0 0 1-2.8 0L3.3 13.8a2 2 0 0 1-.6-1.4V5a2 2 0 0 1 2-2h7.4a2 2 0 0 1 1.4.6l7.1 7.1a1.9 1.9 0 0 1 0 2.4Z"></path><circle cx="7.5" cy="7.5" r=".5"></circle>`,
+  };
+
+  return icons[name] ?? "";
+}
 ---
 
-<PapyrusBaseLayout title="Posts" description="All public posts." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
-  <section class="papyrus-hero">
-    <h1>Posts</h1>
-    <p class="papyrus-description">The public posts in this Papyrus site.</p>
+<PapyrusBaseLayout title="Posts" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+  <section class="papyrus-hero papyrus-posts-hero">
+    <h1 class="papyrus-heading-with-action">
+      <span>Posts</span>
+      {site.features.rss && (
+        <a class="papyrus-heading-icon-link" href={withBase("/rss.xml")} aria-label="RSS feed" title="RSS feed">
+          <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("rss")} />
+        </a>
+      )}
+    </h1>
+    {description && <p class="papyrus-description">{description}</p>}
+    <p class="papyrus-actions">
+      <a href={withBase("/posts/timeline/")}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("clock")} />
+        Timeline
+      </a>
+      <a href={withBase("/tag/")}>
+        <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("tag")} />
+        Tags
+      </a>
+      {
+        archivedPosts.length > 0 && (
+          <a href={withBase("/search/?archive=hidden")}>
+            <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("archive")} />
+            Archive
+          </a>
+        )
+      }
+    </p>
   </section>
-  <PapyrusPostList posts={posts} showTags={site.postCard.tags} showReadTime={site.postCard.readTime} />
+
+  <section class="papyrus-section" data-posts-view="list">
+    <PapyrusPostList posts={visiblePosts} view="list" {...postListProps} />
+    {
+      hasMorePosts && (
+        <p class="papyrus-section-more papyrus-section-more-with-count">
+          <span>{visiblePostCount} of {currentPostCount} posts</span>
+          <a href={withBase("/posts/timeline/")}>show all</a>
+        </p>
+      )
+    }
+  </section>
 </PapyrusBaseLayout>

@@ -1,13 +1,11 @@
 {
   "projects": [
     {
-      "title": "papyrus",
-      "description": "Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata.",
+      "title": "Papyrus theme",
+      "description": "Reusable Astro theme package that provides the routes, layouts, styles, search, RSS, collections, and profile/CV surfaces.",
       "href": "/collections/docs/",
       "links": [
-        { "label": "features", "href": "/collections/docs/feature-map/" },
         { "label": "docs", "href": "/collections/docs/" },
-        { "label": "website", "href": "/" },
         { "label": "repo", "text": "marcelofpfelix/papyrus", "href": "https://github.com/marcelofpfelix/papyrus" }
       ],
       "repo": "https://github.com/marcelofpfelix/papyrus",
@@ -16,47 +14,37 @@
       "pinned": true
     },
     {
-      "title": "CV profile components",
-      "description": "Mobile profile, timeline, and A4 CV components using one normalized profile data source.",
-      "href": "/profile/",
-      "image": "/demo/demo-profile-avatar.svg",
+      "title": "Papyrus template",
+      "description": "Starter site that consumes the Papyrus package and keeps local code focused on config, content, profile data, and assets.",
+      "href": "https://github.com/marcelofpfelix/papyrus-template",
       "links": [
-        { "label": "components", "href": "/profile/" },
-        { "label": "data", "href": "/posts/cv-profile/" }
+        { "label": "docs", "href": "/collections/docs/install-configure-papyrus/" },
+        { "label": "repo", "text": "marcelofpfelix/papyrus-template", "href": "https://github.com/marcelofpfelix/papyrus-template" }
       ],
+      "repo": "https://github.com/marcelofpfelix/papyrus-template",
       "language": "Astro",
-      "status": "reference"
-    },
-    {
-      "title": "AI indexes",
-      "description": "Static JSON and llms.txt outputs for agents, site search, and graph features.",
-      "href": "/collections/docs/ai-mobile/",
-      "links": [
-        { "label": "docs", "href": "/collections/docs/ai-mobile/" },
-        { "label": "graph", "href": "/ai/graph.json" }
-      ],
-      "language": "Node",
-      "status": "reference"
+      "status": "starter",
+      "pinned": true
     }
   ],
   "notes": [
     {
-      "id": "pure-shiki-code",
-      "text": "Code fences use Astro/Shiki CSS-variable output with readable titles, highlights, diffs, and copy actions.",
+      "id": "template-first",
+      "text": "Start from papyrus-template; keep local code small and let the theme package provide the standard pages.",
       "date": "2026-07-01T10:00:00.000Z",
-      "tags": ["code", "ux"]
+      "tags": ["template", "docs"]
     },
     {
-      "id": "theme-tokens",
-      "text": "Theme profiles own light and dark token sets; runtime switching only changes the selected profile and mode.",
+      "id": "config-not-code",
+      "text": "Use TOML for site copy, projects, profile data, and feature flags before copying components into a site.",
       "date": "2026-07-01T11:00:00.000Z",
-      "tags": ["theme"]
+      "tags": ["config"]
     },
     {
-      "id": "cv-data",
-      "text": "Keep CV data stable and swap components/templates around it instead of rewriting the source file.",
+      "id": "collections",
+      "text": "Use collections when posts need a deliberate reading order instead of normal blog date order.",
       "date": "2026-07-01T12:00:00.000Z",
-      "tags": ["cv", "data"]
+      "tags": ["collections"]
     }
   ],
   "cv": {

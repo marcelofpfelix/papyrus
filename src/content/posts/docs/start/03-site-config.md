@@ -10,12 +10,12 @@ tags:
   - start
 ---
 
-`papyrus.config.toml` is the site-level control file. It keeps the consuming
-site editable without copying theme code into `src/pages` or component files.
+`papyrus.config.toml` is the site control file. Edit this before copying theme
+code into `src/pages` or local components.
 
-Use it for public site identity, navigation, social links, project cards, theme
+Use it for site identity, navigation, social links, project cards, theme
 defaults, feature flags, and post-list behavior. Use frontmatter for per-post
-metadata, and use `src/data/profile.toml` for profile and CV data.
+metadata. Use `src/data/profile.toml` for profile and CV data.
 
 ## What it controls
 
@@ -24,20 +24,22 @@ metadata, and use `src/data/profile.toml` for profile and CV data.
 | `[site]` | Site title, description, URL, language, text direction, and timezone |
 | `[brand]` | Header brand title, mark, and whether the text title is visible |
 | `[theme]` | Default color profile and font profile |
+| `[pages.<name>]` | Optional text overrides for inherited page descriptions |
 | `[features]` | Optional UI, metadata, comments, search, graph, media, and profile features |
 | `[post_card]` | Post-list tags, read time, fresh indicators, updated-date behavior, and default limit |
 | `[[nav]]` | Header navigation links |
-| `[[social]]` | Social links used by header/footer surfaces |
+| `[[social]]` | Social links used by the header and footer |
 | `[[project]]` | Project cards shown by the project list components |
 
-Papyrus reads this file with `loadPapyrusConfig()`. If the file is missing,
-Papyrus falls back to package defaults so a minimal template can still build.
+Papyrus reads this file with `loadPapyrusConfig()`. If it is missing, package
+defaults are used so a minimal template can still build.
 
 ## Minimal config
 
 ```toml title="papyrus.config.toml"
 [site]
 title = "My site"
+home_title = "hello, world"
 description = "Notes, projects, and profile."
 url = "https://site.test"
 lang = "en"
@@ -64,6 +66,55 @@ label = "Profile"
 
 Keep the URL set to the deployed origin. The same value is used for canonical
 metadata, RSS, sitemap, robots, social previews, and generated AI indexes.
+Use `home_title` only when the homepage heading should be different from the
+site title used by metadata, RSS, and shared layout chrome.
+
+## Source links
+
+Set the public GitHub source once so profile source links and post source
+actions can point at the right repository branch:
+
+```toml title="papyrus.config.toml"
+[source]
+repo = "site-owner/site-repo"
+branch = "main"
+```
+
+Papyrus uses that value for GitHub blob links and raw Markdown copy actions.
+The repo can be written as `owner/repo`, a GitHub URL, or an SSH GitHub remote.
+
+## Page descriptions
+
+Inherited routes ship with default intro descriptions. Override or hide those
+without copying route files:
+
+```toml title="papyrus.config.toml"
+[pages.posts]
+description = "Latest notes and release updates."
+
+[pages.projects]
+description = false
+```
+
+TOML does not support `null`. Use `description = false` when a route should not
+render a description or description meta tag. Omit the page entry to keep the
+Papyrus default.
+
+The inherited About page accepts longer paragraph content:
+
+```toml title="papyrus.config.toml"
+[pages.about]
+description = "Short About page intro."
+content = """
+Hey, I am Marcelo.
+
+I build and operate software around telecom, Linux, automation, and infrastructure.
+This site is where I keep technical notes, project logs, and occasional side interests.
+"""
+```
+
+Blank lines in `content` create separate paragraphs. The About page keeps this
+body focused and adds a profile link at the end.
 
 ## Feature flags
 
@@ -77,9 +128,8 @@ postStats = false
 graph = false
 ```
 
-The common rule is to disable features that need external setup. For example,
-turn off comments and remote post stats until the consuming site has configured
-those services.
+Disable features that need external setup. For example, turn off comments and
+remote post stats until the site has configured those services.
 
 ## Post-list defaults
 

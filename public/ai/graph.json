@@ -1,30 +1,6 @@
 {
-  "generatedAt": "2026-08-10T13:29:47.384Z",
+  "generatedAt": "2026-07-13T08:20:00.000Z",
   "nodes": [
-    {
-      "id": "post:code-demo",
-      "type": "post",
-      "label": "Markdown code guide",
-      "url": "https://papyrus.marcelofelix.com/posts/code-demo/",
-      "sourcePath": "src/content/posts/docs/authoring/10-code-demo.md",
-      "tags": [
-        "authoring",
-        "markdown",
-        "code"
-      ]
-    },
-    {
-      "id": "post:content-structure",
-      "type": "post",
-      "label": "Generated content structure",
-      "url": "https://papyrus.marcelofelix.com/posts/content-structure/",
-      "sourcePath": "src/content/posts/docs/authoring/11-content-structure.md",
-      "tags": [
-        "papyrus",
-        "docs",
-        "content"
-      ]
-    },
     {
       "id": "post:markdown-feature-sample",
       "type": "post",
@@ -39,16 +15,6 @@
       ]
     },
     {
-      "id": "post:folder-tags-demo",
-      "type": "post",
-      "label": "Folder tags for nested posts",
-      "url": "https://papyrus.marcelofelix.com/posts/folder-tags-demo/",
-      "sourcePath": "src/content/posts/docs/authoring/13-folder-tags.md",
-      "tags": [
-        "astro"
-      ]
-    },
-    {
       "id": "post:deploy",
       "type": "post",
       "label": "Deploy Papyrus",
@@ -58,18 +24,6 @@
         "deploy",
         "docs",
         "astro"
-      ]
-    },
-    {
-      "id": "post:release-checklist",
-      "type": "post",
-      "label": "Release checklist",
-      "url": "https://papyrus.marcelofelix.com/posts/release-checklist/",
-      "sourcePath": "src/content/posts/docs/deploy/31-release-checklist.md",
-      "tags": [
-        "papyrus",
-        "deploy",
-        "docs"
       ]
     },
     {
@@ -94,18 +48,6 @@
         "ai",
         "mobile",
         "docs"
-      ]
-    },
-    {
-      "id": "post:dark-mode-and-search",
-      "type": "post",
-      "label": "Dark mode and search in Papyrus",
-      "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/",
-      "sourcePath": "src/content/posts/docs/references/22-dark-mode-and-search.md",
-      "tags": [
-        "astro",
-        "search",
-        "dark-mode"
       ]
     },
     {
@@ -147,18 +89,6 @@
       ]
     },
     {
-      "id": "post:theme-spec",
-      "type": "post",
-      "label": "Theme specification",
-      "url": "https://papyrus.marcelofelix.com/posts/theme-spec/",
-      "sourcePath": "src/content/posts/docs/references/27-theme-spec.md",
-      "tags": [
-        "papyrus",
-        "docs",
-        "reference"
-      ]
-    },
-    {
       "id": "post:papyrus-docs",
       "type": "post",
       "label": "Papyrus docs",
@@ -168,18 +98,6 @@
         "papyrus",
         "docs",
         "astro"
-      ]
-    },
-    {
-      "id": "post:features",
-      "type": "post",
-      "label": "Feature config",
-      "url": "https://papyrus.marcelofelix.com/posts/features/",
-      "sourcePath": "src/content/posts/docs/start/01-features.md",
-      "tags": [
-        "papyrus",
-        "docs",
-        "config"
       ]
     },
     {
@@ -436,24 +354,18 @@
       "id": "tag:astro",
       "type": "tag",
       "label": "#astro",
-      "count": 6
+      "count": 4
     },
     {
       "id": "tag:authoring",
       "type": "tag",
       "label": "#authoring",
-      "count": 2
+      "count": 1
     },
     {
       "id": "tag:changelog",
       "type": "tag",
       "label": "#changelog",
-      "count": 1
-    },
-    {
-      "id": "tag:code",
-      "type": "tag",
-      "label": "#code",
       "count": 1
     },
     {
@@ -466,12 +378,6 @@
       "id": "tag:config",
       "type": "tag",
       "label": "#config",
-      "count": 2
-    },
-    {
-      "id": "tag:content",
-      "type": "tag",
-      "label": "#content",
       "count": 1
     },
     {
@@ -487,34 +393,22 @@
       "count": 1
     },
     {
-      "id": "tag:dark-mode",
-      "type": "tag",
-      "label": "#dark-mode",
-      "count": 1
-    },
-    {
-      "id": "tag:data",
-      "type": "tag",
-      "label": "#data",
-      "count": 0
-    },
-    {
       "id": "tag:deploy",
       "type": "tag",
       "label": "#deploy",
-      "count": 2
+      "count": 1
     },
     {
       "id": "tag:docs",
       "type": "tag",
       "label": "#docs",
-      "count": 9
+      "count": 5
     },
     {
       "id": "tag:markdown",
       "type": "tag",
       "label": "#markdown",
-      "count": 2
+      "count": 1
     },
     {
       "id": "tag:mobile",
@@ -526,7 +420,7 @@
       "id": "tag:papyrus",
       "type": "tag",
       "label": "#papyrus",
-      "count": 11
+      "count": 7
     },
     {
       "id": "tag:portuguese-food",
@@ -550,13 +444,7 @@
       "id": "tag:reference",
       "type": "tag",
       "label": "#reference",
-      "count": 4
-    },
-    {
-      "id": "tag:search",
-      "type": "tag",
-      "label": "#search",
-      "count": 1
+      "count": 3
     },
     {
       "id": "tag:start",
@@ -565,66 +453,59 @@
       "count": 1
     },
     {
+      "id": "tag:template",
+      "type": "tag",
+      "label": "#template",
+      "count": 0
+    },
+    {
       "id": "tag:theme",
       "type": "tag",
       "label": "#theme",
       "count": 2
     },
     {
-      "id": "tag:ux",
-      "type": "tag",
-      "label": "#ux",
-      "count": 0
-    },
-    {
-      "id": "project:papyrus",
+      "id": "project:papyrus-theme",
       "type": "project",
-      "label": "papyrus",
+      "label": "Papyrus theme",
       "url": "https://papyrus.marcelofelix.com/collections/docs/",
       "repo": "https://github.com/marcelofpfelix/papyrus",
       "tags": []
     },
     {
-      "id": "project:cv-profile-components",
+      "id": "project:papyrus-template",
       "type": "project",
-      "label": "CV profile components",
-      "url": "https://papyrus.marcelofelix.com/profile/",
+      "label": "Papyrus template",
+      "url": "https://github.com/marcelofpfelix/papyrus-template",
+      "repo": "https://github.com/marcelofpfelix/papyrus-template",
       "tags": []
     },
     {
-      "id": "project:ai-indexes",
-      "type": "project",
-      "label": "AI indexes",
-      "url": "https://papyrus.marcelofelix.com/collections/docs/ai-mobile/",
-      "tags": []
-    },
-    {
-      "id": "note:pure-shiki-code",
+      "id": "note:template-first",
       "type": "note",
-      "label": "note:pure-shiki-code",
-      "url": "https://papyrus.marcelofelix.com/#pure-shiki-code",
+      "label": "note:template-first",
+      "url": "https://papyrus.marcelofelix.com/#template-first",
       "tags": [
-        "code",
-        "ux"
+        "template",
+        "docs"
       ]
     },
     {
-      "id": "note:theme-tokens",
+      "id": "note:config-not-code",
       "type": "note",
-      "label": "note:theme-tokens",
-      "url": "https://papyrus.marcelofelix.com/#theme-tokens",
+      "label": "note:config-not-code",
+      "url": "https://papyrus.marcelofelix.com/#config-not-code",
       "tags": [
-        "theme"
+        "config"
       ]
     },
     {
-      "id": "note:cv-data",
+      "id": "note:collections",
       "type": "note",
-      "label": "note:cv-data",
-      "url": "https://papyrus.marcelofelix.com/#cv-data",
+      "label": "note:collections",
+      "url": "https://papyrus.marcelofelix.com/#collections",
       "tags": [
-        "cv",
-        "data"
+        "collections"
       ]
     },
     {
@@ -662,36 +543,6 @@
   ],
   "edges": [
     {
-      "source": "post:code-demo",
-      "target": "tag:authoring",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:code-demo",
-      "target": "tag:markdown",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:code-demo",
-      "target": "tag:code",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "tag:papyrus",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "tag:docs",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "tag:content",
-      "relation": "has-tag"
-    },
-    {
       "source": "post:markdown-feature-sample",
       "target": "tag:markdown",
       "relation": "has-tag"
@@ -712,11 +563,6 @@
       "relation": "has-tag"
     },
     {
-      "source": "post:folder-tags-demo",
-      "target": "tag:astro",
-      "relation": "has-tag"
-    },
-    {
       "source": "post:deploy",
       "target": "tag:deploy",
       "relation": "has-tag"
@@ -729,21 +575,6 @@
     {
       "source": "post:deploy",
       "target": "tag:astro",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "tag:papyrus",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "tag:deploy",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "tag:docs",
       "relation": "has-tag"
     },
     {
@@ -774,21 +605,6 @@
     {
       "source": "post:ai-mobile",
       "target": "tag:docs",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "tag:astro",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "tag:search",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "tag:dark-mode",
       "relation": "has-tag"
     },
     {
@@ -847,21 +663,6 @@
       "relation": "has-tag"
     },
     {
-      "source": "post:theme-spec",
-      "target": "tag:papyrus",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "tag:docs",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "tag:reference",
-      "relation": "has-tag"
-    },
-    {
       "source": "post:papyrus-docs",
       "target": "tag:papyrus",
       "relation": "has-tag"
@@ -874,21 +675,6 @@
     {
       "source": "post:papyrus-docs",
       "target": "tag:astro",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "tag:papyrus",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "tag:docs",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "tag:config",
       "relation": "has-tag"
     },
     {
@@ -1122,28 +908,23 @@
       "relation": "has-tag"
     },
     {
-      "source": "note:pure-shiki-code",
-      "target": "tag:code",
+      "source": "note:template-first",
+      "target": "tag:template",
       "relation": "mentions-tag"
     },
     {
-      "source": "note:pure-shiki-code",
-      "target": "tag:ux",
+      "source": "note:template-first",
+      "target": "tag:docs",
       "relation": "mentions-tag"
     },
     {
-      "source": "note:theme-tokens",
-      "target": "tag:theme",
+      "source": "note:config-not-code",
+      "target": "tag:config",
       "relation": "mentions-tag"
     },
     {
-      "source": "note:cv-data",
-      "target": "tag:cv",
-      "relation": "mentions-tag"
-    },
-    {
-      "source": "note:cv-data",
-      "target": "tag:data",
+      "source": "note:collections",
+      "target": "tag:collections",
       "relation": "mentions-tag"
     },
     {
@@ -1172,121 +953,11 @@
       "relation": "has-section"
     },
     {
-      "source": "post:code-demo",
-      "target": "post:markdown-feature-sample",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:release-checklist",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:feature-map",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:ai-mobile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:collections",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:profile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:content-structure",
-      "target": "post:site-config",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:markdown-feature-sample",
-      "target": "post:code-demo",
-      "relation": "related-by-tag"
-    },
-    {
       "source": "post:markdown-feature-sample",
       "target": "post:papyrus-package-shape",
       "relation": "related-by-tag"
     },
     {
-      "source": "post:folder-tags-demo",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:folder-tags-demo",
-      "target": "post:dark-mode-and-search",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:folder-tags-demo",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:folder-tags-demo",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:folder-tags-demo",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:folder-tags-demo",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:release-checklist",
-      "relation": "related-by-tag"
-    },
-    {
       "source": "post:deploy",
       "target": "post:feature-map",
       "relation": "related-by-tag"
@@ -1298,17 +969,7 @@
     },
     {
       "source": "post:deploy",
-      "target": "post:dark-mode-and-search",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
       "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:theme-spec",
       "relation": "related-by-tag"
     },
     {
@@ -1318,87 +979,12 @@
     },
     {
       "source": "post:deploy",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
       "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:feature-map",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:ai-mobile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:collections",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:profile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:release-checklist",
-      "target": "post:site-config",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
-      "target": "post:content-structure",
       "relation": "related-by-tag"
     },
     {
       "source": "post:feature-map",
       "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
-      "target": "post:release-checklist",
       "relation": "related-by-tag"
     },
     {
@@ -1423,17 +1009,7 @@
     },
     {
       "source": "post:feature-map",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
       "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
-      "target": "post:features",
       "relation": "related-by-tag"
     },
     {
@@ -1448,17 +1024,7 @@
     },
     {
       "source": "post:ai-mobile",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
       "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
-      "target": "post:release-checklist",
       "relation": "related-by-tag"
     },
     {
@@ -1468,52 +1034,12 @@
     },
     {
       "source": "post:ai-mobile",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
       "target": "post:papyrus-docs",
       "relation": "related-by-tag"
     },
     {
       "source": "post:ai-mobile",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
       "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "post:folder-tags-demo",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-package-shape",
-      "target": "post:content-structure",
       "relation": "related-by-tag"
     },
     {
@@ -1523,27 +1049,12 @@
     },
     {
       "source": "post:papyrus-package-shape",
-      "target": "post:folder-tags-demo",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-package-shape",
       "target": "post:deploy",
       "relation": "related-by-tag"
     },
     {
       "source": "post:papyrus-package-shape",
-      "target": "post:release-checklist",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-package-shape",
       "target": "post:feature-map",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-package-shape",
-      "target": "post:dark-mode-and-search",
       "relation": "related-by-tag"
     },
     {
@@ -1558,17 +1069,7 @@
     },
     {
       "source": "post:papyrus-package-shape",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-package-shape",
       "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-package-shape",
-      "target": "post:features",
       "relation": "related-by-tag"
     },
     {
@@ -1579,16 +1080,6 @@
     {
       "source": "post:papyrus-package-shape",
       "target": "post:site-config",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:collections",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:collections",
-      "target": "post:release-checklist",
       "relation": "related-by-tag"
     },
     {
@@ -1608,17 +1099,7 @@
     },
     {
       "source": "post:collections",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:collections",
       "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:collections",
-      "target": "post:features",
       "relation": "related-by-tag"
     },
     {
@@ -1629,16 +1110,6 @@
     {
       "source": "post:collections",
       "target": "post:site-config",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:profile",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:profile",
-      "target": "post:release-checklist",
       "relation": "related-by-tag"
     },
     {
@@ -1658,17 +1129,7 @@
     },
     {
       "source": "post:profile",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:profile",
       "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:profile",
-      "target": "post:features",
       "relation": "related-by-tag"
     },
     {
@@ -1682,83 +1143,8 @@
       "relation": "related-by-tag"
     },
     {
-      "source": "post:theme-spec",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:release-checklist",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:feature-map",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:ai-mobile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:collections",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:profile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:theme-spec",
-      "target": "post:site-config",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:folder-tags-demo",
-      "relation": "related-by-tag"
-    },
-    {
       "source": "post:papyrus-docs",
       "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:release-checklist",
       "relation": "related-by-tag"
     },
     {
@@ -1773,11 +1159,6 @@
     },
     {
       "source": "post:papyrus-docs",
-      "target": "post:dark-mode-and-search",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
       "target": "post:papyrus-package-shape",
       "relation": "related-by-tag"
     },
@@ -1793,16 +1174,6 @@
     },
     {
       "source": "post:papyrus-docs",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
       "target": "post:install-configure-papyrus",
       "relation": "related-by-tag"
     },
@@ -1812,83 +1183,8 @@
       "relation": "related-by-tag"
     },
     {
-      "source": "post:features",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:release-checklist",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:feature-map",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:ai-mobile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:collections",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:profile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:site-config",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:folder-tags-demo",
-      "relation": "related-by-tag"
-    },
-    {
       "source": "post:install-configure-papyrus",
       "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:release-checklist",
       "relation": "related-by-tag"
     },
     {
@@ -1903,11 +1199,6 @@
     },
     {
       "source": "post:install-configure-papyrus",
-      "target": "post:dark-mode-and-search",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
       "target": "post:papyrus-package-shape",
       "relation": "related-by-tag"
     },
@@ -1923,32 +1214,12 @@
     },
     {
       "source": "post:install-configure-papyrus",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
       "target": "post:papyrus-docs",
       "relation": "related-by-tag"
     },
     {
       "source": "post:install-configure-papyrus",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
       "target": "post:site-config",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:site-config",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:site-config",
-      "target": "post:release-checklist",
       "relation": "related-by-tag"
     },
     {
@@ -1973,17 +1244,7 @@
     },
     {
       "source": "post:site-config",
-      "target": "post:theme-spec",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:site-config",
       "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:site-config",
-      "target": "post:features",
       "relation": "related-by-tag"
     },
     {

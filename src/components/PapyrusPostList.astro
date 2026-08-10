@@ -3,14 +3,17 @@ import {
   formatPostDate,
   hasFreshUpdate,
   hasUpdatedDate,
+  isScheduledPost,
   isNewPost,
   postHref,
+  postPublishTimestamp,
   postTags,
   readingTime,
   tagHref,
   toTransitionName,
 } from "../utils/posts";
 import { getAssetPath } from "../utils/withBase";
+import PapyrusScheduledPostsRuntime from "./runtime/PapyrusScheduledPostsRuntime.astro";
 
 interface PostItem {
   id: string;
@@ -81,12 +84,16 @@ function primaryDateIsUpdate(post: PostItem) {
 function primaryDateIcon(post: PostItem) {
   return primaryDateIsUpdate(post) ? "refresh" : "calendar";
 }
+
+function publishAt(post: PostItem) {
+  return isScheduledPost(post) ? String(postPublishTimestamp(post)) : undefined;
+}
 ---
 
 <ul class:list={["papyrus-post-list", `papyrus-post-list-${view}`]}>
   {
     posts.map(post => (
-      <li class:list={[post.data.pinned && "papyrus-post-list-pinned"]}>
+      <li class:list={[post.data.pinned && "papyrus-post-list-pinned"]} hidden={isScheduledPost(post)} data-papyrus-publish-at={publishAt(post)}>
         <a href={postHref(post, basePath)}>
           {post.data.cover && <img class="papyrus-post-cover" src={getAssetPath(post.data.cover)} alt="" loading="lazy" />}
           <span class="papyrus-post-title" transition:name={toTransitionName(post.data.title)}>{post.data.title}</span>
@@ -140,3 +147,4 @@ function primaryDateIcon(post: PostItem) {
     ))
   }
 </ul>
+<PapyrusScheduledPostsRuntime />

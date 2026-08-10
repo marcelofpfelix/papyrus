@@ -1,4 +1,6 @@
 <script>
+  import { copyPapyrusText } from "./papyrusClipboard";
+
   function setActionButtonState(button: HTMLButtonElement, label: string, restore = "Copy code") {
     button.dataset.state = label.toLowerCase().replace(/\s+/g, "-");
     button.setAttribute("aria-label", label);
@@ -9,19 +11,6 @@
       button.setAttribute("aria-label", restore);
       if (labelElement) labelElement.textContent = restore;
     }, 1600);
-  }
-
-  async function writeActionClipboard(text: string) {
-    if (navigator.clipboard) {
-      try {
-        await navigator.clipboard.writeText(text);
-        return "copied";
-      } catch {
-        // Fall through to prompt fallback where the caller needs it.
-      }
-    }
-
-    return "unavailable";
   }
 
   document.querySelectorAll<HTMLButtonElement>("[data-papyrus-share]").forEach((button) => {
@@ -44,9 +33,8 @@
         }
       }
 
-      const result = await writeActionClipboard(url);
-      if (result === "unavailable") window.prompt("Copy link", url);
-      setActionButtonState(button, result === "copied" ? "Copied" : "Share", "Share");
+      await copyPapyrusText(url, "Copy link");
+      setActionButtonState(button, "Copied", "Share");
     });
   });
 
@@ -59,8 +47,8 @@
         const response = await fetch(sourceUrl);
         if (!response.ok) throw new Error(`Could not load ${sourceUrl}`);
         const source = await response.text();
-        const result = await writeActionClipboard(source);
-        setActionButtonState(button, result === "copied" ? "Copied" : "Copy", "Copy");
+        await copyPapyrusText(source, "Copy source");
+        setActionButtonState(button, "Copied", "Copy");
       } catch {
         setActionButtonState(button, "Unavailable", "Copy");
       }
@@ -72,9 +60,8 @@
       const sourceUrl = button.dataset.papyrusCopySourceLink;
       if (!sourceUrl) return;
 
-      const result = await writeActionClipboard(sourceUrl);
-      if (result === "unavailable") window.prompt("Copy source link", sourceUrl);
-      setActionButtonState(button, result === "copied" ? "Copied" : "Source", "Source");
+      await copyPapyrusText(sourceUrl, "Copy source link");
+      setActionButtonState(button, "Copied", "Source");
     });
   });
 
@@ -83,8 +70,8 @@
       const url = button.dataset.papyrusCopyCitation ?? window.location.href;
       const pageTitle = button.dataset.papyrusTitle ?? document.title;
       const citation = `${pageTitle}. ${url}`;
-      const result = await writeActionClipboard(citation);
-      setActionButtonState(button, result === "copied" ? "Title + link copied" : "Copy title + link", "Copy title + link");
+      await copyPapyrusText(citation, "Copy title + link");
+      setActionButtonState(button, "Title + link copied", "Copy title + link");
     });
   });
 </script>

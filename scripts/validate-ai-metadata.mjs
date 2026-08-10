@@ -108,7 +108,9 @@ async function validatePosts() {
     requireField(scope, data, "title");
     requireField(scope, data, "description");
     requireField(scope, data, "slug");
-    requireField(scope, data, "pubDatetime", hasDate, "must be an ISO-like date");
+    if (!hasDate(data.pubDatetime) && !hasDate(data.date)) {
+      errors.push(`${scope}: date or pubDatetime must be an ISO-like date`);
+    }
     requireField(scope, data, "license");
 
     if (!Array.isArray(data.tags) || data.tags.length === 0) {

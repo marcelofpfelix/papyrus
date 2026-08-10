@@ -5,7 +5,7 @@ import { readingTime } from "../utils/posts";
 
 const body = [
   "Use this route to check how PapyrusPostLayout presents a published date, an updated date, reading time, and tags when a post has changed after publication.",
-  "A consuming site gets the same footer behavior by passing pubDatetime, modDatetime, tags, and readingTime to the post layout.",
+  "A site gets the same footer behavior by passing pubDatetime, modDatetime, tags, and readingTime to the post layout.",
 ];
 ---
 
@@ -15,7 +15,7 @@ const body = [
   siteTitle="papyrus"
   pubDatetime="2026-07-01T10:00:00.000Z"
   modDatetime="2026-07-03T12:00:00.000Z"
-  tags={["authoring", "metadata"]}
+  tags={["authoring", "papyrus"]}
   readingTime={readingTime(body.join("\n\n"))}
   canonicalUrl="/metadata-demo/"
   nav={demoNav}

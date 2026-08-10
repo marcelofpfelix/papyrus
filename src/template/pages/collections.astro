@@ -1,6 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusContentIndex } from "../../components";
+import { pageDescription } from "../../config";
 import { getPostCollections } from "../../utils/collections";
 import { getTemplateSite } from "../site";
 
@@ -11,12 +12,13 @@ const collectionItems = collections.map(collection => ({
   href: collection.href,
   description: collection.description || `${collection.posts.length} posts`,
 }));
+const description = pageDescription(site, "collections", "Post folders can define collection metadata with TOML. Papyrus detects those files at build time and exposes the matching reading paths.");
 ---
 
-<PapyrusBaseLayout title="Collections" description="Collections detected from TOML files inside post folders." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
+<PapyrusBaseLayout title="Collections" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
   <section class="papyrus-hero">
     <h1>Collections</h1>
-    <p class="papyrus-description">Post folders can define collection metadata with TOML. Papyrus detects those files at build time and exposes the matching reading paths.</p>
+    {description && <p class="papyrus-description">{description}</p>}
   </section>
 
   {collections.length > 0 ? (

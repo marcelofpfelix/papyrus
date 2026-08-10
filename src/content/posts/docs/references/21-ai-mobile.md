@@ -10,17 +10,17 @@ tags:
   - docs
 ---
 
-Papyrus ships useful agent-readable metadata, generated indexes, and responsive
-UI defaults for small content sites.
+Papyrus builds static metadata and search files alongside the site. The same
+build also keeps the main layouts usable on small screens.
 
-## AI-first primitives
+## Generated files
 
-- Package-level `llms.txt` and `llms-full.txt` generation for agent-readable site summaries.
+- `llms.txt` and `llms-full.txt` for agent-readable site summaries.
 - Static RSS feeds per tag.
 - Static JSON indexes for posts, tags, projects, notes, and CV summary data.
 - Static graph data export connecting posts, tags, projects, notes, and CV sections.
-- Stable machine IDs in generated JSON indexes, graph nodes, graph edges, and search records.
-- Reusable static search index for local agents.
+- Stable IDs in generated JSON indexes, graph nodes, graph edges, and search records.
+- Static search data for local tools and Pagefind.
 - Per-post JSON-LD metadata for schema.org types.
 - Post layout support for canonical URL, source Markdown URL, author metadata, copy Markdown, and copy citation.
 
@@ -28,7 +28,7 @@ Generated files include [`llms.txt`](/llms.txt), [`llms-full.txt`](/llms-full.tx
 [`posts.json`](/ai/posts.json), [`tags.json`](/ai/tags.json),
 [`cv.json`](/ai/cv.json), and [`graph.json`](/ai/graph.json).
 
-## Site-specific AI extensions
+## Site-specific metadata
 
 - Add extra source links when a post depends on diagrams, notebooks, or external datasets.
 - Add JSON-LD types for people, projects, software source code, or breadcrumbs on site-specific pages.
@@ -36,7 +36,7 @@ Generated files include [`llms.txt`](/llms.txt), [`llms-full.txt`](/llms-full.tx
 - Store explicit license metadata for images, code snippets, and diagrams when licensing matters.
 - Publish diagram source beside rendered SVG output for Mermaid, PlantUML, or Excalidraw workflows.
 
-## Mobile-first primitives
+## Mobile defaults
 
 - Safe-area padding for phones with notches or rounded display edges.
 - 44px coarse-pointer hit targets for core icon, copy, post action, tag, TOC, and back-to-top controls.

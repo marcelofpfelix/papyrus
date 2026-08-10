@@ -15,6 +15,10 @@ show_title = true
 profile = "gruvbox"
 font_profile = "readable"
 
+[source]
+repo = "marcelofpfelix/papyrus"
+branch = "0.2.1"
+
 [features]
 search = true
 rss = true

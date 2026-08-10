@@ -1,5 +1,5 @@
 name = "Papyrus docs"
-description = "Package docs for installing, composing, and extending Papyrus without copying a full theme into every site."
+description = "Template-first docs for building a small Astro site with Papyrus."
 
 [settings]
 post_footer = "collection"
@@ -7,16 +7,16 @@ post_footer_collapsible = true
 
 [[sections]]
 name = "Start"
-description = "Getting started, feature configuration, and the core Papyrus content model."
+description = "Start with papyrus-template, then edit config, posts, profile data, and assets."
 
 [[sections]]
 name = "Authoring"
-description = "Markdown, code blocks, nested content, and generated content structure."
+description = "Write Markdown posts, organize collection content, and keep profile data in TOML."
 
 [[sections]]
 name = "References"
-description = "Feature maps, AI metadata, mobile behavior, and reusable route references."
+description = "Understand the package boundary, feature map, metadata, search, and generated routes."
 
 [[sections]]
 name = "Deploy"
-description = "Static hosting, production previews, and base-path deploy guidance."
+description = "Build, preview, and publish the generated static site."

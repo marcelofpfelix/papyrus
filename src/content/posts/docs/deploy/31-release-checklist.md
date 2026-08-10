@@ -4,6 +4,7 @@ description: Package metadata, verification, smoke install, and npm publishing c
 slug: release-checklist
 pubDatetime: 2026-07-14T08:30:00.000Z
 category: Docs
+hidden: true
 tags:
   - papyrus
   - deploy
@@ -18,8 +19,8 @@ can be installed by another Astro site.
 
 1. Update `CHANGELOG.md` with the target version and user-facing changes.
 2. Confirm `package.json` has the real package name, repository, homepage,
-   bugs URL, keywords, `license`, `files`, public `publishConfig`, exports, and
-   bin entries.
+   bugs URL, keywords, the package license field, `files`, public
+   `publishConfig`, exports, and bin entries.
 3. Confirm `pnpm-workspace.yaml` keeps the mature-release install gate:
    `minimumReleaseAge: 10080` and `minimumReleaseAgeStrict: true`.
    This blocks registry packages published in the last seven days, including

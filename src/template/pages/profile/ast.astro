@@ -1,14 +1,17 @@
 ---
-import { cvSections, printProfileLinks, profile } from "../../data/profile";
-import { PapyrusCvActions } from "../../components";
-import { githubSourceUrl, loadPapyrusConfig } from "../../config";
-import { compactDurationLabel, profileLinkKindLabel } from "../../utils/cv-profile-data";
-import { shouldShowCvItemTitle } from "../../utils/cv";
-import { withBase } from "../../utils/withBase";
-import "../../styles/papyrus.css";
-import "../../styles/cv-print.css";
+import { PapyrusCvActions } from "../../../components";
+import { githubSourceUrl } from "../../../config";
+import { compactDurationLabel, profileLinkKindLabel } from "../../../utils/cv-profile-data";
+import { shouldShowCvItemTitle } from "../../../utils/cv";
+import { withBase } from "../../../utils/withBase";
+import { getTemplateProfileData } from "../../profile";
+import { getTemplateSite } from "../../site";
+import "../../../styles/papyrus.css";
+import "../../../styles/cv-print.css";
 
-const site = await loadPapyrusConfig();
+const site = await getTemplateSite();
+const { cvSections, printProfileLinks, profile } = await getTemplateProfileData();
+
 const currentCvHref = profile.canonicalCv;
 const cvMarkdownHref = withBase("/cv/profile.md");
 const profileSourceLinks = [

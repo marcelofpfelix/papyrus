@@ -14,12 +14,12 @@ tags:
   - custom
 ---
 
-Papyrus keeps authoring close to regular Astro Markdown. A post stays readable
-as plain text, builds into a clean article page, and can expose source, share,
-tag, table-of-contents, and metadata features when the site enables them.
+Papyrus uses regular Astro Markdown. A post stays readable as plain text and
+builds into an article page with source, share, tag, table-of-contents, and
+metadata actions when the site enables them.
 
-Use this page as a compact authoring reference when templating a new site. Every
-section below shows a Markdown feature in the same shape a real post can use.
+This page is a quick rendering reference. Every section below is ordinary
+Markdown that a real post can use.
 
 ## Headings
 

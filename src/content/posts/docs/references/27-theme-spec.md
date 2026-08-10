@@ -4,6 +4,7 @@ description: Public behavior contract for Papyrus features, configuration, posts
 slug: theme-spec
 pubDatetime: 2026-07-14T08:00:00.000Z
 category: Docs
+hidden: true
 tags:
   - papyrus
   - docs
@@ -30,7 +31,7 @@ blogs, profiles, and technical notes.
 The theme MUST:
 
 - stay a thin wrapper around Pure where Pure already provides a strong pattern
-- keep consuming sites focused on content, configuration, and small page
+- keep site repos focused on content, configuration, and small page
   composition
 - provide reusable layout, post, search, RSS, profile, CV, markdown, and SEO
   behavior from the package
@@ -61,7 +62,7 @@ The package owns:
 - search, tag, archive, RSS, sitemap, robots, and AI index helpers
 - demo pages and reusable documentation
 
-Consuming sites own:
+Site repos own:
 
 - content files
 - site identity, social links, profile data, and project data
@@ -69,7 +70,7 @@ Consuming sites own:
 - site-specific page composition
 - private or production-only data
 
-Shared behavior MUST move into `papyrus` when more than one consuming site would
+Shared behavior MUST move into `papyrus` when more than one site repo would
 otherwise copy it.
 
 ## Configuration
@@ -92,7 +93,7 @@ do not drift.
 The post list MUST support a configurable default count. The package default is
 20 posts for `/posts/`.
 
-Back links and other post controls MUST be configurable. A consuming site MAY
+Back links and other post controls MUST be configurable. A site MAY
 disable the post back link.
 
 Google Site Verification MUST be configurable from site config and rendered as a
@@ -125,7 +126,7 @@ The post list MUST support:
 - accent-colored date metadata for recently updated posts
 
 Pinned posts MUST be visually distinguishable from normal posts. The pinned
-state should use a subtle background related to project-card surfaces and an
+state should use a subtle background related to project-card panels and an
 icon without requiring label text.
 
 When `post_card.tags` is false:
@@ -157,7 +158,7 @@ The `/posts/` page MUST expose icon links for related post browsing modes:
 - RSS, using an icon next to the posts heading or equivalent title area
 
 These icon links SHOULD be borderless, aligned to the right where the layout
-allows, and use the same icon set and visual treatment across consuming sites.
+allows, and use the same icon set and visual treatment across site repos.
 
 The `/posts/` page SHOULD avoid exposing multiple RSS examples in page chrome.
 Specialized RSS feeds, such as tag-specific feeds or changelog feeds, should be
@@ -309,8 +310,8 @@ Every theme profile MUST define:
 - `--papyrus-theme-color`
 - font tokens
 
-The default package theme MAY differ from a consuming site's default theme.
-Consuming sites MUST be able to set their own default theme profile and font
+The default package theme MAY differ from a site's default theme.
+Site repos MUST be able to set their own default theme profile and font
 profile.
 
 Footer controls MUST expose:

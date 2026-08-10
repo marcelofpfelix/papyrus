@@ -1,35 +1,21 @@
 # Content index
 
-- [Markdown code guide](https://papyrus.marcelofelix.com/posts/code-demo/) - Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.
-  Updated: 2026-07-01T13:00:00.000Z
-- [Generated content structure](https://papyrus.marcelofelix.com/posts/content-structure/) - How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.
-  Updated: 2026-07-01T13:10:00.000Z
 - [Markdown authoring guide](https://papyrus.marcelofelix.com/posts/markdown-feature-sample/) - A practical guide showing how Papyrus renders Markdown, callouts, code, media, diagrams, and source actions.
   Updated: 2026-06-30T10:00:00.000Z
-- [Folder tags for nested posts](https://papyrus.marcelofelix.com/posts/folder-tags-demo/) - Content-model guide showing stable slugs with automatic tags from source folders.
-  Updated: 2026-06-30T11:00:00.000Z
 - [Deploy Papyrus](https://papyrus.marcelofelix.com/posts/deploy/) - Static hosting, build settings, metadata URLs, and base-path notes for a Papyrus site.
   Updated: 2026-07-01T15:00:00.000Z
-- [Release checklist](https://papyrus.marcelofelix.com/posts/release-checklist/) - Package metadata, verification, smoke install, and npm publishing checks for Papyrus releases.
-  Updated: 2026-07-14T08:30:00.000Z
 - [Feature map](https://papyrus.marcelofelix.com/posts/feature-map/) - Route-by-route guide to public Papyrus features.
   Updated: 2026-07-01T14:00:00.000Z
 - [AI and mobile readiness](https://papyrus.marcelofelix.com/posts/ai-mobile/) - AI metadata, generated indexes, and mobile-ready defaults in a Papyrus site.
   Updated: 2026-07-01T14:10:00.000Z
-- [Dark mode and search in Papyrus](https://papyrus.marcelofelix.com/posts/dark-mode-and-search/) - The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.
-  Updated: 2026-06-30T11:15:00.000Z
 - [Papyrus package shape](https://papyrus.marcelofelix.com/posts/papyrus-package-shape/) - Package-boundary guide showing how Papyrus keeps repeated blog UI in reusable theme exports.
   Updated: 2026-06-30T11:00:00.000Z
 - [Collections](https://papyrus.marcelofelix.com/posts/collections/) - What Papyrus collections are and how folder-backed collection routes work.
   Updated: 2026-07-13T08:10:00.000Z
 - [Profile and CV](https://papyrus.marcelofelix.com/posts/profile/) - What the Papyrus profile data file controls and how profile, print, and export routes share it.
   Updated: 2026-07-13T08:20:00.000Z
-- [Theme specification](https://papyrus.marcelofelix.com/posts/theme-spec/) - Public behavior contract for Papyrus features, configuration, posts, search, profile, SEO, accessibility, and quality gates.
-  Updated: 2026-07-14T08:00:00.000Z
-- [Papyrus docs](https://papyrus.marcelofelix.com/posts/papyrus-docs/) - Package docs for installing, composing, and extending Papyrus without copying a full theme into every site.
+- [Papyrus docs](https://papyrus.marcelofelix.com/posts/papyrus-docs/) - Start with papyrus-template, then edit config, Markdown, profile data, and assets.
   Updated: 2026-07-01T09:00:00.000Z
-- [Feature config](https://papyrus.marcelofelix.com/posts/features/) - Grouped feature toggles for Papyrus layouts.
-  Updated: 2026-07-01T09:10:00.000Z
 - [Install and configure Papyrus](https://papyrus.marcelofelix.com/posts/install-configure-papyrus/) - Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides.
   Updated: 2026-07-10T09:00:00.000Z
 - [Site config](https://papyrus.marcelofelix.com/posts/site-config/) - What papyrus.config.toml controls and how a site should edit it.

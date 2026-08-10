@@ -1,6 +1,6 @@
 ---
 title: Papyrus docs
-description: Package docs for installing, composing, and extending Papyrus without copying a full theme into every site.
+description: Start with papyrus-template, then edit config, Markdown, profile data, and assets.
 slug: papyrus-docs
 pubDatetime: 2026-07-01T09:00:00.000Z
 category: Docs
@@ -10,51 +10,34 @@ tags:
   - astro
 ---
 
-Papyrus keeps consuming sites focused on content and config. The theme package
-owns reusable layouts, post rendering, collections, generated metadata, search,
-RSS, project cards, and profile/CV surfaces.
+Papyrus is a reusable Astro theme for personal sites, technical notes, project
+pages, and profile/CV pages. Start from `papyrus-template`, keep your content
+in that site, and let `astro-theme-papyrus` provide the shared routes and
+components.
 
-## Start points
+## Read first
 
-- [Install and configure Papyrus](/collections/docs/install-configure-papyrus/) explains the template-first workflow.
-- [Feature config](/collections/docs/features/) shows grouped layout and post toggles.
-- [Site config](/collections/docs/site-config/) explains `papyrus.config.toml`.
-- [Collections](/collections/docs/collections/) explains folder-backed collection routes.
-- [Profile and CV](/collections/docs/profile/) explains `src/data/profile.toml`.
-- [Feature map](/collections/docs/feature-map/) maps the public routes to reusable theme features.
-- [Markdown code guide](/collections/docs/code-demo/) shows Markdown, code, callouts, diagrams, media, and artifacts.
+- [Install and configure Papyrus](/collections/docs/install-configure-papyrus/) explains the template workflow.
+- [Site config](/collections/docs/site-config/) shows what belongs in `papyrus.config.toml`.
+- [Markdown authoring guide](/collections/docs/markdown-feature-sample/) shows posts, code blocks, callouts, media, and source actions.
+- [Collections](/collections/docs/collections/) explains ordered docs or guide sections.
+- [Profile and CV](/collections/docs/profile/) explains the TOML-driven profile, print routes, and exports.
 
-## Theme profiles
+## For developers
 
-Each theme profile defines one light token set and one dark token set. Runtime
-mode defaults to system, while the default color profile is Gruvbox and the
-default font profile is readable. Included profiles are Catppuccin, Tokyo Night,
-Kanagawa, Rose Pine, Everforest, Dracula, Gruvbox, Nord, and Pure.
+- [Papyrus package shape](/collections/docs/papyrus-package-shape/) explains what stays in the theme package and what stays in a site.
+- [Feature map](/collections/docs/feature-map/) maps public routes to reusable features.
+- [AI and mobile readiness](/collections/docs/ai-mobile/) covers search, generated metadata, mobile layout, and agent-readable files.
+- [Deploy Papyrus](/collections/docs/deploy/) covers static hosting and production builds.
 
-```css
-:root[data-papyrus-theme="custom"] {
-  --papyrus-bg: #fbf7ef;
-  --papyrus-fg: #1f2933;
-  --papyrus-muted: #6b7280;
-  --papyrus-panel: #ffffff;
-  --papyrus-border: #d8d0bf;
-  --papyrus-accent: #7c3aed;
-  --papyrus-code-bg: #f4efe5;
-  --papyrus-code-fg: #111827;
-  --papyrus-theme-color: #fbf7ef;
-}
-```
+## What to edit
 
-Use `pnpm papyrus-theme list` to inspect installed profiles and
-`pnpm papyrus-theme validate` to check that every profile file has the required
-light and dark selectors and tokens.
+Most sites only need these files:
 
-## Content model
+- `papyrus.config.toml` for site identity, navigation, projects, theme, and feature flags
+- `src/content/posts/` for posts, docs, and collections
+- `src/data/profile.toml` for profile and CV data
+- `public/` for images, logos, favicons, and static files
 
-Papyrus uses `src/content/posts` as the public content source. A folder can add a
-TOML file to become a collection, and the collection route reads posts in
-filename order. Regular blog/archive pages can still sort the same posts by
-date.
-
-Repo-only notes stay under `.agents/` unless they are intentionally rewritten as
-public posts.
+The package repo has more files because it is the theme. A site made from
+`papyrus-template` should stay much smaller.

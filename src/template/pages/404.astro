@@ -1,15 +1,29 @@
 ---
+import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusNotFound } from "../../components";
+import { pageDescription } from "../../config";
+import { postHref, postTags, publishedPosts, sortPosts } from "../../utils";
 import { getTemplateSite } from "../site";
 
 const site = await getTemplateSite();
-const items = [
+const staticItems = [
   { title: "Posts", href: "/posts/", description: "Read the post index.", tags: ["posts"] },
+  { title: "Timeline", href: "/posts/timeline/", description: "Browse every public post by date.", tags: ["posts", "timeline"] },
+  { title: "Search", href: "/search/", description: "Search posts and tags.", tags: ["search"] },
+  { title: "Collections", href: "/collections/", description: "Browse configured post collections.", tags: ["collections"] },
   { title: "Projects", href: "/projects/", description: "Open the project cards.", tags: ["projects"] },
   { title: "Profile", href: "/profile/", description: "Open the profile page.", tags: ["profile"] },
 ];
+const postItems = sortPosts(publishedPosts(await getCollection("posts"))).map((post) => ({
+  title: post.data.title,
+  description: post.data.description,
+  href: postHref(post),
+  tags: postTags(post),
+}));
+const items = [...postItems, ...staticItems];
+const description = pageDescription(site, "notFound", "Find a nearby page.");
 ---
 
-<PapyrusBaseLayout title="Not found" description="Find a nearby page." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+<PapyrusBaseLayout title="Not found" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
   <PapyrusNotFound items={items} searchHref="/posts/" />
 </PapyrusBaseLayout>

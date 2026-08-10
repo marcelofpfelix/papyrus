@@ -4,6 +4,7 @@ description: "Content-model guide showing stable slugs with automatic tags from 
 slug: folder-tags-demo
 pubDatetime: 2026-06-30T11:00:00.000Z
 license: CC-BY-4.0
+hidden: true
 tags:
   - astro
 ---

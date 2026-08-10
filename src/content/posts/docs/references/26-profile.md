@@ -11,12 +11,12 @@ tags:
   - reference
 ---
 
-The profile system is driven by `src/data/profile.toml`. The same source data is
-used by the web profile page, timeline view, print routes, generated Markdown,
-and generated JSON.
+The profile page reads `src/data/profile.toml`. The same data feeds the web
+profile page, timeline view, print routes, generated Markdown, and generated
+JSON.
 
 Keep personal data in this TOML file instead of hardcoding it in components.
-That makes a consuming site easier to template, review, export, and print.
+That makes the site easier to review, export, and print.
 
 ## User fields
 
@@ -79,8 +79,8 @@ a = "2022-01-01T00:00:00"
 b = "2026-07-01T00:00:00"
 
 [user.data.experience.company]
-ententy = "Company"
-url = "https://example.com/"
+entity = "Company"
+url = "https://github.com/marcelofpfelix/papyrus"
 items = ["role"]
 
 [user.data.experience.company.role]
@@ -117,10 +117,9 @@ Run the export command after editing profile data:
 pnpm run cv:export
 ```
 
-The command writes `public/cv/profile.json` and `public/cv/profile.md`. The web
-routes use the TOML source, while the generated artifacts are useful for sharing,
-source actions, and external review.
+The command writes `public/cv/profile.json` and `public/cv/profile.md`. Web
+routes use the TOML source. The generated files are useful for sharing, source
+actions, and external review.
 
 The profile page links to print routes. The modern print route and classic ATS
-route should use the same normalized data so the site does not maintain multiple
-resumes by hand.
+route use the same data, so the site does not maintain multiple resumes by hand.

@@ -13,12 +13,5 @@
       <pubDate>Mon, 13 Jul 2026 08:00:00 GMT</pubDate>
       <description>What papyrus.config.toml controls and how a site should edit it.</description>
     </item>
-    <item>
-      <title>Feature config</title>
-      <link>/posts/features/</link>
-      <guid>/posts/features/</guid>
-      <pubDate>Wed, 01 Jul 2026 09:10:00 GMT</pubDate>
-      <description>Grouped feature toggles for Papyrus layouts.</description>
-    </item>
   </channel>
 </rss>

@@ -1,12 +1,13 @@
 ---
-import { PapyrusBaseLayout, PapyrusProjectList } from "../../components";
-import { getTemplateProfile } from "../profile";
+import { PapyrusBaseLayout } from "../../components";
+import { pageContent, pageDescription } from "../../config";
+import { withBase } from "../../utils";
 import { getTemplateSite } from "../site";
 
 const site = await getTemplateSite();
-const profile = await getTemplateProfile();
-const description = profile.bio || site.description;
-const projects = site.projects.slice(0, 3);
+const description = pageDescription(site, "about", site.description);
+const content = pageContent(site, "about");
+const paragraphs = content?.split(/\n\s*\n/).map(paragraph => paragraph.trim()).filter(Boolean) ?? [];
 ---
 
 <PapyrusBaseLayout title="About" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
@@ -16,20 +17,7 @@ const projects = site.projects.slice(0, 3);
   </section>
 
   <section class="papyrus-section">
-    <h2>{profile.name}</h2>
-    {profile.bio && <p class="papyrus-description">{profile.bio}</p>}
-    <p><a href="/profile/">Profile</a></p>
-  </section>
-
-  {projects.length > 0 && (
-    <section class="papyrus-section">
-      <h2>Projects</h2>
-      <PapyrusProjectList projects={projects} />
-    </section>
-  )}
-
-  <section class="papyrus-section">
-    <h2>Posts</h2>
-    <p><a href="/posts/">Posts</a></p>
+    {paragraphs.map(paragraph => <p>{paragraph}</p>)}
+    <p class="papyrus-section-more"><a href={withBase("/profile/")}>Profile</a></p>
   </section>
 </PapyrusBaseLayout>

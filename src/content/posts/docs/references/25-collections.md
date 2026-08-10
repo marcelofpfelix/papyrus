@@ -10,9 +10,8 @@ tags:
   - reference
 ---
 
-A collection is a folder of posts with a TOML file that describes the public
-collection page. It is useful when readers need to follow posts in a deliberate
-order instead of the normal date-based blog order.
+A collection is a folder of posts with a TOML file. Use one when readers should
+follow posts in a fixed order instead of normal blog date order.
 
 The same Markdown post can appear in the regular `/posts/` archive and in a
 collection route. The archive sorts by publishing metadata; the collection sorts
@@ -84,8 +83,8 @@ Collection post pages receive collection-aware navigation:
 - the table of contents can include collection sections
 - the footer can show the current collection, collapsed by default
 
-Use collection routes when context and sequence matter. Use normal post routes
-when date order and discovery are the main concern.
+Use collection routes when sequence matters. Use normal post routes when date
+order is enough.
 
 ## Hiding collection posts
 

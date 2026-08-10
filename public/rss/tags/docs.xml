@@ -4,22 +4,8 @@
     <title>#docs posts</title>
     <link>/</link>
     <description>Posts tagged #docs</description>
-    <lastBuildDate>Tue, 14 Jul 2026 08:30:00 GMT</lastBuildDate>
+    <lastBuildDate>Fri, 10 Jul 2026 09:00:00 GMT</lastBuildDate>
     <atom:link href="/rss/tags/docs.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Release checklist</title>
-      <link>/posts/release-checklist/</link>
-      <guid>/posts/release-checklist/</guid>
-      <pubDate>Tue, 14 Jul 2026 08:30:00 GMT</pubDate>
-      <description>Package metadata, verification, smoke install, and npm publishing checks for Papyrus releases.</description>
-    </item>
-    <item>
-      <title>Theme specification</title>
-      <link>/posts/theme-spec/</link>
-      <guid>/posts/theme-spec/</guid>
-      <pubDate>Tue, 14 Jul 2026 08:00:00 GMT</pubDate>
-      <description>Public behavior contract for Papyrus features, configuration, posts, search, profile, SEO, accessibility, and quality gates.</description>
-    </item>
     <item>
       <title>Install and configure Papyrus</title>
       <link>/posts/install-configure-papyrus/</link>
@@ -49,25 +35,11 @@
       <description>Route-by-route guide to public Papyrus features.</description>
     </item>
     <item>
-      <title>Generated content structure</title>
-      <link>/posts/content-structure/</link>
-      <guid>/posts/content-structure/</guid>
-      <pubDate>Wed, 01 Jul 2026 13:10:00 GMT</pubDate>
-      <description>How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.</description>
-    </item>
-    <item>
-      <title>Feature config</title>
-      <link>/posts/features/</link>
-      <guid>/posts/features/</guid>
-      <pubDate>Wed, 01 Jul 2026 09:10:00 GMT</pubDate>
-      <description>Grouped feature toggles for Papyrus layouts.</description>
-    </item>
-    <item>
       <title>Papyrus docs</title>
       <link>/posts/papyrus-docs/</link>
       <guid>/posts/papyrus-docs/</guid>
       <pubDate>Wed, 01 Jul 2026 09:00:00 GMT</pubDate>
-      <description>Package docs for installing, composing, and extending Papyrus without copying a full theme into every site.</description>
+      <description>Start with papyrus-template, then edit config, Markdown, profile data, and assets.</description>
     </item>
   </channel>
 </rss>

@@ -14,10 +14,10 @@ tags:
 featured: true
 ---
 
-Papyrus is meant to keep the site repo focused. The consuming site owns content,
-configuration, route choices, and deployment. The theme package owns reusable
-UI: base layout, post layout, header, footer, post lists, tags, archive helpers,
-profile/CV components, generated metadata helpers, and shared CSS.
+Papyrus keeps site repos focused on content and config. The site owns posts,
+profile data, assets, and deployment. The package owns shared UI: layouts,
+headers, footers, post lists, tags, archive helpers, profile/CV components,
+metadata helpers, and CSS.
 
 ![Papyrus centered layout](/images/papyrus-layout.svg)
 
@@ -33,37 +33,45 @@ A content site usually needs the same core pieces on several routes:
 - a search entry point in the header
 - generated metadata for RSS, sitemap, robots, search, and AI indexes
 
-The package boundary stays explicit. Papyrus reuses Pure as the foundation,
-adds Papyrus-style publishing features, exposes a stable public API through
-package exports, and lets the site override content, config, and routes.
+The package boundary stays explicit. Papyrus builds on Pure, adds publishing
+features, exports components and helpers, and lets the site override content,
+config, and routes.
 
 ```ts
 import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
 import { publishedPosts } from "astro-theme-papyrus/utils";
 ```
 
-That is the intended shape: small imports, low local code, and theme updates
-handled in one package.
+The goal is small imports, little local code, and theme updates in one package.
+
+## Site files
+
+In a site repo, `src/` is source and `public/` is deployed static input.
+
+- Put posts, collections, custom pages, profile data, and content config in `src/`.
+- Put logos, favicons, covers, avatars, and generated static artifacts in `public/`.
+- Keep site copy in Markdown, TOML, or data files instead of hardcoding it in theme components.
+
+If a site needs a custom route, add that route in the site. If the route is
+generic enough for every Papyrus site, it belongs in the theme package.
 
 ## Post list views
 
-The public posts page uses the standard list view so the archive stays easy to scan:
+The public posts page uses the standard list view so the archive stays scannable:
 
 ```astro title="src/pages/posts/index.astro"
 <PapyrusPostList posts={posts} view="list" />
 ```
 
-The same component can still render denser or card-like post groups inside
-documentation references, landing pages, or custom sections:
+The same component can render denser or card-like post groups inside custom
+sections:
 
 ```astro title="post-list-view-reference.astro"
 <PapyrusPostList posts={posts} view="compact" />
 <PapyrusPostList posts={posts} view="cards" />
 ```
 
-Keeping these alternatives inside a post leaves `/posts/` focused on the main
-archive while documenting every supported display mode where readers can inspect
-it as content.
+Keeping these examples inside a doc keeps `/posts/` focused on the main archive.
 
 ## RSS feed choices
 
@@ -74,6 +82,5 @@ filtering after the fact:
 - [`/rss/tags/custom.xml`](/rss/tags/custom.xml) follows posts tagged with custom authoring features.
 - [`/rss/tags/changelog.xml`](/rss/tags/changelog.xml) follows release and package-change notes.
 
-That is the practical RSS model for selective subscriptions: publish one feed
-per tag or site-owned section, then document the important subscription choices
-inside the relevant post.
+For selective subscriptions, publish one feed per tag or section and link to the
+useful ones from the relevant post.

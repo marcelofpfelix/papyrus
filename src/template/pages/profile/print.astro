@@ -1,14 +1,16 @@
 ---
-import { cvSections, printProfileLinks, profile, profilePages } from "../../data/profile";
-import { PapyrusCvActions } from "../../components";
-import { githubSourceUrl, loadPapyrusConfig } from "../../config";
-import { cvIconSvg, cvLinkIcon } from "../../utils/cv-icons";
-import { compactDurationLabel, profileLinkKindLabel } from "../../utils/cv-profile-data";
-import { shouldShowCvItemTitle } from "../../utils/cv";
-import { withBase } from "../../utils/withBase";
-import "../../styles/cv-print.css";
+import { PapyrusCvActions } from "../../../components";
+import { githubSourceUrl } from "../../../config";
+import { cvIconSvg, cvLinkIcon } from "../../../utils/cv-icons";
+import { compactDurationLabel, profileLinkKindLabel } from "../../../utils/cv-profile-data";
+import { shouldShowCvItemTitle } from "../../../utils/cv";
+import { withBase } from "../../../utils/withBase";
+import { getTemplateProfileData } from "../../profile";
+import { getTemplateSite } from "../../site";
+import "../../../styles/cv-print.css";
 
-const site = await loadPapyrusConfig();
+const site = await getTemplateSite();
+const { cvSections, printProfileLinks, profile, profilePages } = await getTemplateProfileData();
 const pages = profilePages;
 const currentCvHref = profile.canonicalCv;
 const cvMarkdownHref = withBase("/cv/profile.md");

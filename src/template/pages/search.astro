@@ -2,7 +2,8 @@
 import "@pagefind/default-ui/css/ui.css";
 import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusTagList } from "../../components";
-import { formatPostDate, hiddenPosts, postCategory, postHref, postTags, publishedPosts, sortPosts } from "../../utils/posts";
+import { pageDescription } from "../../config";
+import { formatPostDate, hiddenPosts, postCategory, postDate, postHref, postTags, postsByTag, publishedPosts, sortPosts } from "../../utils/posts";
 import { getTemplateSite } from "../site";
 
 const site = await getTemplateSite();
@@ -17,7 +18,7 @@ const categoryCounts = Object.fromEntries(
   categories.map(category => [category, publicPosts.filter(post => postCategory(post) === category).length])
 );
 const counts = Object.fromEntries(
-  tags.map(tag => [tag, publicPosts.filter(post => postTags(post).includes(tag)).length])
+  tags.map(tag => [tag, postsByTag(publicPosts, tag).length])
 );
 const archivePosts = sortPosts(archivedPosts).map((post) => ({
   title: post.data.title,
@@ -25,17 +26,17 @@ const archivePosts = sortPosts(archivedPosts).map((post) => ({
   href: postHref(post),
   category: postCategory(post) ?? "",
   tags: postTags(post),
-  date: formatPostDate(post.data.pubDatetime),
+  date: formatPostDate(postDate(post)),
 }));
 const archivePostsJson = JSON.stringify(archivePosts).replace(/</g, "\\u003c");
+const description = pageDescription(site, "search", "Search public content, browse sections, or open tag pages.");
 ---
 
-<PapyrusBaseLayout title="Search" description="Static search for posts, optional sections, tags, and hidden archive entries." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
+<PapyrusBaseLayout title="Search" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
   <section class="papyrus-search">
     <h1>Search</h1>
-    <p class="papyrus-description">Search public content, browse sections, or open tag pages.</p>
+    {description && <p class="papyrus-description">{description}</p>}
     <div id="pagefind-search" data-pagefind-bundle="/pagefind/"></div>
-    <p class="papyrus-search-browse-label">Browse</p>
     <nav class="papyrus-search-tags" aria-label="Sections">
       {
         categories.map(category => (

@@ -7,21 +7,16 @@
   {
     "tag": "astro",
     "feed": "/rss/tags/astro.xml",
-    "count": 6
+    "count": 4
   },
   {
     "tag": "authoring",
     "feed": "/rss/tags/authoring.xml",
-    "count": 2
+    "count": 1
   },
   {
     "tag": "changelog",
     "feed": "/rss/tags/changelog.xml",
-    "count": 1
-  },
-  {
-    "tag": "code",
-    "feed": "/rss/tags/code.xml",
     "count": 1
   },
   {
@@ -32,11 +27,6 @@
   {
     "tag": "config",
     "feed": "/rss/tags/config.xml",
-    "count": 2
-  },
-  {
-    "tag": "content",
-    "feed": "/rss/tags/content.xml",
     "count": 1
   },
   {
@@ -50,24 +40,19 @@
     "count": 1
   },
   {
-    "tag": "dark-mode",
-    "feed": "/rss/tags/dark-mode.xml",
-    "count": 1
-  },
-  {
     "tag": "deploy",
     "feed": "/rss/tags/deploy.xml",
-    "count": 2
+    "count": 1
   },
   {
     "tag": "docs",
     "feed": "/rss/tags/docs.xml",
-    "count": 9
+    "count": 5
   },
   {
     "tag": "markdown",
     "feed": "/rss/tags/markdown.xml",
-    "count": 2
+    "count": 1
   },
   {
     "tag": "mobile",
@@ -77,7 +62,7 @@
   {
     "tag": "papyrus",
     "feed": "/rss/tags/papyrus.xml",
-    "count": 11
+    "count": 7
   },
   {
     "tag": "portuguese-food",
@@ -97,12 +82,7 @@
   {
     "tag": "reference",
     "feed": "/rss/tags/reference.xml",
-    "count": 4
-  },
-  {
-    "tag": "search",
-    "feed": "/rss/tags/search.xml",
-    "count": 1
+    "count": 3
   },
   {
     "tag": "start",
