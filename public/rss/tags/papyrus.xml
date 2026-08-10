@@ -4,8 +4,43 @@
     <title>#papyrus posts</title>
     <link>/</link>
     <description>Posts tagged #papyrus</description>
-    <lastBuildDate>Fri, 10 Jul 2026 09:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Tue, 14 Jul 2026 08:30:00 GMT</lastBuildDate>
     <atom:link href="/rss/tags/papyrus.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Release checklist</title>
+      <link>/posts/release-checklist/</link>
+      <guid>/posts/release-checklist/</guid>
+      <pubDate>Tue, 14 Jul 2026 08:30:00 GMT</pubDate>
+      <description>Package metadata, verification, smoke install, and npm publishing checks for Papyrus releases.</description>
+    </item>
+    <item>
+      <title>Theme specification</title>
+      <link>/posts/theme-spec/</link>
+      <guid>/posts/theme-spec/</guid>
+      <pubDate>Tue, 14 Jul 2026 08:00:00 GMT</pubDate>
+      <description>Public behavior contract for Papyrus features, configuration, posts, search, profile, SEO, accessibility, and quality gates.</description>
+    </item>
+    <item>
+      <title>Profile and CV</title>
+      <link>/posts/profile/</link>
+      <guid>/posts/profile/</guid>
+      <pubDate>Mon, 13 Jul 2026 08:20:00 GMT</pubDate>
+      <description>What the Papyrus profile data file controls and how profile, print, and export routes share it.</description>
+    </item>
+    <item>
+      <title>Collections</title>
+      <link>/posts/collections/</link>
+      <guid>/posts/collections/</guid>
+      <pubDate>Mon, 13 Jul 2026 08:10:00 GMT</pubDate>
+      <description>What Papyrus collections are and how folder-backed collection routes work.</description>
+    </item>
+    <item>
+      <title>Site config</title>
+      <link>/posts/site-config/</link>
+      <guid>/posts/site-config/</guid>
+      <pubDate>Mon, 13 Jul 2026 08:00:00 GMT</pubDate>
+      <description>What papyrus.config.toml controls and how a site should edit it.</description>
+    </item>
     <item>
       <title>Install and configure Papyrus</title>
       <link>/posts/install-configure-papyrus/</link>

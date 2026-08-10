@@ -9,8 +9,7 @@ export async function getStaticPaths() {
   const allPosts = await getCollection("posts");
   const adjacentPosts = publishedPosts(allPosts);
   const collections = await getPostCollections("src/content/posts", allPosts);
-  const posts = routablePosts(allPosts)
-    .filter((post) => postSlug(post) !== "ai-first-metadata-demo");
+  const posts = routablePosts(allPosts);
   return posts.map((post) => ({
     params: { slug: postSlug(post) },
     props: {

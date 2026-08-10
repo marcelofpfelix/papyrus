@@ -1,4 +1,14 @@
-# Papyrus theme specification
+---
+title: Theme specification
+description: Public behavior contract for Papyrus features, configuration, posts, search, profile, SEO, accessibility, and quality gates.
+slug: theme-spec
+pubDatetime: 2026-07-14T08:00:00.000Z
+category: Docs
+tags:
+  - papyrus
+  - docs
+  - reference
+---
 
 This document defines the public behavior contract for `papyrus`.
 

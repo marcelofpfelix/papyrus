@@ -4,6 +4,7 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { unified } from "@astrojs/markdown-remark";
 import rehypeCallouts from "rehype-callouts";
+import kamailioLang from "./src/shiki/langs/kamailio.mjs";
 import remarkArtifactLinks from "./src/markdown/remark-artifact-links.mjs";
 import rehypeTaskListLabels from "./src/markdown/rehype-task-list-labels.mjs";
 import remarkMermaidBlocks from "./src/markdown/remark-mermaid-blocks.mjs";
@@ -117,6 +118,10 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       theme: "css-variables",
+      langs: [kamailioLang],
+      langAlias: {
+        kam: "kamailio",
+      },
       transformers: [
         transformerNotationDiff(),
         transformerNotationHighlight(),

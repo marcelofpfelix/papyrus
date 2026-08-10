@@ -16,8 +16,11 @@ RSS, project cards, and profile/CV surfaces.
 
 ## Start points
 
-- [Install and configure Papyrus](/posts/install-configure-papyrus/) explains the template-first workflow.
+- [Install and configure Papyrus](/collections/docs/install-configure-papyrus/) explains the template-first workflow.
 - [Feature config](/collections/docs/features/) shows grouped layout and post toggles.
+- [Site config](/collections/docs/site-config/) explains `papyrus.config.toml`.
+- [Collections](/collections/docs/collections/) explains folder-backed collection routes.
+- [Profile and CV](/collections/docs/profile/) explains `src/data/profile.toml`.
 - [Feature map](/collections/docs/feature-map/) maps the public routes to reusable theme features.
 - [Markdown code guide](/collections/docs/code-demo/) shows Markdown, code, callouts, diagrams, media, and artifacts.
 
@@ -53,5 +56,5 @@ TOML file to become a collection, and the collection route reads posts in
 filename order. Regular blog/archive pages can still sort the same posts by
 date.
 
-Repo-only notes stay under the repository `docs/` or `.agents/` folders unless
-they are intentionally rewritten as public posts.
+Repo-only notes stay under `.agents/` unless they are intentionally rewritten as
+public posts.

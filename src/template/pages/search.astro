@@ -1,12 +1,14 @@
 ---
 import "@pagefind/default-ui/css/ui.css";
-import { PapyrusBaseLayout, PapyrusTagList } from "../components";
-import { demoNav, demoSocialLinks } from "../data/demo-nav";
-import { demoPosts } from "../data/demo-posts";
-import { formatPostDate, hiddenPosts, postCategory, postHref, postTags, publishedPosts, sortPosts } from "../utils/posts";
+import { getCollection } from "astro:content";
+import { PapyrusBaseLayout, PapyrusTagList } from "../../components";
+import { formatPostDate, hiddenPosts, postCategory, postHref, postTags, publishedPosts, sortPosts } from "../../utils/posts";
+import { getTemplateSite } from "../site";
 
-const publicPosts = publishedPosts(demoPosts);
-const archivedPosts = hiddenPosts(demoPosts);
+const site = await getTemplateSite();
+const allPosts = await getCollection("posts");
+const publicPosts = publishedPosts(allPosts);
+const archivedPosts = hiddenPosts(allPosts);
 const categories = Array.from(
   new Set(publicPosts.map((post) => postCategory(post)).filter((category): category is string => Boolean(category)))
 ).sort();
@@ -28,16 +30,10 @@ const archivePosts = sortPosts(archivedPosts).map((post) => ({
 const archivePostsJson = JSON.stringify(archivePosts).replace(/</g, "\\u003c");
 ---
 
-<PapyrusBaseLayout
-  title="Search"
-  description="Static search for Papyrus posts, optional sections, tags, and hidden archive entries."
-  siteTitle="papyrus"
-  nav={demoNav}
-  socialLinks={demoSocialLinks}
->
+<PapyrusBaseLayout title="Search" description="Static search for posts, optional sections, tags, and hidden archive entries." siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
   <section class="papyrus-search">
     <h1>Search</h1>
-    <p class="papyrus-description">Papyrus uses static search output for public content and keeps hidden posts in a separate archive mode. Section and tag controls prefill the same query so readers can move between search, tag pages, and archives without a server. Sections are optional site metadata; tags remain the primary built-in topic model.</p>
+    <p class="papyrus-description">Search public content, browse sections, or open tag pages.</p>
     <div id="pagefind-search" data-pagefind-bundle="/pagefind/"></div>
     <p class="papyrus-search-browse-label">Browse</p>
     <nav class="papyrus-search-tags" aria-label="Sections">

@@ -69,6 +69,22 @@ site# pnpm build
 site> pnpm preview
 ```
 
+## Kamailio fences
+
+```kamailio title="kamailio.cfg"
+#!KAMAILIO
+listen=udp:127.0.0.2:5060
+loadmodule "sl.so"
+modparam("sl", "bind_tm", 0)
+
+request_route {
+  if (is_method("INVITE")) {
+    xlog("L_INFO", "call from $si to $ru\n");
+    sl_send_reply("100", "Trying");
+  }
+}
+```
+
 ## Task list
 
 - [x] Keep feature walkthroughs explicit

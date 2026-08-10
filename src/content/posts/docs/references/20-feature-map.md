@@ -15,14 +15,15 @@ Start here when exploring Papyrus.
 
 ## Feature map
 
-- [Install and configure Papyrus](/posts/install-configure-papyrus/) covers the template-first setup flow.
+- [Install and configure Papyrus](/collections/docs/install-configure-papyrus/) covers the template-first setup flow.
 - [Layout, header, footer, and theme controls](/) are visible on the home page.
 - [Post layout and actions](/metadata-demo/) show covers, dates, tags, reading time, adjacent links, source/copy/share actions, table of contents, and optional back links.
 - [Markdown authoring guide](/collections/docs/code-demo/) shows Pure-style Astro/Shiki code blocks, alerts, task lists, tables, Mermaid SVG, artifacts, and zoom hooks.
 - [Posts index and tags](/posts/) show pinned ordering, list-only archive view, tag links, compact metadata, timeline link, and small covers.
 - [Search and tag filters](/search/) work with tag filters, standalone tag pages, and generated RSS feeds for individual tags.
-- [Collections](/collections/) list folder-backed post collections detected from TOML files.
-- [CV/profile templates](/profile/) use normalized CV data across resume, timeline, projects, A4 links, and print routes.
+- [Collections](/collections/docs/collections/) explains folder-backed post collections detected from TOML files.
+- [CV/profile templates](/collections/docs/profile/) use normalized CV data across resume, timeline, projects, A4 links, and print routes.
+- [Site config](/collections/docs/site-config/) explains site identity, navigation, projects, feature flags, and post-list defaults.
 - [Projects and GitHub cards](/projects/) show pinned projects, project list cards, and Pure-inspired GitHub repository preview cards.
 - [Feature flags and plugin contract](/collections/docs/features/) document configurable feature flags, comments, plugins, and typed plugin configuration.
 - [Content structure helpers](/collections/docs/content-structure/) explain nested folders, folder metadata, folder-derived tags, stable slugs, and generated content outlines.

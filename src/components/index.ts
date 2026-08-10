@@ -30,5 +30,6 @@ export { default as PapyrusCvExportActions } from "./PapyrusCvExportActions.astr
 export { default as PapyrusCvActions } from "./PapyrusCvActions.astro";
 export { default as PapyrusCvA4Page } from "./PapyrusCvA4Page.astro";
 export { default as PapyrusJekyllCvPage } from "./PapyrusJekyllCvPage.astro";
+export { default as PapyrusProfilePage } from "./PapyrusProfilePage.astro";
 export { default as PapyrusAiMetadata } from "./PapyrusAiMetadata.astro";
 export { default as PapyrusNotFound } from "./PapyrusNotFound.astro";

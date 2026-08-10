@@ -38,9 +38,8 @@ pnpm papyrus-content-outline public/demo/content-tree public/demo/content-struct
 ## Public boundary
 
 User-facing docs now live as regular posts under `src/content/posts/docs`.
-Development-only notes stay under the repository `docs/` folder or `.agents/`
-and are not linked from the demo navigation unless they are intentionally
-rewritten as user documentation.
+Development-only notes stay under `.agents/` and are not linked from navigation
+unless they are intentionally rewritten as user documentation.
 
 ## Source artifact
 

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.1
+
+- Move public docs into collection-backed posts and keep private agent notes out
+  of the human documentation surface.
+- Add inherited template pages for profile, search, and collections so
+  consuming sites can stay smaller while using the same Papyrus UI.
+- Refresh profile, post, collection, search, and local serving behavior for the
+  GitHub/Cloudflare template workflow.
+
 ## 0.2.0
 
 - Rename the public theme API to `Papyrus*`/`papyrus.*`, including

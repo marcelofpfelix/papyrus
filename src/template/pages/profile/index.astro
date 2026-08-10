@@ -1,16 +1,24 @@
 ---
-import { PapyrusBaseLayout, PapyrusCvProfile } from "../../../components";
-import { getTemplateProfile } from "../../profile";
+import PapyrusProfilePage from "../../../components/PapyrusProfilePage.astro";
+import { getTemplateProfileData } from "../../profile";
 import { getTemplateSite } from "../../site";
 
 const site = await getTemplateSite();
-const profile = await getTemplateProfile();
+const profileData = await getTemplateProfileData();
+const profileSourceLinks = [
+  { label: "TOML", href: "/src/data/profile.toml" },
+  { label: "JSON", href: "/cv/profile.json" },
+  { label: "Markdown", href: "/cv/profile.md" },
+];
+const profileVersionLinks = [
+  { label: "Modern", href: "/profile/print/" },
+  { label: "Classic", href: "/profile/ast/" },
+];
 ---
 
-<PapyrusBaseLayout title="Profile" description={profile.bio} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
-  <section class="papyrus-hero">
-    <h1>Profile</h1>
-    <p class="papyrus-description">{profile.bio}</p>
-  </section>
-  <PapyrusCvProfile user={profile} variant="cards" showSource={true} sourceHref="/cv/profile.md" />
-</PapyrusBaseLayout>
+<PapyrusProfilePage
+  site={site}
+  {...profileData}
+  sourceLinks={profileSourceLinks}
+  versionLinks={profileVersionLinks}
+/>

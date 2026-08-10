@@ -2,7 +2,7 @@
   color-scheme: light;
   --papyrus-bg: #e1e2e7;
   --papyrus-fg: #3760bf;
-  --papyrus-muted: #6172b0;
+  --papyrus-muted: #848cb5;
   --papyrus-panel: #d5d6db;
   --papyrus-border: #b8c0e0;
   --papyrus-accent: #2e7de9;
@@ -18,7 +18,7 @@ html[data-papyrus-theme="tokyo-night"].dark {
   color-scheme: dark;
   --papyrus-bg: #1a1b26;
   --papyrus-fg: #c0caf5;
-  --papyrus-muted: #7aa2f7;
+  --papyrus-muted: #a9b1d6;
   --papyrus-panel: #24283b;
   --papyrus-border: #414868;
   --papyrus-accent: #7aa2f7;

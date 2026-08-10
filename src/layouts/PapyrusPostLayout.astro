@@ -183,6 +183,11 @@ function icon(name: string) {
         </a>
       </p>
     )}
+    {resolvedFeatures.toc && (
+      <div class="papyrus-post-toc-top">
+        <PapyrusToc headings={headings} links={tocLinks} collapsed={tocCollapsed} />
+      </div>
+    )}
     {
       cover && (
         <figure class="papyrus-post-cover-frame">
@@ -194,7 +199,6 @@ function icon(name: string) {
       <h1 transition:name={toTransitionName(title)}>{title}</h1>
       {description && <p class="papyrus-description">{description}</p>}
     </header>
-    {resolvedFeatures.toc && <PapyrusToc headings={headings} links={tocLinks} collapsed={tocCollapsed} />}
     <div class="papyrus-prose">
       <slot />
     </div>

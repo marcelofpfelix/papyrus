@@ -1,7 +1,7 @@
 export const demoPosts = [
   {
-    id: "install-configure-papyrus.md",
-    filePath: "src/content/posts/install-configure-papyrus.md",
+    id: "docs/start/02-install-configure-papyrus.md",
+    filePath: "src/content/posts/docs/start/02-install-configure-papyrus.md",
     data: {
       title: "Install and configure Papyrus",
       description: "A consuming-site guide for installing Papyrus, wiring layouts, posts, search, RSS, metadata, and profile data.",
@@ -14,8 +14,8 @@ export const demoPosts = [
     },
   },
   {
-    id: "markdown-feature-sample.md",
-    filePath: "src/content/posts/markdown-feature-sample.md",
+    id: "docs/authoring/12-markdown-feature-sample.md",
+    filePath: "src/content/posts/docs/authoring/12-markdown-feature-sample.md",
     data: {
       title: "Markdown authoring guide",
       description: "A practical guide showing how Papyrus renders Markdown, callouts, code, media, diagrams, and source actions.",
@@ -42,8 +42,8 @@ export const demoPosts = [
     },
   },
   {
-    id: "papyrus-package-shape.md",
-    filePath: "src/content/posts/papyrus-package-shape.md",
+    id: "docs/references/24-papyrus-package-shape.md",
+    filePath: "src/content/posts/docs/references/24-papyrus-package-shape.md",
     data: {
       title: "Papyrus package shape",
       description: "Package-boundary guide showing how Papyrus keeps repeated blog UI in reusable theme exports.",
@@ -56,8 +56,8 @@ export const demoPosts = [
     },
   },
   {
-    id: "dark-mode-and-search.md",
-    filePath: "src/content/posts/dark-mode-and-search.md",
+    id: "docs/references/22-dark-mode-and-search.md",
+    filePath: "src/content/posts/docs/references/22-dark-mode-and-search.md",
     data: {
       title: "Dark mode and search in Papyrus",
       description: "The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.",
@@ -69,8 +69,8 @@ export const demoPosts = [
     },
   },
   {
-    id: "guides/content-model/folder-tags.md",
-    filePath: "src/content/posts/guides/content-model/folder-tags.md",
+    id: "docs/authoring/13-folder-tags.md",
+    filePath: "src/content/posts/docs/authoring/13-folder-tags.md",
     data: {
       title: "Folder tags for nested posts",
       description: "Content-model guide showing stable slugs with automatic tags from source folders.",
@@ -358,6 +358,18 @@ export const demoPosts = [
     },
   },
   {
+    id: "docs/start/03-site-config.md",
+    filePath: "src/content/posts/docs/start/03-site-config.md",
+    data: {
+      title: "Site config",
+      description: "What papyrus.config.toml controls and how a site should edit it.",
+      slug: "site-config",
+      pubDatetime: "2026-07-13T08:00:00.000Z",
+      category: "Docs",
+      tags: ["papyrus", "config", "start"],
+    },
+  },
+  {
     id: "docs/authoring/10-code-demo.md",
     filePath: "src/content/posts/docs/authoring/10-code-demo.md",
     data: {
@@ -406,6 +418,42 @@ export const demoPosts = [
     },
   },
   {
+    id: "docs/references/25-collections.md",
+    filePath: "src/content/posts/docs/references/25-collections.md",
+    data: {
+      title: "Collections",
+      description: "What Papyrus collections are and how folder-backed collection routes work.",
+      slug: "collections",
+      pubDatetime: "2026-07-13T08:10:00.000Z",
+      category: "Docs",
+      tags: ["papyrus", "collections", "reference"],
+    },
+  },
+  {
+    id: "docs/references/26-profile.md",
+    filePath: "src/content/posts/docs/references/26-profile.md",
+    data: {
+      title: "Profile and CV",
+      description: "What the Papyrus profile data file controls and how profile, print, and export routes share it.",
+      slug: "profile",
+      pubDatetime: "2026-07-13T08:20:00.000Z",
+      category: "Docs",
+      tags: ["papyrus", "profile", "cv", "reference"],
+    },
+  },
+  {
+    id: "docs/references/27-theme-spec.md",
+    filePath: "src/content/posts/docs/references/27-theme-spec.md",
+    data: {
+      title: "Theme specification",
+      description: "Public behavior contract for Papyrus features, configuration, posts, search, profile, SEO, accessibility, and quality gates.",
+      slug: "theme-spec",
+      pubDatetime: "2026-07-14T08:00:00.000Z",
+      category: "Docs",
+      tags: ["papyrus", "docs", "reference"],
+    },
+  },
+  {
     id: "docs/deploy/30-deploy.md",
     filePath: "src/content/posts/docs/deploy/30-deploy.md",
     data: {
@@ -415,6 +463,18 @@ export const demoPosts = [
       pubDatetime: "2026-07-01T15:00:00.000Z",
       category: "Docs",
       tags: ["deploy", "docs", "astro"],
+    },
+  },
+  {
+    id: "docs/deploy/31-release-checklist.md",
+    filePath: "src/content/posts/docs/deploy/31-release-checklist.md",
+    data: {
+      title: "Release checklist",
+      description: "Package metadata, verification, smoke install, and npm publishing checks for Papyrus releases.",
+      slug: "release-checklist",
+      pubDatetime: "2026-07-14T08:30:00.000Z",
+      category: "Docs",
+      tags: ["papyrus", "deploy", "docs"],
     },
   },
   {
@@ -428,18 +488,6 @@ export const demoPosts = [
       cover: "/demo/covers/cv.svg",
       category: "Profile",
       tags: ["profile", "cv"],
-    },
-  },
-  {
-    id: "ai-first-demo.md",
-    filePath: "src/content/posts/ai-first-demo.md",
-    data: {
-      title: "AI-first metadata",
-      description: "How Papyrus publishes llms.txt and llms-full.txt for agents and search tools.",
-      slug: "ai-first-metadata-demo",
-      pubDatetime: "2026-07-01T12:00:00.000Z",
-      category: "Metadata",
-      tags: ["ai", "metadata"],
     },
   },
 ];

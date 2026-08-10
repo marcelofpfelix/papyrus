@@ -2,14 +2,8 @@
   {
     "id": "tag:ai",
     "tag": "ai",
-    "count": 2,
+    "count": 1,
     "posts": [
-      {
-        "id": "post:ai-first-metadata-demo",
-        "slug": "ai-first-metadata-demo",
-        "title": "AI-first metadata",
-        "url": "https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/"
-      },
       {
         "id": "post:ai-mobile",
         "slug": "ai-mobile",
@@ -24,10 +18,10 @@
     "count": 6,
     "posts": [
       {
-        "id": "post:dark-mode-and-search",
-        "slug": "dark-mode-and-search",
-        "title": "Dark mode and search in Papyrus",
-        "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/"
+        "id": "post:folder-tags-demo",
+        "slug": "folder-tags-demo",
+        "title": "Folder tags for nested posts",
+        "url": "https://papyrus.marcelofelix.com/posts/folder-tags-demo/"
       },
       {
         "id": "post:deploy",
@@ -36,28 +30,28 @@
         "url": "https://papyrus.marcelofelix.com/posts/deploy/"
       },
       {
-        "id": "post:papyrus-docs",
-        "slug": "papyrus-docs",
-        "title": "Papyrus docs",
-        "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/"
-      },
-      {
-        "id": "post:folder-tags-demo",
-        "slug": "folder-tags-demo",
-        "title": "Folder tags for nested posts",
-        "url": "https://papyrus.marcelofelix.com/posts/folder-tags-demo/"
-      },
-      {
-        "id": "post:install-configure-papyrus",
-        "slug": "install-configure-papyrus",
-        "title": "Install and configure Papyrus",
-        "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/"
+        "id": "post:dark-mode-and-search",
+        "slug": "dark-mode-and-search",
+        "title": "Dark mode and search in Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/"
       },
       {
         "id": "post:papyrus-package-shape",
         "slug": "papyrus-package-shape",
         "title": "Papyrus package shape",
         "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/"
+      },
+      {
+        "id": "post:papyrus-docs",
+        "slug": "papyrus-docs",
+        "title": "Papyrus docs",
+        "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/"
+      },
+      {
+        "id": "post:install-configure-papyrus",
+        "slug": "install-configure-papyrus",
+        "title": "Install and configure Papyrus",
+        "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/"
       }
     ]
   },
@@ -107,15 +101,34 @@
     ]
   },
   {
+    "id": "tag:collections",
+    "tag": "collections",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:collections",
+        "slug": "collections",
+        "title": "Collections",
+        "url": "https://papyrus.marcelofelix.com/posts/collections/"
+      }
+    ]
+  },
+  {
     "id": "tag:config",
     "tag": "config",
-    "count": 1,
+    "count": 2,
     "posts": [
       {
         "id": "post:features",
         "slug": "features",
         "title": "Feature config",
         "url": "https://papyrus.marcelofelix.com/posts/features/"
+      },
+      {
+        "id": "post:site-config",
+        "slug": "site-config",
+        "title": "Site config",
+        "url": "https://papyrus.marcelofelix.com/posts/site-config/"
       }
     ]
   },
@@ -148,8 +161,15 @@
   {
     "id": "tag:cv",
     "tag": "cv",
-    "count": 0,
-    "posts": []
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:profile",
+        "slug": "profile",
+        "title": "Profile and CV",
+        "url": "https://papyrus.marcelofelix.com/posts/profile/"
+      }
+    ]
   },
   {
     "id": "tag:dark-mode",
@@ -173,20 +193,26 @@
   {
     "id": "tag:deploy",
     "tag": "deploy",
-    "count": 1,
+    "count": 2,
     "posts": [
       {
         "id": "post:deploy",
         "slug": "deploy",
         "title": "Deploy Papyrus",
         "url": "https://papyrus.marcelofelix.com/posts/deploy/"
+      },
+      {
+        "id": "post:release-checklist",
+        "slug": "release-checklist",
+        "title": "Release checklist",
+        "url": "https://papyrus.marcelofelix.com/posts/release-checklist/"
       }
     ]
   },
   {
     "id": "tag:docs",
     "tag": "docs",
-    "count": 7,
+    "count": 9,
     "posts": [
       {
         "id": "post:content-structure",
@@ -201,6 +227,12 @@
         "url": "https://papyrus.marcelofelix.com/posts/deploy/"
       },
       {
+        "id": "post:release-checklist",
+        "slug": "release-checklist",
+        "title": "Release checklist",
+        "url": "https://papyrus.marcelofelix.com/posts/release-checklist/"
+      },
+      {
         "id": "post:feature-map",
         "slug": "feature-map",
         "title": "Feature map",
@@ -211,6 +243,12 @@
         "slug": "ai-mobile",
         "title": "AI and mobile readiness",
         "url": "https://papyrus.marcelofelix.com/posts/ai-mobile/"
+      },
+      {
+        "id": "post:theme-spec",
+        "slug": "theme-spec",
+        "title": "Theme specification",
+        "url": "https://papyrus.marcelofelix.com/posts/theme-spec/"
       },
       {
         "id": "post:papyrus-docs",
@@ -252,19 +290,6 @@
     ]
   },
   {
-    "id": "tag:metadata",
-    "tag": "metadata",
-    "count": 1,
-    "posts": [
-      {
-        "id": "post:ai-first-metadata-demo",
-        "slug": "ai-first-metadata-demo",
-        "title": "AI-first metadata",
-        "url": "https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/"
-      }
-    ]
-  },
-  {
     "id": "tag:mobile",
     "tag": "mobile",
     "count": 1,
@@ -280,7 +305,7 @@
   {
     "id": "tag:papyrus",
     "tag": "papyrus",
-    "count": 6,
+    "count": 11,
     "posts": [
       {
         "id": "post:content-structure",
@@ -289,10 +314,40 @@
         "url": "https://papyrus.marcelofelix.com/posts/content-structure/"
       },
       {
+        "id": "post:release-checklist",
+        "slug": "release-checklist",
+        "title": "Release checklist",
+        "url": "https://papyrus.marcelofelix.com/posts/release-checklist/"
+      },
+      {
         "id": "post:feature-map",
         "slug": "feature-map",
         "title": "Feature map",
         "url": "https://papyrus.marcelofelix.com/posts/feature-map/"
+      },
+      {
+        "id": "post:papyrus-package-shape",
+        "slug": "papyrus-package-shape",
+        "title": "Papyrus package shape",
+        "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/"
+      },
+      {
+        "id": "post:collections",
+        "slug": "collections",
+        "title": "Collections",
+        "url": "https://papyrus.marcelofelix.com/posts/collections/"
+      },
+      {
+        "id": "post:profile",
+        "slug": "profile",
+        "title": "Profile and CV",
+        "url": "https://papyrus.marcelofelix.com/posts/profile/"
+      },
+      {
+        "id": "post:theme-spec",
+        "slug": "theme-spec",
+        "title": "Theme specification",
+        "url": "https://papyrus.marcelofelix.com/posts/theme-spec/"
       },
       {
         "id": "post:papyrus-docs",
@@ -313,10 +368,10 @@
         "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/"
       },
       {
-        "id": "post:papyrus-package-shape",
-        "slug": "papyrus-package-shape",
-        "title": "Papyrus package shape",
-        "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/"
+        "id": "post:site-config",
+        "slug": "site-config",
+        "title": "Site config",
+        "url": "https://papyrus.marcelofelix.com/posts/site-config/"
       }
     ]
   },
@@ -444,6 +499,19 @@
         "slug": "cabrito-assado",
         "title": "Cabrito Assado",
         "url": "https://papyrus.marcelofelix.com/posts/cabrito-assado/"
+      }
+    ]
+  },
+  {
+    "id": "tag:profile",
+    "tag": "profile",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:profile",
+        "slug": "profile",
+        "title": "Profile and CV",
+        "url": "https://papyrus.marcelofelix.com/posts/profile/"
       }
     ]
   },
@@ -577,13 +645,31 @@
   {
     "id": "tag:reference",
     "tag": "reference",
-    "count": 1,
+    "count": 4,
     "posts": [
       {
         "id": "post:feature-map",
         "slug": "feature-map",
         "title": "Feature map",
         "url": "https://papyrus.marcelofelix.com/posts/feature-map/"
+      },
+      {
+        "id": "post:collections",
+        "slug": "collections",
+        "title": "Collections",
+        "url": "https://papyrus.marcelofelix.com/posts/collections/"
+      },
+      {
+        "id": "post:profile",
+        "slug": "profile",
+        "title": "Profile and CV",
+        "url": "https://papyrus.marcelofelix.com/posts/profile/"
+      },
+      {
+        "id": "post:theme-spec",
+        "slug": "theme-spec",
+        "title": "Theme specification",
+        "url": "https://papyrus.marcelofelix.com/posts/theme-spec/"
       }
     ]
   },
@@ -597,6 +683,19 @@
         "slug": "dark-mode-and-search",
         "title": "Dark mode and search in Papyrus",
         "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/"
+      }
+    ]
+  },
+  {
+    "id": "tag:start",
+    "tag": "start",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:site-config",
+        "slug": "site-config",
+        "title": "Site config",
+        "url": "https://papyrus.marcelofelix.com/posts/site-config/"
       }
     ]
   },

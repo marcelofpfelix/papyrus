@@ -1,8 +1,8 @@
-# papyrus guide
+# Papyrus package guide
 
 ## Package goal
 
-`papyrus` is a reusable Astro theme package. It should stay a thin wrapper around Pure while providing the parts Marcelo's sites would otherwise copy into every repo: layouts, components, theme tokens, markdown behavior, scripts, and docs.
+`papyrus` is a reusable Astro theme package. It should stay a thin wrapper around Pure while providing the parts consuming sites would otherwise copy into every repo: layouts, components, theme tokens, markdown behavior, scripts, and docs.
 
 Site repos should keep content, site config, deployment config, and small page composition. Shared behavior belongs in `papyrus`.
 
@@ -13,9 +13,7 @@ make dev
 ```
 
 `make dev` restarts the Astro dev daemon and serves `http://localhost:4326/`
-for editing with HMR. Astro advertises LAN URLs, but on this Mac the
-Astro/Vite Node server accepts TCP on the LAN IP and then does not complete
-HTTP responses.
+for editing with HMR.
 
 For a LAN-safe static preview:
 
@@ -25,7 +23,8 @@ make serve
 
 Default LAN preview URL: `http://192.168.1.102:4326/`.
 
-The consuming blog repo is named `marcelofelix`. Ignore that repo while evolving the package unless the consuming integration needs a smoke test.
+Use consuming-site smoke tests only when a package change affects the exported
+API or injected template routes.
 
 ## Public exports
 

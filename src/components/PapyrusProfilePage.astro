@@ -1,0 +1,678 @@
+---
+import PapyrusBaseLayout from "../layouts/PapyrusBaseLayout.astro";
+import PapyrusCvActions from "./PapyrusCvActions.astro";
+import PapyrusCvLinks from "./PapyrusCvLinks.astro";
+import PapyrusGithubCard from "./PapyrusGithubCard.astro";
+import PapyrusTimeline from "./PapyrusTimeline.astro";
+import { cvIconSvg } from "../utils/cv-icons";
+import { shouldShowCvItemTitle } from "../utils/cv";
+import { getAssetPath, withBase } from "../utils/withBase";
+import type { ProfileData, ProfileProject } from "../utils/cv-profile-data";
+
+type SiteProps = {
+  title?: string;
+  brandTitle?: string;
+  brandMark?: "terminal" | "twinkle";
+  showBrandTitle?: boolean;
+  defaultThemeProfile?: string;
+  defaultFontProfile?: string;
+  nav?: { href: string; label: string }[];
+  socialLinks?: { href: string; label: string; icon?: string }[];
+  features?: Record<string, unknown>;
+  googleVerification?: string;
+};
+
+type Props = ProfileData & {
+  site?: SiteProps;
+  sourceLinks?: { label: string; href: string }[];
+  versionLinks?: { label: string; href: string }[];
+  markdownHref?: string;
+};
+
+const {
+  site = {},
+  profile,
+  profileLinks,
+  cvSections,
+  timelineEvents,
+  profileProjects,
+  sourceLinks,
+  versionLinks,
+  markdownHref,
+} = Astro.props as Props;
+
+const cvMarkdownHref = withBase(markdownHref ?? "/cv/profile.md");
+const visibleProfileLinks = profileLinks.filter(link => link.href !== profile.canonicalCv);
+const resumeSections = cvSections.filter(section => section.id !== "interests");
+const skillsSection = cvSections.find(section => section.id === "skills" || section.title.toLowerCase() === "skills");
+const skillTags = Array.from(new Set(
+  (skillsSection?.groups ?? [])
+    .flatMap(group => group.items)
+    .flatMap(item => item.tags ?? [])
+    .map(tag => tag.trim())
+    .filter(Boolean)
+)).map(tag => ({ label: `#${tag}`, href: withBase(`/tag/${tag}/`) }));
+const profileSourceLinks = sourceLinks ?? [
+  { label: "TOML", href: "https://github.com/marcelofpfelix/papyrus/blob/main/src/data/profile.toml" },
+  { label: "JSON", href: "https://github.com/marcelofpfelix/papyrus/blob/main/public/cv/profile.json" },
+  { label: "Markdown", href: "https://github.com/marcelofpfelix/papyrus/blob/main/public/cv/profile.md" },
+];
+const profileVersionLinks = versionLinks ?? [
+  { label: "Modern", href: withBase("/profile/print/") },
+  { label: "Classic", href: withBase("/profile/ast/") },
+];
+const visibleProfileProjects = profileProjects.filter((project: ProfileProject) => project.repo);
+
+function cvIcon(name: string) {
+  const icons: Record<string, string> = {
+    award: `<circle cx="12" cy="8" r="5"></circle><path d="M8.5 12.5 7 22l5-3 5 3-1.5-9.5"></path>`,
+    briefcase: `<rect x="3" y="7" width="18" height="13" rx="2"></rect><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>`,
+    hands: `<path d="M7 11v4a4 4 0 0 0 8 0v-4"></path><path d="M5 11h14"></path><path d="M9 7V4"></path><path d="M15 7V4"></path>`,
+    repo: `<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>`,
+    school: `<path d="m22 10-10-5-10 5 10 5 10-5Z"></path><path d="M6 12v5c3 2 9 2 12 0v-5"></path>`,
+    timeline: `<path d="M12 8v4l3 2"></path><circle cx="12" cy="12" r="9"></circle>`,
+    tools: `<path d="m14.7 6.3 3-3a3.5 3.5 0 0 1-4.9 4.9l-6.6 6.6a2 2 0 1 0 2.8 2.8l6.6-6.6a3.5 3.5 0 0 1 4.9-4.9l-3 3"></path>`,
+    university: `<path d="m3 10 9-6 9 6"></path><path d="M5 10h14"></path><path d="M6 10v8"></path><path d="M10 10v8"></path><path d="M14 10v8"></path><path d="M18 10v8"></path><path d="M4 18h16"></path>`,
+    user: `<circle cx="12" cy="8" r="4"></circle><path d="M4 22a8 8 0 0 1 16 0"></path>`,
+  };
+
+  return icons[name] ?? icons.user;
+}
+
+---
+
+<PapyrusBaseLayout
+  title="Profile"
+  description={profile.summary}
+  siteTitle={site.title}
+  brandTitle={site.brandTitle}
+  brandMark={site.brandMark}
+  showBrandTitle={site.showBrandTitle}
+  defaultThemeProfile={site.defaultThemeProfile}
+  defaultFontProfile={site.defaultFontProfile}
+  nav={site.nav}
+  socialLinks={site.socialLinks}
+  features={site.features}
+  googleVerification={site.googleVerification}
+>
+  <section class="cv-shell">
+    <aside class="cv-sidebar">
+      <img src={getAssetPath(profile.avatar)} alt={profile.name} />
+      <h1>{profile.name}</h1>
+      <p>{profile.headline}</p>
+
+      <section>
+        <h2>Contact</h2>
+        <PapyrusCvLinks links={visibleProfileLinks} />
+      </section>
+
+      <section>
+        <h2>Info</h2>
+        <dl>
+          {profile.meta.map(item => (
+            <div class="cv-profile-detail">
+              <dt>
+                <svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIconSvg(item.icon)} />
+                <span>{item.label}</span>
+              </dt>
+              <dd>{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+    </aside>
+
+    <div class="cv-main">
+      <div class="cv-controls">
+        <PapyrusCvActions
+          profile
+          markdownHref={cvMarkdownHref}
+          shareText={profile.headline}
+          sourceLinks={profileSourceLinks}
+          versionLinks={profileVersionLinks}
+        />
+
+        <div class="cv-template-tabs" role="tablist" aria-label="Profile templates">
+          <button type="button" role="tab" aria-selected="true" data-cv-tab="resume">Resume</button>
+          <button type="button" role="tab" aria-selected="false" data-cv-tab="timeline">Timeline</button>
+          <button type="button" role="tab" aria-selected="false" data-cv-tab="projects">Projects</button>
+          <button type="button" role="tab" aria-selected="false" data-cv-tab="skills">Skills</button>
+        </div>
+      </div>
+
+      <div class="cv-template-panels">
+      <section class="cv-template-panel" data-cv-panel="resume">
+        {resumeSections.map(section => (
+          <section class="cv-section" id={section.id}>
+            <h2>
+              <span><svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIcon(section.icon)} /></span>
+              {section.title}
+              {section.duration && <small>{section.duration}</small>}
+            </h2>
+            {section.groups.map(group => (
+              <article class="cv-group">
+                {group.entity && (
+                  <a class="cv-entity" href={group.url}>
+                    {group.logo && <img src={getAssetPath(group.logo)} alt="" loading="lazy" />}
+                    <strong>{group.entity}</strong>
+                  </a>
+                )}
+                {group.items.map(item => (
+                  <section class="cv-item">
+                    {(shouldShowCvItemTitle(section, group, item) || item.location || item.dates || item.duration) && (
+                      <header>
+                        {shouldShowCvItemTitle(section, group, item) && <h3>{item.title}</h3>}
+                        {(item.location || item.dates || item.duration) && (
+                          <p>{[item.location, item.dates, item.duration].filter(Boolean).join(", ")}</p>
+                        )}
+                      </header>
+                    )}
+                    {item.description && <div class="cv-description" set:html={item.description} />}
+                  </section>
+                ))}
+              </article>
+            ))}
+          </section>
+        ))}
+      </section>
+
+      <section class="cv-template-panel" data-cv-panel="timeline" aria-hidden="true" inert>
+        <section class="cv-section">
+          <h2><span><svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIcon("timeline")} /></span>Timeline</h2>
+          <PapyrusTimeline events={timelineEvents} />
+        </section>
+      </section>
+
+      <section class="cv-template-panel" data-cv-panel="projects" aria-hidden="true" inert>
+        <section class="cv-section">
+          <h2><span><svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIcon("repo")} /></span>Projects</h2>
+          <div class="cv-repo-grid">
+            {visibleProfileProjects.map(project => (
+              <PapyrusGithubCard repo={project.repo} description={project.description} fetchMetadata={false} />
+            ))}
+          </div>
+        </section>
+      </section>
+
+      <section class="cv-template-panel" data-cv-panel="skills" aria-hidden="true" inert>
+        <section class="cv-section cv-skills-panel">
+          <h2><span><svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIcon("tools")} /></span>Skills</h2>
+          {skillsSection?.groups.map(group => (
+            <article class="cv-group">
+              {group.items.map(item => (
+                <section class="cv-item">
+                  {item.description && <div class="cv-description" set:html={item.description} />}
+                </section>
+              ))}
+            </article>
+          ))}
+          {skillTags.length > 0 && (
+            <nav class="cv-skill-tags" aria-label="Skill tag pages">
+              {skillTags.map(tag => <a href={tag.href}>{tag.label}</a>)}
+            </nav>
+          )}
+        </section>
+      </section>
+      </div>
+    </div>
+  </section>
+</PapyrusBaseLayout>
+
+<script>
+  function bindCvTabs() {
+    const tabs = Array.from(document.querySelectorAll<HTMLElement>("[data-cv-tab]"));
+    const panels = Array.from(document.querySelectorAll<HTMLElement>("[data-cv-panel]"));
+    const activate = (name: string) => {
+      tabs.forEach((tab) => {
+        const active = tab.dataset.cvTab === name;
+        tab.setAttribute("aria-selected", String(active));
+      });
+      panels.forEach((panel) => {
+        const active = panel.dataset.cvPanel === name;
+        panel.toggleAttribute("inert", !active);
+        panel.setAttribute("aria-hidden", String(!active));
+      });
+    };
+
+    tabs.forEach((tab) => {
+      if (tab.dataset.cvBound) return;
+      tab.dataset.cvBound = "true";
+      tab.addEventListener("click", () => activate(tab.dataset.cvTab ?? "resume"));
+    });
+  }
+
+  bindCvTabs();
+  document.addEventListener("astro:page-load", bindCvTabs);
+
+</script>
+
+<style>
+  .cv-shell {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .cv-sidebar {
+    align-self: start;
+    background: var(--papyrus-panel);
+    border: 1px solid var(--papyrus-border);
+    border-radius: var(--papyrus-radius);
+    display: grid;
+    gap: 18px;
+    padding: 18px;
+    position: sticky;
+    top: 92px;
+  }
+
+  .cv-sidebar img {
+    aspect-ratio: 1;
+    border: 2px solid var(--papyrus-border);
+    border-radius: 999px;
+    justify-self: center;
+    object-fit: cover;
+    width: 96px;
+  }
+
+  .cv-sidebar h1 {
+    color: var(--papyrus-accent);
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    letter-spacing: 0;
+    line-height: 1;
+    margin: 0;
+    text-align: center;
+  }
+
+  .cv-sidebar h2 {
+    color: var(--papyrus-accent);
+    font-size: 1rem;
+    margin: 0 0 8px;
+  }
+
+  .cv-sidebar p {
+    justify-self: center;
+    margin: 0;
+    text-align: center;
+  }
+
+  .cv-sidebar nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: flex-start;
+  }
+
+  .cv-sidebar a {
+    color: var(--papyrus-accent);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .cv-sidebar a:hover,
+  .cv-sidebar a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .cv-sidebar dl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+  }
+
+  .cv-profile-detail {
+    align-items: center;
+    background: var(--papyrus-panel);
+    border-radius: var(--papyrus-radius);
+    color: var(--papyrus-fg);
+    display: flex;
+    gap: 6px;
+    padding: 6px 9px;
+  }
+
+  .cv-sidebar dt {
+    align-items: center;
+    color: var(--papyrus-muted);
+    display: inline-flex;
+    flex: 0 0 auto;
+    font-family: var(--papyrus-font-mono);
+    font-size: 0.75rem;
+  }
+
+  .cv-sidebar dt svg {
+    color: var(--papyrus-accent);
+    height: 1rem;
+    stroke: currentColor;
+    width: 1rem;
+  }
+
+  .cv-sidebar dt span {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  .cv-sidebar dd {
+    margin: 0;
+  }
+
+  .cv-main {
+    display: grid;
+    justify-items: center;
+    min-width: 0;
+  }
+
+  .cv-sidebar :global(.papyrus-cv-links) {
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .cv-sidebar :global(.papyrus-cv-links svg) {
+    color: var(--papyrus-accent);
+    stroke: currentColor;
+  }
+
+  .cv-sidebar :global(.papyrus-cv-links a),
+  .cv-sidebar :global(.papyrus-cv-link-item) {
+    justify-content: flex-start;
+  }
+
+  .cv-controls {
+    display: grid;
+    gap: 10px;
+    justify-items: center;
+    margin: 0 auto 22px;
+    max-width: min(100%, 720px);
+    text-align: center;
+    width: 100%;
+  }
+
+  .cv-actions {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 100%;
+    place-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .cv-action,
+  .cv-source-links a {
+    align-items: center;
+    appearance: none;
+    background: transparent;
+    border: 0;
+    color: var(--papyrus-accent);
+    cursor: pointer;
+    display: inline-flex;
+    font: 700 0.86rem/1 var(--papyrus-font-sans);
+    gap: 5px;
+    min-height: 32px;
+    padding: 4px 2px;
+    text-decoration: none;
+    justify-content: center;
+  }
+
+  .cv-action:hover,
+  .cv-action:focus-visible,
+  .cv-source-links a:hover,
+  .cv-source-links a:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .cv-action svg {
+    fill: none;
+    height: 1em;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+    width: 1em;
+  }
+
+  .cv-source-menu {
+    display: inline-flex;
+    position: relative;
+  }
+
+  .cv-source-menu summary {
+    list-style: none;
+  }
+
+  .cv-source-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .cv-source-links {
+    background: var(--papyrus-panel);
+    border: 1px solid var(--papyrus-border);
+    box-shadow: 0 8px 24px rgb(24 24 27 / 0.14);
+    display: grid;
+    min-width: 120px;
+    padding: 4px 8px;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    z-index: 2;
+  }
+
+  .cv-action-status {
+    color: var(--papyrus-muted);
+    font-size: 0.78rem;
+  }
+
+  .cv-template-tabs {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 0 auto;
+    max-width: 100%;
+    place-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  .cv-template-tabs button {
+    align-items: center;
+    appearance: none;
+    background: transparent;
+    border: 1px solid var(--papyrus-border);
+    border-radius: 6px;
+    color: var(--papyrus-muted);
+    cursor: pointer;
+    display: inline-flex;
+    font: 600 0.86rem/1 var(--papyrus-font-sans);
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 11px;
+    text-align: center;
+  }
+
+  .cv-template-tabs button:hover,
+  .cv-template-tabs button:focus-visible,
+  .cv-template-tabs button[aria-selected="true"] {
+    border-color: var(--papyrus-accent);
+    color: var(--papyrus-accent);
+    outline: none;
+  }
+
+  .cv-template-panels {
+    display: grid;
+    width: 100%;
+  }
+
+  .cv-template-panel {
+    grid-area: 1 / 1;
+    opacity: 1;
+    transition: opacity 120ms ease;
+    visibility: visible;
+    width: 100%;
+  }
+
+  .cv-template-panel[aria-hidden="true"] {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  .cv-section {
+    border-top: 1px solid var(--papyrus-border);
+    padding: 24px 0;
+  }
+
+  .cv-section h2 {
+    align-items: center;
+    color: var(--papyrus-accent);
+    display: flex;
+    font-size: 1.35rem;
+    gap: 10px;
+    margin: 0 0 14px;
+  }
+
+  .cv-section h2 span {
+    align-items: center;
+    color: var(--papyrus-muted);
+    display: inline-flex;
+  }
+
+  .cv-section h2 small {
+    color: var(--papyrus-muted);
+    font-size: 0.76rem;
+    font-weight: 600;
+    margin-left: auto;
+  }
+
+  .cv-section h2 svg {
+    fill: none;
+    height: 1em;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+    width: 1em;
+  }
+
+  .cv-group + .cv-group {
+    margin-top: 18px;
+  }
+
+  .cv-entity {
+    align-items: center;
+    display: inline-flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    text-decoration: none;
+  }
+
+  .cv-entity img {
+    border-radius: 5px;
+    height: 36px;
+    object-fit: contain;
+    width: 36px;
+  }
+
+  .cv-item + .cv-item {
+    margin-top: 10px;
+  }
+
+  .cv-item header {
+    align-items: baseline;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+  }
+
+  .cv-item h3,
+  .cv-item p {
+    margin: 0;
+  }
+
+  .cv-item header p {
+    color: var(--papyrus-muted);
+    font-size: 0.9rem;
+    text-align: right;
+  }
+
+  .cv-description {
+    margin-top: 6px;
+  }
+
+  .cv-description :global(ul) {
+    margin: 8px 0 0;
+    padding-left: 18px;
+  }
+
+  .cv-repo-grid {
+    display: grid;
+    gap: 14px;
+  }
+
+  .cv-skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .cv-skill-tags a {
+    align-items: center;
+    border: 1px solid var(--papyrus-border);
+    border-radius: 6px;
+    color: var(--papyrus-accent);
+    display: inline-flex;
+    font: 700 0.82rem/1 var(--papyrus-font-sans);
+    min-height: 30px;
+    padding: 6px 9px;
+    text-decoration: none;
+  }
+
+  .cv-skill-tags a:hover,
+  .cv-skill-tags a:focus-visible {
+    border-color: var(--papyrus-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 780px) {
+    .cv-shell {
+      grid-template-columns: 1fr;
+    }
+
+    .cv-sidebar {
+      position: static;
+    }
+
+    .cv-sidebar dl {
+      display: flex;
+    }
+
+    .cv-profile-detail {
+      flex: 1 1 calc(50% - 4px);
+      min-width: 0;
+    }
+
+    .cv-sidebar dd {
+      overflow-wrap: anywhere;
+    }
+
+    .cv-item header {
+      display: block;
+    }
+
+    .cv-item header p {
+      text-align: left;
+    }
+  }
+</style>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>#profile posts</title>
+    <link>/</link>
+    <description>Posts tagged #profile</description>
+    <lastBuildDate>Mon, 13 Jul 2026 08:20:00 GMT</lastBuildDate>
+    <atom:link href="/rss/tags/profile.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Profile and CV</title>
+      <link>/posts/profile/</link>
+      <guid>/posts/profile/</guid>
+      <pubDate>Mon, 13 Jul 2026 08:20:00 GMT</pubDate>
+      <description>What the Papyrus profile data file controls and how profile, print, and export routes share it.</description>
+    </item>
+  </channel>
+</rss>

@@ -15,8 +15,8 @@ components, injected template pages, styles, helpers, and build utilities.
 
 ## Demo
 
-Run `make dev` and open `http://localhost:4326/`. For remote device testing,
-run `make serve` and open `http://192.168.1.102:4326/`.
+Run `make dev` and open `http://localhost:4326/`.
+Run `make serve` for a static LAN preview at `http://192.168.1.102:4326/`.
 Public demo: `https://papyrus.marcelofelix.com/`
 
 ## Start a Site
@@ -71,12 +71,13 @@ dependency during theme development.
 ## Documentation
 
 Open `/collections/docs/` in the public Papyrus site. Package docs live as a post collection.
-`/posts/install-configure-papyrus/` explains the template-first setup,
-`/collections/docs/feature-map/` links each public feature route, `/collections/docs/code-demo/` and `/posts/markdown-feature-sample/` document authoring, and
+`/collections/docs/install-configure-papyrus/` explains the template-first setup,
+`/collections/docs/site-config/`, `/collections/docs/collections/`, and `/collections/docs/profile/` cover the main data/config surfaces,
+`/collections/docs/feature-map/` links each public feature route, `/collections/docs/code-demo/` and `/collections/docs/markdown-feature-sample/` document authoring, and
 `/collections/docs/features/` covers feature flags, SEO, accessibility, search, sitemap,
 robots.txt, and plugin-shaped extension points.
 
-`docs/guide.md` contains development reference material, `.agents/status-roadmap.md`
+`.agents/package-guide.md` contains development reference material, `.agents/status-roadmap.md`
 points to the repo-only request audit, `scripts` contains package generators and user-facing CLI helpers, and
 `.agents/scripts` contains repo-only verification helpers. README intentionally stays short; roadmap,
 parity notes, and implementation audits belong in `.agents/`.

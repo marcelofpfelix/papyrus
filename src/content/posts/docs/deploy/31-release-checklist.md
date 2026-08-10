@@ -1,4 +1,14 @@
-# Release checklist
+---
+title: Release checklist
+description: Package metadata, verification, smoke install, and npm publishing checks for Papyrus releases.
+slug: release-checklist
+pubDatetime: 2026-07-14T08:30:00.000Z
+category: Docs
+tags:
+  - papyrus
+  - deploy
+  - docs
+---
 
 Papyrus publishes as `astro-theme-papyrus`. Do not reserve or publish an empty package name.
 A release must ship usable exports, docs, styles, scripts, and examples that

@@ -11,12 +11,12 @@ but the audit marks a concrete request as `Partial`, `Missing`, `Unverified`, or
 ## Source of truth
 
 - Current request status: `.agents/request-audit.md`
-- Public theme specification: `docs/theme-spec.md`
-- Implementation and setup guide: `docs/guide.md`
+- Public theme specification: `src/content/posts/docs/references/27-theme-spec.md`
+- Implementation and setup guide: `.agents/package-guide.md`
 - Pure adaptation checklist: `.agents/pure-parity.md`
 - Starlight reference log: `.agents/starlight-comparison.md`
 - CV source comparison: `.agents/cv-source-comparison.md`
-- Deployment notes: `docs/deploy.md`
+- Deployment notes: `src/content/posts/docs/deploy/30-deploy.md`
 
 ## What belongs here
 

@@ -1,29 +1,6 @@
 {
-  "generatedAt": "2026-07-12T21:25:06.075Z",
+  "generatedAt": "2026-08-10T13:29:47.384Z",
   "nodes": [
-    {
-      "id": "post:ai-first-metadata-demo",
-      "type": "post",
-      "label": "AI-first metadata",
-      "url": "https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/",
-      "sourcePath": "src/content/posts/ai-first-demo.md",
-      "tags": [
-        "ai",
-        "metadata"
-      ]
-    },
-    {
-      "id": "post:dark-mode-and-search",
-      "type": "post",
-      "label": "Dark mode and search in Papyrus",
-      "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/",
-      "sourcePath": "src/content/posts/dark-mode-and-search.md",
-      "tags": [
-        "astro",
-        "search",
-        "dark-mode"
-      ]
-    },
     {
       "id": "post:code-demo",
       "type": "post",
@@ -49,6 +26,29 @@
       ]
     },
     {
+      "id": "post:markdown-feature-sample",
+      "type": "post",
+      "label": "Markdown authoring guide",
+      "url": "https://papyrus.marcelofelix.com/posts/markdown-feature-sample/",
+      "sourcePath": "src/content/posts/docs/authoring/12-markdown-feature-sample.md",
+      "tags": [
+        "markdown",
+        "theme",
+        "authoring",
+        "custom"
+      ]
+    },
+    {
+      "id": "post:folder-tags-demo",
+      "type": "post",
+      "label": "Folder tags for nested posts",
+      "url": "https://papyrus.marcelofelix.com/posts/folder-tags-demo/",
+      "sourcePath": "src/content/posts/docs/authoring/13-folder-tags.md",
+      "tags": [
+        "astro"
+      ]
+    },
+    {
       "id": "post:deploy",
       "type": "post",
       "label": "Deploy Papyrus",
@@ -58,6 +58,18 @@
         "deploy",
         "docs",
         "astro"
+      ]
+    },
+    {
+      "id": "post:release-checklist",
+      "type": "post",
+      "label": "Release checklist",
+      "url": "https://papyrus.marcelofelix.com/posts/release-checklist/",
+      "sourcePath": "src/content/posts/docs/deploy/31-release-checklist.md",
+      "tags": [
+        "papyrus",
+        "deploy",
+        "docs"
       ]
     },
     {
@@ -85,6 +97,68 @@
       ]
     },
     {
+      "id": "post:dark-mode-and-search",
+      "type": "post",
+      "label": "Dark mode and search in Papyrus",
+      "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/",
+      "sourcePath": "src/content/posts/docs/references/22-dark-mode-and-search.md",
+      "tags": [
+        "astro",
+        "search",
+        "dark-mode"
+      ]
+    },
+    {
+      "id": "post:papyrus-package-shape",
+      "type": "post",
+      "label": "Papyrus package shape",
+      "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/",
+      "sourcePath": "src/content/posts/docs/references/24-papyrus-package-shape.md",
+      "tags": [
+        "astro",
+        "theme",
+        "papyrus",
+        "changelog"
+      ]
+    },
+    {
+      "id": "post:collections",
+      "type": "post",
+      "label": "Collections",
+      "url": "https://papyrus.marcelofelix.com/posts/collections/",
+      "sourcePath": "src/content/posts/docs/references/25-collections.md",
+      "tags": [
+        "papyrus",
+        "collections",
+        "reference"
+      ]
+    },
+    {
+      "id": "post:profile",
+      "type": "post",
+      "label": "Profile and CV",
+      "url": "https://papyrus.marcelofelix.com/posts/profile/",
+      "sourcePath": "src/content/posts/docs/references/26-profile.md",
+      "tags": [
+        "papyrus",
+        "profile",
+        "cv",
+        "reference"
+      ]
+    },
+    {
+      "id": "post:theme-spec",
+      "type": "post",
+      "label": "Theme specification",
+      "url": "https://papyrus.marcelofelix.com/posts/theme-spec/",
+      "sourcePath": "src/content/posts/docs/references/27-theme-spec.md",
+      "tags": [
+        "papyrus",
+        "docs",
+        "reference"
+      ]
+    },
+    {
       "id": "post:papyrus-docs",
       "type": "post",
       "label": "Papyrus docs",
@@ -106,6 +180,30 @@
         "papyrus",
         "docs",
         "config"
+      ]
+    },
+    {
+      "id": "post:install-configure-papyrus",
+      "type": "post",
+      "label": "Install and configure Papyrus",
+      "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/",
+      "sourcePath": "src/content/posts/docs/start/02-install-configure-papyrus.md",
+      "tags": [
+        "papyrus",
+        "astro",
+        "docs"
+      ]
+    },
+    {
+      "id": "post:site-config",
+      "type": "post",
+      "label": "Site config",
+      "url": "https://papyrus.marcelofelix.com/posts/site-config/",
+      "sourcePath": "src/content/posts/docs/start/03-site-config.md",
+      "tags": [
+        "papyrus",
+        "config",
+        "start"
       ]
     },
     {
@@ -329,58 +427,10 @@
       ]
     },
     {
-      "id": "post:folder-tags-demo",
-      "type": "post",
-      "label": "Folder tags for nested posts",
-      "url": "https://papyrus.marcelofelix.com/posts/folder-tags-demo/",
-      "sourcePath": "src/content/posts/guides/content-model/folder-tags.md",
-      "tags": [
-        "astro"
-      ]
-    },
-    {
-      "id": "post:install-configure-papyrus",
-      "type": "post",
-      "label": "Install and configure Papyrus",
-      "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/",
-      "sourcePath": "src/content/posts/install-configure-papyrus.md",
-      "tags": [
-        "papyrus",
-        "astro",
-        "docs"
-      ]
-    },
-    {
-      "id": "post:markdown-feature-sample",
-      "type": "post",
-      "label": "Markdown authoring guide",
-      "url": "https://papyrus.marcelofelix.com/posts/markdown-feature-sample/",
-      "sourcePath": "src/content/posts/markdown-feature-sample.md",
-      "tags": [
-        "markdown",
-        "theme",
-        "authoring",
-        "custom"
-      ]
-    },
-    {
-      "id": "post:papyrus-package-shape",
-      "type": "post",
-      "label": "Papyrus package shape",
-      "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/",
-      "sourcePath": "src/content/posts/papyrus-package-shape.md",
-      "tags": [
-        "astro",
-        "theme",
-        "papyrus",
-        "changelog"
-      ]
-    },
-    {
       "id": "tag:ai",
       "type": "tag",
       "label": "#ai",
-      "count": 2
+      "count": 1
     },
     {
       "id": "tag:astro",
@@ -407,10 +457,16 @@
       "count": 1
     },
     {
+      "id": "tag:collections",
+      "type": "tag",
+      "label": "#collections",
+      "count": 1
+    },
+    {
       "id": "tag:config",
       "type": "tag",
       "label": "#config",
-      "count": 1
+      "count": 2
     },
     {
       "id": "tag:content",
@@ -428,7 +484,7 @@
       "id": "tag:cv",
       "type": "tag",
       "label": "#cv",
-      "count": 0
+      "count": 1
     },
     {
       "id": "tag:dark-mode",
@@ -446,25 +502,19 @@
       "id": "tag:deploy",
       "type": "tag",
       "label": "#deploy",
-      "count": 1
+      "count": 2
     },
     {
       "id": "tag:docs",
       "type": "tag",
       "label": "#docs",
-      "count": 7
+      "count": 9
     },
     {
       "id": "tag:markdown",
       "type": "tag",
       "label": "#markdown",
       "count": 2
-    },
-    {
-      "id": "tag:metadata",
-      "type": "tag",
-      "label": "#metadata",
-      "count": 1
     },
     {
       "id": "tag:mobile",
@@ -476,13 +526,19 @@
       "id": "tag:papyrus",
       "type": "tag",
       "label": "#papyrus",
-      "count": 6
+      "count": 11
     },
     {
       "id": "tag:portuguese-food",
       "type": "tag",
       "label": "#portuguese-food",
       "count": 20
+    },
+    {
+      "id": "tag:profile",
+      "type": "tag",
+      "label": "#profile",
+      "count": 1
     },
     {
       "id": "tag:recipe",
@@ -494,12 +550,18 @@
       "id": "tag:reference",
       "type": "tag",
       "label": "#reference",
-      "count": 1
+      "count": 4
     },
     {
       "id": "tag:search",
       "type": "tag",
       "label": "#search",
+      "count": 1
+    },
+    {
+      "id": "tag:start",
+      "type": "tag",
+      "label": "#start",
       "count": 1
     },
     {
@@ -600,31 +662,6 @@
   ],
   "edges": [
     {
-      "source": "post:ai-first-metadata-demo",
-      "target": "tag:ai",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:ai-first-metadata-demo",
-      "target": "tag:metadata",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "tag:astro",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "tag:search",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "tag:dark-mode",
-      "relation": "has-tag"
-    },
-    {
       "source": "post:code-demo",
       "target": "tag:authoring",
       "relation": "has-tag"
@@ -655,6 +692,31 @@
       "relation": "has-tag"
     },
     {
+      "source": "post:markdown-feature-sample",
+      "target": "tag:markdown",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:markdown-feature-sample",
+      "target": "tag:theme",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:markdown-feature-sample",
+      "target": "tag:authoring",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:markdown-feature-sample",
+      "target": "tag:custom",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:folder-tags-demo",
+      "target": "tag:astro",
+      "relation": "has-tag"
+    },
+    {
       "source": "post:deploy",
       "target": "tag:deploy",
       "relation": "has-tag"
@@ -667,6 +729,21 @@
     {
       "source": "post:deploy",
       "target": "tag:astro",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "tag:papyrus",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "tag:deploy",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "tag:docs",
       "relation": "has-tag"
     },
     {
@@ -700,6 +777,91 @@
       "relation": "has-tag"
     },
     {
+      "source": "post:dark-mode-and-search",
+      "target": "tag:astro",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "tag:search",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "tag:dark-mode",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "tag:astro",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "tag:theme",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "tag:papyrus",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "tag:changelog",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "tag:papyrus",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "tag:collections",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "tag:reference",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "tag:papyrus",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "tag:profile",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "tag:cv",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "tag:reference",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "tag:papyrus",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "tag:docs",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "tag:reference",
+      "relation": "has-tag"
+    },
+    {
       "source": "post:papyrus-docs",
       "target": "tag:papyrus",
       "relation": "has-tag"
@@ -730,211 +892,6 @@
       "relation": "has-tag"
     },
     {
-      "source": "post:choco-frito",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "tag:recipe",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "tag:portuguese-food",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:folder-tags-demo",
-      "target": "tag:astro",
-      "relation": "has-tag"
-    },
-    {
       "source": "post:install-configure-papyrus",
       "target": "tag:papyrus",
       "relation": "has-tag"
@@ -950,43 +907,218 @@
       "relation": "has-tag"
     },
     {
-      "source": "post:markdown-feature-sample",
-      "target": "tag:markdown",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:markdown-feature-sample",
-      "target": "tag:theme",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:markdown-feature-sample",
-      "target": "tag:authoring",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:markdown-feature-sample",
-      "target": "tag:custom",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:papyrus-package-shape",
-      "target": "tag:astro",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:papyrus-package-shape",
-      "target": "tag:theme",
-      "relation": "has-tag"
-    },
-    {
-      "source": "post:papyrus-package-shape",
+      "source": "post:site-config",
       "target": "tag:papyrus",
       "relation": "has-tag"
     },
     {
-      "source": "post:papyrus-package-shape",
-      "target": "tag:changelog",
+      "source": "post:site-config",
+      "target": "tag:config",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "tag:start",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "tag:portuguese-food",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "tag:recipe",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "tag:portuguese-food",
       "relation": "has-tag"
     },
     {
@@ -1040,36 +1172,6 @@
       "relation": "has-section"
     },
     {
-      "source": "post:ai-first-metadata-demo",
-      "target": "post:ai-mobile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "post:folder-tags-demo",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:dark-mode-and-search",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
       "source": "post:code-demo",
       "target": "post:markdown-feature-sample",
       "relation": "related-by-tag"
@@ -1081,6 +1183,11 @@
     },
     {
       "source": "post:content-structure",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:content-structure",
       "target": "post:feature-map",
       "relation": "related-by-tag"
     },
@@ -1091,6 +1198,26 @@
     },
     {
       "source": "post:content-structure",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:content-structure",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:content-structure",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:content-structure",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:content-structure",
       "target": "post:papyrus-docs",
       "relation": "related-by-tag"
     },
@@ -1106,2172 +1233,7 @@
     },
     {
       "source": "post:content-structure",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:dark-mode-and-search",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:feature-map",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:ai-mobile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:folder-tags-demo",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:deploy",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
-      "target": "post:ai-mobile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feature-map",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
-      "target": "post:ai-first-metadata-demo",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
-      "target": "post:feature-map",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ai-mobile",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:dark-mode-and-search",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:feature-map",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:ai-mobile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:folder-tags-demo",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-docs",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:feature-map",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:ai-mobile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:features",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:choco-frito",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-bras",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:ameijoas-a-bulhao-pato",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-com-natas",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cataplana-de-peixe",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bacalhau-a-gomes-de-sa",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:polvo-a-lagareiro",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:sardinhas-assadas",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-marisco",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:caldeirada-de-peixe",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cozido-a-portuguesa",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:leitao-a-bairrada",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:carne-de-porco-a-alentejana",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:prego-no-prato",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:francesinha",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:feijoada-a-transmontana",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:bitoque",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:tripas-a-moda-do-porto",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:arroz-de-pato",
-      "target": "post:cabrito-assado",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:choco-frito",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:bacalhau-a-bras",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:ameijoas-a-bulhao-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:bacalhau-com-natas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:cataplana-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:bacalhau-a-gomes-de-sa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:polvo-a-lagareiro",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:sardinhas-assadas",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:arroz-de-marisco",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:caldeirada-de-peixe",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:cozido-a-portuguesa",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:leitao-a-bairrada",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:carne-de-porco-a-alentejana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:prego-no-prato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:francesinha",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:feijoada-a-transmontana",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:bitoque",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:tripas-a-moda-do-porto",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:cabrito-assado",
-      "target": "post:arroz-de-pato",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:folder-tags-demo",
-      "target": "post:dark-mode-and-search",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:folder-tags-demo",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:folder-tags-demo",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:folder-tags-demo",
-      "target": "post:install-configure-papyrus",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:folder-tags-demo",
-      "target": "post:papyrus-package-shape",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:dark-mode-and-search",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:content-structure",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:deploy",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:feature-map",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:ai-mobile",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:papyrus-docs",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:features",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:folder-tags-demo",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:install-configure-papyrus",
-      "target": "post:papyrus-package-shape",
+      "target": "post:site-config",
       "relation": "related-by-tag"
     },
     {
@@ -3285,8 +1247,268 @@
       "relation": "related-by-tag"
     },
     {
-      "source": "post:papyrus-package-shape",
+      "source": "post:folder-tags-demo",
+      "target": "post:deploy",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:folder-tags-demo",
       "target": "post:dark-mode-and-search",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:folder-tags-demo",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:folder-tags-demo",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:folder-tags-demo",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:folder-tags-demo",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:ai-mobile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:dark-mode-and-search",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:features",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:deploy",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:deploy",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:ai-mobile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:features",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:release-checklist",
+      "target": "post:site-config",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:deploy",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:ai-mobile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:features",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feature-map",
+      "target": "post:site-config",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ai-mobile",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ai-mobile",
+      "target": "post:deploy",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ai-mobile",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ai-mobile",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ai-mobile",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ai-mobile",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ai-mobile",
+      "target": "post:features",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ai-mobile",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "post:folder-tags-demo",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "post:deploy",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:dark-mode-and-search",
+      "target": "post:install-configure-papyrus",
       "relation": "related-by-tag"
     },
     {
@@ -3296,12 +1518,47 @@
     },
     {
       "source": "post:papyrus-package-shape",
+      "target": "post:markdown-feature-sample",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "post:folder-tags-demo",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
       "target": "post:deploy",
       "relation": "related-by-tag"
     },
     {
       "source": "post:papyrus-package-shape",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
       "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "post:dark-mode-and-search",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-package-shape",
+      "target": "post:theme-spec",
       "relation": "related-by-tag"
     },
     {
@@ -3316,17 +1573,2322 @@
     },
     {
       "source": "post:papyrus-package-shape",
-      "target": "post:folder-tags-demo",
-      "relation": "related-by-tag"
-    },
-    {
-      "source": "post:papyrus-package-shape",
       "target": "post:install-configure-papyrus",
       "relation": "related-by-tag"
     },
     {
       "source": "post:papyrus-package-shape",
-      "target": "post:markdown-feature-sample",
+      "target": "post:site-config",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "post:features",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:collections",
+      "target": "post:site-config",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:features",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:site-config",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:deploy",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:ai-mobile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:features",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:theme-spec",
+      "target": "post:site-config",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:folder-tags-demo",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:deploy",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:ai-mobile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:dark-mode-and-search",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:features",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:papyrus-docs",
+      "target": "post:site-config",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:deploy",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:ai-mobile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:features",
+      "target": "post:site-config",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:folder-tags-demo",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:deploy",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:ai-mobile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:dark-mode-and-search",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:features",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:install-configure-papyrus",
+      "target": "post:site-config",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "post:content-structure",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "post:release-checklist",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "post:theme-spec",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "post:features",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:site-config",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:choco-frito",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-bras",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:ameijoas-a-bulhao-pato",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-com-natas",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cataplana-de-peixe",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bacalhau-a-gomes-de-sa",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:polvo-a-lagareiro",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:sardinhas-assadas",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-marisco",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:caldeirada-de-peixe",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cozido-a-portuguesa",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:leitao-a-bairrada",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:carne-de-porco-a-alentejana",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:prego-no-prato",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:francesinha",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:feijoada-a-transmontana",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:bitoque",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:tripas-a-moda-do-porto",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:arroz-de-pato",
+      "target": "post:cabrito-assado",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:choco-frito",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:bacalhau-a-bras",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:ameijoas-a-bulhao-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:bacalhau-com-natas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:cataplana-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:bacalhau-a-gomes-de-sa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:polvo-a-lagareiro",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:sardinhas-assadas",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:arroz-de-marisco",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:caldeirada-de-peixe",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:cozido-a-portuguesa",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:leitao-a-bairrada",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:carne-de-porco-a-alentejana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:prego-no-prato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:francesinha",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:feijoada-a-transmontana",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:bitoque",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:tripas-a-moda-do-porto",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:cabrito-assado",
+      "target": "post:arroz-de-pato",
       "relation": "related-by-tag"
     }
   ]
