@@ -724,7 +724,8 @@ components.
 
 Most sites only need these files:
 
-- `papyrus.config.toml` for site identity, navigation, projects, theme, and feature flags
+- `papyrus.config.toml` for site identity, navigation, theme, feature flags, and homepage counts
+- `src/data/projects.toml` for project cards
 - `src/content/posts/` for posts, docs, and collections
 - `src/data/profile.toml` for profile and CV data
 - `public/` for images, logos, favicons, and static files
@@ -790,7 +791,7 @@ Papyrus adds these routes:
 | `/` | Home page with latest posts and project cards |
 | `/posts/` | Public post list |
 | `/posts/[...slug]/` | Post detail page |
-| `/projects/` | Project cards from `papyrus.config.toml` |
+| `/projects/` | Project cards from `src/data/projects.toml` |
 | `/profile/`, `/profile/print/`, `/profile/ast/` | Profile and CV pages from `src/data/profile.toml` |
 | `/tag/` and `/tag/[tag]/` | Tag index and tag detail pages |
 | `/404.html` | Helpful not-found page |
@@ -830,7 +831,8 @@ For normal site work, start with these files:
 
 | Goal | Edit |
 | --- | --- |
-| Site title, description, navigation, projects, theme, feature flags, and post-card defaults | `papyrus.config.toml` |
+| Site title, description, navigation, theme, feature flags, homepage counts, and post-card defaults | `papyrus.config.toml` |
+| Project cards | `src/data/projects.toml` |
 | Add or edit posts | `src/content/posts/*.md` |
 | Add ordered docs or guide sections | `src/content/posts//.toml` plus Markdown posts |
 | Change the profile, CV, links, skills, dates, and print color | `src/data/profile.toml` |
@@ -896,9 +898,10 @@ Source: src/content/posts/docs/start/03-site-config.md
 `papyrus.config.toml` is the site control file. Edit this before copying theme
 code into `src/pages` or local components.
 
-Use it for site identity, navigation, social links, project cards, theme
-defaults, feature flags, and post-list behavior. Use frontmatter for per-post
-metadata. Use `src/data/profile.toml` for profile and CV data.
+Use it for site identity, navigation, social links, theme defaults, feature
+flags, homepage behavior, and post-list behavior. Use frontmatter for per-post
+metadata. Use `src/data/projects.toml` for project cards and
+`src/data/profile.toml` for profile and CV data.
 
 ## What it controls
 
@@ -907,12 +910,12 @@ metadata. Use `src/data/profile.toml` for profile and CV data.
 | `[site]` | Site title, description, URL, language, text direction, and timezone |
 | `[brand]` | Header brand title, mark, and whether the text title is visible |
 | `[theme]` | Default color profile and font profile |
+| `[home]` | Homepage counts and layout-facing defaults |
 | `[pages.]` | Optional text overrides for inherited page descriptions |
 | `[features]` | Optional UI, metadata, comments, search, graph, media, and profile features |
 | `[post_card]` | Post-list tags, read time, fresh indicators, updated-date behavior, and default limit |
 | `[[nav]]` | Header navigation links |
 | `[[social]]` | Social links used by the header and footer |
-| `[[project]]` | Project cards shown by the project list components |
 
 Papyrus reads this file with `loadPapyrusConfig()`. If it is missing, package
 defaults are used so a minimal template can still build.
@@ -937,6 +940,9 @@ show_title = true
 [theme]
 profile = "everforest"
 font_profile = "readable"
+
+[home]
+project_limit = 2
 
 [[nav]]
 href = "/posts/"
@@ -1035,14 +1041,19 @@ updated posts while the post page can still show both created and updated dates.
 
 ## Projects and links
 
-Use repeated TOML tables for navigation, social links, and projects:
+Use repeated TOML tables for navigation and social links in
+`papyrus.config.toml`:
 
 ```toml title="papyrus.config.toml"
 [[social]]
 href = "https://github.com/site-owner"
 label = "GitHub"
 icon = "github"
+```
 
+Keep project cards in `src/data/projects.toml`:
+
+```toml title="src/data/projects.toml"
 [[project]]
 title = "My project"
 description = "A short public project summary."

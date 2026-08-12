@@ -29,6 +29,6 @@ const siteData = JSON.parse(await readFile("public/demo/site-data.json", "utf8")
   <section class="papyrus-section">
     <h2>Where projects live</h2>
     <p>Project cards read from site data, so the homepage, project index, and generated metadata can reuse the same titles, descriptions, tags, and links.</p>
-    <p>Edit the project list in <code>papyrus.config.toml</code>. The template keeps that file close to the content so a site does not need custom card code for normal project pages.</p>
+    <p>Edit the project list in <code>src/data/projects.toml</code>. The template keeps that data close to the content so a site does not need custom card code for normal project pages.</p>
   </section>
 </PapyrusBaseLayout>

@@ -66,7 +66,7 @@ Papyrus adds these routes:
 | `/` | Home page with latest posts and project cards |
 | `/posts/` | Public post list |
 | `/posts/[...slug]/` | Post detail page |
-| `/projects/` | Project cards from `papyrus.config.toml` |
+| `/projects/` | Project cards from `src/data/projects.toml` |
 | `/profile/`, `/profile/print/`, `/profile/ast/` | Profile and CV pages from `src/data/profile.toml` |
 | `/tag/` and `/tag/[tag]/` | Tag index and tag detail pages |
 | `/404.html` | Helpful not-found page |
@@ -106,7 +106,8 @@ For normal site work, start with these files:
 
 | Goal | Edit |
 | --- | --- |
-| Site title, description, navigation, projects, theme, feature flags, and post-card defaults | `papyrus.config.toml` |
+| Site title, description, navigation, theme, feature flags, homepage counts, and post-card defaults | `papyrus.config.toml` |
+| Project cards | `src/data/projects.toml` |
 | Add or edit posts | `src/content/posts/*.md` |
 | Add ordered docs or guide sections | `src/content/posts/<folder>/<folder>.toml` plus Markdown posts |
 | Change the profile, CV, links, skills, dates, and print color | `src/data/profile.toml` |

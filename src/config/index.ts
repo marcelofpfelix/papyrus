@@ -31,6 +31,10 @@ export type PapyrusPostCardConfig = {
   limit?: number;
 };
 
+export type PapyrusHomeConfig = {
+  projectLimit: number;
+};
+
 export type PapyrusSourceConfig = {
   repo?: string;
   branch?: string;
@@ -59,15 +63,17 @@ export type PapyrusSiteConfig = {
   nav: PapyrusLinkConfig[];
   socialLinks: PapyrusLinkConfig[];
   projects: PapyrusProjectConfig[];
+  home: PapyrusHomeConfig;
   pages: Record<string, PapyrusPageConfig>;
   source: PapyrusSourceConfig;
   features: Required<PapyrusFeatureConfig>;
   postCard: PapyrusPostCardConfig;
 };
 
-export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "nav" | "socialLinks" | "source">> & {
+export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "home" | "nav" | "socialLinks" | "source">> & {
   features?: PapyrusFeatureConfig;
   postCard?: Partial<PapyrusPostCardConfig>;
+  home?: Partial<PapyrusHomeConfig>;
   nav?: PapyrusLinkConfig[];
   socialLinks?: PapyrusLinkConfig[];
   projects?: PapyrusProjectConfig[];
@@ -83,6 +89,10 @@ const defaultPostCard = {
   updatedDateOnly: false,
 } satisfies PapyrusPostCardConfig;
 
+const defaultHome = {
+  projectLimit: 2,
+} satisfies PapyrusHomeConfig;
+
 const defaultConfig = {
   title: "papyrus",
   lang: "en",
@@ -94,6 +104,7 @@ const defaultConfig = {
   nav: [],
   socialLinks: [],
   projects: [],
+  home: defaultHome,
   pages: {},
   source: {},
   features: defaultPapyrusFeatures,
@@ -208,6 +219,14 @@ function readPostCardConfig(record: Record<string, unknown>): Partial<PapyrusPos
   };
 }
 
+function readHomeConfig(record: Record<string, unknown>): Partial<PapyrusHomeConfig> {
+  return {
+    ...(asNumber(record.projectLimit ?? record.project_limit ?? record.project_count ?? record.projects) !== undefined
+      ? { projectLimit: asNumber(record.projectLimit ?? record.project_limit ?? record.project_count ?? record.projects) }
+      : {}),
+  };
+}
+
 export function definePapyrusConfig(config: PapyrusConfigInput): PapyrusSiteConfig {
   return resolvePapyrusConfig(config);
 }
@@ -219,6 +238,10 @@ export function resolvePapyrusConfig(config: PapyrusConfigInput = {}): PapyrusSi
     nav: config.nav ?? defaultConfig.nav,
     socialLinks: config.socialLinks ?? defaultConfig.socialLinks,
     projects: config.projects ?? defaultConfig.projects,
+    home: {
+      ...defaultHome,
+      ...(config.home ?? {}),
+    },
     pages: config.pages ?? defaultConfig.pages,
     source: config.source ?? defaultConfig.source,
     features: {
@@ -239,6 +262,7 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
   const theme = asRecord(parsed.theme);
   const seo = asRecord(parsed.seo);
   const sourceConfig = asRecord(parsed.source);
+  const home = asRecord(parsed.home);
 
   return resolvePapyrusConfig({
     title: asString(site.title ?? parsed.title),
@@ -258,11 +282,17 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
     nav: asLinks(parsed.nav),
     socialLinks: asLinks(parsed.social ?? parsed.socialLinks ?? parsed.social_links),
     projects: asProjects(parsed.project ?? parsed.projects),
+    home: readHomeConfig(home),
     pages: asPages(parsed.pages ?? parsed.page),
     source: asSourceConfig(sourceConfig),
     features: readFeatureConfig(asRecord(parsed.features)),
     postCard: readPostCardConfig(asRecord(parsed.post_card ?? parsed.postCard)),
   });
+}
+
+export function parsePapyrusProjectsToml(source: string): PapyrusProjectConfig[] {
+  const parsed = asRecord(parse(source));
+  return asProjects(parsed.project ?? parsed.projects);
 }
 
 export async function loadPapyrusConfig(path = "papyrus.config.toml", cwd = process.cwd()): Promise<PapyrusSiteConfig> {
@@ -275,7 +305,17 @@ export async function loadPapyrusConfig(path = "papyrus.config.toml", cwd = proc
     }
     throw error;
   }
-  return parsePapyrusConfigToml(source);
+  const site = parsePapyrusConfigToml(source);
+  try {
+    const projectsSource = await readFile(resolve(cwd, "src/data/projects.toml"), "utf8");
+    const projects = parsePapyrusProjectsToml(projectsSource);
+    return projects.length ? { ...site, projects } : site;
+  } catch (error) {
+    if (error && typeof error === "object" && "code" in error && error.code === "ENOENT") {
+      return site;
+    }
+    throw error;
+  }
 }
 
 export function pageDescription(site: Pick<PapyrusSiteConfig, "pages">, page: string, fallback?: string): string | undefined {

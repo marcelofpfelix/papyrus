@@ -181,7 +181,7 @@
     "sourcePath": "src/content/posts/docs/start/03-site-config.md",
     "title": "Site config",
     "description": "What papyrus.config.toml controls and how a site should edit it.",
-    "excerpt": "`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, project cards, theme defaults, feature flags, and post-list behavior. Use frontmatter for per-post metadat",
+    "excerpt": "`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, theme defaults, feature flags, homepage behavior, and post-list behavior. Use frontmatter for per-post met",
     "tags": [
       "papyrus",
       "config",

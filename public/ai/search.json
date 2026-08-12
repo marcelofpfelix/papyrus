@@ -144,13 +144,13 @@
     "url": "https://papyrus.marcelofelix.com/posts/site-config/",
     "sourcePath": "src/content/posts/docs/start/03-site-config.md",
     "description": "What papyrus.config.toml controls and how a site should edit it.",
-    "excerpt": "`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, project cards, theme defaults, feature flags, and post-list behavior. Use frontmatter for per-post metadat",
+    "excerpt": "`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, theme defaults, feature flags, homepage behavior, and post-list behavior. Use frontmatter for per-post met",
     "tags": [
       "papyrus",
       "config",
       "start"
     ],
-    "text": "Site config\nWhat papyrus.config.toml controls and how a site should edit it.\n`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, project cards, theme defaults, feature flags, and post-list behavior. Use frontmatter for per-post metadat\npapyrus config start"
+    "text": "Site config\nWhat papyrus.config.toml controls and how a site should edit it.\n`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, theme defaults, feature flags, homepage behavior, and post-list behavior. Use frontmatter for per-post met\npapyrus config start"
   },
   {
     "id": "post:choco-frito",

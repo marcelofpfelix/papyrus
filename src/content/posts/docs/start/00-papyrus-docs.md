@@ -34,7 +34,8 @@ components.
 
 Most sites only need these files:
 
-- `papyrus.config.toml` for site identity, navigation, projects, theme, and feature flags
+- `papyrus.config.toml` for site identity, navigation, theme, feature flags, and homepage counts
+- `src/data/projects.toml` for project cards
 - `src/content/posts/` for posts, docs, and collections
 - `src/data/profile.toml` for profile and CV data
 - `public/` for images, logos, favicons, and static files

@@ -4,7 +4,7 @@ import { pageDescription } from "../../config";
 import { getTemplateSite } from "../site";
 
 const site = await getTemplateSite();
-const description = pageDescription(site, "projects", "Two project cards configured in papyrus.config.toml.");
+const description = pageDescription(site, "projects", "Project cards from src/data/projects.toml.");
 ---
 
 <PapyrusBaseLayout title="Projects" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
@@ -12,5 +12,5 @@ const description = pageDescription(site, "projects", "Two project cards configu
     <h1>Projects</h1>
     {description && <p class="papyrus-description">{description}</p>}
   </section>
-  <PapyrusProjectList projects={site.projects.slice(0, 2)} />
+  <PapyrusProjectList projects={site.projects} />
 </PapyrusBaseLayout>

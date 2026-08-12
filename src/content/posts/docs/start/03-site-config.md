@@ -13,9 +13,10 @@ tags:
 `papyrus.config.toml` is the site control file. Edit this before copying theme
 code into `src/pages` or local components.
 
-Use it for site identity, navigation, social links, project cards, theme
-defaults, feature flags, and post-list behavior. Use frontmatter for per-post
-metadata. Use `src/data/profile.toml` for profile and CV data.
+Use it for site identity, navigation, social links, theme defaults, feature
+flags, homepage behavior, and post-list behavior. Use frontmatter for per-post
+metadata. Use `src/data/projects.toml` for project cards and
+`src/data/profile.toml` for profile and CV data.
 
 ## What it controls
 
@@ -24,12 +25,12 @@ metadata. Use `src/data/profile.toml` for profile and CV data.
 | `[site]` | Site title, description, URL, language, text direction, and timezone |
 | `[brand]` | Header brand title, mark, and whether the text title is visible |
 | `[theme]` | Default color profile and font profile |
+| `[home]` | Homepage counts and layout-facing defaults |
 | `[pages.<name>]` | Optional text overrides for inherited page descriptions |
 | `[features]` | Optional UI, metadata, comments, search, graph, media, and profile features |
 | `[post_card]` | Post-list tags, read time, fresh indicators, updated-date behavior, and default limit |
 | `[[nav]]` | Header navigation links |
 | `[[social]]` | Social links used by the header and footer |
-| `[[project]]` | Project cards shown by the project list components |
 
 Papyrus reads this file with `loadPapyrusConfig()`. If it is missing, package
 defaults are used so a minimal template can still build.
@@ -54,6 +55,9 @@ show_title = true
 [theme]
 profile = "everforest"
 font_profile = "readable"
+
+[home]
+project_limit = 2
 
 [[nav]]
 href = "/posts/"
@@ -152,14 +156,19 @@ updated posts while the post page can still show both created and updated dates.
 
 ## Projects and links
 
-Use repeated TOML tables for navigation, social links, and projects:
+Use repeated TOML tables for navigation and social links in
+`papyrus.config.toml`:
 
 ```toml title="papyrus.config.toml"
 [[social]]
 href = "https://github.com/site-owner"
 label = "GitHub"
 icon = "github"
+```
 
+Keep project cards in `src/data/projects.toml`:
+
+```toml title="src/data/projects.toml"
 [[project]]
 title = "My project"
 description = "A short public project summary."
