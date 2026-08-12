@@ -302,11 +302,22 @@ function normalizeGithubRepo(repo: string): string {
     .replace(/^\/+|\/+$/g, "");
 }
 
+function detectedSourceBranch(): string | undefined {
+  return [
+    process.env.CF_PAGES_BRANCH,
+    process.env.GITHUB_HEAD_REF,
+    process.env.GITHUB_REF_NAME,
+    process.env.VERCEL_GIT_COMMIT_REF,
+    process.env.BRANCH,
+    process.env.HEAD,
+  ].find((branch) => branch && branch !== "HEAD");
+}
+
 export function githubSourceUrl(site: Pick<PapyrusSiteConfig, "source">, path: string, kind: "blob" | "raw" = "blob"): string | undefined {
   const repo = site.source.repo ? normalizeGithubRepo(site.source.repo) : undefined;
   if (!repo) return undefined;
 
-  const branch = site.source.branch ?? "main";
+  const branch = site.source.branch ?? detectedSourceBranch() ?? "main";
   const normalizedPath = path.replace(/^\/+/, "");
   if (kind === "raw") return `https://raw.githubusercontent.com/${repo}/${branch}/${normalizedPath}`;
   return `https://github.com/${repo}/blob/${branch}/${normalizedPath}`;
