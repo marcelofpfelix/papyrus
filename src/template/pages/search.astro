@@ -2,7 +2,7 @@
 import "@pagefind/default-ui/css/ui.css";
 import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusTagList } from "../../components";
-import { pageDescription, pageVisibleDescription } from "../../config";
+import { pageDescription } from "../../config";
 import { formatPostDate, hiddenPosts, postCategory, postDate, postHref, postTags, postsByTag, publishedPosts, sortPosts } from "../../utils/posts";
 import { getTemplateSite } from "../site";
 
@@ -30,13 +30,12 @@ const archivePosts = sortPosts(archivedPosts).map((post) => ({
 }));
 const archivePostsJson = JSON.stringify(archivePosts).replace(/</g, "\\u003c");
 const description = pageDescription(site, "search", "Search public content, browse sections, or open tag pages.");
-const visibleDescription = pageVisibleDescription(site, "search", "Search public content, browse sections, or open tag pages.");
 ---
 
 <PapyrusBaseLayout title="Search" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
   <section class="papyrus-search">
     <h1>Search</h1>
-    {visibleDescription && <p class="papyrus-description">{visibleDescription}</p>}
+    {description && <p class="papyrus-description">{description}</p>}
     <div id="pagefind-search" data-pagefind-bundle="/pagefind/"></div>
     <nav class="papyrus-search-tags" aria-label="Sections">
       {
