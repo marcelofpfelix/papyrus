@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusPostList } from "../../../components";
-import { pageDescription } from "../../../config";
+import { pageDescription, pageMetaDescription } from "../../../config";
 import { hiddenPosts, isScheduledPost, publishedPosts, scheduledListPosts, sortPostsWithPinned } from "../../../utils";
 import { withBase } from "../../../utils/withBase";
 import { getTemplateSite } from "../../site";
@@ -16,6 +16,7 @@ const visiblePostCount = visiblePosts.filter(post => !isScheduledPost(post)).len
 const currentPostCount = posts.filter(post => !isScheduledPost(post)).length;
 const hasMorePosts = currentPostCount > visiblePostCount;
 const description = pageDescription(site, "posts", "A posts index that keeps homepage highlights separate from the full archive view.");
+const metaDescription = pageMetaDescription(site, "posts", "A posts index that keeps homepage highlights separate from the full archive view.");
 const postListProps = {
   showTags: site.postCard.tags,
   showReadTime: site.postCard.readTime,
@@ -37,7 +38,7 @@ function icon(name: string) {
 }
 ---
 
-<PapyrusBaseLayout title="Posts" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+<PapyrusBaseLayout title="Posts" description={metaDescription} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
   <section class="papyrus-hero papyrus-posts-hero">
     <h1 class="papyrus-heading-with-action">
       <span>Posts</span>

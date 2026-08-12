@@ -284,6 +284,12 @@ export function pageDescription(site: Pick<PapyrusSiteConfig, "pages">, page: st
   return configured ?? fallback;
 }
 
+export function pageMetaDescription(site: Pick<PapyrusSiteConfig, "pages">, page: string, fallback?: string): string | undefined {
+  const configured = site.pages[page]?.description;
+  if (configured === false) return fallback;
+  return configured ?? fallback;
+}
+
 export function pageContent(site: Pick<PapyrusSiteConfig, "pages">, page: string): string | undefined {
   return site.pages[page]?.content;
 }
