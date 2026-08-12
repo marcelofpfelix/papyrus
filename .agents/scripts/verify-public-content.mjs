@@ -113,15 +113,9 @@ assert(llmsFull.includes("Use folders for organization, inherited tags, and sect
 assert(!llmsFull.includes("[user.email_parts]"), "llms-full.txt should not document the unsupported user.email_parts TOML shape");
 assert(llmsFull.includes('email_user = "hello"') && llmsFull.includes('email_domain = "site.test"'), "llms-full.txt should document the supported split email TOML fields");
 
-const mainRss = await readFile("public/rss.xml", "utf8");
-assert(mainRss.includes("Papyrus posts covering installation, docs, themes, profile/CV pages, RSS, search, and generated metadata."), "main RSS feed should use polished public-site description");
+const mainRss = await readFile("dist/rss.xml", "utf8");
+assert(mainRss.includes("Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata."), "main RSS feed should use polished public-site description");
 assert(!mainRss.includes("Example feed for Papyrus") && !mainRss.includes("profile examples"), "main RSS feed should not use generic example wording");
-
-const demoAiSource = await readFile("public/demo/ai-first-demo.md", "utf8");
-assert(demoAiSource.includes("section: references"), "public AI demo source should use a current docs section id");
-assert(demoAiSource.includes('pnpm papyrus-llms src/content/posts public "$SITE_URL" src/pages/docs'), "public AI demo source should use SITE_URL instead of a placeholder domain");
-assert(demoAiSource.includes('pnpm papyrus-ai-indexes src/content/posts public/ai "$SITE_URL" public/demo/site-data.json'), "public AI demo source should document JSON index generation");
-assert(demoAiSource.includes("hidden: true") && demoAiSource.includes("same hidden-content rule"), "public AI demo source should document hidden-content boundaries");
 
 const demoPostSource = await readFile("public/demo/post-demo.md", "utf8");
 assert(demoPostSource.includes("Markdown source reference"), "public post demo source should explain its source-action purpose");
@@ -144,44 +138,41 @@ const homeHtml = await readFile("dist/index.html", "utf8");
 assert(homeHtml.includes("/posts/install-configure-papyrus/") && homeHtml.includes("start here"), "home page should point new users to the install guide");
 assert(homeHtml.includes("Code fences use Astro/Shiki") && homeHtml.includes("Theme profiles own light and dark token sets") && homeHtml.includes("Keep CV data stable"), "home notes should be real feature notes, not filler");
 
-const publicDocsIndexHtml = await readFile("dist/docs/index.html", "utf8");
-for (const repoOnlyDoc of ["guide", "request-audit", "status-roadmap", "pure-parity", "theme-spec"]) {
-  assert(!publicDocsIndexHtml.includes(`/docs/${repoOnlyDoc}/`), `repo-only ${repoOnlyDoc} doc should not be linked from the public docs index`);
+const publicDocsIndexHtml = await readFile("dist/collections/docs/index.html", "utf8");
+for (const repoOnlyDoc of ["guide", "request-audit", "status-roadmap", "pure-parity"]) {
+  assert(!publicDocsIndexHtml.includes(`/collections/docs/${repoOnlyDoc}/`), `repo-only ${repoOnlyDoc} doc should not be linked from the public docs collection index`);
 }
-assert(publicDocsIndexHtml.includes("Feature references") && publicDocsIndexHtml.includes("route-by-route feature coverage"), "docs index should label feature docs as references");
+assert(publicDocsIndexHtml.includes("References") && publicDocsIndexHtml.includes("Feature map") && publicDocsIndexHtml.includes("Route-by-route guide to public Papyrus features."), "docs collection index should label feature docs as references");
 assert(!publicDocsIndexHtml.includes(">Examples<") && !publicDocsIndexHtml.includes("feature examples stay in one"), "docs index should avoid generic Examples section wording");
-assert((publicDocsIndexHtml.match(/href="\/docs\/">Getting started<\/a>/g) ?? []).length === 1, "docs index should link the Getting started section once, not duplicate it as a child page");
-assert(publicDocsIndexHtml.includes("/posts/ai-first-metadata-demo/") && publicDocsIndexHtml.includes("AI-first metadata"), "docs index should include the AI metadata post-as-doc guide");
-assert(publicDocsIndexHtml.includes("data-papyrus-theme=&quot;custom&quot;") && publicDocsIndexHtml.includes("--papyrus-code-bg") && publicDocsIndexHtml.includes("pnpm papyrus-theme validate"), "docs index should show a complete public theme profile example");
+assert(publicDocsIndexHtml.includes("Start") && publicDocsIndexHtml.includes("Getting started, feature configuration, and the core Papyrus content model."), "docs collection index should expose the getting-started section");
+assert(!publicDocsIndexHtml.includes("/posts/ai-first-metadata-demo/") && !publicDocsIndexHtml.includes("AI-first metadata"), "docs collection index should not link the removed AI metadata post");
 assert(!publicDocsIndexHtml.includes('{ ... }'), "docs index should not use placeholder CSS theme examples");
-assert(publicDocsIndexHtml.includes("Post layout reference for published dates"), "docs index should describe the metadata route as a reference");
 assert(!publicDocsIndexHtml.includes("Post layout example for published dates"), "docs index should not use scaffold-style metadata wording");
-assert(publicDocsIndexHtml.includes("Consuming sites keep content and config") && publicDocsIndexHtml.includes("profile/CV pages"), "docs index should describe profile/CV pages as package-owned reusable surfaces");
 assert(!publicDocsIndexHtml.includes("TOML and Astro content collection examples for CV input."), "docs index should not resurrect removed CV demo wording");
 
-const pluginFeaturesHtml = await readFile("dist/docs/features/index.html", "utf8");
-assert(pluginFeaturesHtml.includes("@papyrus/plugin-giscus") && pluginFeaturesHtml.includes("@papyrus/plugin-diagrams"), "features docs should use Papyrus-owned plugin package names");
+const pluginFeaturesHtml = await readFile("dist/collections/docs/features/index.html", "utf8");
 assert(!pluginFeaturesHtml.includes("@example/papyrus-giscus") && !pluginFeaturesHtml.includes("@example/papyrus-diagrams"), "features docs should not show placeholder plugin package names");
+assert(pluginFeaturesHtml.includes("Community plugins stay small") && pluginFeaturesHtml.includes("optional feature"), "features docs should describe the current plugin contract");
 
-const codeDemoHtml = await readFile("dist/docs/code-demo/index.html", "utf8");
+const codeDemoHtml = await readFile("dist/collections/docs/code-demo/index.html", "utf8");
 assert(codeDemoHtml.includes('alt="Profile fixture avatar"'), "Markdown code guide should use fixture-style image alt text");
 assert(!codeDemoHtml.includes('alt="Example profile avatar"'), "Markdown code guide should not use generic example image alt text");
 assert(codeDemoHtml.includes("Keep feature walkthroughs explicit"), "Markdown code guide should use walkthrough wording in task lists");
 assert(!codeDemoHtml.includes("Keep feature examples explicit"), "Markdown code guide should avoid generic feature-example task wording");
 
-const contentStructureHtml = await readFile("dist/docs/content-structure/index.html", "utf8");
+const contentStructureHtml = await readFile("dist/collections/docs/content-structure/index.html", "utf8");
 assert(contentStructureHtml.includes("papyrus-content-outline public/demo/content-tree public/demo/content-structure.md"), "content-structure docs should show the outline generation command");
-assert(contentStructureHtml.includes("direct route") && contentStructureHtml.includes("public lists, feeds, sitemaps, search, and AI exports") && contentStructureHtml.includes("explicit <code>robots</code> frontmatter"), "content-structure docs should explain hidden direct-route boundaries");
-assert(contentStructureHtml.includes("User-facing docs live in rendered routes") && contentStructureHtml.includes("<code>docs</code> frontmatter"), "content-structure docs should distinguish public docs from repo-only notes");
-assert(contentStructureHtml.includes("Development-only notes stay under <code>docs/</code>"), "content-structure docs should state repo-only docs boundary");
-assert(contentStructureHtml.includes("public fixture for content-outline generation") && contentStructureHtml.includes("papyrus fixture"), "content-structure docs should present demo content as a public fixture");
+assert(contentStructureHtml.includes("direct route") && contentStructureHtml.includes("public lists, feeds, sitemaps, search, and AI exports") && contentStructureHtml.includes("<code>hidden: true</code>"), "content-structure docs should explain hidden direct-route boundaries");
+assert(contentStructureHtml.includes("User-facing docs now live as regular posts under <code>src/content/posts/docs</code>"), "content-structure docs should distinguish public docs from repo-only notes");
+assert(contentStructureHtml.includes("Development-only notes stay under <code>.agents/</code>"), "content-structure docs should state repo-only docs boundary");
+assert(contentStructureHtml.includes("generated Markdown outline remains available as a public fixture") && contentStructureHtml.includes("/demo/content-structure.md"), "content-structure docs should present demo content as a public fixture");
 assert(!contentStructureHtml.includes("public example content") && !contentStructureHtml.includes("papyrus example"), "content-structure docs should not use generic example wording");
 
-const deployHtml = await readFile("dist/docs/deploy/index.html", "utf8");
+const deployHtml = await readFile("dist/collections/docs/deploy/index.html", "utf8");
 assert(deployHtml.includes("Build settings") && deployHtml.includes("package manager: pnpm"), "deploy docs should show static-host build settings");
 assert(deployHtml.includes('SITE_URL="https://example.test" pnpm build') && deployHtml.includes("output directory: dist"), "deploy docs should document production URL and dist output");
 assert(deployHtml.includes("Astro <code>base</code> option") && deployHtml.includes("withBase()") && deployHtml.includes("getRelativeLocaleUrl()"), "deploy docs should document base-path helper expectations");
-assert(deployHtml.includes("minimumReleaseAge") && deployHtml.includes("published only minutes ago"), "deploy docs should carry the dependency freshness policy into production builds");
+assert(deployHtml.includes("minimumReleaseAge") && deployHtml.includes("production builds do not pick up packages published") && deployHtml.includes("only minutes ago"), "deploy docs should carry the dependency freshness policy into production builds");
 
 const profileHtml = await readFile("dist/profile/index.html", "utf8");
 assert(profileHtml.includes(">Source<") && profileHtml.includes("profile.toml") && profileHtml.includes("profile.json") && profileHtml.includes("profile.md"), "profile page should expose canonical source links through the shared action menu");
@@ -221,32 +212,23 @@ assert(searchPostHtml.includes("Static search for posts, tags, and archive entri
 assert(searchPostHtml.includes("The public Papyrus site builds a Pagefind index"), "search guide should describe the package site's search implementation directly");
 assert(!searchPostHtml.includes("Search example") && !searchPostHtml.includes("The demo site builds"), "search guide should not use placeholder or demo-site route titles");
 
-const aiPostHtml = await readFile("dist/posts/ai-first-metadata-demo/index.html", "utf8");
-assert(aiPostHtml.includes("JSON indexes") && aiPostHtml.includes("graph data"), "AI metadata post should document JSON indexes and graph data");
-assert(aiPostHtml.includes("papyrus-ai-indexes") && aiPostHtml.includes("/ai/graph.json"), "AI metadata post should link index generation to the graph artifact");
-assert(aiPostHtml.includes("hidden: true") && aiPostHtml.includes("same hidden-content rule"), "AI metadata post should document hidden-content boundaries");
-
-const featuresHtml = await readFile("dist/docs/features/index.html", "utf8");
-for (const phrase of ["SEO and social metadata", "Sitemap and robots", "Keyboard accessibility", "Search and tags"]) {
+const featuresHtml = await readFile("dist/collections/docs/features/index.html", "utf8");
+for (const phrase of ["SEO and social metadata", "Base path deploys", "Search, tags, sitemap, and robots", "Plugin contract"]) {
   assert(featuresHtml.includes(phrase), `features docs should use concrete public docs heading: ${phrase}`);
 }
 for (const phrase of ["SEO Friendly", "Dynamic Sitemap", "Fully Accessible", "Search Box, Categories"]) {
   assert(!featuresHtml.includes(phrase), `features docs should not use checklist-style heading: ${phrase}`);
 }
-assert(featuresHtml.includes("Sites that want categories can model them as explicit tags"), "features docs should explain categories as site-owned facets");
 assert(!featuresHtml.includes("category pages"), "features docs should not imply built-in category pages");
-assert(featuresHtml.includes("Regenerate the sitemap during every build") && featuresHtml.includes("Papyrus includes a dynamic <code>robots.txt</code> route"), "features docs should explain sitemap and robots as direct user documentation");
-assert(featuresHtml.includes("Readers can navigate the public Papyrus site with a keyboard"), "features docs should use public-site accessibility wording");
-assert(featuresHtml.includes("static fixture counts for documentation posts"), "features docs should describe comment/stat fixtures as documentation fixtures");
-assert(featuresHtml.includes("this route renders the component in disabled mode") && featuresHtml.includes("package site stays static"), "features docs should describe disabled comments as package-site behavior");
-assert(featuresHtml.includes("The resolved plugin config disables RSS"), "features docs should describe resolved plugin config without demo-only wording");
+assert(featuresHtml.includes("Regenerate the sitemap") && featuresHtml.includes("dynamic <code>robots.txt</code> route"), "features docs should explain sitemap and robots as direct user documentation");
+assert(featuresHtml.includes("Community plugins stay small") && featuresHtml.includes("do not mutate Papyrus"), "features docs should describe plugin boundaries");
 assert(!featuresHtml.includes("should regenerate its sitemap") && !featuresHtml.includes("navigate the demo with a keyboard") && !featuresHtml.includes("The resolved example config") && !featuresHtml.includes("while this example renders"), "features docs should not use audit-style sitemap/accessibility wording");
 
-const featureMapHtml = await readFile("dist/docs/feature-map/index.html", "utf8");
-assert(featureMapHtml.includes("typed plugin configuration pattern"), "feature map should describe plugin docs as a reusable configuration pattern");
-assert(featureMapHtml.includes("editing TOML config, adding posts, profile data, and asset overrides") && featureMapHtml.includes("CV/profile templates") && featureMapHtml.includes("normalized CV data"), "feature map should describe profile data and CV routes as public reusable surfaces");
-assert(!featureMapHtml.includes("/docs/cv-data/"), "feature map should not link removed CV data docs");
-assert(featureMapHtml.includes("The public Papyrus site focuses on reusable routes"), "feature map should describe the public site directly");
+const featureMapHtml = await readFile("dist/collections/docs/feature-map/index.html", "utf8");
+assert(featureMapHtml.includes("Feature flags and plugin contract") && featureMapHtml.includes("typed plugin configuration"), "feature map should describe plugin docs as a reusable configuration pattern");
+assert(featureMapHtml.includes("CV/profile templates") && featureMapHtml.includes("normalized CV data") && featureMapHtml.includes("Site config"), "feature map should describe profile data and CV routes as public reusable surfaces");
+assert(!featureMapHtml.includes("/docs/cv-data/") && !featureMapHtml.includes("/collections/docs/cv-data/"), "feature map should not link removed CV data docs");
+assert(featureMapHtml.includes("Every public feature has a route") && featureMapHtml.includes("Repository-only implementation notes stay outside visitor-facing docs"), "feature map should describe the public site directly");
 assert(!featureMapHtml.includes("example plugin configuration") && !featureMapHtml.includes("This example site focuses"), "feature map should not use demo-only wording for public docs");
 
 const packageShapeHtml = await readFile("dist/posts/papyrus-package-shape/index.html", "utf8");
@@ -268,41 +250,41 @@ assert(cvProfilePostHtml.includes("src/data/profile.toml") && cvProfilePostHtml.
 assert(!cvProfilePostHtml.includes("TOML and Astro content collection examples for feeding profile data into Papyrus."), "CV profile post should not describe CV data as generic examples");
 
 const notFoundHtml = await readFile("dist/404.html", "utf8");
-assert(notFoundHtml.includes("section, tag, and hidden-archive entry points"), "404 search suggestion should use section/tag wording");
+assert(notFoundHtml.includes("Closest matches") && notFoundHtml.includes("Search posts and tags.") && notFoundHtml.includes("Browse configured post collections."), "404 search suggestion should use post/tag/collection wording");
 assert(!notFoundHtml.includes("category, tag, and hidden-archive entry points"), "404 search suggestion should not present categories as built-in search facets");
 
-const hiddenPostHtml = await readFile("dist/posts/folder-tags-demo/index.html", "utf8");
-assert(!hiddenPostHtml.includes('<meta name="robots" content="noindex'), "hidden folder-tags demo should stay crawlable unless robots frontmatter opts out");
-assert(!llmsFull.includes("Folder tags for nested posts"), "hidden folder-tags demo should stay out of llms-full.txt");
+const hiddenPostHtml = await readFile("dist/posts/hidden-post-demo/index.html", "utf8");
+assert(hiddenPostHtml.includes('<meta name="robots" content="noindex'), "hidden post demo should emit noindex robots metadata");
+assert(!llmsFull.includes("Hidden post demo"), "hidden post demo should stay out of llms-full.txt");
 
 const postsIndexHtml = await readFile("dist/posts/index.html", "utf8");
 const timelineHtml = await readFile("dist/posts/timeline/index.html", "utf8");
 const astroTagHtml = await readFile("dist/tag/astro/index.html", "utf8");
 const searchHtml = await readFile("dist/search/index.html", "utf8");
-assert(searchHtml.includes("optional sections") && searchHtml.includes("tags remain the primary built-in topic model"), "search page should explain optional sections and tag-first topic model");
+assert(searchHtml.includes("Search public content, browse sections, or open tag pages.") && searchHtml.includes("/tag/papyrus/"), "search page should expose sections and tag pages");
 assert(searchHtml.includes('aria-label="Sections"'), "search page should label optional facets as sections");
 assert(!searchHtml.includes('aria-label="Categories"') && !searchHtml.includes("categories, tags"), "search page should not present categories as a built-in taxonomy");
 const markdownGuideItem = postsIndexHtml.match(/<li[^>]*>\s*<a href="\/posts\/markdown-feature-sample\/">([\s\S]*?)<\/a>\s*<\/li>/)?.[1] ?? "";
 assert(markdownGuideItem.includes("Jun 30") && !markdownGuideItem.includes("Jun 29"), "posts index should show only the updated date for the updated Markdown guide");
 assert(markdownGuideItem.includes("M21 12a9 9 0 0 1-9 9") && !markdownGuideItem.includes("M16 2v4"), "posts index updated date should use the refresh icon instead of the calendar icon");
 assert((await readFile("src/styles/papyrus.css", "utf8")).includes(".papyrus-post-recently-updated svg"), "recently updated list styling should target the icon, not the whole date item");
-assert(!postsIndexHtml.includes("Folder tags for nested posts"), "hidden folder-tags demo should stay out of public posts index");
-assert(!timelineHtml.includes("Folder tags for nested posts"), "hidden folder-tags demo should stay out of public timeline");
-assert(!astroTagHtml.includes("Folder tags for nested posts"), "hidden folder-tags demo should stay out of public tag pages");
-assert(searchHtml.includes('"href":"/posts/folder-tags-demo/"'), "hidden folder-tags demo should remain available through explicit archive search data");
+assert(!postsIndexHtml.includes("Hidden post demo"), "hidden post demo should stay out of public posts index");
+assert(!timelineHtml.includes("Hidden post demo"), "hidden post demo should stay out of public timeline");
+assert(!astroTagHtml.includes("Hidden post demo"), "hidden post demo should stay out of public tag pages");
+assert(searchHtml.includes('"href":"/posts/hidden-post-demo/"'), "hidden post demo should remain available through explicit archive search data");
 
 const routeMetadataChecks = [
   ["dist/index.html", "papyrus", "Reusable Astro theme package"],
   ["dist/about/index.html", "About", "Compact about page pattern"],
-  ["dist/docs/index.html", "papyrus docs", "Package docs for installing"],
-  ["dist/docs/feature-map/index.html", "Feature map", "public Papyrus features"],
+  ["dist/collections/docs/index.html", "Papyrus docs", "Package docs for installing"],
+  ["dist/collections/docs/feature-map/index.html", "Feature map", "public Papyrus features"],
   ["dist/posts/install-configure-papyrus/index.html", "Install and configure Papyrus", "recommended starting point"],
   ["dist/posts/markdown-feature-sample/index.html", "Markdown authoring guide", "practical guide"],
-  ["dist/posts/index.html", "Posts", "list, tag, archive, RSS"],
+  ["dist/posts/index.html", "Posts", "All public posts"],
   ["dist/search/index.html", "Search", "Static search"],
   ["dist/profile/index.html", "Profile", "public fixture"],
   ["dist/projects/index.html", "Projects", "Project list page"],
-  ["dist/404.html", "Page not found", "Find a matching Papyrus page"],
+  ["dist/404.html", "Not found", "Find a nearby page"],
 ];
 
 for (const [file, expectedTitle, expectedDescription] of routeMetadataChecks) {

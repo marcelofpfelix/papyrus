@@ -19,7 +19,7 @@ function same(actual, expected, message) {
 
 try {
   const source = await readFile("src/utils/posts.ts", "utf8");
-  const guide = await readFile("docs/guide.md", "utf8");
+  const guide = await readFile(".agents/package-guide.md", "utf8");
   const transpiled = ts.transpileModule(source, {
     compilerOptions: {
       module: ts.ModuleKind.ES2022,

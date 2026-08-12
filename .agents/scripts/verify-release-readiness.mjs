@@ -10,7 +10,7 @@ const packageJson = JSON.parse(await readFile(join(root, "package.json"), "utf8"
 const readme = await readFile(join(root, "README.md"), "utf8");
 const changelog = await readFile(join(root, "CHANGELOG.md"), "utf8");
 const license = await readFile(join(root, "LICENSE"), "utf8");
-const releaseDocs = await readFile(join(root, "docs/release.md"), "utf8");
+const releaseDocs = await readFile(join(root, "src/content/posts/docs/deploy/31-release-checklist.md"), "utf8");
 const pnpmWorkspace = await readFile(join(root, "pnpm-workspace.yaml"), "utf8");
 const failures = [];
 let packedTarball;
@@ -47,7 +47,7 @@ for (const keyword of ["astro", "astro-theme", "blog", "docs", "portfolio", "ast
   assert(packageJson.keywords?.includes(keyword), `package keywords missing ${keyword}`);
 }
 
-for (const file of ["README.md", "LICENSE", "CHANGELOG.md", "src", "scripts", "examples", "public", "docs"]) {
+for (const file of ["README.md", "LICENSE", "CHANGELOG.md", "src", "scripts", "examples", "public"]) {
   assert(packageJson.files?.includes(file), `package files missing ${file}`);
 }
 
@@ -56,7 +56,8 @@ assert(!Object.keys(packageJson.bin ?? {}).some((name) => name.startsWith("papyr
 assert(!packageJson.bin?.["papyrus-audit-status"], "audit status should stay agent-only, not a public package bin");
 assert(existsSync(join(root, "LICENSE")), "LICENSE file missing");
 assert(existsSync(join(root, "CHANGELOG.md")), "CHANGELOG.md file missing");
-assert(existsSync(join(root, "docs/release.md")), "docs/release.md file missing");
+assert(!packageJson.files?.includes("docs"), "package files should not include deleted top-level docs folder");
+assert(existsSync(join(root, "src/content/posts/docs/deploy/31-release-checklist.md")), "release checklist post missing");
 
 for (const phrase of [
   "\"astro-theme-papyrus\": \"^0.2.0\"",
@@ -123,7 +124,7 @@ try {
       "README.md",
       "LICENSE",
       "CHANGELOG.md",
-      "docs/release.md",
+      "src/content/posts/docs/deploy/31-release-checklist.md",
       "package.json",
       "src/index.ts",
       "src/components/PapyrusPostList.astro",

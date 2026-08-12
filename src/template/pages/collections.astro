@@ -1,0 +1,34 @@
+---
+import { getCollection } from "astro:content";
+import { PapyrusBaseLayout, PapyrusContentIndex } from "../../components";
+import { pageDescription } from "../../config";
+import { getPostCollections } from "../../utils/collections";
+import { getTemplateSite } from "../site";
+
+const site = await getTemplateSite();
+const collections = await getPostCollections("src/content/posts", await getCollection("posts"));
+const collectionItems = collections.map(collection => ({
+  title: collection.name,
+  href: collection.href,
+  description: collection.description || `${collection.posts.length} posts`,
+}));
+const description = pageDescription(site, "collections", "Post folders can define collection metadata with TOML. Papyrus detects those files at build time and exposes the matching reading paths.");
+---
+
+<PapyrusBaseLayout title="Collections" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
+  <section class="papyrus-hero">
+    <h1>Collections</h1>
+    {description && <p class="papyrus-description">{description}</p>}
+  </section>
+
+  {collections.length > 0 ? (
+    <section class="papyrus-section">
+      <h2>Available collections</h2>
+      <PapyrusContentIndex items={collectionItems} />
+    </section>
+  ) : (
+    <section class="papyrus-section">
+      <p>No post collections found.</p>
+    </section>
+  )}
+</PapyrusBaseLayout>

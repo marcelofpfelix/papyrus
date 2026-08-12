@@ -30,7 +30,7 @@ async function transpileModule(sourcePath, outputName) {
 }
 
 try {
-  const guide = await readFile("docs/guide.md", "utf8");
+  const guide = await readFile(".agents/package-guide.md", "utf8");
   const starlightComparison = await readFile(".agents/starlight-comparison.md", "utf8");
   const featuresPath = await transpileModule("src/utils/features.ts", "features.mjs");
   const pluginsPath = await transpileModule("src/utils/plugins.ts", "plugins.mjs");

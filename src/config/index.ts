@@ -31,8 +31,19 @@ export type PapyrusPostCardConfig = {
   limit?: number;
 };
 
+export type PapyrusSourceConfig = {
+  repo?: string;
+  branch?: string;
+};
+
+export type PapyrusPageConfig = {
+  content?: string;
+  description?: string | false;
+};
+
 export type PapyrusSiteConfig = {
   title: string;
+  homeTitle?: string;
   description?: string;
   site?: string;
   lang: string;
@@ -48,16 +59,20 @@ export type PapyrusSiteConfig = {
   nav: PapyrusLinkConfig[];
   socialLinks: PapyrusLinkConfig[];
   projects: PapyrusProjectConfig[];
+  pages: Record<string, PapyrusPageConfig>;
+  source: PapyrusSourceConfig;
   features: Required<PapyrusFeatureConfig>;
   postCard: PapyrusPostCardConfig;
 };
 
-export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "nav" | "socialLinks">> & {
+export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "nav" | "socialLinks" | "source">> & {
   features?: PapyrusFeatureConfig;
   postCard?: Partial<PapyrusPostCardConfig>;
   nav?: PapyrusLinkConfig[];
   socialLinks?: PapyrusLinkConfig[];
   projects?: PapyrusProjectConfig[];
+  pages?: Record<string, PapyrusPageConfig>;
+  source?: PapyrusSourceConfig;
 };
 
 const defaultPostCard = {
@@ -79,6 +94,8 @@ const defaultConfig = {
   nav: [],
   socialLinks: [],
   projects: [],
+  pages: {},
+  source: {},
   features: defaultPapyrusFeatures,
   postCard: defaultPostCard,
 } satisfies PapyrusSiteConfig;
@@ -146,6 +163,31 @@ function asProjects(value: unknown): PapyrusProjectConfig[] {
   });
 }
 
+function asPageConfig(value: unknown): PapyrusPageConfig {
+  const record = asRecord(value);
+  const description = record.description;
+  return {
+    ...(asString(record.content) ? { content: asString(record.content) } : {}),
+    ...(description === false ? { description: false as const } : {}),
+    ...(asString(description) ? { description: asString(description) } : {}),
+  };
+}
+
+function asSourceConfig(value: unknown): PapyrusSourceConfig {
+  const record = asRecord(value);
+  return {
+    ...(asString(record.repo) ? { repo: asString(record.repo) } : {}),
+    ...(asString(record.branch) ? { branch: asString(record.branch) } : {}),
+  };
+}
+
+function asPages(value: unknown): Record<string, PapyrusPageConfig> {
+  const record = asRecord(value);
+  return Object.fromEntries(
+    Object.entries(record).map(([key, page]) => [key, asPageConfig(page)])
+  );
+}
+
 function readFeatureConfig(record: Record<string, unknown>): PapyrusFeatureConfig {
   return Object.fromEntries(
     Object.keys(defaultPapyrusFeatures).flatMap((key) => {
@@ -177,6 +219,8 @@ export function resolvePapyrusConfig(config: PapyrusConfigInput = {}): PapyrusSi
     nav: config.nav ?? defaultConfig.nav,
     socialLinks: config.socialLinks ?? defaultConfig.socialLinks,
     projects: config.projects ?? defaultConfig.projects,
+    pages: config.pages ?? defaultConfig.pages,
+    source: config.source ?? defaultConfig.source,
     features: {
       ...defaultPapyrusFeatures,
       ...(config.features ?? {}),
@@ -194,9 +238,11 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
   const brand = asRecord(parsed.brand);
   const theme = asRecord(parsed.theme);
   const seo = asRecord(parsed.seo);
+  const sourceConfig = asRecord(parsed.source);
 
   return resolvePapyrusConfig({
     title: asString(site.title ?? parsed.title),
+    homeTitle: asString(site.homeTitle ?? site.home_title ?? parsed.homeTitle ?? parsed.home_title),
     description: asString(site.description ?? parsed.description),
     site: asString(site.url ?? site.site ?? parsed.site),
     lang: asString(site.lang ?? parsed.lang),
@@ -212,6 +258,8 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
     nav: asLinks(parsed.nav),
     socialLinks: asLinks(parsed.social ?? parsed.socialLinks ?? parsed.social_links),
     projects: asProjects(parsed.project ?? parsed.projects),
+    pages: asPages(parsed.pages ?? parsed.page),
+    source: asSourceConfig(sourceConfig),
     features: readFeatureConfig(asRecord(parsed.features)),
     postCard: readPostCardConfig(asRecord(parsed.post_card ?? parsed.postCard)),
   });
@@ -228,4 +276,32 @@ export async function loadPapyrusConfig(path = "papyrus.config.toml", cwd = proc
     throw error;
   }
   return parsePapyrusConfigToml(source);
+}
+
+export function pageDescription(site: Pick<PapyrusSiteConfig, "pages">, page: string, fallback?: string): string | undefined {
+  const configured = site.pages[page]?.description;
+  if (configured === false) return undefined;
+  return configured ?? fallback;
+}
+
+export function pageContent(site: Pick<PapyrusSiteConfig, "pages">, page: string): string | undefined {
+  return site.pages[page]?.content;
+}
+
+function normalizeGithubRepo(repo: string): string {
+  return repo
+    .replace(/^https:\/\/github\.com\//, "")
+    .replace(/^git@github\.com:/, "")
+    .replace(/\.git$/, "")
+    .replace(/^\/+|\/+$/g, "");
+}
+
+export function githubSourceUrl(site: Pick<PapyrusSiteConfig, "source">, path: string, kind: "blob" | "raw" = "blob"): string | undefined {
+  const repo = site.source.repo ? normalizeGithubRepo(site.source.repo) : undefined;
+  if (!repo) return undefined;
+
+  const branch = site.source.branch ?? "main";
+  const normalizedPath = path.replace(/^\/+/, "");
+  if (kind === "raw") return `https://raw.githubusercontent.com/${repo}/${branch}/${normalizedPath}`;
+  return `https://github.com/${repo}/blob/${branch}/${normalizedPath}`;
 }

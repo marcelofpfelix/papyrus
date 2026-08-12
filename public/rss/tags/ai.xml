@@ -13,12 +13,5 @@
       <pubDate>Wed, 01 Jul 2026 14:10:00 GMT</pubDate>
       <description>AI metadata, generated indexes, and mobile-ready defaults in a Papyrus site.</description>
     </item>
-    <item>
-      <title>AI-first metadata</title>
-      <link>/posts/ai-first-metadata-demo/</link>
-      <guid>/posts/ai-first-metadata-demo/</guid>
-      <pubDate>Wed, 01 Jul 2026 12:00:00 GMT</pubDate>
-      <description>How Papyrus publishes llms.txt and llms-full.txt for agents and search tools.</description>
-    </item>
   </channel>
 </rss>

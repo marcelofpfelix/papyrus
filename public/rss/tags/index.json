@@ -2,17 +2,17 @@
   {
     "tag": "ai",
     "feed": "/rss/tags/ai.xml",
-    "count": 2
+    "count": 1
   },
   {
     "tag": "astro",
     "feed": "/rss/tags/astro.xml",
-    "count": 6
+    "count": 4
   },
   {
     "tag": "authoring",
     "feed": "/rss/tags/authoring.xml",
-    "count": 2
+    "count": 1
   },
   {
     "tag": "changelog",
@@ -20,8 +20,8 @@
     "count": 1
   },
   {
-    "tag": "code",
-    "feed": "/rss/tags/code.xml",
+    "tag": "collections",
+    "feed": "/rss/tags/collections.xml",
     "count": 1
   },
   {
@@ -30,18 +30,13 @@
     "count": 1
   },
   {
-    "tag": "content",
-    "feed": "/rss/tags/content.xml",
-    "count": 1
-  },
-  {
     "tag": "custom",
     "feed": "/rss/tags/custom.xml",
     "count": 1
   },
   {
-    "tag": "dark-mode",
-    "feed": "/rss/tags/dark-mode.xml",
+    "tag": "cv",
+    "feed": "/rss/tags/cv.xml",
     "count": 1
   },
   {
@@ -52,16 +47,11 @@
   {
     "tag": "docs",
     "feed": "/rss/tags/docs.xml",
-    "count": 7
+    "count": 5
   },
   {
     "tag": "markdown",
     "feed": "/rss/tags/markdown.xml",
-    "count": 2
-  },
-  {
-    "tag": "metadata",
-    "feed": "/rss/tags/metadata.xml",
     "count": 1
   },
   {
@@ -72,12 +62,17 @@
   {
     "tag": "papyrus",
     "feed": "/rss/tags/papyrus.xml",
-    "count": 6
+    "count": 7
   },
   {
     "tag": "portuguese-food",
     "feed": "/rss/tags/portuguese-food.xml",
     "count": 20
+  },
+  {
+    "tag": "profile",
+    "feed": "/rss/tags/profile.xml",
+    "count": 1
   },
   {
     "tag": "recipe",
@@ -87,11 +82,11 @@
   {
     "tag": "reference",
     "feed": "/rss/tags/reference.xml",
-    "count": 1
+    "count": 3
   },
   {
-    "tag": "search",
-    "feed": "/rss/tags/search.xml",
+    "tag": "start",
+    "feed": "/rss/tags/start.xml",
     "count": 1
   },
   {

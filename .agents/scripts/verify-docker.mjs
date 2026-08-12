@@ -5,7 +5,7 @@ const [dockerfile, makefile, packageJsonText, deployDocs] = await Promise.all([
   readFile("Dockerfile", "utf8"),
   readFile("Makefile", "utf8"),
   readFile("package.json", "utf8"),
-  readFile("docs/deploy.md", "utf8"),
+  readFile("src/content/posts/docs/deploy/30-deploy.md", "utf8"),
 ]);
 const packageJson = JSON.parse(packageJsonText);
 
@@ -19,9 +19,10 @@ assert(dockerfile.includes("RUN pnpm run build"), "Dockerfile should build the s
 assert(dockerfile.includes("FROM nginx:1.29-alpine AS runtime"), "Dockerfile should use pinned nginx static runtime");
 assert(dockerfile.includes("COPY --from=build /app/dist /usr/share/nginx/html"), "Dockerfile should serve dist from nginx");
 
-for (const target of ["docker-build", "docker-run", "docker-stop", "verify-docker"]) {
+for (const target of ["docker-build", "docker-run", "docker-stop"]) {
   assert(makefile.includes(`${target}:`), `Makefile missing ${target} target`);
 }
+assert(makefile.includes("verify-%:"), "Makefile missing generic verify target for verify-docker");
 
 assert(makefile.includes("DOCKER_IMAGE ?= papyrus-demo"), "Makefile missing DOCKER_IMAGE default");
 assert(makefile.includes("DOCKER_PORT ?= 4327"), "Makefile missing DOCKER_PORT default");

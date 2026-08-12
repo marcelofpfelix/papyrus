@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 
-const guide = await readFile("docs/guide.md", "utf8");
+const guide = await readFile(".agents/package-guide.md", "utf8");
 const makefile = await readFile("Makefile", "utf8");
 const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 

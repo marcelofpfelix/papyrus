@@ -6,19 +6,6 @@ import { demoNav, demoSocialLinks } from "../data/demo-nav";
 const siteData = JSON.parse(await readFile("public/demo/site-data.json", "utf8")) as {
   projects: Parameters<typeof PapyrusProjectList>[0]["projects"];
 };
-
-const projectDataExample = `{
-  "title": "papyrus",
-  "description": "Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata.",
-  "tags": ["Astro", "theme", "docs"],
-  "pinned": true,
-  "links": [
-    { "label": "features", "href": "/collections/docs/feature-map/" },
-    { "label": "docs", "href": "/collections/docs/" },
-    { "label": "website", "href": "/" },
-    { "label": "repo", "href": "https://github.com/marcelofpfelix/papyrus" }
-  ]
-}`;
 ---
 
 <PapyrusBaseLayout
@@ -30,18 +17,18 @@ const projectDataExample = `{
 >
   <section class="papyrus-hero">
     <h1>Projects</h1>
-    <p class="papyrus-description">Use project cards for work that deserves more than a link in the footer: packages, apps, docs sites, or repositories that explain the site owner’s public work.</p>
+    <p class="papyrus-description">The Papyrus demo keeps projects focused on the two public repos readers need: the reusable theme package and the starter template.</p>
   </section>
 
   <section class="papyrus-section">
     <h2>Project cards</h2>
-    <p>Projects come from structured site data, so pinned homepage cards, the full project index, and AI metadata can all describe the same items without duplicating copy.</p>
+    <p>Projects come from structured site data, so homepage cards, the project index, and generated metadata can describe the same items without duplicating copy.</p>
     <PapyrusProjectList projects={siteData.projects} />
   </section>
 
   <section class="papyrus-section">
-    <h2>Project data</h2>
-    <p>Keep project copy in site data, not inside the card component. The same record can render homepage cards, project pages, and AI/project JSON.</p>
-    <pre><code>{projectDataExample}</code></pre>
+    <h2>Where projects live</h2>
+    <p>Project cards read from site data, so the homepage, project index, and generated metadata can reuse the same titles, descriptions, tags, and links.</p>
+    <p>Edit the project list in <code>papyrus.config.toml</code>. The template keeps that file close to the content so a site does not need custom card code for normal project pages.</p>
   </section>
 </PapyrusBaseLayout>

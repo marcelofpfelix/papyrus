@@ -11,6 +11,9 @@ importers:
       '@astrojs/rss':
         specifier: ^4.0.19
         version: 4.0.19
+      '@pagefind/default-ui':
+        specifier: ^1.5.2
+        version: 1.5.2
       astro-pure:
         specifier: ^1.4.6
         version: 1.4.6(@types/node@24.13.2)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.62.2)(typescript@5.9.3)(vite@8.1.1(@types/node@24.13.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.9.0))(yaml@2.9.0)
@@ -39,9 +42,6 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.2
         version: 3.7.2
-      '@pagefind/default-ui':
-        specifier: ^1.5.2
-        version: 1.5.2
       astro:
         specifier: ^7.0.4
         version: 7.0.4(@astrojs/markdown-remark@7.2.0)(@emnapi/core@1.11.1)(@emnapi/runtime@1.11.1)(@types/node@24.13.2)(jiti@2.7.0)(rollup@4.62.2)(yaml@2.9.0)

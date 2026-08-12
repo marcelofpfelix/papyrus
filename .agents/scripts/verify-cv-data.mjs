@@ -119,7 +119,7 @@ try {
   const profileToml = await readFile("src/data/profile.toml", "utf8");
   assert(demoToml.includes('email_domain = "site.test"'), "public demo TOML should use the reserved site.test email domain");
   assert(profileToml.includes('email_domain = "site.test"'), "profile TOML should use the reserved site.test email domain");
-  const guide = await readFile("docs/guide.md", "utf8");
+  const guide = await readFile(".agents/package-guide.md", "utf8");
   const sourceComparison = await readFile(".agents/cv-source-comparison.md", "utf8");
   assert(guide.includes("Parser packages belong in consuming sites"), "guide should document parser ownership for YAML/TOML");
   assert(guide.includes("TOML example in a consuming site"), "guide should document consuming-site TOML adapter example");

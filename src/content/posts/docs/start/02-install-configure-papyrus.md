@@ -1,0 +1,166 @@
+---
+title: "Install and configure Papyrus"
+description: "Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides."
+slug: install-configure-papyrus
+pubDatetime: 2026-07-10T09:00:00.000Z
+license: CC-BY-4.0
+pinned: 3
+cover: /images/papyrus-layout.svg
+tags:
+  - papyrus
+  - astro
+  - docs
+---
+
+Start with
+[`papyrus-template`](https://github.com/marcelofpfelix/papyrus-template).
+The template keeps the site repo small: config, profile data, posts, and
+assets. The package provides the routes, layouts, post UI, collections, RSS,
+robots, search hooks, profile pages, and theme CSS.
+
+## Start from the template
+
+Create a repository from `papyrus-template`, then install dependencies:
+
+```sh
+pnpm install
+pnpm dev
+```
+
+The template depends on the package:
+
+```json title="package.json"
+{
+  "dependencies": {
+    "astro-theme-papyrus": "^0.2.1"
+  }
+}
+```
+
+It enables Papyrus in Astro:
+
+```js title="astro.config.mjs"
+import sitemap from "@astrojs/sitemap";
+import { defineConfig } from "astro/config";
+import { loadPapyrusConfig } from "astro-theme-papyrus/config";
+import papyrus from "astro-theme-papyrus/integration";
+
+const site = await loadPapyrusConfig();
+
+export default defineConfig({
+  site: site.site,
+  integrations: [papyrus(), sitemap()],
+});
+```
+
+It also reuses the Papyrus content collection:
+
+```ts title="src/content.config.ts"
+export { collections } from "astro-theme-papyrus/content";
+```
+
+Papyrus adds these routes:
+
+| Route | Source |
+| --- | --- |
+| `/` | Home page with latest posts and project cards |
+| `/posts/` | Public post list |
+| `/posts/[...slug]/` | Post detail page |
+| `/projects/` | Project cards from `papyrus.config.toml` |
+| `/profile/`, `/profile/print/`, `/profile/ast/` | Profile and CV pages from `src/data/profile.toml` |
+| `/tag/` and `/tag/[tag]/` | Tag index and tag detail pages |
+| `/404.html` | Helpful not-found page |
+| `/rss.xml` | Main RSS feed |
+| `/robots.txt` | Robots file with sitemap URL |
+
+The template does not need a `src/pages` tree unless your site adds custom
+routes.
+
+## Know `src` vs `public`
+
+Papyrus follows Astro's normal file boundary: `src/` is source, and `public/`
+is copied to the deployed site as-is.
+
+Use `src/` for files Astro should read, transform, type-check, or route during
+the build:
+
+- `src/content/posts/*.md` for posts
+- `src/content/posts/**/folder.toml` for ordered collections
+- `src/content.config.ts` for the Papyrus content collection export
+- `src/data/profile.toml` for the profile and CV source
+- `src/pages/*.astro` only when you need a custom route
+
+Use `public/` for files that should keep the same URL and contents after build:
+
+- `public/logo.svg`, `public/favicon.svg`, and `public/site.webmanifest`
+- `public/images/*` for covers, avatars, and project images
+- generated artifacts such as `public/cv/profile.json`, `public/cv/profile.md`,
+  `public/ai/*`, `public/rss/tags/*`, and `public/pagefind/*`
+
+Do not hand-edit generated files in `public/`. Edit the source in `src/`,
+`papyrus.config.toml`, or `src/data/profile.toml`, then regenerate artifacts.
+
+## Edit the right file
+
+For normal site work, start with these files:
+
+| Goal | Edit |
+| --- | --- |
+| Site title, description, navigation, projects, theme, feature flags, and post-card defaults | `papyrus.config.toml` |
+| Add or edit posts | `src/content/posts/*.md` |
+| Add ordered docs or guide sections | `src/content/posts/<folder>/<folder>.toml` plus Markdown posts |
+| Change the profile, CV, links, skills, dates, and print color | `src/data/profile.toml` |
+| Change logos, favicons, covers, avatars, and project images | `public/` assets |
+
+The package repo has many files because it owns the reusable components, routes,
+scripts, styles, and demo fixtures. A site repo should stay closer to the
+template shape: config, content, profile data, and assets.
+
+## Add posts
+
+Posts live in `src/content/posts`. A minimal post needs a title, description,
+date, and optional tags.
+
+```md title="src/content/posts/publishing-with-papyrus.md"
+---
+title: Publishing with Papyrus
+description: A short implementation note published from a Papyrus-powered site.
+date: 2026-07-10T09:00:00.000Z
+tags: [astro, papyrus]
+cover: /images/cover.svg
+---
+
+Write the post body in Markdown.
+```
+
+Papyrus handles list pages, detail pages, adjacent links, tags, scheduled posts,
+reading time, cover images, RSS entries, and generated route paths.
+
+## Edit the profile
+
+The profile page reads `src/data/profile.toml`.
+
+```toml title="src/data/profile.toml"
+[user]
+name = "Site Author"
+title = "Software Engineer"
+bio = "Writer and software engineer"
+location = "Lisbon, Portugal"
+print_color = "#37474F"
+email_user = "hello"
+email_domain = "site.test"
+sections = ["about", "experience", "education", "skills"]
+```
+
+The same profile data can be exported to JSON and Markdown with:
+
+```sh
+pnpm run cv:export
+```
+
+## Next steps
+
+- Configure the site in [Site config](/collections/docs/site-config/).
+- Learn content features in [Markdown authoring guide](/collections/docs/markdown-feature-sample/).
+- Use ordered docs or guides with [Collections](/collections/docs/collections/).
+- Review the package boundary in [Papyrus package shape](/collections/docs/papyrus-package-shape/).

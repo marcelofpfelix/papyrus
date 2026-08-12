@@ -4,6 +4,7 @@ description: Markdown route showing Pure-style Astro/Shiki code blocks, callouts
 slug: code-demo
 pubDatetime: 2026-07-01T13:00:00.000Z
 category: Docs
+hidden: true
 tags:
   - authoring
   - markdown
@@ -67,6 +68,22 @@ int main(void) {
 site$ pnpm install
 site# pnpm build
 site> pnpm preview
+```
+
+## Kamailio fences
+
+```kamailio title="kamailio.cfg"
+#!KAMAILIO
+listen=udp:127.0.0.2:5060
+loadmodule "sl.so"
+modparam("sl", "bind_tm", 0)
+
+request_route {
+  if (is_method("INVITE")) {
+    xlog("L_INFO", "call from $si to $ru\n");
+    sl_send_reply("100", "Trying");
+  }
+}
 ```
 
 ## Task list

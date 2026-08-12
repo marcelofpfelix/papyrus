@@ -1,4 +1,5 @@
 HOST ?= 0.0.0.0
+SERVE_HOST ?= 0.0.0.0
 SITE_HOST ?= 192.168.1.102
 PORT ?= 4326
 SITE_URL ?= http://$(SITE_HOST):$(PORT)
@@ -37,7 +38,7 @@ pre:
 
 preview serve: build
 	$(MAKE) dev-stop
-	$(if $(filter preview,$@),pnpm exec astro preview --host=$(HOST) --allowed-hosts --port $(PORT),python3 scripts/serve-static.py dist $(PORT) $(SITE_HOST))
+	$(if $(filter preview,$@),pnpm exec astro preview --host=$(HOST) --allowed-hosts --port $(PORT),ruby scripts/serve-static.rb dist $(PORT) $(SERVE_HOST))
 
 check:
 	pnpm run check

@@ -1,37 +1,36 @@
 [
   {
-    "id": "note:pure-shiki-code",
-    "text": "Code fences use Astro/Shiki CSS-variable output with readable titles, highlights, diffs, and copy actions.",
+    "id": "note:template-first",
+    "text": "Start from papyrus-template; keep local code small and let the theme package provide the standard pages.",
     "date": "2026-07-01T10:00:00.000Z",
     "tags": [
-      "code",
-      "ux"
+      "template",
+      "docs"
     ],
     "type": "note",
-    "url": "https://papyrus.marcelofelix.com/#pure-shiki-code",
-    "noteId": "pure-shiki-code"
+    "url": "https://papyrus.marcelofelix.com/#template-first",
+    "noteId": "template-first"
   },
   {
-    "id": "note:theme-tokens",
-    "text": "Theme profiles own light and dark token sets; runtime switching only changes the selected profile and mode.",
+    "id": "note:config-not-code",
+    "text": "Use TOML for site copy, projects, profile data, and feature flags before copying components into a site.",
     "date": "2026-07-01T11:00:00.000Z",
     "tags": [
-      "theme"
+      "config"
     ],
     "type": "note",
-    "url": "https://papyrus.marcelofelix.com/#theme-tokens",
-    "noteId": "theme-tokens"
+    "url": "https://papyrus.marcelofelix.com/#config-not-code",
+    "noteId": "config-not-code"
   },
   {
-    "id": "note:cv-data",
-    "text": "Keep CV data stable and swap components/templates around it instead of rewriting the source file.",
+    "id": "note:collections",
+    "text": "Use collections when posts need a deliberate reading order instead of normal blog date order.",
     "date": "2026-07-01T12:00:00.000Z",
     "tags": [
-      "cv",
-      "data"
+      "collections"
     ],
     "type": "note",
-    "url": "https://papyrus.marcelofelix.com/#cv-data",
-    "noteId": "cv-data"
+    "url": "https://papyrus.marcelofelix.com/#collections",
+    "noteId": "collections"
   }
 ]

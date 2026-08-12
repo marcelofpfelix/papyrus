@@ -1,77 +1,22 @@
 [
   {
-    "id": "post:ai-first-metadata-demo",
+    "id": "post:markdown-feature-sample",
     "type": "post",
-    "slug": "ai-first-metadata-demo",
-    "url": "https://papyrus.marcelofelix.com/posts/ai-first-metadata-demo/",
-    "sourcePath": "src/content/posts/ai-first-demo.md",
-    "title": "AI-first metadata",
-    "description": "How Papyrus publishes llms.txt and llms-full.txt for agents and search tools.",
-    "excerpt": "AI-first metadata Papyrus can generate `llms.txt`, `llms-full.txt`, JSON indexes, and graph data from the same public content set used by posts, tags, RSS, sitemap, and search. That keeps readers, crawlers, and AI tools pointed at the same canonical pages. `llms.txt` is the short",
+    "slug": "markdown-feature-sample",
+    "url": "https://papyrus.marcelofelix.com/posts/markdown-feature-sample/",
+    "sourcePath": "src/content/posts/docs/authoring/12-markdown-feature-sample.md",
+    "title": "Markdown authoring guide",
+    "description": "A practical guide showing how Papyrus renders Markdown, callouts, code, media, diagrams, and source actions.",
+    "excerpt": "Papyrus uses regular Astro Markdown. A post stays readable as plain text and builds into an article page with source, share, tag, table-of-contents, and metadata actions when the site enables them. This page is a quick rendering reference. Every section below is ordinary Markdown",
     "tags": [
-      "ai",
-      "metadata"
-    ],
-    "license": "CC-BY-4.0",
-    "created": "2026-07-01T12:00:00.000Z",
-    "updated": "",
-    "draft": false
-  },
-  {
-    "id": "post:dark-mode-and-search",
-    "type": "post",
-    "slug": "dark-mode-and-search",
-    "url": "https://papyrus.marcelofelix.com/posts/dark-mode-and-search/",
-    "sourcePath": "src/content/posts/dark-mode-and-search.md",
-    "title": "Dark mode and search in Papyrus",
-    "description": "The theme keeps a Pure-like neutral background, then adds a small Papyrus-style search flow.",
-    "excerpt": "The light and dark backgrounds stay close to the default Pure theme: neutral, quiet, and readable. Papyrus keeps color accents restrained so the content remains the main surface. The header has a search icon. It links to the site-owned `/search/` page. That keeps the package gene",
-    "tags": [
-      "astro",
-      "search",
-      "dark-mode"
-    ],
-    "license": "CC-BY-4.0",
-    "created": "2026-06-30T11:15:00.000Z",
-    "updated": "",
-    "draft": false
-  },
-  {
-    "id": "post:code-demo",
-    "type": "post",
-    "slug": "code-demo",
-    "url": "https://papyrus.marcelofelix.com/posts/code-demo/",
-    "sourcePath": "src/content/posts/docs/authoring/10-code-demo.md",
-    "title": "Markdown code guide",
-    "description": "Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.",
-    "excerpt": "This route is a compact rendering reference for Markdown-heavy posts. It shows how callouts, code fences, tables, diagrams, media, and fallback artifact links look inside the same article layout used by regular Papyrus posts. Obsidian callout syntax > [!NOTE] > Notes render as th",
-    "tags": [
-      "authoring",
       "markdown",
-      "code"
+      "theme",
+      "authoring",
+      "custom"
     ],
-    "license": "",
-    "created": "2026-07-01T13:00:00.000Z",
-    "updated": "",
-    "draft": false
-  },
-  {
-    "id": "post:content-structure",
-    "type": "post",
-    "slug": "content-structure",
-    "url": "https://papyrus.marcelofelix.com/posts/content-structure/",
-    "sourcePath": "src/content/posts/docs/authoring/11-content-structure.md",
-    "title": "Generated content structure",
-    "description": "How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.",
-    "excerpt": "Use folder metadata when a site needs nested notes, guides, or knowledge-base pages without turning source paths into fragile public URLs. What gets generated Papyrus can read a folder tree, combine explicit frontmatter with folder-level labels, and render a public index that sti",
-    "tags": [
-      "papyrus",
-      "docs",
-      "content"
-    ],
-    "license": "",
-    "created": "2026-07-01T13:10:00.000Z",
-    "updated": "",
+    "license": "CC-BY-4.0",
+    "created": "2026-06-29T10:00:00.000Z",
+    "updated": "2026-06-30T10:00:00.000Z",
     "draft": false
   },
   {
@@ -82,7 +27,7 @@
     "sourcePath": "src/content/posts/docs/deploy/30-deploy.md",
     "title": "Deploy Papyrus",
     "description": "Static hosting, build settings, metadata URLs, and base-path notes for a Papyrus site.",
-    "excerpt": "Papyrus builds to static Astro output, so a consuming site can publish the generated `dist` directory to any static host. Local preview Use the local development server while editing content, routes, and theme configuration. For a production-shaped preview, build first and serve ",
+    "excerpt": "Papyrus builds static Astro output. Publish the generated `dist` directory to any static host. Local preview Use the local development server while editing content, routes, and theme configuration. For a production-shaped preview, build first and serve the generated output. For a",
     "tags": [
       "deploy",
       "docs",
@@ -101,7 +46,7 @@
     "sourcePath": "src/content/posts/docs/references/20-feature-map.md",
     "title": "Feature map",
     "description": "Route-by-route guide to public Papyrus features.",
-    "excerpt": "Every public feature has a route that shows how a consuming site can use it. Start here when exploring Papyrus. Feature map - [Install and configure Papyrus](/posts/install-configure-papyrus/) covers the template-first setup flow. - [Layout, header, footer, and theme controls](/)",
+    "excerpt": "This is a map of the demo site. Each link points to a route or doc that shows the feature in context. Feature map - [Install and configure Papyrus](/collections/docs/install-configure-papyrus/) covers the template setup flow. - [Layout, header, footer, and theme controls](/) are ",
     "tags": [
       "papyrus",
       "docs",
@@ -120,7 +65,7 @@
     "sourcePath": "src/content/posts/docs/references/21-ai-mobile.md",
     "title": "AI and mobile readiness",
     "description": "AI metadata, generated indexes, and mobile-ready defaults in a Papyrus site.",
-    "excerpt": "Papyrus ships useful agent-readable metadata, generated indexes, and responsive UI defaults for small content sites. AI-first primitives - Package-level `llms.txt` and `llms-full.txt` generation for agent-readable site summaries. - Static RSS feeds per tag. - Static JSON indexes ",
+    "excerpt": "Papyrus builds static metadata and search files alongside the site. The same build also keeps the main layouts usable on small screens. Generated files - `llms.txt` and `llms-full.txt` for agent-readable site summaries. - Static RSS feeds per tag. - Static JSON indexes for posts,",
     "tags": [
       "ai",
       "mobile",
@@ -132,14 +77,73 @@
     "draft": false
   },
   {
+    "id": "post:papyrus-package-shape",
+    "type": "post",
+    "slug": "papyrus-package-shape",
+    "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/",
+    "sourcePath": "src/content/posts/docs/references/24-papyrus-package-shape.md",
+    "title": "Papyrus package shape",
+    "description": "Package-boundary guide showing how Papyrus keeps repeated blog UI in reusable theme exports.",
+    "excerpt": "Papyrus keeps site repos focused on content and config. The site owns posts, profile data, assets, and deployment. The package owns shared UI: layouts, headers, footers, post lists, tags, archive helpers, profile/CV components, metadata helpers, and CSS. ![Papyrus centered layout",
+    "tags": [
+      "astro",
+      "theme",
+      "papyrus",
+      "changelog"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2026-06-30T11:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:collections",
+    "type": "post",
+    "slug": "collections",
+    "url": "https://papyrus.marcelofelix.com/posts/collections/",
+    "sourcePath": "src/content/posts/docs/references/25-collections.md",
+    "title": "Collections",
+    "description": "What Papyrus collections are and how folder-backed collection routes work.",
+    "excerpt": "A collection is a folder of posts with a TOML file. Use one when readers should follow posts in a fixed order instead of normal blog date order. The same Markdown post can appear in the regular `/posts/` archive and in a collection route. The archive sorts by publishing metadata;",
+    "tags": [
+      "papyrus",
+      "collections",
+      "reference"
+    ],
+    "license": "",
+    "created": "2026-07-13T08:10:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:profile",
+    "type": "post",
+    "slug": "profile",
+    "url": "https://papyrus.marcelofelix.com/posts/profile/",
+    "sourcePath": "src/content/posts/docs/references/26-profile.md",
+    "title": "Profile and CV",
+    "description": "What the Papyrus profile data file controls and how profile, print, and export routes share it.",
+    "excerpt": "The profile page reads `src/data/profile.toml`. The same data feeds the web profile page, timeline view, print routes, generated Markdown, and generated JSON. Keep personal data in this TOML file instead of hardcoding it in components. That makes the site easier to review, export",
+    "tags": [
+      "papyrus",
+      "profile",
+      "cv",
+      "reference"
+    ],
+    "license": "",
+    "created": "2026-07-13T08:20:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
     "id": "post:papyrus-docs",
     "type": "post",
     "slug": "papyrus-docs",
     "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/",
     "sourcePath": "src/content/posts/docs/start/00-papyrus-docs.md",
     "title": "Papyrus docs",
-    "description": "Package docs for installing, composing, and extending Papyrus without copying a full theme into every site.",
-    "excerpt": "Papyrus keeps consuming sites focused on content and config. The theme package owns reusable layouts, post rendering, collections, generated metadata, search, RSS, project cards, and profile/CV surfaces. Start points - [Install and configure Papyrus](/posts/install-configure-papy",
+    "description": "Start with papyrus-template, then edit config, Markdown, profile data, and assets.",
+    "excerpt": "Papyrus is a reusable Astro theme for personal sites, technical notes, project pages, and profile/CV pages. Start from `papyrus-template`, keep your content in that site, and let `astro-theme-papyrus` provide the shared routes and components. Read first - [Install and configure P",
     "tags": [
       "papyrus",
       "docs",
@@ -151,21 +155,40 @@
     "draft": false
   },
   {
-    "id": "post:features",
+    "id": "post:install-configure-papyrus",
     "type": "post",
-    "slug": "features",
-    "url": "https://papyrus.marcelofelix.com/posts/features/",
-    "sourcePath": "src/content/posts/docs/start/01-features.md",
-    "title": "Feature config",
-    "description": "Grouped feature toggles for Papyrus layouts.",
-    "excerpt": "Use one typed config object to disable optional layout and post features without copying theme components. Base layout Post layout SEO and social metadata Papyrus layouts emit the metadata a small public site normally needs: titles, descriptions, canonical URLs, Open Graph, Twitt",
+    "slug": "install-configure-papyrus",
+    "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/",
+    "sourcePath": "src/content/posts/docs/start/02-install-configure-papyrus.md",
+    "title": "Install and configure Papyrus",
+    "description": "Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides.",
+    "excerpt": "Start with [`papyrus-template`](https://github.com/marcelofpfelix/papyrus-template). The template keeps the site repo small: config, profile data, posts, and assets. The package provides the routes, layouts, post UI, collections, RSS, robots, search hooks, profile pages, and them",
     "tags": [
       "papyrus",
-      "docs",
-      "config"
+      "astro",
+      "docs"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2026-07-10T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:site-config",
+    "type": "post",
+    "slug": "site-config",
+    "url": "https://papyrus.marcelofelix.com/posts/site-config/",
+    "sourcePath": "src/content/posts/docs/start/03-site-config.md",
+    "title": "Site config",
+    "description": "What papyrus.config.toml controls and how a site should edit it.",
+    "excerpt": "`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, project cards, theme defaults, feature flags, and post-list behavior. Use frontmatter for per-post metadat",
+    "tags": [
+      "papyrus",
+      "config",
+      "start"
     ],
     "license": "",
-    "created": "2026-07-01T09:10:00.000Z",
+    "created": "2026-07-13T08:00:00.000Z",
     "updated": "",
     "draft": false
   },
@@ -526,82 +549,6 @@
     ],
     "license": "CC-BY-4.0",
     "created": "2024-06-10T09:00:00.000Z",
-    "updated": "",
-    "draft": false
-  },
-  {
-    "id": "post:folder-tags-demo",
-    "type": "post",
-    "slug": "folder-tags-demo",
-    "url": "https://papyrus.marcelofelix.com/posts/folder-tags-demo/",
-    "sourcePath": "src/content/posts/guides/content-model/folder-tags.md",
-    "title": "Folder tags for nested posts",
-    "description": "Content-model guide showing stable slugs with automatic tags from source folders.",
-    "excerpt": "This post lives in `src/content/posts/guides/content-model/` to show how a nested source folder can add metadata without changing the public URL. The public URL uses the explicit `slug`, so the route stays stable even if the file moves later. Because it is not hidden, it appears ",
-    "tags": [
-      "astro"
-    ],
-    "license": "CC-BY-4.0",
-    "created": "2026-06-30T11:00:00.000Z",
-    "updated": "",
-    "draft": false
-  },
-  {
-    "id": "post:install-configure-papyrus",
-    "type": "post",
-    "slug": "install-configure-papyrus",
-    "url": "https://papyrus.marcelofelix.com/posts/install-configure-papyrus/",
-    "sourcePath": "src/content/posts/install-configure-papyrus.md",
-    "title": "Install and configure Papyrus",
-    "description": "Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides.",
-    "excerpt": "The recommended way to start a Papyrus site is to use `papyrus-template`. The template keeps site-owned files small: one site config, one profile config, one example post, and a few asset overrides. Papyrus provides the layouts, standard pages, content collection, RSS route, robo",
-    "tags": [
-      "papyrus",
-      "astro",
-      "docs"
-    ],
-    "license": "CC-BY-4.0",
-    "created": "2026-07-10T09:00:00.000Z",
-    "updated": "",
-    "draft": false
-  },
-  {
-    "id": "post:markdown-feature-sample",
-    "type": "post",
-    "slug": "markdown-feature-sample",
-    "url": "https://papyrus.marcelofelix.com/posts/markdown-feature-sample/",
-    "sourcePath": "src/content/posts/markdown-feature-sample.md",
-    "title": "Markdown authoring guide",
-    "description": "A practical guide showing how Papyrus renders Markdown, callouts, code, media, diagrams, and source actions.",
-    "excerpt": "Papyrus keeps authoring close to regular Astro Markdown. A post stays readable as plain text, builds into a clean article page, and can expose source, share, tag, table-of-contents, and metadata features when the site enables them. Use this page as a compact authoring reference w",
-    "tags": [
-      "markdown",
-      "theme",
-      "authoring",
-      "custom"
-    ],
-    "license": "CC-BY-4.0",
-    "created": "2026-06-29T10:00:00.000Z",
-    "updated": "2026-06-30T10:00:00.000Z",
-    "draft": false
-  },
-  {
-    "id": "post:papyrus-package-shape",
-    "type": "post",
-    "slug": "papyrus-package-shape",
-    "url": "https://papyrus.marcelofelix.com/posts/papyrus-package-shape/",
-    "sourcePath": "src/content/posts/papyrus-package-shape.md",
-    "title": "Papyrus package shape",
-    "description": "Package-boundary guide showing how Papyrus keeps repeated blog UI in reusable theme exports.",
-    "excerpt": "Papyrus is meant to keep the site repo focused. The consuming site owns content, configuration, route choices, and deployment. The theme package owns reusable UI: base layout, post layout, header, footer, post lists, tags, archive helpers, profile/CV components, generated metadat",
-    "tags": [
-      "astro",
-      "theme",
-      "papyrus",
-      "changelog"
-    ],
-    "license": "CC-BY-4.0",
-    "created": "2026-06-30T11:00:00.000Z",
     "updated": "",
     "draft": false
   }

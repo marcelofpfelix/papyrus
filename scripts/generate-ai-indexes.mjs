@@ -151,6 +151,16 @@ function uniqueEdges(items) {
   ];
 }
 
+function snapshotGeneratedAt(posts) {
+  const times = posts
+    .flatMap((post) => [post.updated, post.created])
+    .map((value) => Date.parse(value))
+    .filter(Number.isFinite);
+
+  if (times.length === 0) return "1970-01-01T00:00:00.000Z";
+  return new Date(Math.max(...times)).toISOString();
+}
+
 async function readSiteData() {
   if (!dataFile) return {};
 
@@ -297,15 +307,16 @@ try {
       .filter((other) => other.slug !== post.slug && other.tags.some((tag) => post.tags.includes(tag)))
       .map((other) => edge(post.id, other.id, "related-by-tag"))),
   ]);
+  const generatedAt = snapshotGeneratedAt(posts);
 
   const graph = {
-    generatedAt: new Date().toISOString(),
+    generatedAt,
     nodes: graphNodes,
     edges: graphEdges,
   };
 
   const manifest = {
-    generatedAt: new Date().toISOString(),
+    generatedAt,
     contentDir: path.relative(root, inputDir),
     postCount: posts.length,
     tagCount: tagMap.size,

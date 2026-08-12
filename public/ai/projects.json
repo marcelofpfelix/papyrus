@@ -1,20 +1,12 @@
 [
   {
-    "title": "papyrus",
-    "description": "Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata.",
+    "title": "Papyrus theme",
+    "description": "Reusable Astro theme package that provides the routes, layouts, styles, search, RSS, collections, and profile/CV surfaces.",
     "href": "/collections/docs/",
     "links": [
       {
-        "label": "features",
-        "href": "/collections/docs/feature-map/"
-      },
-      {
         "label": "docs",
         "href": "/collections/docs/"
-      },
-      {
-        "label": "website",
-        "href": "/"
       },
       {
         "label": "repo",
@@ -27,48 +19,30 @@
     "status": "active",
     "pinned": true,
     "url": "https://papyrus.marcelofelix.com/collections/docs/",
-    "id": "project:papyrus",
+    "id": "project:papyrus-theme",
     "type": "project"
   },
   {
-    "title": "CV profile components",
-    "description": "Mobile profile, timeline, and A4 CV components using one normalized profile data source.",
-    "href": "/profile/",
-    "image": "/demo/demo-profile-avatar.svg",
-    "links": [
-      {
-        "label": "components",
-        "href": "/profile/"
-      },
-      {
-        "label": "data",
-        "href": "/posts/cv-profile/"
-      }
-    ],
-    "language": "Astro",
-    "status": "reference",
-    "url": "https://papyrus.marcelofelix.com/profile/",
-    "id": "project:cv-profile-components",
-    "type": "project"
-  },
-  {
-    "title": "AI indexes",
-    "description": "Static JSON and llms.txt outputs for agents, site search, and graph features.",
-    "href": "/collections/docs/ai-mobile/",
+    "title": "Papyrus template",
+    "description": "Starter site that consumes the Papyrus package and keeps local code focused on config, content, profile data, and assets.",
+    "href": "https://github.com/marcelofpfelix/papyrus-template",
     "links": [
       {
         "label": "docs",
-        "href": "/collections/docs/ai-mobile/"
+        "href": "/collections/docs/install-configure-papyrus/"
       },
       {
-        "label": "graph",
-        "href": "/ai/graph.json"
+        "label": "repo",
+        "text": "marcelofpfelix/papyrus-template",
+        "href": "https://github.com/marcelofpfelix/papyrus-template"
       }
     ],
-    "language": "Node",
-    "status": "reference",
-    "url": "https://papyrus.marcelofelix.com/collections/docs/ai-mobile/",
-    "id": "project:ai-indexes",
+    "repo": "https://github.com/marcelofpfelix/papyrus-template",
+    "language": "Astro",
+    "status": "starter",
+    "pinned": true,
+    "url": "https://github.com/marcelofpfelix/papyrus-template",
+    "id": "project:papyrus-template",
     "type": "project"
   }
 ]

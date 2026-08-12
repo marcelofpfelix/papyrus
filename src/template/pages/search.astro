@@ -1,0 +1,144 @@
+---
+import "@pagefind/default-ui/css/ui.css";
+import { getCollection } from "astro:content";
+import { PapyrusBaseLayout, PapyrusTagList } from "../../components";
+import { pageDescription } from "../../config";
+import { formatPostDate, hiddenPosts, postCategory, postDate, postHref, postTags, postsByTag, publishedPosts, sortPosts } from "../../utils/posts";
+import { getTemplateSite } from "../site";
+
+const site = await getTemplateSite();
+const allPosts = await getCollection("posts");
+const publicPosts = publishedPosts(allPosts);
+const archivedPosts = hiddenPosts(allPosts);
+const categories = Array.from(
+  new Set(publicPosts.map((post) => postCategory(post)).filter((category): category is string => Boolean(category)))
+).sort();
+const tags = Array.from(new Set(publicPosts.flatMap((post) => postTags(post)))).sort();
+const categoryCounts = Object.fromEntries(
+  categories.map(category => [category, publicPosts.filter(post => postCategory(post) === category).length])
+);
+const counts = Object.fromEntries(
+  tags.map(tag => [tag, postsByTag(publicPosts, tag).length])
+);
+const archivePosts = sortPosts(archivedPosts).map((post) => ({
+  title: post.data.title,
+  description: post.data.description ?? "",
+  href: postHref(post),
+  category: postCategory(post) ?? "",
+  tags: postTags(post),
+  date: formatPostDate(postDate(post)),
+}));
+const archivePostsJson = JSON.stringify(archivePosts).replace(/</g, "\\u003c");
+const description = pageDescription(site, "search", "Search public content, browse sections, or open tag pages.");
+---
+
+<PapyrusBaseLayout title="Search" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
+  <section class="papyrus-search">
+    <h1>Search</h1>
+    {description && <p class="papyrus-description">{description}</p>}
+    <div id="pagefind-search" data-pagefind-bundle="/pagefind/"></div>
+    <nav class="papyrus-search-tags" aria-label="Sections">
+      {
+        categories.map(category => (
+          <button type="button" data-papyrus-search-category={category}>
+            <span>{category}</span>
+            <small>{categoryCounts[category]}</small>
+          </button>
+        ))
+      }
+    </nav>
+    <div class="papyrus-search-tag-list" aria-label="Tags">
+      <PapyrusTagList tags={tags} counts={counts} />
+    </div>
+    <ul class="papyrus-post-list" data-papyrus-archive-results hidden></ul>
+    <script is:inline type="application/json" id="papyrus-archive-posts" set:html={archivePostsJson}></script>
+  </section>
+</PapyrusBaseLayout>
+
+<script>
+  // @ts-expect-error - Pagefind does not ship TypeScript declarations for the default UI package.
+  import { PagefindUI } from "@pagefind/default-ui";
+
+  interface ArchivePost {
+    title: string;
+    description: string;
+    href: string;
+    category: string;
+    tags: string[];
+    date: string;
+  }
+
+  const archivePosts = JSON.parse(document.querySelector("#papyrus-archive-posts")?.textContent ?? "[]") as ArchivePost[];
+  const pagefindContainer = document.querySelector<HTMLElement>("#pagefind-search");
+  const archiveResults = document.querySelector<HTMLElement>("[data-papyrus-archive-results]");
+  const categoryButtons = document.querySelectorAll<HTMLButtonElement>("[data-papyrus-search-category]");
+
+  function renderArchive(query = "") {
+    if (!archiveResults || !pagefindContainer) return;
+
+    const normalized = query.trim().toLowerCase();
+    const matches = normalized
+      ? archivePosts.filter((post) => [post.title, post.description, post.category, ...post.tags].join(" ").toLowerCase().includes(normalized))
+      : archivePosts;
+
+    pagefindContainer.hidden = true;
+    archiveResults.hidden = false;
+    archiveResults.innerHTML = matches.length
+      ? matches.map((post) => {
+          const tags = post.tags.length ? ` · ${post.tags.map(tag => `#${tag}`).join(", ")}` : "";
+          const category = post.category ? `${post.category} · ` : "";
+          return `
+            <li class="papyrus-post-item">
+              <a href="${post.href}">
+                <span class="papyrus-post-title">${post.title}</span>
+                <span class="papyrus-post-description">${post.description}</span>
+                <span class="papyrus-post-meta">${category}${post.date}${tags}</span>
+              </a>
+            </li>
+          `;
+        }).join("")
+      : `<li class="papyrus-search-empty">No posts found.</li>`;
+  }
+
+  async function initPagefindSearch() {
+    if (!pagefindContainer) return;
+    if (pagefindContainer.querySelector("form")) return;
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("archive") === "hidden") {
+      renderArchive(params.get("q") ?? params.get("category") ?? params.get("tag") ?? "");
+      return;
+    }
+
+    const search = new PagefindUI({
+      element: "#pagefind-search",
+      bundlePath: pagefindContainer.dataset.pagefindBundle ?? "/pagefind/",
+      showImages: false,
+      showSubResults: true,
+      processTerm(term: string) {
+        const nextParams = new URLSearchParams(window.location.search);
+        if (term) nextParams.set("q", term);
+        else nextParams.delete("q");
+        history.replaceState(history.state, "", nextParams.toString() ? `?${nextParams}` : window.location.pathname);
+        return term;
+      },
+    });
+
+    const initial = params.get("q") ?? params.get("category") ?? params.get("tag") ?? "";
+    if (initial) search.triggerSearch(initial);
+
+    function triggerSearch(query: string) {
+      const nextParams = new URLSearchParams(window.location.search);
+      nextParams.set("q", query);
+      history.replaceState(history.state, "", `?${nextParams}`);
+      search.triggerSearch(query);
+    }
+
+    categoryButtons.forEach((button) => {
+      button.addEventListener("click", () => triggerSearch(button.dataset.papyrusSearchCategory ?? ""));
+    });
+  }
+
+  initPagefindSearch();
+  document.addEventListener("astro:page-load", initPagefindSearch);
+</script>

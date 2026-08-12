@@ -10,27 +10,24 @@ tags:
   - reference
 ---
 
-Every public feature has a route that shows how a consuming site can use it.
-Start here when exploring Papyrus.
+This is a map of the demo site. Each link points to a route or doc
+that shows the feature in context.
 
 ## Feature map
 
-- [Install and configure Papyrus](/posts/install-configure-papyrus/) covers the template-first setup flow.
+- [Install and configure Papyrus](/collections/docs/install-configure-papyrus/) covers the template setup flow.
 - [Layout, header, footer, and theme controls](/) are visible on the home page.
-- [Post layout and actions](/metadata-demo/) show covers, dates, tags, reading time, adjacent links, source/copy/share actions, table of contents, and optional back links.
-- [Markdown authoring guide](/collections/docs/code-demo/) shows Pure-style Astro/Shiki code blocks, alerts, task lists, tables, Mermaid SVG, artifacts, and zoom hooks.
+- [Site config](/collections/docs/site-config/) shows identity, navigation, projects, feature flags, and post-list defaults.
+- [Markdown authoring guide](/collections/docs/markdown-feature-sample/) shows Pure-style Astro/Shiki code blocks, alerts, task lists, tables, Mermaid SVG, artifacts, and zoom hooks.
 - [Posts index and tags](/posts/) show pinned ordering, list-only archive view, tag links, compact metadata, timeline link, and small covers.
 - [Search and tag filters](/search/) work with tag filters, standalone tag pages, and generated RSS feeds for individual tags.
-- [Collections](/collections/) list folder-backed post collections detected from TOML files.
-- [CV/profile templates](/profile/) use normalized CV data across resume, timeline, projects, A4 links, and print routes.
-- [Projects and GitHub cards](/projects/) show pinned projects, project list cards, and Pure-inspired GitHub repository preview cards.
-- [Feature flags and plugin contract](/collections/docs/features/) document configurable feature flags, comments, plugins, and typed plugin configuration.
-- [Content structure helpers](/collections/docs/content-structure/) explain nested folders, folder metadata, folder-derived tags, stable slugs, and generated content outlines.
+- [Collections](/collections/docs/collections/) explains folder-backed post collections detected from TOML files.
+- [CV/profile templates](/collections/docs/profile/) use normalized CV data across resume, timeline, projects, A4 links, and print routes.
+- [Projects and GitHub cards](/projects/) show the Papyrus theme and Papyrus template repositories.
+- [Papyrus package shape](/collections/docs/papyrus-package-shape/) explains `src` vs `public`, package exports, post list views, and RSS feed choices.
 - [Deploy and local preview](/collections/docs/deploy/) covers local dev, production preview, static hosting, base-path deploys, and deploy guidance.
-- [AI and mobile readiness](/collections/docs/ai-mobile/) covers generated metadata, AI indexes, responsive primitives, and mobile authoring guidance.
+- [AI and mobile readiness](/collections/docs/ai-mobile/) covers generated metadata, search, responsive layout, and mobile authoring guidance.
 
 ## How to use it
 
-Use this map as an orientation page when adding Papyrus to another Astro site.
-Each linked route shows the content, component, or generated artifact in
-context. Repository-only implementation notes stay outside visitor-facing docs.
+Repository-only implementation notes stay outside visitor-facing docs.

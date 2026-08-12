@@ -8,7 +8,8 @@ const posts = defineCollection({
     title: z.string(),
     description: z.string().optional(),
     slug: z.string().optional(),
-    pubDatetime: z.coerce.date(),
+    pubDatetime: z.coerce.date().optional(),
+    date: z.coerce.date().optional(),
     modDatetime: z.coerce.date().optional(),
     draft: z.boolean().optional().default(false),
     hidden: z.boolean().optional().default(false),
@@ -18,6 +19,9 @@ const posts = defineCollection({
     category: z.string().optional(),
     tags: z.array(z.string()).optional().default([]),
     featured: z.boolean().optional().default(false),
+  }).refine(data => data.pubDatetime || data.date, {
+    message: "Posts require either pubDatetime or date.",
+    path: ["date"],
   }),
 });
 

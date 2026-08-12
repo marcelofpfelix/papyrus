@@ -22,11 +22,26 @@ export interface PapyrusPostEntry {
 }
 
 export function postDate(post: PapyrusPostEntry): Date {
-  return new Date(post.data.pubDatetime ?? post.data.date ?? 0);
+  return parsePostDate(post.data.pubDatetime ?? post.data.date);
 }
 
 export function postUpdatedDate(post: PapyrusPostEntry): Date | undefined {
   return post.data.modDatetime ? new Date(post.data.modDatetime) : undefined;
+}
+
+export function parsePostDate(value?: Date | string): Date {
+  if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    return new Date(`${value}T00:00:00.000Z`);
+  }
+  return new Date(value ?? 0);
+}
+
+export function isScheduledPost(post: PapyrusPostEntry, reference = new Date()): boolean {
+  return postDate(post).valueOf() > reference.valueOf();
+}
+
+export function postPublishTimestamp(post: PapyrusPostEntry): number {
+  return postDate(post).valueOf();
 }
 
 export function hasUpdatedDate(post: PapyrusPostEntry): boolean {
@@ -79,18 +94,38 @@ export function postSlug(post: PapyrusPostEntry): string {
   return post.data.slug ?? post.id.replace(/\.(md|mdx)$/, "");
 }
 
+export function postSourcePath(post: PapyrusPostEntry, root = "src/content/posts"): string {
+  const filePath = post.filePath?.replaceAll("\\", "/");
+  if (filePath) {
+    const marker = `${root}/`;
+    const markerIndex = filePath.indexOf(marker);
+    if (markerIndex >= 0) return filePath.slice(markerIndex);
+    if (filePath.startsWith("src/")) return filePath;
+  }
+
+  const id = post.id.replace(/\.(md|mdx)$/, "");
+  return `${root}/${id}.md`;
+}
+
 export function folderTags(post: PapyrusPostEntry): string[] {
-  const sourcePath = (post.filePath ?? post.id)
-    .replace(/^.*?src\/content\/posts\//, "")
+  const sourcePath = postSourcePath(post)
+    .replace(/^src\/content\/posts\//, "")
     .replace(/\.(md|mdx)$/, "");
   const parts = sourcePath.split("/").slice(0, -1);
   return parts.map(part => part.trim()).filter(Boolean);
 }
 
 export function postTags(post: PapyrusPostEntry): string[] {
-  return Array.from(
-    new Set([...(post.data.tags ?? []), ...folderTags(post)].map(tag => tag.trim()).filter(Boolean))
-  );
+  const tags = new Map<string, string>();
+  [...(post.data.tags ?? []), ...folderTags(post)]
+    .map(tag => tag.trim())
+    .filter(Boolean)
+    .forEach((tag) => {
+      const slug = tagSlug(tag);
+      if (slug && !tags.has(slug)) tags.set(slug, tag);
+    });
+
+  return Array.from(tags.values());
 }
 
 export function tagSlug(tag: string): string {
@@ -152,14 +187,37 @@ export function pinnedPosts<T extends PapyrusPostEntry>(posts: T[]): T[] {
   return sortPostsWithPinned(posts.filter(post => pinRank(post) > 0 && !post.data.draft && !post.data.hidden));
 }
 
+export function scheduledListPosts<T extends PapyrusPostEntry>(posts: T[], limit: number, reference = new Date()): T[] {
+  const result: T[] = [];
+  let visibleCount = 0;
+
+  for (const post of posts) {
+    const scheduled = isScheduledPost(post, reference);
+    if (!scheduled && visibleCount >= limit) break;
+
+    result.push(post);
+    if (!scheduled) visibleCount += 1;
+  }
+
+  return result;
+}
+
 export function getAllTags<T extends PapyrusPostEntry>(posts: T[]): string[] {
-  return Array.from(
-    new Set(posts.flatMap(post => postTags(post)).map(tag => tag.trim()).filter(Boolean))
-  ).sort((a, b) => a.localeCompare(b));
+  const tags = new Map<string, string>();
+  posts.flatMap(post => postTags(post))
+    .map(tag => tag.trim())
+    .filter(Boolean)
+    .forEach((tag) => {
+      const slug = tagSlug(tag);
+      if (slug && !tags.has(slug)) tags.set(slug, tag);
+    });
+
+  return Array.from(tags.values()).sort((a, b) => a.localeCompare(b));
 }
 
 export function postsByTag<T extends PapyrusPostEntry>(posts: T[], tag: string): T[] {
-  return sortPosts(posts.filter(post => postTags(post).includes(tag)));
+  const slug = tagSlug(tag);
+  return sortPosts(posts.filter(post => postTags(post).some(postTag => tagSlug(postTag) === slug)));
 }
 
 export function getAdjacentPosts<T extends PapyrusPostEntry>(posts: T[], currentId: string) {

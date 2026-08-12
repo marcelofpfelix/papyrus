@@ -1,7 +1,9 @@
 ---
 import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusPostList } from "../../../components";
+import { pageDescription } from "../../../config";
 import { getAllTags, postsByTag, publishedPosts, tagSlug } from "../../../utils";
+import { withBase } from "../../../utils/withBase";
 import { getTemplateSite } from "../../site";
 
 export async function getStaticPaths() {
@@ -14,12 +16,24 @@ export async function getStaticPaths() {
 
 const site = await getTemplateSite();
 const { tag, posts } = Astro.props;
+const description = pageDescription(site, "tag", `${posts.length} post${posts.length === 1 ? "" : "s"} tagged with ${tag}.`);
 ---
 
-<PapyrusBaseLayout title={`#${tag}`} description={`Posts tagged ${tag}.`} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+<PapyrusBaseLayout title={`#${tag}`} description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
   <section class="papyrus-hero">
+    <p class="papyrus-post-back">
+      <a href={withBase("/tag/")}>
+        <svg aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M19 12H5"></path>
+          <path d="m12 19-7-7 7-7"></path>
+        </svg>
+        <span>Back</span>
+      </a>
+    </p>
     <h1>#{tag}</h1>
-    <p class="papyrus-description">{posts.length} post{posts.length === 1 ? "" : "s"} tagged with {tag}.</p>
+    {description && <p class="papyrus-description">{description}</p>}
   </section>
-  <PapyrusPostList posts={posts} showTags={site.postCard.tags} showReadTime={site.postCard.readTime} />
+  <section class="papyrus-section">
+    <PapyrusPostList posts={posts} showTags={site.postCard.tags} showReadTime={site.postCard.readTime} />
+  </section>
 </PapyrusBaseLayout>

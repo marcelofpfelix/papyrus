@@ -1,24 +1,60 @@
 ---
 import { getCollection, render } from "astro:content";
 import { PapyrusPostLayout } from "../../../components";
-import { getAdjacentPosts, postSlug, postTags, publishedPosts, readingTime, routablePosts } from "../../../utils";
+import { githubSourceUrl } from "../../../config";
+import { getPostCollections } from "../../../utils/collections";
+import { getAdjacentPosts, postDate, postSlug, postSourcePath, postTags, publishedPosts, readingTime, routablePosts } from "../../../utils";
 import { getTemplateSite } from "../../site";
 
 export async function getStaticPaths() {
   const allPosts = await getCollection("posts");
   const posts = routablePosts(allPosts);
   const adjacentPosts = publishedPosts(allPosts);
+  const collections = await getPostCollections("src/content/posts", allPosts);
   return posts.map((post) => ({
     params: { slug: postSlug(post) },
-    props: { post, adjacent: getAdjacentPosts(adjacentPosts, post.id) },
+    props: {
+      post,
+      adjacent: getAdjacentPosts(adjacentPosts, post.id),
+      postCollections: collections.filter(collection =>
+        collection.posts.some(collectionPost => postSlug(collectionPost) === postSlug(post))
+      ),
+    },
   }));
 }
 
 const site = await getTemplateSite();
-const { post, adjacent } = Astro.props;
+const { post, adjacent, postCollections = [] } = Astro.props;
 const { Content, headings } = await render(post);
+const slug = postSlug(post);
+const sourcePath = postSourcePath(post);
+const sourceUrl = githubSourceUrl(site, sourcePath, "raw");
+const sourceLinkUrl = githubSourceUrl(site, sourcePath);
 ---
 
-<PapyrusPostLayout title={post.data.title} description={post.data.description} pubDatetime={post.data.pubDatetime} modDatetime={post.data.modDatetime} cover={post.data.cover} tags={postTags(post)} readingTime={readingTime(post.body)} headings={headings} showToc={true} previous={adjacent.previous} next={adjacent.next} robots={post.data.hidden ? "noindex, follow" : undefined} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+<PapyrusPostLayout title={post.data.title} description={post.data.description} pubDatetime={postDate(post)} modDatetime={post.data.modDatetime} cover={post.data.cover} tags={postTags(post)} readingTime={readingTime(post.body)} headings={headings} showToc={true} canonicalUrl={`/posts/${slug}/`} sourceUrl={sourceUrl} sourceLinkUrl={sourceLinkUrl} previous={adjacent.previous} next={adjacent.next} robots={post.data.hidden ? "noindex, follow" : undefined} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
   <Content />
+
+  {
+    postCollections.length > 0 && (
+      <Fragment slot="after">
+        <section class="papyrus-collection-membership">
+          <p class="papyrus-collection-note">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+              <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path>
+            </svg>
+            <span>Part of{" "}</span>
+            {postCollections.map((collection, index) => (
+              <>
+                {index > 0 && (index === postCollections.length - 1 ? " and " : ", ")}
+                <a href={collection.href}>{collection.name}</a>
+              </>
+            ))}
+            .
+          </p>
+        </section>
+      </Fragment>
+    )
+  }
 </PapyrusPostLayout>

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const args = process.argv.slice(2).filter((arg) => arg !== "--");
@@ -171,6 +171,12 @@ try {
   }
 
   await mkdir(targetDir, { recursive: true });
+  const existingFeeds = await readdir(targetDir).catch(() => []);
+  await Promise.all(
+    existingFeeds
+      .filter((file) => file.endsWith(".xml"))
+      .map((file) => unlink(path.join(targetDir, file)))
+  );
 
   for (const [tag, posts] of [...byTag.entries()].sort(([a], [b]) => a.localeCompare(b))) {
     posts.sort((a, b) => Date.parse(b.updated || "0") - Date.parse(a.updated || "0"));

@@ -4,6 +4,8 @@ import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { join, relative, sep } from "node:path";
 import { unified } from "@astrojs/markdown-remark";
 import rehypeCallouts from "rehype-callouts";
+import papyrus from "./src/integration";
+import kamailioLang from "./src/shiki/langs/kamailio.mjs";
 import remarkArtifactLinks from "./src/markdown/remark-artifact-links.mjs";
 import rehypeTaskListLabels from "./src/markdown/rehype-task-list-labels.mjs";
 import remarkMermaidBlocks from "./src/markdown/remark-mermaid-blocks.mjs";
@@ -104,19 +106,31 @@ function hiddenPostPaths(dir = "src/content/posts") {
 
 const hiddenPostPathSet = new Set(hiddenPostPaths());
 
+function shouldIncludeInSitemap(page) {
+  const pathname = new URL(page).pathname;
+  if (hiddenPostPathSet.has(pathname)) return false;
+  if (/^\/collections\/[^/]+\/[^/]+\/$/.test(pathname)) return false;
+  return true;
+}
+
 export default defineConfig({
   site: "https://papyrus.marcelofelix.com",
   experimental: {
     svgOptimizer: svgoOptimizer(),
   },
   integrations: [
+    papyrus(),
     sitemap({
-      filter: (page) => !hiddenPostPathSet.has(new URL(page).pathname),
+      filter: shouldIncludeInSitemap,
     }),
   ],
   markdown: {
     shikiConfig: {
       theme: "css-variables",
+      langs: [kamailioLang],
+      langAlias: {
+        kam: "kamailio",
+      },
       transformers: [
         transformerNotationDiff(),
         transformerNotationHighlight(),

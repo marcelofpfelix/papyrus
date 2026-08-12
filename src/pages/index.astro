@@ -42,19 +42,19 @@ const latestHomeProjects = siteData.projects
 const homeProjects = [...pinnedHomeProjects, ...latestHomeProjects];
 const homeDocs = [
   {
-    title: "papyrus docs",
-    description: "Install guide, Markdown authoring, content model, profile/CV flow, and generated metadata.",
+    title: "Docs",
+    description: "Template-first guide for installing, configuring, authoring, and deploying a Papyrus site.",
     href: "/collections/docs/",
   },
   {
-    title: "start here",
-    description: "Install and configure Papyrus as a reusable Astro theme package.",
-    href: "/posts/install-configure-papyrus/",
+    title: "Use the template",
+    description: "Create a site from papyrus-template, then edit TOML, Markdown, profile data, and assets.",
+    href: "/collections/docs/install-configure-papyrus/",
   },
   {
-    title: "feature map",
-    description: "See the demo routes and package features that Papyrus includes.",
-    href: "/collections/docs/feature-map/",
+    title: "Package boundary",
+    description: "See what belongs in the theme package and what belongs in a site repo.",
+    href: "/collections/docs/papyrus-package-shape/",
   },
 ];
 const postListProps = {
@@ -74,9 +74,9 @@ const postListProps = {
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >
-  <section class="papyrus-hero">
+  <section class="papyrus-hero papyrus-home-hero">
     <h1>papyrus</h1>
-    <p class="papyrus-description">A reusable Astro theme package for quiet blogs, docs, projects, and profile/CV pages. Keep content in your site, import Papyrus components, and publish a fast static site with search, RSS, tags, metadata, and print-ready profile routes.</p>
+    <p class="papyrus-description">A reusable Astro theme for quiet blogs, docs, projects, and profile/CV pages. Start from papyrus-template, keep content in your site, and let the package provide the shared routes, styles, search, RSS, and metadata.</p>
     <p class="papyrus-home-more">
       <a href={withBase("/about/")}>about me</a>
     </p>
@@ -114,6 +114,7 @@ const postListProps = {
 
   <section class="papyrus-section">
     <h2>Notes</h2>
+    <p>Short implementation notes from the demo data. Full setup guidance lives in the docs collection.</p>
     <PapyrusNoteList notes={demoNotes} />
   </section>
 </PapyrusBaseLayout>

@@ -11,7 +11,7 @@ function assert(condition, message) {
 const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 const configSource = await readFile("src/config/index.ts", "utf8");
 const configToml = await readFile("papyrus.config.toml", "utf8");
-const installGuide = await readFile("src/content/posts/install-configure-papyrus.md", "utf8");
+const installGuide = await readFile("src/content/posts/docs/start/02-install-configure-papyrus.md", "utf8");
 const demoNav = await readFile("src/data/demo-nav.ts", "utf8");
 const demoSite = await readFile("src/data/demo-site.ts", "utf8");
 const siteConfigSource = await readFile("scripts/site-config.mjs", "utf8");
@@ -78,9 +78,9 @@ for (const phrase of [
   "astro-theme-papyrus/integration",
   "astro-theme-papyrus/content",
   "astro-theme-papyrus/config",
-  "\"astro-theme-papyrus\": \"^0.2.0\"",
+  "\"astro-theme-papyrus\": \"^0.2.1\"",
   "`src/pages` tree",
-  "Everforest theme profile",
+  "theme, feature flags, and post-card defaults",
 ]) {
   assert(installGuide.includes(phrase), `install guide missing config phrase: ${phrase}`);
 }

@@ -56,23 +56,23 @@ for (const file of files) {
   }
 
   const frontmatter = text.slice(bounds.start, bounds.end);
-  const hasPub = /^pubDatetime:/m.test(frontmatter);
+  const hasPublishedDate = /^(pubDatetime|date):/m.test(frontmatter);
   const hasMod = /^modDatetime:/m.test(frontmatter);
 
   if (mode === "check") {
-    if (!hasPub) {
-      console.error(`${path}: missing pubDatetime`);
+    if (!hasPublishedDate) {
+      console.error(`${path}: missing date or pubDatetime`);
       failed = true;
     }
     continue;
   }
 
   let nextFrontmatter = frontmatter;
-  if (!hasPub) nextFrontmatter = `pubDatetime: ${now}\n${nextFrontmatter}`;
+  if (!hasPublishedDate) nextFrontmatter = `date: ${now}\n${nextFrontmatter}`;
   if (hasMod) {
     nextFrontmatter = nextFrontmatter.replace(/^modDatetime:.*$/m, `modDatetime: ${now}`);
   } else {
-    nextFrontmatter = nextFrontmatter.replace(/^pubDatetime:.*$/m, match => `${match}\nmodDatetime: ${now}`);
+    nextFrontmatter = nextFrontmatter.replace(/^(pubDatetime|date):.*$/m, match => `${match}\nmodDatetime: ${now}`);
   }
 
   await writeFile(path, `---\n${nextFrontmatter}${text.slice(bounds.end)}`);

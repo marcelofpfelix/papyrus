@@ -1,24 +1,22 @@
 #!/usr/bin/env node
-import { access, readFile } from "node:fs/promises";
+import { access, readdir, readFile } from "node:fs/promises";
+import { join } from "node:path";
 
 const readme = await readFile("README.md", "utf8");
 const statusRoadmap = await readFile(".agents/status-roadmap.md", "utf8");
 const requestAudit = await readFile(".agents/request-audit.md", "utf8");
 const astroPapyrusParity = await readFile(".agents/astropapyrus-parity.md", "utf8");
-const docsIndex = await readFile("src/pages/docs/index.astro", "utf8");
-const contentConfig = await readFile("src/content.config.ts", "utf8");
-const docsIndexContent = await readFile("src/content/docs/index.md", "utf8");
-const markdownFeaturePost = await readFile("src/content/posts/markdown-feature-sample.md", "utf8");
-const publicPostDocs = [
-  await readFile("src/content/posts/ai-first-demo.md", "utf8"),
-  await readFile("src/content/posts/dark-mode-and-search.md", "utf8"),
-  await readFile("src/content/posts/install-configure-papyrus.md", "utf8"),
-  await readFile("src/content/posts/markdown-feature-sample.md", "utf8"),
-  await readFile("src/content/posts/papyrus-package-shape.md", "utf8"),
-];
-const docsUtils = await readFile("src/utils/docs.ts", "utf8");
+const packageGuide = await readFile(".agents/package-guide.md", "utf8");
+const docsCollection = await readFile("src/content/posts/docs/docs.toml", "utf8");
+const docsIntro = await readFile("src/content/posts/docs/start/00-papyrus-docs.md", "utf8");
+const contentStructure = await readFile("src/content/posts/docs/authoring/11-content-structure.md", "utf8");
+const installGuide = await readFile("src/content/posts/docs/start/02-install-configure-papyrus.md", "utf8");
+const markdownFeaturePost = await readFile("src/content/posts/docs/authoring/12-markdown-feature-sample.md", "utf8");
+const releaseChecklist = await readFile("src/content/posts/docs/deploy/31-release-checklist.md", "utf8");
+const themeSpec = await readFile("src/content/posts/docs/references/27-theme-spec.md", "utf8");
 const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 const agents = await readFile("AGENTS.md", "utf8");
+const legacyGuidePath = ["docs", "guide.md"].join("/");
 
 function assert(condition, message) {
   if (!condition) throw new Error(message);
@@ -33,10 +31,22 @@ async function exists(path) {
   }
 }
 
+async function walkMarkdown(dir) {
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) files.push(...await walkMarkdown(path));
+    if (entry.isFile() && entry.name.endsWith(".md")) files.push(path);
+  }
+  return files;
+}
+
 for (const phrase of [
-  "Open `/docs/` in the public Papyrus site",
-  "scripts",
-  "docs",
+  "Open `/collections/docs/` in the public Papyrus site",
+  "Package docs live as a post collection",
+  ".agents/package-guide.md",
+  ".agents/scripts` contains repo-only verification helpers",
 ]) {
   assert(readme.includes(phrase), `README missing docs pointer: ${phrase}`);
 }
@@ -45,9 +55,14 @@ for (const forbidden of [
   "## Done",
   "## Roadmap",
   "| ID | Request / behavior | Status | Evidence | Next action |",
+  legacyGuidePath,
 ]) {
   assert(!readme.includes(forbidden), `README should not contain roadmap/audit detail: ${forbidden}`);
 }
+
+assert(!(await exists("docs")), "top-level docs/ should not exist; public docs belong in src/content/posts/docs and agent notes belong in .agents");
+assert(!(await exists("src/pages/docs")), "legacy src/pages/docs routes should not exist; docs render through the collections routes");
+assert(!packageJson.files?.includes("docs"), "package files should not include a top-level docs folder");
 
 for (const phrase of [
   "This file is a summary and historical roadmap index only",
@@ -78,21 +93,17 @@ for (const phrase of [
 const repoOnlyDocs = [
   "astropapyrus-parity",
   "cv-source-comparison",
-  "guide",
+  "package-guide",
   "pure-parity",
   "request-audit",
   "starlight-comparison",
   "status-roadmap",
-  "theme-spec",
 ];
 
 for (const slug of repoOnlyDocs) {
-  assert(!(await exists(`src/pages/docs/${slug}.astro`)), `${slug} should stay repo-only, not render as /docs/${slug}/`);
-  assert(!(await exists(`src/pages/docs/${slug}.md`)), `${slug} should stay repo-only, not render as /docs/${slug}/`);
-  assert(!docsIndex.includes(`/docs/${slug}/`), `docs index should not link to repo-only ${slug} route`);
+  assert(!(await exists(`src/content/posts/docs/${slug}.md`)), `${slug} should stay agent-only, not render as a docs collection post`);
 }
 
-assert(docsIndex.includes("/docs/deploy/"), "public deploy guide should remain linked from docs index");
 for (const phrase of [
   "Papyrus should not claim AstroPapyrus feature parity by default",
   "Typed central config resolver",
@@ -105,23 +116,33 @@ for (const phrase of [
 }
 assert(!astroPapyrusParity.includes("| Partial |"), "AstroPapyrus parity decisions should not keep ambiguous Partial rows");
 assert(!astroPapyrusParity.includes("Implement next"), "AstroPapyrus parity decisions should not keep open-ended Implement next rows");
-assert(docsIndex.includes("Feature map"), "docs index missing Feature map link");
-assert(contentConfig.includes("const docs = defineCollection"), "content config missing docs collection");
-assert(docsIndexContent.includes("sections:"), "src/content/docs/index.md missing section metadata");
-const declaredDocSections = [...docsIndexContent.matchAll(/^\s+- id: ([a-z-]+)$/gm)].map(match => match[1]);
-assert(declaredDocSections.length > 0, "src/content/docs/index.md should declare docs section ids");
-for (const post of publicPostDocs) {
-  const section = post.match(/^\s+section: ([a-z-]+)$/m)?.[1];
-  if (section) {
-    assert(declaredDocSections.includes(section), `post-backed docs entry uses unknown docs section: ${section}`);
-  }
+assert(docsCollection.includes('name = "Papyrus docs"'), "docs collection metadata missing collection name");
+for (const section of ["Start", "Authoring", "References", "Deploy"]) {
+  assert(docsCollection.includes(`name = "${section}"`), `docs collection missing ${section} section`);
 }
-assert(docsIndex.includes('getCollection("docs")'), "docs page should read section metadata from src/content/docs/index.md");
-assert(docsIndex.includes("postDocIndexItem"), "docs page should include posts marked as docs");
-assert(docsIndex.includes("buildDocIndex"), "docs page should build an ordered docs index");
-assert(docsUtils.includes('source?: "doc" | "post"'), "docs utils should preserve post/doc source metadata");
-assert(markdownFeaturePost.includes("docs:") && markdownFeaturePost.includes("section: authoring"), "markdown demo post should opt into docs indexing");
+
+const docsPosts = await walkMarkdown("src/content/posts/docs");
+for (const file of docsPosts) {
+  const post = await readFile(file, "utf8");
+  assert(post.startsWith("---\n"), `${file} should be a public post with frontmatter`);
+  assert(/^slug: /m.test(post), `${file} missing slug frontmatter`);
+}
+
+for (const [post, phrase] of [
+  [docsIntro, "Repo-only notes stay under `.agents/`"],
+  [contentStructure, "Development-only notes stay under `.agents/`"],
+  [installGuide, "Because the pages are injected by the package"],
+  [markdownFeaturePost, "Markdown authoring guide"],
+  [releaseChecklist, "Smoke install the packed tarball"],
+  [themeSpec, "public behavior contract for `papyrus`"],
+]) {
+  assert(post.includes(phrase), `docs collection post missing phrase: ${phrase}`);
+}
+
+assert(!docsIntro.includes("repository `docs/`"), "docs intro should not point repo-only notes to the legacy docs folder");
+assert(!contentStructure.includes("repository `docs/`"), "content structure docs should not point repo-only notes to the legacy docs folder");
+assert(packageGuide.includes("Reference order"), "agent package guide should keep maintainer reference order");
 assert(packageJson.scripts?.["verify:docs"] === "node .agents/scripts/verify-docs-structure.mjs", "verify:docs package script missing");
 assert(agents.includes("make verify-docs"), "AGENTS.md should document make verify-docs");
 
-console.log("Verified roadmap/status details stay in repo docs and are not rendered as public demo pages.");
+console.log("Verified public docs live in the docs post collection and agent-only notes stay under .agents.");
