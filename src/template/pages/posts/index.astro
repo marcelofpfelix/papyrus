@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusPostList } from "../../../components";
-import { pageDescription } from "../../../config";
+import { pageDescription, pageVisibleDescription } from "../../../config";
 import { hiddenPosts, isScheduledPost, publishedPosts, scheduledListPosts, sortPostsWithPinned } from "../../../utils";
 import { withBase } from "../../../utils/withBase";
 import { getTemplateSite } from "../../site";
@@ -16,6 +16,7 @@ const visiblePostCount = visiblePosts.filter(post => !isScheduledPost(post)).len
 const currentPostCount = posts.filter(post => !isScheduledPost(post)).length;
 const hasMorePosts = currentPostCount > visiblePostCount;
 const description = pageDescription(site, "posts", "A posts index that keeps homepage highlights separate from the full archive view.");
+const visibleDescription = pageVisibleDescription(site, "posts", "A posts index that keeps homepage highlights separate from the full archive view.");
 const postListProps = {
   showTags: site.postCard.tags,
   showReadTime: site.postCard.readTime,
@@ -47,7 +48,7 @@ function icon(name: string) {
         </a>
       )}
     </h1>
-    {description && <p class="papyrus-description">{description}</p>}
+    {visibleDescription && <p class="papyrus-description">{visibleDescription}</p>}
     <p class="papyrus-actions">
       <a href={withBase("/posts/timeline/")}>
         <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("clock")} />

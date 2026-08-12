@@ -39,6 +39,7 @@ export type PapyrusSourceConfig = {
 export type PapyrusPageConfig = {
   content?: string;
   description?: string | false;
+  showDescription?: boolean;
 };
 
 export type PapyrusSiteConfig = {
@@ -170,6 +171,7 @@ function asPageConfig(value: unknown): PapyrusPageConfig {
     ...(asString(record.content) ? { content: asString(record.content) } : {}),
     ...(description === false ? { description: false as const } : {}),
     ...(asString(description) ? { description: asString(description) } : {}),
+    ...(asBoolean(record.showDescription ?? record.show_description) !== undefined ? { showDescription: asBoolean(record.showDescription ?? record.show_description) } : {}),
   };
 }
 
@@ -282,6 +284,12 @@ export function pageDescription(site: Pick<PapyrusSiteConfig, "pages">, page: st
   const configured = site.pages[page]?.description;
   if (configured === false) return undefined;
   return configured ?? fallback;
+}
+
+export function pageVisibleDescription(site: Pick<PapyrusSiteConfig, "pages">, page: string, fallback?: string): string | undefined {
+  const configured = site.pages[page];
+  if (configured?.showDescription === false) return undefined;
+  return pageDescription(site, page, fallback);
 }
 
 export function pageContent(site: Pick<PapyrusSiteConfig, "pages">, page: string): string | undefined {
