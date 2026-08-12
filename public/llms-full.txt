@@ -955,16 +955,17 @@ site title used by metadata, RSS, and shared layout chrome.
 ## Source links
 
 Set the public GitHub source once so profile source links and post source
-actions can point at the right repository branch:
+actions can point at the right repository:
 
 ```toml title="papyrus.config.toml"
 [source]
 repo = "site-owner/site-repo"
-branch = "main"
 ```
 
 Papyrus uses that value for GitHub blob links and raw Markdown copy actions.
 The repo can be written as `owner/repo`, a GitHub URL, or an SSH GitHub remote.
+The branch is detected at build time on Cloudflare Pages, GitHub Actions,
+Vercel, and Netlify. Set `branch = "main"` only when you want a fixed branch.
 
 ## Page descriptions
 
