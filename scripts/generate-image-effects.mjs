@@ -6,6 +6,7 @@ const root = resolve(process.argv[2] ?? ".");
 const publicDir = join(root, "public");
 const inputExts = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".svg"]);
 const textExts = new Set([".md", ".mdx", ".toml"]);
+const ditherNoiseFrames = 6;
 
 let sharp;
 
@@ -172,11 +173,17 @@ function atkinsonThreshold(x, y) {
   return thresholds[(y % 4) * 4 + (x % 4)] / 16;
 }
 
+function animatedNoise(x, y, time) {
+  const n1 = hash(x + Math.floor(time), y + Math.floor(time));
+  const n2 = hash(x + Math.floor(time) + 1, y + Math.floor(time) + 1);
+  return n1 + (n2 - n1) * smoothstep(0, 1, fract(time));
+}
+
 function ditherAlpha(grayInput, x, y, width, height, sourceAlpha, themeMode, effect, frame = 1) {
   const uvX = x / width;
   const uvY = 1 - y / height;
-  const frameOffset = (frame - 1) * 97.13;
-  const edgeNoise = hash(x * 0.5 + frameOffset, y * 0.5 + frameOffset) * 0.15;
+  const frameTime = (frame - 1) / 3;
+  const edgeNoise = hash(x * 0.5, y * 0.5) * 0.15;
   const fadeLeft = smoothstep(0, 0.1 + edgeNoise, uvX);
   const fadeRight = smoothstep(0, 0.1 + edgeNoise, 1 - uvX);
   const fadeBottom = smoothstep(0, 0.1 + edgeNoise, uvY);
@@ -187,12 +194,12 @@ function ditherAlpha(grayInput, x, y, width, height, sourceAlpha, themeMode, eff
 
   gray = gray * fade * (1 - isLight) + (1 - isLight) * 0;
   if (isLight) gray = 1 + (grayInput - 1) * fade;
-  if (effect === "dither") gray = Math.max(0, Math.min(1, gray * 1.2 - 0.1));
+  gray = Math.max(0, Math.min(1, gray * 1.2 - 0.1));
 
-  const threshold = effect === "dithernoise" ? hash(x + frameOffset, y - frameOffset) : atkinsonThreshold(x, y);
+  const threshold = atkinsonThreshold(x, y);
   const thresholdBias = isLight ? -0.1 : 0.1;
-  const noise = hash(x * 0.15 + frameOffset, y * 0.15 - frameOffset) - 0.5;
-  const flicker = 0.08 * Math.sin(hash(x * 0.2 + frameOffset, y * 0.2) * 6.28);
+  const noise = animatedNoise(x * 0.15, y * 0.15, frameTime) - 0.5;
+  const flicker = 0.08 * Math.sin(frameTime * 2 + hash(x * 0.2, y * 0.2) * 6.28);
   const effectIntensity = effect === "dithernoise" ? smoothstep(0.05, 0.3, gray) : 0;
   const thresholdLevel = Math.max(0.001, Math.min(0.999, threshold + thresholdBias + (noise * 0.15 + flicker) * effectIntensity));
   const dithered = gray >= thresholdLevel ? 1 : 0;
@@ -243,8 +250,10 @@ for (const { effect, assetPath } of sources) {
   const darkGenerated = await generateMask(assetPath, "dark", effect);
   const lightGenerated = await generateMask(assetPath, "light", effect);
   if (effect === "dithernoise") {
-    await generateMask(assetPath, "dark", effect, 2);
-    await generateMask(assetPath, "light", effect, 2);
+    for (let frame = 2; frame <= ditherNoiseFrames; frame += 1) {
+      await generateMask(assetPath, "dark", effect, frame);
+      await generateMask(assetPath, "light", effect, frame);
+    }
   }
   if (darkGenerated || lightGenerated) generated += 1;
 }

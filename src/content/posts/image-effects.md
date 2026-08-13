@@ -18,8 +18,8 @@ happen immediately. Use `duotone` for background and foreground colors only.
 
 `dither` and `dithernoise` are different. Papyrus generates dark and light alpha
 masks at build time, then the browser paints the active mask with a
-theme-derived ink color. `dither` uses an ordered dot pattern. `dithernoise`
-uses the same edge cut with a noise threshold.
+theme-derived ink color. `dither` uses an Atkinson-style dot pattern.
+`dithernoise` uses the same pattern and steps through generated noise frames.
 
 <div class="papyrus-effect-demo-grid" data-papyrus-dither-src="/images/papyrus-image-effects-demo.jpg" data-papyrus-dithernoise-src="/images/papyrus-image-effects-demo.jpg">
   <figure>
@@ -47,7 +47,7 @@ uses the same edge cut with a noise threshold.
     <figcaption>dither</figcaption>
   </figure>
   <figure>
-    <div class="papyrus-effect-demo-media papyrus-image-effect-dithernoise" style="--papyrus-dither-mask-dark: url('../../generated/dithernoise/images/papyrus-image-effects-demo.png'); --papyrus-dither-mask-light: url('../../generated/dithernoise/images/papyrus-image-effects-demo-light.png'); --papyrus-dither-mask-dark-2: url('../../generated/dithernoise/images/papyrus-image-effects-demo-2.png'); --papyrus-dither-mask-light-2: url('../../generated/dithernoise/images/papyrus-image-effects-demo-2-light.png')">
+    <div class="papyrus-effect-demo-media papyrus-image-effect-dithernoise" style="--papyrus-dither-mask-dark: url('../../generated/dithernoise/images/papyrus-image-effects-demo.png'); --papyrus-dither-mask-light: url('../../generated/dithernoise/images/papyrus-image-effects-demo-light.png'); --papyrus-dither-mask-dark-2: url('../../generated/dithernoise/images/papyrus-image-effects-demo-2.png'); --papyrus-dither-mask-light-2: url('../../generated/dithernoise/images/papyrus-image-effects-demo-2-light.png'); --papyrus-dither-mask-dark-3: url('../../generated/dithernoise/images/papyrus-image-effects-demo-3.png'); --papyrus-dither-mask-light-3: url('../../generated/dithernoise/images/papyrus-image-effects-demo-3-light.png'); --papyrus-dither-mask-dark-4: url('../../generated/dithernoise/images/papyrus-image-effects-demo-4.png'); --papyrus-dither-mask-light-4: url('../../generated/dithernoise/images/papyrus-image-effects-demo-4-light.png'); --papyrus-dither-mask-dark-5: url('../../generated/dithernoise/images/papyrus-image-effects-demo-5.png'); --papyrus-dither-mask-light-5: url('../../generated/dithernoise/images/papyrus-image-effects-demo-5-light.png'); --papyrus-dither-mask-dark-6: url('../../generated/dithernoise/images/papyrus-image-effects-demo-6.png'); --papyrus-dither-mask-light-6: url('../../generated/dithernoise/images/papyrus-image-effects-demo-6-light.png')">
       <img src="../../images/papyrus-image-effects-demo.jpg" alt="Portrait rendered with the dithernoise effect" />
     </div>
     <figcaption>dithernoise</figcaption>

@@ -1512,8 +1512,8 @@ happen immediately. Use `duotone` for background and foreground colors only.
 
 `dither` and `dithernoise` are different. Papyrus generates dark and light alpha
 masks at build time, then the browser paints the active mask with a
-theme-derived ink color. `dither` uses an ordered dot pattern. `dithernoise`
-uses the same edge cut with a noise threshold.
+theme-derived ink color. `dither` uses an Atkinson-style dot pattern.
+`dithernoise` uses the same pattern and steps through generated noise frames.
 
 
 

@@ -126,6 +126,10 @@ img.papyrus-image-effect-tritone {
 .papyrus-image-effect-dithernoise {
   --papyrus-active-dither-mask: var(--papyrus-dither-mask-light, var(--papyrus-dither-mask-dark));
   --papyrus-active-dither-mask-2: var(--papyrus-dither-mask-light-2, var(--papyrus-active-dither-mask));
+  --papyrus-active-dither-mask-3: var(--papyrus-dither-mask-light-3, var(--papyrus-active-dither-mask));
+  --papyrus-active-dither-mask-4: var(--papyrus-dither-mask-light-4, var(--papyrus-active-dither-mask));
+  --papyrus-active-dither-mask-5: var(--papyrus-dither-mask-light-5, var(--papyrus-active-dither-mask));
+  --papyrus-active-dither-mask-6: var(--papyrus-dither-mask-light-6, var(--papyrus-active-dither-mask));
   background: var(--papyrus-bg);
   isolation: isolate;
   overflow: hidden;
@@ -145,16 +149,11 @@ img.papyrus-image-effect-tritone {
 }
 
 .papyrus-image-effect-dithernoise::after {
-  animation: papyrusDitherNoiseAlternate 4.8s ease-in-out infinite;
-  background: color-mix(in srgb, var(--papyrus-fg) 72%, var(--papyrus-accent));
-  content: "";
-  inset: 0;
-  mask: var(--papyrus-active-dither-mask-2) center / cover no-repeat;
-  -webkit-mask: var(--papyrus-active-dither-mask-2) center / cover no-repeat;
-  opacity: 0;
-  pointer-events: none;
-  position: absolute;
-  z-index: 2;
+  content: none;
+}
+
+.papyrus-image-effect-dithernoise::before {
+  animation: papyrusDitherNoiseFrames 3.6s steps(1, end) infinite;
 }
 
 .dark .papyrus-image-effect-dither::before,
@@ -170,6 +169,10 @@ img.papyrus-image-effect-tritone {
 .dark .papyrus-image-effect-dithernoise {
   --papyrus-active-dither-mask: var(--papyrus-dither-mask-dark);
   --papyrus-active-dither-mask-2: var(--papyrus-dither-mask-dark-2, var(--papyrus-active-dither-mask));
+  --papyrus-active-dither-mask-3: var(--papyrus-dither-mask-dark-3, var(--papyrus-active-dither-mask));
+  --papyrus-active-dither-mask-4: var(--papyrus-dither-mask-dark-4, var(--papyrus-active-dither-mask));
+  --papyrus-active-dither-mask-5: var(--papyrus-dither-mask-dark-5, var(--papyrus-active-dither-mask));
+  --papyrus-active-dither-mask-6: var(--papyrus-dither-mask-dark-6, var(--papyrus-active-dither-mask));
 }
 
 .papyrus-image-effect-dither > img,
@@ -217,25 +220,42 @@ img.papyrus-image-effect-dithernoise {
   margin-top: 0.5rem;
 }
 
-@keyframes papyrusDitherNoiseAlternate {
-  0%,
-  100% {
-    opacity: 0;
+@keyframes papyrusDitherNoiseFrames {
+  0% {
+    mask: var(--papyrus-active-dither-mask) center / cover no-repeat;
+    -webkit-mask: var(--papyrus-active-dither-mask) center / cover no-repeat;
   }
 
-  45%,
-  55% {
-    opacity: 0.18;
+  16.666% {
+    mask: var(--papyrus-active-dither-mask-2) center / cover no-repeat;
+    -webkit-mask: var(--papyrus-active-dither-mask-2) center / cover no-repeat;
+  }
+
+  33.333% {
+    mask: var(--papyrus-active-dither-mask-3) center / cover no-repeat;
+    -webkit-mask: var(--papyrus-active-dither-mask-3) center / cover no-repeat;
+  }
+
+  50% {
+    mask: var(--papyrus-active-dither-mask-4) center / cover no-repeat;
+    -webkit-mask: var(--papyrus-active-dither-mask-4) center / cover no-repeat;
+  }
+
+  66.666% {
+    mask: var(--papyrus-active-dither-mask-5) center / cover no-repeat;
+    -webkit-mask: var(--papyrus-active-dither-mask-5) center / cover no-repeat;
+  }
+
+  83.333%,
+  100% {
+    mask: var(--papyrus-active-dither-mask-6) center / cover no-repeat;
+    -webkit-mask: var(--papyrus-active-dither-mask-6) center / cover no-repeat;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .papyrus-image-effect-dithernoise::after {
+  .papyrus-image-effect-dithernoise::before {
     animation: none;
-  }
-
-  .papyrus-image-effect-dithernoise::after {
-    opacity: 0;
   }
 }
 

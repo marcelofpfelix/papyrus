@@ -1,4 +1,5 @@
 export type PapyrusImageEffect = "none" | "duotone" | "tritone" | "dither" | "dithernoise";
+const DITHER_NOISE_FRAMES = 6;
 
 const BASE_URL = import.meta.env?.BASE_URL ?? "/";
 
@@ -28,14 +29,16 @@ export function ditherMaskPath(assetPath: string, mode: "dark" | "light" = "dark
 
 export function imageEffectStyle(effect: PapyrusImageEffect | undefined, assetPath: string | undefined): string | undefined {
   if ((effect !== "dither" && effect !== "dithernoise") || !assetPath) return undefined;
+  const ditherNoiseFrames = Array.from({ length: DITHER_NOISE_FRAMES - 1 }, (_, index) => index + 2);
+
   return [
     `--papyrus-dither-mask-dark: url("${withBase(ditherMaskPath(assetPath, "dark", effect))}")`,
     `--papyrus-dither-mask-light: url("${withBase(ditherMaskPath(assetPath, "light", effect))}")`,
     ...(effect === "dithernoise"
-      ? [
-          `--papyrus-dither-mask-dark-2: url("${withBase(ditherMaskPath(assetPath, "dark", effect, 2))}")`,
-          `--papyrus-dither-mask-light-2: url("${withBase(ditherMaskPath(assetPath, "light", effect, 2))}")`,
-        ]
+      ? ditherNoiseFrames.flatMap(frame => [
+          `--papyrus-dither-mask-dark-${frame}: url("${withBase(ditherMaskPath(assetPath, "dark", effect, frame))}")`,
+          `--papyrus-dither-mask-light-${frame}: url("${withBase(ditherMaskPath(assetPath, "light", effect, frame))}")`,
+        ])
       : []),
   ].join("; ");
 }
