@@ -62,7 +62,7 @@ export type PapyrusCvUser = {
   name: string;
   handle?: string;
   avatar?: string;
-  avatarEffect?: "none" | "mono-accent" | "tricolor";
+  avatarEffect?: "none" | "tricolor";
   favicon?: string;
   ogImage?: string;
   canonicalCv?: string;
@@ -202,11 +202,7 @@ export function normalizeJekyllCvUser(input: unknown): PapyrusCvUser {
     name: stringValue(user.name) ?? "Unnamed profile",
     handle: stringValue(user.handle),
     avatar: stringValue(user.avatar),
-    avatarEffect: stringValue(user.avatar_effect) === "mono-accent" || stringValue(user.avatarEffect) === "mono-accent"
-      ? "mono-accent"
-      : stringValue(user.avatar_effect) === "tricolor" || stringValue(user.avatarEffect) === "tricolor"
-        ? "tricolor"
-        : undefined,
+    avatarEffect: stringValue(user.avatar_effect) === "tricolor" || stringValue(user.avatarEffect) === "tricolor" ? "tricolor" : undefined,
     favicon: stringValue(user.favicon),
     ogImage: stringValue(user.og_image) ?? stringValue(user.ogImage),
     canonicalCv: cvHref(stringValue(user.canonical_cv) ?? stringValue(user.canonicalCv)),

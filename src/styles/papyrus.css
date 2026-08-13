@@ -61,27 +61,6 @@ body {
   min-height: 100vh;
 }
 
-.papyrus-svg-defs {
-  height: 0;
-  left: 0;
-  overflow: hidden;
-  pointer-events: none;
-  position: absolute;
-  top: 0;
-  width: 0;
-}
-
-.papyrus-image-effect-mono-accent {
-  background: var(--papyrus-accent);
-  isolation: isolate;
-}
-
-.papyrus-image-effect-mono-accent > img,
-img.papyrus-image-effect-mono-accent {
-  filter: url("#papyrus-mono-alpha");
-  mix-blend-mode: screen;
-}
-
 .papyrus-image-effect-tricolor {
   background:
     radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--papyrus-accent) 88%, transparent), transparent 32%),

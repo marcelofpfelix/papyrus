@@ -111,18 +111,6 @@ const headerHomeHref = withBase("/");
     <ClientRouter />
   </head>
   <body>
-    <svg aria-hidden="true" class="papyrus-svg-defs" focusable="false">
-      <filter id="papyrus-mono-alpha">
-        <feColorMatrix
-          in="SourceGraphic"
-          type="matrix"
-          values="0 0 0 0 1
-                  0 0 0 0 1
-                  0 0 0 0 1
-                  0.2126 0.7152 0.0722 0 0"
-        />
-      </filter>
-    </svg>
     <div class="papyrus-shell">
       {showHeader && <PapyrusHeader title={headerTitle} brandTitle={resolvedBrandTitle} brandMark={resolvedBrandMark} brandAriaLabel={brandAriaLabel} showBrandTitle={resolvedShowBrandTitle} homeHref={headerHomeHref} nav={resolvedNav} searchHref={resolvedSearchHref ? withBase(resolvedSearchHref) : undefined} />}
       <main id="top" class="papyrus-main">

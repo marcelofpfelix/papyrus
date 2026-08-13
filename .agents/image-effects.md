@@ -85,10 +85,10 @@ background, foreground, and accent colors.
 ## Modes
 
 - `none`: render the original image.
-- `monotone`: map luminance to one ink color and transparency or background.
 - `duotone`: map shadows/highlights to two colors.
 - `tritone`: map shadows/midtones/highlights to three colors.
-- `dithered-ink`: upstream-inspired one-ink dither over the current background.
+- `dithered-ink`: next planned effect, upstream-inspired one-ink threshold
+  dither over the current background.
 - `animated-dithered-ink`: dithered ink plus animated threshold noise for normal
   images or video, guarded by reduced-motion and visibility checks.
 - `dithered-tritone`: optional later mode, combining palette mapping with
@@ -120,7 +120,7 @@ Animated choices:
 
 ## Validation
 
-- Add fixture images with monotone, duotone, tritone, and dithered-ink outputs.
+- Add fixture images with tricolor and dithered-ink outputs.
 - Verify generated files are referenced by rendered pages.
 - Check no orphan generated images are kept when frontmatter does not reference
   them.

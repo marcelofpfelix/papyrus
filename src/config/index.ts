@@ -35,7 +35,7 @@ export type PapyrusHomeConfig = {
   projectLimit: number;
 };
 
-export type PapyrusImageEffect = "none" | "mono-accent" | "tricolor";
+export type PapyrusImageEffect = "none" | "tricolor";
 
 export type PapyrusProfileImagesConfig = {
   effect: PapyrusImageEffect;
@@ -161,7 +161,7 @@ function asNumber(value: unknown): number | undefined {
 }
 
 function asImageEffect(value: unknown): PapyrusImageEffect | undefined {
-  return value === "none" || value === "mono-accent" || value === "tricolor" ? value : undefined;
+  return value === "none" || value === "tricolor" ? value : undefined;
 }
 
 function asLinks(value: unknown): PapyrusLinkConfig[] {
