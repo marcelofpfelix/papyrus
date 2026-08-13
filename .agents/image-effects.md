@@ -67,11 +67,20 @@ Profile data override:
 ```toml
 [user]
 avatar = "images/profile.png"
-avatar_effect = "mono-accent"
+avatar_effect = "tricolor"
 ```
 
-The first implemented slice supports `cover_effect: mono-accent` for post
-covers and `avatar_effect = "mono-accent"` for profile avatars.
+Site-wide profile default:
+
+```toml
+[profile.images]
+effect = "tricolor"
+```
+
+The first implemented slice supports `cover_effect: tricolor` for post
+covers and `avatar_effect = "tricolor"` or `[profile.images].effect =
+"tricolor"` for profile avatars. The CSS version uses the active theme
+background, foreground, and accent colors.
 
 ## Modes
 

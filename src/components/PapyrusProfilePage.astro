@@ -58,6 +58,7 @@ const profileVersionLinks = versionLinks ?? [
   { label: "Classic", href: withBase("/profile/ast/") },
 ];
 const visibleProfileProjects = profileProjects.filter((project: ProfileProject) => project.repo);
+const avatarEffectClass = profile.avatarEffect === "none" ? undefined : `papyrus-image-effect-${profile.avatarEffect}`;
 
 function cvIcon(name: string) {
   const icons: Record<string, string> = {
@@ -93,7 +94,7 @@ function cvIcon(name: string) {
 >
   <section class="cv-shell">
     <aside class="cv-sidebar">
-      <span class:list={["cv-avatar-frame", profile.avatarEffect === "mono-accent" && "papyrus-image-effect-mono-accent"]}>
+      <span class:list={["cv-avatar-frame", avatarEffectClass]}>
         <img src={getAssetPath(profile.avatar)} alt={profile.name} />
       </span>
       <h1>{profile.name}</h1>

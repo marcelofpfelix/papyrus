@@ -16,7 +16,7 @@ profile = "gruvbox"
 font_profile = "readable"
 
 [profile.images]
-effect = "mono-accent"
+effect = "tricolor"
 
 [source]
 repo = "marcelofpfelix/papyrus"

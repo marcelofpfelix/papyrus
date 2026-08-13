@@ -2,7 +2,7 @@
 
 ## 0.2.2
 
-- Add configurable mono-accent image treatment for post covers and profile
+- Add configurable tricolor image treatment for post covers and profile
   avatars, including a site-wide `[profile.images]` default.
 - Keep inherited profile pages configurable from `papyrus.config.toml` while
   preserving per-profile avatar overrides in `src/data/profile.toml`.

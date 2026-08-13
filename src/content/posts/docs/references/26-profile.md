@@ -41,7 +41,7 @@ Set site-wide avatar treatment in `papyrus.config.toml`:
 
 ```toml title="papyrus.config.toml"
 [profile.images]
-effect = "mono-accent"
+effect = "tricolor"
 ```
 
 Use `avatar_effect` in this file only when one profile should override that

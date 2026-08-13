@@ -3,7 +3,7 @@ import { cvHref, normalizeJekyllCvUser, type PapyrusCvEmailParts, type PapyrusCv
 
 const DEFAULT_PRINT_COLOR = "#37474F";
 const DEFAULT_PRINT_LINKS = ["email", "linkedin", "github", "website"];
-type ProfileImageEffect = "none" | "mono-accent";
+type ProfileImageEffect = "none" | "mono-accent" | "tricolor";
 
 export type ProfileDataOptions = {
   imageEffect?: ProfileImageEffect;
@@ -52,7 +52,7 @@ export type ProfileData = {
     handle: string;
     headline: string;
     avatar: string;
-    avatarEffect: "none" | "mono-accent";
+    avatarEffect: ProfileImageEffect;
     favicon: string;
     ogImage: string;
     canonicalCv: string;

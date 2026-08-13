@@ -82,6 +82,36 @@ img.papyrus-image-effect-mono-accent {
   mix-blend-mode: screen;
 }
 
+.papyrus-image-effect-tricolor {
+  background:
+    radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--papyrus-accent) 88%, transparent), transparent 32%),
+    linear-gradient(135deg, var(--papyrus-bg) 0%, var(--papyrus-accent) 48%, var(--papyrus-fg) 100%);
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+}
+
+.papyrus-image-effect-tricolor::before {
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--papyrus-bg) 45%, transparent), transparent 38%),
+    radial-gradient(circle at 72% 74%, color-mix(in srgb, var(--papyrus-fg) 62%, transparent), transparent 44%);
+  content: "";
+  inset: 0;
+  mix-blend-mode: overlay;
+  opacity: 0.82;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.papyrus-image-effect-tricolor > img,
+img.papyrus-image-effect-tricolor {
+  filter: grayscale(1) contrast(1.42) brightness(1.02);
+  mix-blend-mode: luminosity;
+  position: relative;
+  z-index: 0;
+}
+
 .sr-only {
   border: 0;
   clip: rect(0 0 0 0);
@@ -653,6 +683,18 @@ a {
   width: 100%;
 }
 
+.papyrus-post-cover-wrap {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--papyrus-radius);
+  display: block;
+  overflow: hidden;
+  width: 100%;
+}
+
+.papyrus-post-cover-wrap .papyrus-post-cover {
+  height: 100%;
+}
+
 .papyrus-project-image-link {
   border-radius: var(--papyrus-radius);
   display: block;
@@ -663,13 +705,13 @@ a {
   grid-template-columns: minmax(0, 1fr) minmax(96px, 160px);
 }
 
-.papyrus-post-list-list .papyrus-post-cover {
+.papyrus-post-list-list .papyrus-post-cover-wrap {
   grid-column: 2;
   grid-row: 1 / span 3;
   max-width: 160px;
 }
 
-.papyrus-post-list-cards .papyrus-post-cover {
+.papyrus-post-list-cards .papyrus-post-cover-wrap {
   max-width: 100%;
 }
 
@@ -865,7 +907,7 @@ a {
 }
 
 .papyrus-post-list-compact .papyrus-post-description,
-.papyrus-post-list-compact .papyrus-post-cover,
+.papyrus-post-list-compact .papyrus-post-cover-wrap,
 .papyrus-post-list-compact .papyrus-post-list-tags {
   display: none;
 }
@@ -2835,7 +2877,7 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .papyrus-post-list-list .papyrus-post-cover {
+  .papyrus-post-list-list .papyrus-post-cover-wrap {
     grid-column: auto;
     grid-row: auto;
     max-width: 100%;

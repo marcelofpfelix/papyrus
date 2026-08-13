@@ -43,8 +43,8 @@ interface Props {
   showToc?: boolean;
   tocCollapsed?: boolean;
   cover?: string;
-  coverEffect?: "none" | "mono-accent";
-  cover_effect?: "none" | "mono-accent";
+  coverEffect?: "none" | "mono-accent" | "tricolor";
+  cover_effect?: "none" | "mono-accent" | "tricolor";
   editUrl?: string;
   canonicalUrl?: string;
   sourceUrl?: string;
@@ -139,6 +139,7 @@ const resolvedSourceLinkUrl = sourceLinkUrl ?? editUrl ?? sourceUrl;
 const showPostActions = Boolean((resolvedFeatures.sourceActions && (editUrl || sourceUrl || sourceLinkUrl)) || resolvedFeatures.share);
 const showPostFooter = Boolean(showPostMeta || (resolvedFeatures.postTags && tags.length > 0));
 const resolvedCoverEffect = coverEffect ?? cover_effect ?? "none";
+const coverEffectClass = resolvedCoverEffect === "none" ? undefined : `papyrus-image-effect-${resolvedCoverEffect}`;
 const shouldIndexWithPagefind = !robots?.toLowerCase().includes("noindex");
 const sideLinks = [
   moreAboutHref && { href: moreAboutHref, label: moreAboutLabel },
@@ -195,7 +196,7 @@ function icon(name: string) {
     )}
     {
       cover && (
-        <figure class:list={["papyrus-post-cover-frame", resolvedCoverEffect === "mono-accent" && "papyrus-image-effect-mono-accent"]}>
+        <figure class:list={["papyrus-post-cover-frame", coverEffectClass]}>
           <img src={getAssetPath(cover)} alt="" decoding="async" fetchpriority="high" />
         </figure>
       )

@@ -7,7 +7,7 @@ modDatetime: 2026-06-30T10:00:00.000Z
 license: CC-BY-4.0
 pinned: 2
 cover: /images/papyrus-layout.svg
-cover_effect: mono-accent
+cover_effect: tricolor
 tags:
   - markdown
   - theme

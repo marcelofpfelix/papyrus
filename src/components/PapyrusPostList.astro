@@ -28,8 +28,8 @@ interface PostItem {
     date?: Date | string;
     pinned?: boolean | number;
     cover?: string;
-    coverEffect?: "none" | "mono-accent";
-    cover_effect?: "none" | "mono-accent";
+    coverEffect?: "none" | "mono-accent" | "tricolor";
+    cover_effect?: "none" | "mono-accent" | "tricolor";
     tags?: string[];
   };
 }
@@ -94,6 +94,11 @@ function publishAt(post: PostItem) {
 function coverEffect(post: PostItem) {
   return post.data.coverEffect ?? post.data.cover_effect ?? "none";
 }
+
+function coverEffectClass(post: PostItem) {
+  const effect = coverEffect(post);
+  return effect === "none" ? undefined : `papyrus-image-effect-${effect}`;
+}
 ---
 
 <ul class:list={["papyrus-post-list", `papyrus-post-list-${view}`]}>
@@ -101,7 +106,11 @@ function coverEffect(post: PostItem) {
     posts.map(post => (
       <li class:list={[post.data.pinned && "papyrus-post-list-pinned"]} hidden={isScheduledPost(post)} data-papyrus-publish-at={publishAt(post)}>
         <a href={postHref(post, basePath)}>
-          {post.data.cover && <img class:list={["papyrus-post-cover", coverEffect(post) === "mono-accent" && "papyrus-image-effect-mono-accent"]} src={getAssetPath(post.data.cover)} alt="" loading="lazy" />}
+          {post.data.cover && (
+            <span class:list={["papyrus-post-cover-wrap", coverEffectClass(post)]}>
+              <img class="papyrus-post-cover" src={getAssetPath(post.data.cover)} alt="" loading="lazy" />
+            </span>
+          )}
           <span class="papyrus-post-title" transition:name={toTransitionName(post.data.title)}>{post.data.title}</span>
           {post.data.description && <span class="papyrus-post-description">{post.data.description}</span>}
           <span class="papyrus-post-meta">
