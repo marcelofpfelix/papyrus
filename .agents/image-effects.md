@@ -67,30 +67,28 @@ Profile data override:
 ```toml
 [user]
 avatar = "images/profile.png"
-avatar_effect = "tricolor"
+avatar_effect = "tritone"
 ```
 
 Site-wide profile default:
 
 ```toml
 [profile.images]
-effect = "tricolor"
+effect = "tritone"
 ```
 
-The first implemented slice supports `cover_effect: tricolor` for post
-covers and `avatar_effect = "tricolor"` or `[profile.images].effect =
-"tricolor"` for profile avatars. The CSS version uses the active theme
-background, foreground, and accent colors.
+The first implemented slice supports `cover_effect: tritone` and
+`cover_effect: dither` for post covers, plus `avatar_effect = "tritone"`,
+`avatar_effect = "dither"`, or `[profile.images].effect` for profile avatars.
+`tritone` is CSS-only. `dither` generates a build-time alpha mask and colors it
+with runtime theme variables.
 
 ## Modes
 
 - `none`: render the original image.
-- `duotone`: map shadows/highlights to two colors.
 - `tritone`: map shadows/midtones/highlights to three colors.
-- `dithered-ink`: next planned effect, upstream-inspired one-ink threshold
-  dither over the current background.
-- `animated-dithered-ink`: dithered ink plus animated threshold noise for normal
-  images or video, guarded by reduced-motion and visibility checks.
+- `dither`: upstream-inspired one-ink threshold dither over the current
+  background.
 - `dithered-tritone`: optional later mode, combining palette mapping with
   Atkinson/Bayer/noise thresholds.
 
@@ -120,7 +118,7 @@ Animated choices:
 
 ## Validation
 
-- Add fixture images with tricolor and dithered-ink outputs.
+- Add fixture images with tritone and dither outputs.
 - Verify generated files are referenced by rendered pages.
 - Check no orphan generated images are kept when frontmatter does not reference
   them.

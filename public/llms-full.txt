@@ -613,11 +613,11 @@ Set site-wide avatar treatment in `papyrus.config.toml`:
 
 ```toml title="papyrus.config.toml"
 [profile.images]
-effect = "tricolor"
+effect = "tritone"
 ```
 
 Use `avatar_effect` in this file only when one profile should override that
-site default.
+site default. Supported values are `none`, `tritone`, and `dither`.
 
 Use `email_user` and `email_domain` instead of a single literal email address
 when you want the page to assemble the visible contact with less obvious static
@@ -1042,12 +1042,13 @@ Use `src/data/profile.toml` for profile content and asset paths. Use
 
 ```toml title="papyrus.config.toml"
 [profile.images]
-effect = "tricolor"
+effect = "tritone"
 ```
 
-The default is `none`. `tricolor` layers the profile avatar with the current
-theme background, foreground, and accent colors. A profile data file can still
-override the default for its own avatar with `avatar_effect`.
+The default is `none`. `tritone` layers the profile avatar with the current
+theme background, foreground, and accent colors. `dither` generates a mask at
+build time and colors it with the current accent color. A profile data file can
+still override the default for its own avatar with `avatar_effect`.
 
 ## Post-list defaults
 
@@ -1496,3 +1497,58 @@ Cabrito Assado is a celebratory roast, often served with potatoes and greens.
 
 Marinate overnight, roast slowly with potatoes, and baste until the meat is
 tender and the potatoes are browned.
+## Theme-aware image effects
+URL: https://papyrus.marcelofelix.com/posts/image-effects/
+Summary: Configure tritone and dithered image treatments for covers and profile photos.
+Updated: 2026-08-13
+Source: src/content/posts/image-effects.md
+Papyrus image effects are configured per image. Use them when a normal photo
+feels too detached from the active theme.
+
+`tritone` is a CSS effect. The browser keeps the original image and recolors it
+with the current background, text, and accent tokens, so light and dark mode
+switches happen immediately.
+
+`dither` is different. Papyrus generates a monochrome alpha mask at build time,
+then the browser paints that mask with the current accent color. That keeps the
+runtime cheap while still allowing the color to change with the theme.
+
+  
+    
+    tritone
+  
+  
+    
+    dither
+  
+
+For a post cover, set the effect in frontmatter:
+
+```yaml
+cover: /images/photo.jpg
+cover_effect: tritone
+```
+
+Use `dither` when you want the build-time mask:
+
+```yaml
+cover: /images/photo.jpg
+cover_effect: dither
+```
+
+For profile images, set the site default:
+
+```toml
+[profile.images]
+effect = "tritone"
+```
+
+Or override one profile directly:
+
+```toml
+[user]
+avatar = "images/profile.jpg"
+avatar_effect = "dither"
+```
+
+The supported values are `none`, `tritone`, and `dither`.

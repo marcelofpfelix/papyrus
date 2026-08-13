@@ -115,6 +115,7 @@
     "papyrus-theme": "scripts/theme-profile.mjs",
     "papyrus-post-date": "scripts/post-date.mjs",
     "papyrus-compress": "scripts/compress-images.mjs",
+    "papyrus-image-effects": "scripts/generate-image-effects.mjs",
     "papyrus-cover": "scripts/create-cover-svg.mjs",
     "papyrus-card-cover": "scripts/create-card-cover.mjs",
     "papyrus-llms": "scripts/generate-llms.mjs",
@@ -136,7 +137,7 @@
   ],
   "scripts": {
     "check": "astro check",
-    "build": "pnpm run cv:export && pnpm run build:llms && pnpm run ai:indexes -- src/content/posts public/ai ${SITE_URL:-https://papyrus.marcelofelix.com} public/demo/site-data.json && pnpm run rss:tags && astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
+    "build": "pnpm run image:effects && pnpm run cv:export && pnpm run build:llms && pnpm run ai:indexes -- src/content/posts public/ai ${SITE_URL:-https://papyrus.marcelofelix.com} public/demo/site-data.json && pnpm run rss:tags && astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
     "cv:export": "node scripts/export-cv.mjs src/data/profile.toml public/cv/profile",
     "cv:check": "node scripts/export-cv.mjs src/data/profile.toml public/cv/profile --check",
     "precommit": "pnpm run cv:export",
@@ -148,6 +149,7 @@
     "content:outline": "node scripts/content-outline.mjs",
     "post:date": "node scripts/post-date.mjs",
     "compress": "node scripts/compress-images.mjs",
+    "image:effects": "node scripts/generate-image-effects.mjs",
     "cover": "node scripts/create-cover-svg.mjs",
     "card-cover": "node scripts/create-card-cover.mjs",
     "llms": "node scripts/generate-llms.mjs",
@@ -166,6 +168,7 @@
     "verify:package": "node .agents/scripts/verify-package-covers.mjs",
     "verify:pure-parity": "node .agents/scripts/verify-pure-parity.mjs",
     "verify:compress": "node .agents/scripts/verify-compress-workflow.mjs",
+    "verify:image-effects": "node .agents/scripts/verify-image-effects.mjs",
     "verify:date": "node .agents/scripts/verify-date-workflow.mjs",
     "verify:deps": "node .agents/scripts/verify-dependencies.mjs",
     "verify:release": "node .agents/scripts/verify-release-readiness.mjs",
@@ -202,6 +205,7 @@
     "lighthouse": "^13.4.0",
     "pagefind": "^1.5.2",
     "playwright": "^1.61.1",
+    "sharp": "^0.35.3",
     "typescript": "^5.9.3",
     "wrangler": "4.106.0"
   }

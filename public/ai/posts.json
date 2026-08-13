@@ -551,5 +551,23 @@
     "created": "2024-06-10T09:00:00.000Z",
     "updated": "",
     "draft": false
+  },
+  {
+    "id": "post:image-effects",
+    "type": "post",
+    "slug": "image-effects",
+    "url": "https://papyrus.marcelofelix.com/posts/image-effects/",
+    "sourcePath": "src/content/posts/image-effects.md",
+    "title": "Theme-aware image effects",
+    "description": "Configure tritone and dithered image treatments for covers and profile photos.",
+    "excerpt": "Papyrus image effects are configured per image. Use them when a normal photo feels too detached from the active theme. `tritone` is a CSS effect. The browser keeps the original image and recolors it with the current background, text, and accent tokens, so light and dark mode swit",
+    "tags": [
+      "papyrus",
+      "images"
+    ],
+    "license": "",
+    "created": "2026-08-13",
+    "updated": "",
+    "draft": false
   }
 ]

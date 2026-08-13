@@ -1,9 +1,10 @@
 import { parse } from "smol-toml";
 import { cvHref, normalizeJekyllCvUser, type PapyrusCvEmailParts, type PapyrusCvItem, type PapyrusCvUser } from "./cv";
+import type { PapyrusImageEffect } from "./image-effects";
 
 const DEFAULT_PRINT_COLOR = "#37474F";
 const DEFAULT_PRINT_LINKS = ["email", "linkedin", "github", "website"];
-type ProfileImageEffect = "none" | "tricolor";
+type ProfileImageEffect = PapyrusImageEffect;
 
 export type ProfileDataOptions = {
   imageEffect?: ProfileImageEffect;

@@ -41,11 +41,11 @@ Set site-wide avatar treatment in `papyrus.config.toml`:
 
 ```toml title="papyrus.config.toml"
 [profile.images]
-effect = "tricolor"
+effect = "tritone"
 ```
 
 Use `avatar_effect` in this file only when one profile should override that
-site default.
+site default. Supported values are `none`, `tritone`, and `dither`.
 
 Use `email_user` and `email_domain` instead of a single literal email address
 when you want the page to assemble the visible contact with less obvious static

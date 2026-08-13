@@ -12,6 +12,7 @@ import {
   tagHref,
   toTransitionName,
 } from "../utils/posts";
+import { imageEffectClass, imageEffectStyle, type PapyrusImageEffect } from "../utils/image-effects";
 import { getAssetPath } from "../utils/withBase";
 import PapyrusScheduledPostsRuntime from "./runtime/PapyrusScheduledPostsRuntime.astro";
 
@@ -28,8 +29,8 @@ interface PostItem {
     date?: Date | string;
     pinned?: boolean | number;
     cover?: string;
-    coverEffect?: "none" | "tricolor";
-    cover_effect?: "none" | "tricolor";
+    coverEffect?: PapyrusImageEffect;
+    cover_effect?: PapyrusImageEffect;
     tags?: string[];
   };
 }
@@ -95,10 +96,6 @@ function coverEffect(post: PostItem) {
   return post.data.coverEffect ?? post.data.cover_effect ?? "none";
 }
 
-function coverEffectClass(post: PostItem) {
-  const effect = coverEffect(post);
-  return effect === "none" ? undefined : `papyrus-image-effect-${effect}`;
-}
 ---
 
 <ul class:list={["papyrus-post-list", `papyrus-post-list-${view}`]}>
@@ -107,7 +104,7 @@ function coverEffectClass(post: PostItem) {
       <li class:list={[post.data.pinned && "papyrus-post-list-pinned"]} hidden={isScheduledPost(post)} data-papyrus-publish-at={publishAt(post)}>
         <a href={postHref(post, basePath)}>
           {post.data.cover && (
-            <span class:list={["papyrus-post-cover-wrap", coverEffectClass(post)]}>
+            <span class:list={["papyrus-post-cover-wrap", imageEffectClass(coverEffect(post))]} style={imageEffectStyle(coverEffect(post), post.data.cover)}>
               <img class="papyrus-post-cover" src={getAssetPath(post.data.cover)} alt="" loading="lazy" />
             </span>
           )}

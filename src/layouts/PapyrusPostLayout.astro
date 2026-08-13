@@ -7,6 +7,7 @@ import PapyrusBackToTopRuntime from "../components/runtime/PapyrusBackToTopRunti
 import PapyrusMediaRuntime from "../components/runtime/PapyrusMediaRuntime.astro";
 import PapyrusPostActionsRuntime from "../components/runtime/PapyrusPostActionsRuntime.astro";
 import { resolvePapyrusFeatures, type PapyrusFeatureConfig } from "../utils/features";
+import { imageEffectClass, imageEffectStyle, type PapyrusImageEffect } from "../utils/image-effects";
 import { formatPostDate, tagHref, toTransitionName } from "../utils/posts";
 import { getAssetPath, withBase } from "../utils/withBase";
 
@@ -43,8 +44,8 @@ interface Props {
   showToc?: boolean;
   tocCollapsed?: boolean;
   cover?: string;
-  coverEffect?: "none" | "tricolor";
-  cover_effect?: "none" | "tricolor";
+  coverEffect?: PapyrusImageEffect;
+  cover_effect?: PapyrusImageEffect;
   editUrl?: string;
   canonicalUrl?: string;
   sourceUrl?: string;
@@ -139,7 +140,7 @@ const resolvedSourceLinkUrl = sourceLinkUrl ?? editUrl ?? sourceUrl;
 const showPostActions = Boolean((resolvedFeatures.sourceActions && (editUrl || sourceUrl || sourceLinkUrl)) || resolvedFeatures.share);
 const showPostFooter = Boolean(showPostMeta || (resolvedFeatures.postTags && tags.length > 0));
 const resolvedCoverEffect = coverEffect ?? cover_effect ?? "none";
-const coverEffectClass = resolvedCoverEffect === "none" ? undefined : `papyrus-image-effect-${resolvedCoverEffect}`;
+const coverEffectClass = imageEffectClass(resolvedCoverEffect);
 const shouldIndexWithPagefind = !robots?.toLowerCase().includes("noindex");
 const sideLinks = [
   moreAboutHref && { href: moreAboutHref, label: moreAboutLabel },
@@ -196,7 +197,7 @@ function icon(name: string) {
     )}
     {
       cover && (
-        <figure class:list={["papyrus-post-cover-frame", coverEffectClass]}>
+        <figure class:list={["papyrus-post-cover-frame", coverEffectClass]} style={imageEffectStyle(resolvedCoverEffect, cover)}>
           <img src={getAssetPath(cover)} alt="" decoding="async" fetchpriority="high" />
         </figure>
       )

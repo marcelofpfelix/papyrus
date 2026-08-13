@@ -172,6 +172,19 @@
     ]
   },
   {
+    "id": "tag:images",
+    "tag": "images",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:image-effects",
+        "slug": "image-effects",
+        "title": "Theme-aware image effects",
+        "url": "https://papyrus.marcelofelix.com/posts/image-effects/"
+      }
+    ]
+  },
+  {
     "id": "tag:markdown",
     "tag": "markdown",
     "count": 1,
@@ -200,7 +213,7 @@
   {
     "id": "tag:papyrus",
     "tag": "papyrus",
-    "count": 7,
+    "count": 8,
     "posts": [
       {
         "id": "post:feature-map",
@@ -243,6 +256,12 @@
         "slug": "site-config",
         "title": "Site config",
         "url": "https://papyrus.marcelofelix.com/posts/site-config/"
+      },
+      {
+        "id": "post:image-effects",
+        "slug": "image-effects",
+        "title": "Theme-aware image effects",
+        "url": "https://papyrus.marcelofelix.com/posts/image-effects/"
       }
     ]
   },

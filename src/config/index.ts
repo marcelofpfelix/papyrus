@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { parse } from "smol-toml";
 import { defaultPapyrusFeatures, type PapyrusFeatureConfig } from "../utils/features.ts";
+import { isPapyrusImageEffect, type PapyrusImageEffect } from "../utils/image-effects.ts";
 
 export type PapyrusLinkConfig = {
   href: string;
@@ -34,8 +35,6 @@ export type PapyrusPostCardConfig = {
 export type PapyrusHomeConfig = {
   projectLimit: number;
 };
-
-export type PapyrusImageEffect = "none" | "tricolor";
 
 export type PapyrusProfileImagesConfig = {
   effect: PapyrusImageEffect;
@@ -161,7 +160,7 @@ function asNumber(value: unknown): number | undefined {
 }
 
 function asImageEffect(value: unknown): PapyrusImageEffect | undefined {
-  return value === "none" || value === "tricolor" ? value : undefined;
+  return isPapyrusImageEffect(value) ? value : undefined;
 }
 
 function asLinks(value: unknown): PapyrusLinkConfig[] {

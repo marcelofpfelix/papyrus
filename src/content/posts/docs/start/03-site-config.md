@@ -147,12 +147,13 @@ Use `src/data/profile.toml` for profile content and asset paths. Use
 
 ```toml title="papyrus.config.toml"
 [profile.images]
-effect = "tricolor"
+effect = "tritone"
 ```
 
-The default is `none`. `tricolor` layers the profile avatar with the current
-theme background, foreground, and accent colors. A profile data file can still
-override the default for its own avatar with `avatar_effect`.
+The default is `none`. `tritone` layers the profile avatar with the current
+theme background, foreground, and accent colors. `dither` generates a mask at
+build time and colors it with the current accent color. A profile data file can
+still override the default for its own avatar with `avatar_effect`.
 
 ## Post-list defaults
 

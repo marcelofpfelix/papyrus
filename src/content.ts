@@ -15,8 +15,8 @@ const posts = defineCollection({
     hidden: z.boolean().optional().default(false),
     pinned: z.union([z.boolean(), z.number()]).optional().default(false),
     cover: z.string().optional(),
-    coverEffect: z.enum(["none", "tricolor"]).optional(),
-    cover_effect: z.enum(["none", "tricolor"]).optional(),
+    coverEffect: z.enum(["none", "tritone", "dither"]).optional(),
+    cover_effect: z.enum(["none", "tritone", "dither"]).optional(),
     tags: z.array(z.string()).optional().default([]),
   }).refine(data => data.pubDatetime || data.date, {
     message: "Posts require either pubDatetime or date.",

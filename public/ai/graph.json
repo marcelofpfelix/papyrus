@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T08:20:00.000Z",
+  "generatedAt": "2026-08-13T00:00:00.000Z",
   "nodes": [
     {
       "id": "post:markdown-feature-sample",
@@ -345,6 +345,17 @@
       ]
     },
     {
+      "id": "post:image-effects",
+      "type": "post",
+      "label": "Theme-aware image effects",
+      "url": "https://papyrus.marcelofelix.com/posts/image-effects/",
+      "sourcePath": "src/content/posts/image-effects.md",
+      "tags": [
+        "papyrus",
+        "images"
+      ]
+    },
+    {
       "id": "tag:ai",
       "type": "tag",
       "label": "#ai",
@@ -405,6 +416,12 @@
       "count": 5
     },
     {
+      "id": "tag:images",
+      "type": "tag",
+      "label": "#images",
+      "count": 1
+    },
+    {
       "id": "tag:markdown",
       "type": "tag",
       "label": "#markdown",
@@ -420,7 +437,7 @@
       "id": "tag:papyrus",
       "type": "tag",
       "label": "#papyrus",
-      "count": 7
+      "count": 8
     },
     {
       "id": "tag:portuguese-food",
@@ -908,6 +925,16 @@
       "relation": "has-tag"
     },
     {
+      "source": "post:image-effects",
+      "target": "tag:papyrus",
+      "relation": "has-tag"
+    },
+    {
+      "source": "post:image-effects",
+      "target": "tag:images",
+      "relation": "has-tag"
+    },
+    {
       "source": "note:template-first",
       "target": "tag:template",
       "relation": "mentions-tag"
@@ -1023,6 +1050,11 @@
       "relation": "related-by-tag"
     },
     {
+      "source": "post:feature-map",
+      "target": "post:image-effects",
+      "relation": "related-by-tag"
+    },
+    {
       "source": "post:ai-mobile",
       "target": "post:deploy",
       "relation": "related-by-tag"
@@ -1083,6 +1115,11 @@
       "relation": "related-by-tag"
     },
     {
+      "source": "post:papyrus-package-shape",
+      "target": "post:image-effects",
+      "relation": "related-by-tag"
+    },
+    {
       "source": "post:collections",
       "target": "post:feature-map",
       "relation": "related-by-tag"
@@ -1113,6 +1150,11 @@
       "relation": "related-by-tag"
     },
     {
+      "source": "post:collections",
+      "target": "post:image-effects",
+      "relation": "related-by-tag"
+    },
+    {
       "source": "post:profile",
       "target": "post:feature-map",
       "relation": "related-by-tag"
@@ -1140,6 +1182,11 @@
     {
       "source": "post:profile",
       "target": "post:site-config",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:profile",
+      "target": "post:image-effects",
       "relation": "related-by-tag"
     },
     {
@@ -1183,6 +1230,11 @@
       "relation": "related-by-tag"
     },
     {
+      "source": "post:papyrus-docs",
+      "target": "post:image-effects",
+      "relation": "related-by-tag"
+    },
+    {
       "source": "post:install-configure-papyrus",
       "target": "post:deploy",
       "relation": "related-by-tag"
@@ -1223,6 +1275,11 @@
       "relation": "related-by-tag"
     },
     {
+      "source": "post:install-configure-papyrus",
+      "target": "post:image-effects",
+      "relation": "related-by-tag"
+    },
+    {
       "source": "post:site-config",
       "target": "post:feature-map",
       "relation": "related-by-tag"
@@ -1253,6 +1310,11 @@
       "relation": "related-by-tag"
     },
     {
+      "source": "post:site-config",
+      "target": "post:image-effects",
+      "relation": "related-by-tag"
+    },
+    {
       "source": "post:choco-frito",
       "target": "post:bacalhau-a-bras",
       "relation": "related-by-tag"
@@ -3150,6 +3212,41 @@
     {
       "source": "post:cabrito-assado",
       "target": "post:arroz-de-pato",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:image-effects",
+      "target": "post:feature-map",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:image-effects",
+      "target": "post:papyrus-package-shape",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:image-effects",
+      "target": "post:collections",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:image-effects",
+      "target": "post:profile",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:image-effects",
+      "target": "post:papyrus-docs",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:image-effects",
+      "target": "post:install-configure-papyrus",
+      "relation": "related-by-tag"
+    },
+    {
+      "source": "post:image-effects",
+      "target": "post:site-config",
       "relation": "related-by-tag"
     }
   ]

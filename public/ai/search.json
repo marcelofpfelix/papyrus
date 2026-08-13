@@ -433,6 +433,20 @@
     "text": "Cabrito Assado\nRoast kid goat with garlic, white wine, bay leaf, potatoes, and paprika.\nCabrito Assado is a celebratory roast, often served with potatoes and greens. Ingredients - Kid goat pieces - Garlic, bay leaf, paprika, and white wine - Olive oil - Potatoes - Parsley and lemon Method Marinate overnight, roast slowly with potatoes, and baste until the meat is te\nrecipe portuguese-food"
   },
   {
+    "id": "post:image-effects",
+    "type": "post",
+    "title": "Theme-aware image effects",
+    "url": "https://papyrus.marcelofelix.com/posts/image-effects/",
+    "sourcePath": "src/content/posts/image-effects.md",
+    "description": "Configure tritone and dithered image treatments for covers and profile photos.",
+    "excerpt": "Papyrus image effects are configured per image. Use them when a normal photo feels too detached from the active theme. `tritone` is a CSS effect. The browser keeps the original image and recolors it with the current background, text, and accent tokens, so light and dark mode swit",
+    "tags": [
+      "papyrus",
+      "images"
+    ],
+    "text": "Theme-aware image effects\nConfigure tritone and dithered image treatments for covers and profile photos.\nPapyrus image effects are configured per image. Use them when a normal photo feels too detached from the active theme. `tritone` is a CSS effect. The browser keeps the original image and recolors it with the current background, text, and accent tokens, so light and dark mode swit\npapyrus images"
+  },
+  {
     "id": "project:papyrus-theme",
     "type": "project",
     "title": "Papyrus theme",

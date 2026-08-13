@@ -6,6 +6,7 @@ import PapyrusGithubCard from "./PapyrusGithubCard.astro";
 import PapyrusTimeline from "./PapyrusTimeline.astro";
 import { cvIconSvg } from "../utils/cv-icons";
 import { shouldShowCvItemTitle } from "../utils/cv";
+import { imageEffectClass, imageEffectStyle } from "../utils/image-effects";
 import { getAssetPath, withBase } from "../utils/withBase";
 import type { ProfileData, ProfileProject } from "../utils/cv-profile-data";
 
@@ -58,7 +59,7 @@ const profileVersionLinks = versionLinks ?? [
   { label: "Classic", href: withBase("/profile/ast/") },
 ];
 const visibleProfileProjects = profileProjects.filter((project: ProfileProject) => project.repo);
-const avatarEffectClass = profile.avatarEffect === "none" ? undefined : `papyrus-image-effect-${profile.avatarEffect}`;
+const avatarEffectClass = imageEffectClass(profile.avatarEffect);
 
 function cvIcon(name: string) {
   const icons: Record<string, string> = {
@@ -94,7 +95,7 @@ function cvIcon(name: string) {
 >
   <section class="cv-shell">
     <aside class="cv-sidebar">
-      <span class:list={["cv-avatar-frame", avatarEffectClass]}>
+      <span class:list={["cv-avatar-frame", avatarEffectClass]} style={imageEffectStyle(profile.avatarEffect, profile.avatar)}>
         <img src={getAssetPath(profile.avatar)} alt={profile.name} />
       </span>
       <h1>{profile.name}</h1>

@@ -4,8 +4,15 @@
     <title>#papyrus posts</title>
     <link>/</link>
     <description>Posts tagged #papyrus</description>
-    <lastBuildDate>Mon, 13 Jul 2026 08:20:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2026 00:00:00 GMT</lastBuildDate>
     <atom:link href="/rss/tags/papyrus.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Theme-aware image effects</title>
+      <link>/posts/image-effects/</link>
+      <guid>/posts/image-effects/</guid>
+      <pubDate>Thu, 13 Aug 2026 00:00:00 GMT</pubDate>
+      <description>Configure tritone and dithered image treatments for covers and profile photos.</description>
+    </item>
     <item>
       <title>Profile and CV</title>
       <link>/posts/profile/</link>
