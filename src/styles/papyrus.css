@@ -70,6 +70,37 @@ body {
   position: relative;
 }
 
+.papyrus-image-effect-duotone {
+  background: var(--papyrus-bg);
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+}
+
+.papyrus-image-effect-duotone::before {
+  background: var(--papyrus-fg);
+  content: "";
+  inset: 0;
+  mix-blend-mode: lighten;
+  opacity: 0.34;
+  pointer-events: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dark .papyrus-image-effect-duotone::before {
+  mix-blend-mode: screen;
+  opacity: 0.28;
+}
+
+.papyrus-image-effect-duotone > img,
+img.papyrus-image-effect-duotone {
+  filter: grayscale(1) contrast(1.34);
+  mix-blend-mode: luminosity;
+  position: relative;
+  z-index: 0;
+}
+
 .papyrus-image-effect-tritone::before {
   background:
     linear-gradient(180deg, color-mix(in srgb, var(--papyrus-bg) 45%, transparent), transparent 38%),
@@ -91,14 +122,16 @@ img.papyrus-image-effect-tritone {
   z-index: 0;
 }
 
-.papyrus-image-effect-dither {
+.papyrus-image-effect-dither,
+.papyrus-image-effect-dithernoise {
   background: var(--papyrus-bg);
   isolation: isolate;
   overflow: hidden;
   position: relative;
 }
 
-.papyrus-image-effect-dither::before {
+.papyrus-image-effect-dither::before,
+.papyrus-image-effect-dithernoise::before {
   background: color-mix(in srgb, var(--papyrus-fg) 72%, var(--papyrus-accent));
   content: "";
   inset: 0;
@@ -109,24 +142,26 @@ img.papyrus-image-effect-tritone {
   z-index: 1;
 }
 
-.dark .papyrus-image-effect-dither::before {
+.dark .papyrus-image-effect-dither::before,
+.dark .papyrus-image-effect-dithernoise::before {
   background: color-mix(in srgb, var(--papyrus-fg) 70%, var(--papyrus-accent));
   mask-image: var(--papyrus-dither-mask-dark);
   -webkit-mask-image: var(--papyrus-dither-mask-dark);
 }
 
 .papyrus-image-effect-dither > img,
-img.papyrus-image-effect-dither {
+.papyrus-image-effect-dithernoise > img,
+img.papyrus-image-effect-dither,
+img.papyrus-image-effect-dithernoise {
   opacity: 0;
 }
 
 .papyrus-effect-demo-grid {
   display: grid;
-  gap: 1.25rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
   margin: 2rem 0;
-  margin-inline: calc((100% - min(920px, calc(100vw - 40px))) / 2);
-  width: min(920px, calc(100vw - 40px));
+  width: 100%;
 }
 
 .papyrus-effect-demo-grid figure {
@@ -153,14 +188,6 @@ img.papyrus-image-effect-dither {
   color: var(--papyrus-muted);
   font-size: 0.9rem;
   margin-top: 0.5rem;
-}
-
-@media (max-width: 719px) {
-  .papyrus-effect-demo-grid {
-    grid-template-columns: 1fr;
-    margin-inline: 0;
-    width: 100%;
-  }
 }
 
 .sr-only {

@@ -559,8 +559,8 @@
     "url": "https://papyrus.marcelofelix.com/posts/image-effects/",
     "sourcePath": "src/content/posts/image-effects.md",
     "title": "Theme-aware image effects",
-    "description": "Configure tritone and dithered image treatments for covers and profile photos.",
-    "excerpt": "Papyrus image effects are configured per image. Use them when a normal photo feels too detached from the active theme. `tritone` is a CSS effect. The browser keeps the original image and recolors it with the current background, text, and accent tokens, so light and dark mode swit",
+    "description": "Configure duotone, tritone, and dithered image treatments for covers and profile photos.",
+    "excerpt": "Papyrus image effects are configured per image. Use them when a normal photo feels too detached from the active theme. `duotone` and `tritone` are CSS effects. The browser keeps the original image and recolors it with the current theme tokens, so light and dark mode switches happ",
     "tags": [
       "papyrus",
       "images"

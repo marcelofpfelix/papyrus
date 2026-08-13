@@ -150,10 +150,10 @@ Use `src/data/profile.toml` for profile content and asset paths. Use
 effect = "tritone"
 ```
 
-The default is `none`. `tritone` layers the profile avatar with the current
-theme background, foreground, and accent colors. `dither` generates a mask at
-build time and colors it with the current accent color. A profile data file can
-still override the default for its own avatar with `avatar_effect`.
+The default is `none`. `duotone` uses the current background and foreground
+colors. `tritone` also uses the accent color. `dither` and `dithernoise`
+generate masks at build time and color them with theme-aware ink. A profile data
+file can still override the default for its own avatar with `avatar_effect`.
 
 ## Post-list defaults
 

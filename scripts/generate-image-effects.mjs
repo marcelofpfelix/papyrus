@@ -46,15 +46,19 @@ function publicAssetPath(value) {
   return inputExts.has(extname(publicPath).toLowerCase()) ? publicPath : undefined;
 }
 
-function ditherMaskPath(assetPath, mode = "dark") {
+function ditherMaskPath(assetPath, mode = "dark", effect = "dither") {
   const suffix = mode === "light" ? "-light" : "";
-  return `/generated/dither/${assetPath.replace(/^\/+/, "").replace(/\.[a-z0-9]+$/i, "")}${suffix}.png`;
+  return `/generated/${effect}/${assetPath.replace(/^\/+/, "").replace(/\.[a-z0-9]+$/i, "")}${suffix}.png`;
 }
 
 function markdownFrontmatter(text) {
   if (!text.startsWith("---\n")) return "";
   const end = text.indexOf("\n---", 4);
   return end === -1 ? "" : text.slice(4, end);
+}
+
+function addSource(sources, effect, asset) {
+  if (asset) sources.add(`${effect}:${asset}`);
 }
 
 function collectDitherSources(path, text) {
@@ -64,25 +68,31 @@ function collectDitherSources(path, text) {
 
   for (const match of text.matchAll(/data-papyrus-dither-src=["']([^"']+)["']/g)) {
     const asset = publicAssetPath(match[1]);
-    if (asset) sources.add(asset);
+    addSource(sources, "dither", asset);
+  }
+
+  for (const match of text.matchAll(/data-papyrus-dithernoise-src=["']([^"']+)["']/g)) {
+    const asset = publicAssetPath(match[1]);
+    addSource(sources, "dithernoise", asset);
   }
 
   const coverMatch = configText.match(/^cover:\s*["']?([^"'\n]+)["']?/m);
-  const hasDitherCover = /^\s*(coverEffect|cover_effect):\s*["']?dither["']?\s*$/m.test(configText);
-  if (coverMatch && hasDitherCover) {
+  const ditherCoverMatch = configText.match(/^\s*(coverEffect|cover_effect):\s*["']?(dither|dithernoise)["']?\s*$/m);
+  if (coverMatch && ditherCoverMatch) {
     const asset = publicAssetPath(coverMatch[1]);
-    if (asset) sources.add(asset);
+    addSource(sources, ditherCoverMatch[2], asset);
   }
 
   const avatarMatch = configText.match(/^\s*avatar\s*=\s*["']([^"']+)["']/m);
-  const hasDitherAvatar = /^\s*avatar_effect\s*=\s*["']dither["']\s*$/m.test(configText) || /^\s*effect\s*=\s*["']dither["']\s*$/m.test(configText);
-  if (avatarMatch && hasDitherAvatar) {
+  const ditherAvatarMatch = configText.match(/^\s*(avatar_effect|effect)\s*=\s*["'](dither|dithernoise)["']\s*$/m);
+  if (avatarMatch && ditherAvatarMatch) {
     const asset = publicAssetPath(avatarMatch[1]);
-    if (asset) sources.add(asset);
+    addSource(sources, ditherAvatarMatch[2], asset);
   }
 
-  if (path.endsWith("papyrus.config.toml") && /^\s*effect\s*=\s*["']dither["']\s*$/m.test(configText)) {
-    sources.add("__PROFILE_AVATAR__");
+  if (path.endsWith("papyrus.config.toml")) {
+    const defaultEffectMatch = configText.match(/^\s*effect\s*=\s*["'](dither|dithernoise)["']\s*$/m);
+    if (defaultEffectMatch) sources.add(`__PROFILE_AVATAR__:${defaultEffectMatch[1]}`);
   }
 
   return sources;
@@ -109,17 +119,22 @@ async function configuredSources() {
     for (const source of collectDitherSources(file, text)) sources.add(source);
   }
 
-  if (sources.delete("__PROFILE_AVATAR__")) {
+  for (const source of [...sources].filter(source => source.startsWith("__PROFILE_AVATAR__:"))) {
+    sources.delete(source);
+    const effect = source.split(":")[1];
     const profilePath = join(root, "src", "data", "profile.toml");
     if (await exists(profilePath)) {
       const profileText = await readFile(profilePath, "utf8");
       const avatarMatch = profileText.match(/^\s*avatar\s*=\s*["']([^"']+)["']/m);
       const asset = avatarMatch ? publicAssetPath(avatarMatch[1]) : undefined;
-      if (asset) sources.add(asset);
+      addSource(sources, effect, asset);
     }
   }
 
-  return [...sources].sort();
+  return [...sources].sort().map((source) => {
+    const index = source.indexOf(":");
+    return { effect: source.slice(0, index), assetPath: source.slice(index + 1) };
+  });
 }
 
 function luminance(r, g, b) {
@@ -156,7 +171,7 @@ function atkinsonThreshold(x, y) {
   return thresholds[(y % 4) * 4 + (x % 4)] / 16;
 }
 
-function ditherAlpha(grayInput, x, y, width, height, sourceAlpha, mode) {
+function ditherAlpha(grayInput, x, y, width, height, sourceAlpha, themeMode, effect) {
   const uvX = x / width;
   const uvY = 1 - y / height;
   const edgeNoise = hash(x * 0.5, y * 0.5) * 0.15;
@@ -165,21 +180,25 @@ function ditherAlpha(grayInput, x, y, width, height, sourceAlpha, mode) {
   const fadeBottom = smoothstep(0, 0.1 + edgeNoise, uvY);
   const fadeTop = smoothstep(0, 0.1 + edgeNoise, 1 - uvY);
   const fade = fadeLeft * fadeRight * fadeBottom * fadeTop;
-  const isLight = mode === "light" ? 1 : 0;
+  const isLight = themeMode === "light" ? 1 : 0;
   let gray = grayInput;
 
   gray = gray * fade * (1 - isLight) + (1 - isLight) * 0;
   if (isLight) gray = 1 + (grayInput - 1) * fade;
-  gray = Math.max(0, Math.min(1, gray * 1.2 - 0.1));
+  if (effect === "dither") gray = Math.max(0, Math.min(1, gray * 1.2 - 0.1));
 
+  const threshold = effect === "dithernoise" ? hash(x, y) : atkinsonThreshold(x, y);
   const thresholdBias = isLight ? -0.1 : 0.1;
-  const thresholdLevel = Math.max(0.001, Math.min(0.999, atkinsonThreshold(x, y) + thresholdBias));
+  const noise = hash(x * 0.15, y * 0.15) - 0.5;
+  const flicker = 0.08 * Math.sin(hash(x * 0.2, y * 0.2) * 6.28);
+  const effectIntensity = effect === "dithernoise" ? smoothstep(0.05, 0.3, gray) : 0;
+  const thresholdLevel = Math.max(0.001, Math.min(0.999, threshold + thresholdBias + (noise * 0.15 + flicker) * effectIntensity));
   const dithered = gray >= thresholdLevel ? 1 : 0;
   const inkAlpha = isLight ? 1 - dithered : dithered;
   return Math.round(sourceAlpha * inkAlpha);
 }
 
-async function generateMask(assetPath, mode) {
+async function generateMask(assetPath, themeMode, effect) {
   const sourcePath = join(publicDir, assetPath.replace(/^\/+/, ""));
   if (!await exists(sourcePath)) {
     console.warn(`Skipping missing dither source ${assetPath}`);
@@ -199,7 +218,7 @@ async function generateMask(assetPath, mode) {
       const sourceOffset = index * channels;
       const offset = index * 4;
       const gray = luminance(data[sourceOffset], data[sourceOffset + 1], data[sourceOffset + 2]);
-      const alpha = ditherAlpha(gray, x, y, width, height, data[sourceOffset + 3] ?? 255, mode);
+      const alpha = ditherAlpha(gray, x, y, width, height, data[sourceOffset + 3] ?? 255, themeMode, effect);
 
       output[offset] = 0;
       output[offset + 1] = 0;
@@ -208,19 +227,19 @@ async function generateMask(assetPath, mode) {
     }
   }
 
-  const maskPath = join(publicDir, ditherMaskPath(assetPath, mode).replace(/^\/+/, ""));
+  const maskPath = join(publicDir, ditherMaskPath(assetPath, themeMode, effect).replace(/^\/+/, ""));
   await mkdir(dirname(maskPath), { recursive: true });
   await writeFile(maskPath, await sharp(output, { raw: { width, height, channels: 4 } }).png({ compressionLevel: 9 }).toBuffer());
-  console.log(`generated ${ditherMaskPath(assetPath, mode)}`);
+  console.log(`generated ${ditherMaskPath(assetPath, themeMode, effect)}`);
   return true;
 }
 
 const sources = await configuredSources();
 let generated = 0;
 
-for (const source of sources) {
-  const darkGenerated = await generateMask(source, "dark");
-  const lightGenerated = await generateMask(source, "light");
+for (const { effect, assetPath } of sources) {
+  const darkGenerated = await generateMask(assetPath, "dark", effect);
+  const lightGenerated = await generateMask(assetPath, "light", effect);
   if (darkGenerated || lightGenerated) generated += 1;
 }
 
