@@ -105,6 +105,51 @@ public/generated/dithernoise/v2/images/example/light-1.png
 - `dithered-tritone`: optional later mode, combining palette mapping with
   Atkinson/Bayer/noise thresholds.
 
+## Deferred source-tone override
+
+Tracking row: `PP-201`.
+
+`duotone` and `tritone` are CSS-only effects. Unlike `dither` and
+`dithernoise`, they do not generate separate light/dark masks, and they do not
+currently know whether the source image is naturally dark or light. Most images
+should keep the default behavior, but a manual override may be useful when a
+very dark or very light source image loses contrast after a theme switch.
+
+Preferred future shape:
+
+```yaml
+cover: /images/post-cover.jpg
+cover_effect: tritone
+cover_tone: dark # auto | dark | light
+```
+
+```toml
+[profile.images]
+effect = "tritone"
+tone = "dark" # auto | dark | light
+```
+
+Rules:
+
+- Default remains `auto`, preserving the current CSS output.
+- `dark` means the source image is dark and needs a lighter/brighter mapping.
+- `light` means the source image is light and needs a deeper mapping.
+- Apply only to CSS tone effects first: `duotone` and `tritone`.
+- Do not add build-time luminance auto-detection until there is a real failing
+  image and a clear test case.
+- Do not change `dither` or `dithernoise`; they already generate separate
+  dark/light masks.
+
+Acceptance criteria for implementation:
+
+- Post covers accept `cover_tone` and `coverTone`.
+- Profile images accept `[profile.images].tone` and optional `avatar_tone`.
+- Rendered media gets one shared attribute or class such as
+  `data-papyrus-image-tone="dark"`.
+- CSS adjusts only the tone-effect mapping, not layout.
+- Add one demo image that clearly shows why the override exists.
+- Update config, content schema, profile data, and image-effect verifiers.
+
 ## Performance guidance
 
 Default implementation should be build-time for static images:
