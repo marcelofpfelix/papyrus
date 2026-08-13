@@ -178,6 +178,29 @@ img.papyrus-image-effect-dithernoise {
   opacity: 0;
 }
 
+.papyrus-video-dither-frame {
+  background: var(--papyrus-bg);
+  display: block;
+  overflow: hidden;
+  position: relative;
+}
+
+.papyrus-video-dither-frame video,
+.papyrus-video-dither-frame canvas {
+  display: block;
+  width: 100%;
+}
+
+.papyrus-video-dither-source {
+  opacity: 0;
+}
+
+.papyrus-video-dither-canvas {
+  inset: 0;
+  height: 100%;
+  position: absolute;
+}
+
 .papyrus-effect-demo-grid {
   display: grid;
   gap: 1rem;

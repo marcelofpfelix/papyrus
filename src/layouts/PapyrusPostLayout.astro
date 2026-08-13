@@ -322,11 +322,12 @@ function icon(name: string) {
     {resolvedFeatures.adjacentPosts && <PapyrusAdjacentPosts previous={previous} next={next} basePath={adjacentBasePath} />}
   </article>
   {((resolvedFeatures.sourceActions && (sourceUrl || resolvedSourceLinkUrl)) || resolvedFeatures.share) && <PapyrusPostActionsRuntime />}
-  {(resolvedFeatures.artifactLinks || resolvedFeatures.imageZoom || resolvedFeatures.mermaid) && (
+  {(resolvedFeatures.artifactLinks || resolvedFeatures.imageZoom || resolvedFeatures.mermaid || resolvedFeatures.videoDither) && (
     <PapyrusMediaRuntime
       artifactLinks={resolvedFeatures.artifactLinks}
       imageZoom={resolvedFeatures.imageZoom}
       mermaid={resolvedFeatures.mermaid}
+      videoDither={resolvedFeatures.videoDither}
     />
   )}
   {resolvedFeatures.backToTop && <PapyrusBackToTopRuntime />}

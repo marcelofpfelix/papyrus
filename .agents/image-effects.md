@@ -100,6 +100,8 @@ public/generated/dithernoise/v2/images/example/light-1.png
   background.
 - `dithernoise`: build-time Atkinson masks with a small set of animated
   threshold-noise frames.
+- `papyrus-video-effect-dither`: runtime Atkinson video dither for explicit
+  content videos.
 - `dithered-tritone`: optional later mode, combining palette mapping with
   Atkinson/Bayer/noise thresholds.
 
@@ -127,25 +129,29 @@ Animated choices:
 - Runtime WebGL should respect `prefers-reduced-motion`, pause off-screen, and
   fall back to a pre-rendered image.
 
-## Video dithering design
+## Video dithering
 
 Video should not reuse the static image-mask implementation. Four PNG masks are
 reasonable for a still image, but video would require too many generated frames.
-The better design is a progressive enhancement inspired by `mitsuhiko/dark`:
+The implemented first slice is a progressive enhancement inspired by
+`mitsuhiko/dark`:
 
 - Source media remains a normal optimized `<video>` with `autoplay`, `muted`,
   `loop`, `playsinline`, and a poster image.
-- A tiny runtime upgrades only configured videos to a `<canvas>` renderer when
-  WebGL is available, motion is allowed, and the video is visible.
+- `PapyrusMediaRuntime` upgrades only videos with
+  `class="papyrus-video-effect-dither"` to a `<canvas>` renderer when WebGL is
+  available, motion is allowed, and the video is visible.
 - The shader samples the current video frame, computes grayscale luminance,
-  applies Atkinson/Bayer/noise thresholding, and emits one theme ink color with
-  alpha over the page background.
+  applies Atkinson thresholding, and emits one theme ink color over the page
+  background.
 - The runtime throttles rendering, pauses via `IntersectionObserver`, stops for
   `prefers-reduced-motion`, and falls back to the poster or normal video.
 - Light/dark colors come from CSS variables so theme switching does not require
   new encoded video files.
-- Do not ship this runtime globally. Load it only when rendered content contains
-  a configured dithered video.
+- The enhancement is inherited by Papyrus post pages; templates and consumer
+  sites only author normal HTML or the Markdown-safe placeholder. The shared
+  media runtime can be present for other media features, but WebGL setup starts
+  only when an opted-in video exists.
 
 Candidate authoring shape:
 
@@ -161,14 +167,11 @@ Candidate authoring shape:
 ></video>
 ```
 
-Open questions before implementation:
+Deferred on purpose:
 
-- Use WebGL 1 for the first slice, matching the upstream browser baseline, or
-  add a slower 2D canvas fallback.
-- Whether video dithering belongs only to explicit HTML/MDX media or also to
-  frontmatter-configured cover videos.
-- Whether to support only `atkinson` first, or expose `atkinson`, `bayer`, and
-  `noise` immediately.
+- 2D canvas fallback.
+- Frontmatter-configured cover videos.
+- `bayer`, `noise`, or animated-noise mode selection.
 
 ## Validation
 

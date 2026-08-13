@@ -54,6 +54,18 @@ theme-derived ink color. `dither` uses an Atkinson-style dot pattern.
   </figure>
 </div>
 
+Videos can opt into the runtime effect with the same theme ink. The video stays
+as normal media, and Papyrus upgrades it only when WebGL, motion, and visibility
+allow it.
+
+<div
+  data-papyrus-video-dither-src="../../media/papyrus-image-effects-demo.mp4"
+  data-papyrus-video-dither-poster="../../images/papyrus-image-effects-demo.jpg"
+  data-papyrus-video-dither-label="Portrait demo rendered as dithered video"
+>
+  <a href="../../media/papyrus-image-effects-demo.mp4">Open the video demo</a>
+</div>
+
 For a post cover, set the effect in frontmatter:
 
 ```yaml
@@ -85,3 +97,9 @@ avatar_effect = "dither"
 
 The supported values are `none`, `duotone`, `tritone`, `dither`, and
 `dithernoise`.
+
+For content videos, use `class="papyrus-video-effect-dither"` on a normal
+`<video>` element with a poster. In Markdown, use
+`data-papyrus-video-dither-src` on a placeholder element and keep a simple link
+inside it. Papyrus keeps the video or link as the fallback and uses a lazy
+canvas enhancement for the dithered rendering.
