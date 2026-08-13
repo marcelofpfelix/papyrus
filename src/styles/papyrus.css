@@ -144,12 +144,8 @@ img.papyrus-image-effect-tritone {
   z-index: 1;
 }
 
-.papyrus-image-effect-dithernoise::before {
-  animation: papyrusDitherNoiseBase 1.15s steps(1, end) infinite;
-}
-
 .papyrus-image-effect-dithernoise::after {
-  animation: papyrusDitherNoiseAlternate 1.15s steps(1, end) infinite;
+  animation: papyrusDitherNoiseAlternate 4.8s ease-in-out infinite;
   background: color-mix(in srgb, var(--papyrus-fg) 72%, var(--papyrus-accent));
   content: "";
   inset: 0;
@@ -221,32 +217,19 @@ img.papyrus-image-effect-dithernoise {
   margin-top: 0.5rem;
 }
 
-@keyframes papyrusDitherNoiseBase {
-  0%,
-  49.99% {
-    opacity: 1;
-  }
-
-  50%,
-  100% {
-    opacity: 0;
-  }
-}
-
 @keyframes papyrusDitherNoiseAlternate {
   0%,
-  49.99% {
+  100% {
     opacity: 0;
   }
 
-  50%,
-  100% {
-    opacity: 1;
+  45%,
+  55% {
+    opacity: 0.18;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .papyrus-image-effect-dithernoise::before,
   .papyrus-image-effect-dithernoise::after {
     animation: none;
   }
