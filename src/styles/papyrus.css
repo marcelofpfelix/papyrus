@@ -128,8 +128,6 @@ img.papyrus-image-effect-tritone {
   --papyrus-active-dither-mask-2: var(--papyrus-dither-mask-light-2, var(--papyrus-active-dither-mask));
   --papyrus-active-dither-mask-3: var(--papyrus-dither-mask-light-3, var(--papyrus-active-dither-mask));
   --papyrus-active-dither-mask-4: var(--papyrus-dither-mask-light-4, var(--papyrus-active-dither-mask));
-  --papyrus-active-dither-mask-5: var(--papyrus-dither-mask-light-5, var(--papyrus-active-dither-mask));
-  --papyrus-active-dither-mask-6: var(--papyrus-dither-mask-light-6, var(--papyrus-active-dither-mask));
   background: var(--papyrus-bg);
   isolation: isolate;
   overflow: hidden;
@@ -171,8 +169,6 @@ img.papyrus-image-effect-tritone {
   --papyrus-active-dither-mask-2: var(--papyrus-dither-mask-dark-2, var(--papyrus-active-dither-mask));
   --papyrus-active-dither-mask-3: var(--papyrus-dither-mask-dark-3, var(--papyrus-active-dither-mask));
   --papyrus-active-dither-mask-4: var(--papyrus-dither-mask-dark-4, var(--papyrus-active-dither-mask));
-  --papyrus-active-dither-mask-5: var(--papyrus-dither-mask-dark-5, var(--papyrus-active-dither-mask));
-  --papyrus-active-dither-mask-6: var(--papyrus-dither-mask-dark-6, var(--papyrus-active-dither-mask));
 }
 
 .papyrus-image-effect-dither > img,
@@ -226,30 +222,20 @@ img.papyrus-image-effect-dithernoise {
     -webkit-mask: var(--papyrus-active-dither-mask) center / cover no-repeat;
   }
 
-  16.666% {
+  25% {
     mask: var(--papyrus-active-dither-mask-2) center / cover no-repeat;
     -webkit-mask: var(--papyrus-active-dither-mask-2) center / cover no-repeat;
   }
 
-  33.333% {
+  50% {
     mask: var(--papyrus-active-dither-mask-3) center / cover no-repeat;
     -webkit-mask: var(--papyrus-active-dither-mask-3) center / cover no-repeat;
   }
 
-  50% {
+  75%,
+  100% {
     mask: var(--papyrus-active-dither-mask-4) center / cover no-repeat;
     -webkit-mask: var(--papyrus-active-dither-mask-4) center / cover no-repeat;
-  }
-
-  66.666% {
-    mask: var(--papyrus-active-dither-mask-5) center / cover no-repeat;
-    -webkit-mask: var(--papyrus-active-dither-mask-5) center / cover no-repeat;
-  }
-
-  83.333%,
-  100% {
-    mask: var(--papyrus-active-dither-mask-6) center / cover no-repeat;
-    -webkit-mask: var(--papyrus-active-dither-mask-6) center / cover no-repeat;
   }
 }
 

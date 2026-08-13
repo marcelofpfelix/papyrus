@@ -1,5 +1,7 @@
 export type PapyrusImageEffect = "none" | "duotone" | "tritone" | "dither" | "dithernoise";
-const DITHER_NOISE_FRAMES = 6;
+const DITHER_NOISE_FRAMES = 4;
+const DITHER_ASSET_VERSION = 1;
+const DITHER_NOISE_ASSET_VERSION = 2;
 
 const BASE_URL = import.meta.env?.BASE_URL ?? "/";
 
@@ -22,9 +24,13 @@ export function imageEffectClass(effect: PapyrusImageEffect | undefined): string
 export function ditherMaskPath(assetPath: string, mode: "dark" | "light" = "dark", effect: "dither" | "dithernoise" = "dither", frame = 1): string {
   const cleanPath = assetPath.split(/[?#]/)[0]?.replace(/^\/+/, "") ?? "";
   const withoutExt = cleanPath.replace(/\.[a-z0-9]+$/i, "");
-  const frameSuffix = frame > 1 ? `-${frame}` : "";
-  const suffix = mode === "light" ? "-light" : "";
-  return `/generated/${effect}/${withoutExt}${frameSuffix}${suffix}.png`;
+  const version = effect === "dithernoise" ? DITHER_NOISE_ASSET_VERSION : DITHER_ASSET_VERSION;
+  const filename = effect === "dithernoise" ? `${mode}-${frame}.png` : `${mode}.png`;
+  return `/generated/${effect}/v${version}/${withoutExt}/${filename}`;
+}
+
+function imageEffectAssetUrl(assetPath: string, mode: "dark" | "light", effect: "dither" | "dithernoise", frame = 1): string {
+  return withBase(ditherMaskPath(assetPath, mode, effect, frame));
 }
 
 export function imageEffectStyle(effect: PapyrusImageEffect | undefined, assetPath: string | undefined): string | undefined {
@@ -32,12 +38,12 @@ export function imageEffectStyle(effect: PapyrusImageEffect | undefined, assetPa
   const ditherNoiseFrames = Array.from({ length: DITHER_NOISE_FRAMES - 1 }, (_, index) => index + 2);
 
   return [
-    `--papyrus-dither-mask-dark: url("${withBase(ditherMaskPath(assetPath, "dark", effect))}")`,
-    `--papyrus-dither-mask-light: url("${withBase(ditherMaskPath(assetPath, "light", effect))}")`,
+    `--papyrus-dither-mask-dark: url("${imageEffectAssetUrl(assetPath, "dark", effect)}")`,
+    `--papyrus-dither-mask-light: url("${imageEffectAssetUrl(assetPath, "light", effect)}")`,
     ...(effect === "dithernoise"
       ? ditherNoiseFrames.flatMap(frame => [
-          `--papyrus-dither-mask-dark-${frame}: url("${withBase(ditherMaskPath(assetPath, "dark", effect, frame))}")`,
-          `--papyrus-dither-mask-light-${frame}: url("${withBase(ditherMaskPath(assetPath, "light", effect, frame))}")`,
+          `--papyrus-dither-mask-dark-${frame}: url("${imageEffectAssetUrl(assetPath, "dark", effect, frame)}")`,
+          `--papyrus-dither-mask-light-${frame}: url("${imageEffectAssetUrl(assetPath, "light", effect, frame)}")`,
         ])
       : []),
   ].join("; ");

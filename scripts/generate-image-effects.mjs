@@ -6,7 +6,9 @@ const root = resolve(process.argv[2] ?? ".");
 const publicDir = join(root, "public");
 const inputExts = new Set([".jpg", ".jpeg", ".png", ".webp", ".avif", ".svg"]);
 const textExts = new Set([".md", ".mdx", ".toml"]);
-const ditherNoiseFrames = 6;
+const ditherNoiseFrames = 4;
+const ditherAssetVersion = 1;
+const ditherNoiseAssetVersion = 2;
 
 let sharp;
 
@@ -48,9 +50,10 @@ function publicAssetPath(value) {
 }
 
 function ditherMaskPath(assetPath, mode = "dark", effect = "dither", frame = 1) {
-  const frameSuffix = frame > 1 ? `-${frame}` : "";
-  const suffix = mode === "light" ? "-light" : "";
-  return `/generated/${effect}/${assetPath.replace(/^\/+/, "").replace(/\.[a-z0-9]+$/i, "")}${frameSuffix}${suffix}.png`;
+  const version = effect === "dithernoise" ? ditherNoiseAssetVersion : ditherAssetVersion;
+  const basePath = assetPath.replace(/^\/+/, "").replace(/\.[a-z0-9]+$/i, "");
+  const filename = effect === "dithernoise" ? `${mode}-${frame}.png` : `${mode}.png`;
+  return `/generated/${effect}/v${version}/${basePath}/${filename}`;
 }
 
 function markdownFrontmatter(text) {
