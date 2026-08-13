@@ -5,9 +5,9 @@ import {
   PapyrusPostList,
   PapyrusProjectList,
 } from "../components";
+import { getCollection } from "astro:content";
 import { readFile } from "node:fs/promises";
 import { demoNav, demoSocialLinks } from "../data/demo-nav";
-import { demoPosts } from "../data/demo-posts";
 import { demoSite } from "../data/demo-site";
 import { pinRank, publishedPosts, sortPosts, sortPostsWithPinned } from "../utils/posts";
 import { withBase } from "../utils/withBase";
@@ -31,7 +31,7 @@ const demoNotes = siteData.notes.map((note) => ({
   },
 }));
 
-const publicPosts = publishedPosts(demoPosts);
+const publicPosts = publishedPosts(await getCollection("posts"));
 const pinnedHomePosts = sortPostsWithPinned(publicPosts.filter((post) => pinRank(post) > 0));
 const latestHomePosts = sortPosts(publicPosts.filter((post) => pinRank(post) === 0)).slice(0, demoSite.homePostCount);
 const homePosts = [...pinnedHomePosts, ...latestHomePosts];

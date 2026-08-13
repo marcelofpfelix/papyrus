@@ -142,11 +142,32 @@ img.papyrus-image-effect-tritone {
   z-index: 1;
 }
 
+.papyrus-image-effect-dithernoise::after {
+  animation: papyrusDitherNoise 1.8s steps(2, end) infinite;
+  background: color-mix(in srgb, var(--papyrus-fg) 68%, var(--papyrus-accent));
+  content: "";
+  inset: -2px;
+  mask: var(--papyrus-dither-mask-light, var(--papyrus-dither-mask-dark)) center / cover no-repeat;
+  -webkit-mask: var(--papyrus-dither-mask-light, var(--papyrus-dither-mask-dark)) center / cover no-repeat;
+  opacity: 0.18;
+  pointer-events: none;
+  position: absolute;
+  transform: translate3d(0, 0, 0);
+  z-index: 2;
+}
+
 .dark .papyrus-image-effect-dither::before,
 .dark .papyrus-image-effect-dithernoise::before {
   background: color-mix(in srgb, var(--papyrus-fg) 70%, var(--papyrus-accent));
   mask-image: var(--papyrus-dither-mask-dark);
   -webkit-mask-image: var(--papyrus-dither-mask-dark);
+}
+
+.dark .papyrus-image-effect-dithernoise::after {
+  background: color-mix(in srgb, var(--papyrus-fg) 68%, var(--papyrus-accent));
+  mask-image: var(--papyrus-dither-mask-dark);
+  -webkit-mask-image: var(--papyrus-dither-mask-dark);
+  opacity: 0.16;
 }
 
 .papyrus-image-effect-dither > img,
@@ -158,8 +179,8 @@ img.papyrus-image-effect-dithernoise {
 
 .papyrus-effect-demo-grid {
   display: grid;
-  gap: 1.5rem;
-  grid-template-columns: 1fr;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin: 2rem 0;
   width: 100%;
 }
@@ -184,10 +205,41 @@ img.papyrus-image-effect-dithernoise {
   width: 100%;
 }
 
+.papyrus-effect-demo-grid figure:first-child {
+  grid-column: 1 / -1;
+}
+
 .papyrus-effect-demo-grid figcaption {
   color: var(--papyrus-muted);
   font-size: 0.9rem;
   margin-top: 0.5rem;
+}
+
+@keyframes papyrusDitherNoise {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  33% {
+    transform: translate3d(1px, -1px, 0);
+  }
+
+  66% {
+    transform: translate3d(-1px, 1px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .papyrus-image-effect-dithernoise::after {
+    animation: none;
+  }
+}
+
+@media (max-width: 719px) {
+  .papyrus-effect-demo-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .sr-only {
