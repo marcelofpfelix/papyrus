@@ -26,6 +26,7 @@ metadata. Use `src/data/projects.toml` for project cards and
 | `[brand]` | Header brand title, mark, and whether the text title is visible |
 | `[theme]` | Default color profile and font profile |
 | `[home]` | Homepage counts and layout-facing defaults |
+| `[profile.images]` | Default visual treatment for profile images |
 | `[pages.<name>]` | Optional text overrides for inherited page descriptions |
 | `[features]` | Optional UI, metadata, comments, search, graph, media, and profile features |
 | `[post_card]` | Post-list tags, read time, fresh indicators, updated-date behavior, and default limit |
@@ -59,6 +60,9 @@ font_profile = "readable"
 [home]
 project_limit = 2
 
+[profile.images]
+effect = "none"
+
 [[nav]]
 href = "/posts/"
 label = "Posts"
@@ -90,8 +94,8 @@ Vercel, and Netlify. Set `branch = "main"` only when you want a fixed branch.
 
 ## Page descriptions
 
-Inherited routes ship with default intro descriptions. Override or hide those
-without copying route files:
+Inherited routes keep intro descriptions hidden by default. Add text only for
+the pages where the site should show it:
 
 ```toml title="papyrus.config.toml"
 [pages.posts]
@@ -136,6 +140,20 @@ graph = false
 Disable features that need external setup. For example, turn off comments and
 remote post stats until the site has configured those services.
 
+## Profile images
+
+Use `src/data/profile.toml` for profile content and asset paths. Use
+`papyrus.config.toml` for the default image treatment:
+
+```toml title="papyrus.config.toml"
+[profile.images]
+effect = "mono-accent"
+```
+
+The default is `none`. `mono-accent` maps the profile avatar to the current
+theme accent color while preserving transparent pixels. A profile data file can
+still override the default for its own avatar with `avatar_effect`.
+
 ## Post-list defaults
 
 Post-card options apply to normal post lists such as home and `/posts/`:
@@ -145,7 +163,7 @@ Post-card options apply to normal post lists such as home and `/posts/`:
 tags = false
 read_time = false
 fresh_indicators = true
-fresh_indicator_text = false
+fresh_indicator_text = true
 updated_date_only = true
 limit = 20
 ```

@@ -93,7 +93,9 @@ function cvIcon(name: string) {
 >
   <section class="cv-shell">
     <aside class="cv-sidebar">
-      <img src={getAssetPath(profile.avatar)} alt={profile.name} />
+      <span class:list={["cv-avatar-frame", profile.avatarEffect === "mono-accent" && "papyrus-image-effect-mono-accent"]}>
+        <img src={getAssetPath(profile.avatar)} alt={profile.name} />
+      </span>
       <h1>{profile.name}</h1>
       <p>{profile.headline}</p>
 
@@ -261,13 +263,22 @@ function cvIcon(name: string) {
     top: 92px;
   }
 
-  .cv-sidebar img {
+  .cv-avatar-frame {
     aspect-ratio: 1;
     border: 2px solid var(--papyrus-border);
     border-radius: 999px;
+    display: block;
+    justify-self: center;
+    overflow: hidden;
+    width: 96px;
+  }
+
+  .cv-sidebar img {
+    display: block;
+    height: 100%;
     justify-self: center;
     object-fit: cover;
-    width: 96px;
+    width: 100%;
   }
 
   .cv-sidebar h1 {

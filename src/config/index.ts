@@ -35,6 +35,20 @@ export type PapyrusHomeConfig = {
   projectLimit: number;
 };
 
+export type PapyrusImageEffect = "none" | "mono-accent";
+
+export type PapyrusProfileImagesConfig = {
+  effect: PapyrusImageEffect;
+};
+
+export type PapyrusProfileConfig = {
+  images: PapyrusProfileImagesConfig;
+};
+
+export type PapyrusProfileConfigInput = {
+  images?: Partial<PapyrusProfileImagesConfig>;
+};
+
 export type PapyrusSourceConfig = {
   repo?: string;
   branch?: string;
@@ -64,16 +78,18 @@ export type PapyrusSiteConfig = {
   socialLinks: PapyrusLinkConfig[];
   projects: PapyrusProjectConfig[];
   home: PapyrusHomeConfig;
+  profile: PapyrusProfileConfig;
   pages: Record<string, PapyrusPageConfig>;
   source: PapyrusSourceConfig;
   features: Required<PapyrusFeatureConfig>;
   postCard: PapyrusPostCardConfig;
 };
 
-export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "home" | "nav" | "socialLinks" | "source">> & {
+export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "home" | "profile" | "nav" | "socialLinks" | "source">> & {
   features?: PapyrusFeatureConfig;
   postCard?: Partial<PapyrusPostCardConfig>;
   home?: Partial<PapyrusHomeConfig>;
+  profile?: PapyrusProfileConfigInput;
   nav?: PapyrusLinkConfig[];
   socialLinks?: PapyrusLinkConfig[];
   projects?: PapyrusProjectConfig[];
@@ -82,16 +98,32 @@ export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "p
 };
 
 const defaultPostCard = {
-  tags: true,
-  readTime: true,
+  tags: false,
+  readTime: false,
   freshIndicators: true,
   freshIndicatorText: true,
-  updatedDateOnly: false,
+  updatedDateOnly: true,
+  limit: 20,
 } satisfies PapyrusPostCardConfig;
 
 const defaultHome = {
   projectLimit: 2,
 } satisfies PapyrusHomeConfig;
+
+const defaultProfile = {
+  images: {
+    effect: "none",
+  },
+} satisfies PapyrusProfileConfig;
+
+const defaultPages: Record<string, PapyrusPageConfig> = {
+  posts: { description: false },
+  timeline: { description: false },
+  tags: { description: false },
+  search: { description: false },
+  projects: { description: false },
+  about: { description: false },
+};
 
 const defaultConfig = {
   title: "papyrus",
@@ -105,7 +137,8 @@ const defaultConfig = {
   socialLinks: [],
   projects: [],
   home: defaultHome,
-  pages: {},
+  profile: defaultProfile,
+  pages: defaultPages,
   source: {},
   features: defaultPapyrusFeatures,
   postCard: defaultPostCard,
@@ -125,6 +158,10 @@ function asBoolean(value: unknown): boolean | undefined {
 
 function asNumber(value: unknown): number | undefined {
   return typeof value === "number" && Number.isFinite(value) ? value : undefined;
+}
+
+function asImageEffect(value: unknown): PapyrusImageEffect | undefined {
+  return value === "none" || value === "mono-accent" ? value : undefined;
 }
 
 function asLinks(value: unknown): PapyrusLinkConfig[] {
@@ -227,6 +264,27 @@ function readHomeConfig(record: Record<string, unknown>): Partial<PapyrusHomeCon
   };
 }
 
+function readProfileConfig(record: Record<string, unknown>): PapyrusProfileConfigInput {
+  const images = asRecord(record.images);
+  return {
+    images: {
+      ...(asImageEffect(images.effect) ? { effect: asImageEffect(images.effect) } : {}),
+    },
+  };
+}
+
+function mergePages(pages: Record<string, PapyrusPageConfig> = {}): Record<string, PapyrusPageConfig> {
+  return Object.fromEntries(
+    Array.from(new Set([...Object.keys(defaultConfig.pages), ...Object.keys(pages)])).map((key) => [
+      key,
+      {
+        ...(defaultConfig.pages[key] ?? {}),
+        ...(pages[key] ?? {}),
+      },
+    ])
+  );
+}
+
 export function definePapyrusConfig(config: PapyrusConfigInput): PapyrusSiteConfig {
   return resolvePapyrusConfig(config);
 }
@@ -242,7 +300,15 @@ export function resolvePapyrusConfig(config: PapyrusConfigInput = {}): PapyrusSi
       ...defaultHome,
       ...(config.home ?? {}),
     },
-    pages: config.pages ?? defaultConfig.pages,
+    profile: {
+      ...defaultProfile,
+      ...(config.profile ?? {}),
+      images: {
+        ...defaultProfile.images,
+        ...(config.profile?.images ?? {}),
+      },
+    },
+    pages: mergePages(config.pages),
     source: config.source ?? defaultConfig.source,
     features: {
       ...defaultPapyrusFeatures,
@@ -263,6 +329,7 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
   const seo = asRecord(parsed.seo);
   const sourceConfig = asRecord(parsed.source);
   const home = asRecord(parsed.home);
+  const profile = asRecord(parsed.profile);
 
   return resolvePapyrusConfig({
     title: asString(site.title ?? parsed.title),
@@ -283,6 +350,7 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
     socialLinks: asLinks(parsed.social ?? parsed.socialLinks ?? parsed.social_links),
     projects: asProjects(parsed.project ?? parsed.projects),
     home: readHomeConfig(home),
+    profile: readProfileConfig(profile),
     pages: asPages(parsed.pages ?? parsed.page),
     source: asSourceConfig(sourceConfig),
     features: readFeatureConfig(asRecord(parsed.features)),

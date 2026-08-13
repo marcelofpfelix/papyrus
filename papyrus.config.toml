@@ -15,6 +15,9 @@ show_title = true
 profile = "gruvbox"
 font_profile = "readable"
 
+[profile.images]
+effect = "mono-accent"
+
 [source]
 repo = "marcelofpfelix/papyrus"
 branch = "0.2.1"

@@ -17,6 +17,7 @@ const demoSite = await readFile("src/data/demo-site.ts", "utf8");
 const siteConfigSource = await readFile("scripts/site-config.mjs", "utf8");
 
 const configModule = await import("../../src/config/index.ts");
+const defaults = configModule.resolvePapyrusConfig();
 const parsed = configModule.parsePapyrusConfigToml(configToml);
 const loaded = await configModule.loadPapyrusConfig();
 const scriptConfig = await siteConfig();
@@ -58,6 +59,23 @@ assert(parsed.postCard.tags === false, "parsed post-card tags flag should come f
 assert(parsed.postCard.readTime === false, "parsed post-card read time flag should come from TOML");
 assert(parsed.postCard.updatedDateOnly === true, "parsed post-card updated-date flag should come from TOML");
 assert(parsed.postCard.limit === 20, "parsed post-card limit should come from TOML");
+assert(parsed.profile.images.effect === "mono-accent", "parsed profile image effect should come from TOML");
+assert(defaults.postCard.tags === false, "default post-card tags should be hidden");
+assert(defaults.postCard.readTime === false, "default post-card read time should be hidden");
+assert(defaults.postCard.freshIndicators === true, "default post-card fresh indicators should be enabled");
+assert(defaults.postCard.freshIndicatorText === true, "default post-card fresh indicator text should be enabled");
+assert(defaults.postCard.updatedDateOnly === true, "default post-card updated date only should be enabled");
+assert(defaults.postCard.limit === 20, "default post-card limit should be 20");
+assert(defaults.profile.images.effect === "none", "default profile image effect should be disabled");
+for (const page of ["posts", "timeline", "tags", "search", "projects", "about"]) {
+  assert(defaults.pages[page]?.description === false, `default ${page} page description should be hidden`);
+}
+const aboutOnly = configModule.resolvePapyrusConfig({ pages: { about: { content: "About body" } } });
+assert(aboutOnly.pages.about?.description === false, "page defaults should merge with about content overrides");
+assert(aboutOnly.pages.about?.content === "About body", "about content override should be preserved");
+assert(aboutOnly.pages.posts?.description === false, "page defaults should survive partial page overrides");
+const profileOnly = configModule.resolvePapyrusConfig({ profile: { images: { effect: "mono-accent" } } });
+assert(profileOnly.profile.images.effect === "mono-accent", "profile image effect override should be preserved");
 assert(parsedProjectConfig.projects.length === 1, "parsed project config should include one TOML project");
 assert(parsedProjectConfig.projects[0]?.title === "Template project", "parsed project title should come from TOML");
 assert(parsedProjectConfig.projects[0]?.links?.[0]?.text === "site-owner/template", "parsed project link text should come from TOML");
@@ -80,7 +98,7 @@ for (const phrase of [
   "astro-theme-papyrus/config",
   "\"astro-theme-papyrus\": \"^0.2.1\"",
   "`src/pages` tree",
-  "theme, feature flags, and post-card defaults",
+  "theme, feature flags, homepage counts, and post-card defaults",
 ]) {
   assert(installGuide.includes(phrase), `install guide missing config phrase: ${phrase}`);
 }

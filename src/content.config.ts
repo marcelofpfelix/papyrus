@@ -16,6 +16,8 @@ const posts = defineCollection({
     robots: z.string().optional(),
     pinned: z.union([z.boolean(), z.number()]).optional().default(false),
     cover: z.string().optional(),
+    coverEffect: z.enum(["none", "mono-accent"]).optional(),
+    cover_effect: z.enum(["none", "mono-accent"]).optional(),
     category: z.string().optional(),
     tags: z.array(z.string()).optional().default([]),
     featured: z.boolean().optional().default(false),
