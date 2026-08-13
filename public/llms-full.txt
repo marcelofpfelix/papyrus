@@ -101,19 +101,19 @@ Nested quote:
 
 ## GitHub alerts
 
-> [!NOTE]  
+> [!NOTE]
 > Notes are calm and readable.
 
-> [!TIP]  
+> [!TIP]
 > Tips stand out without becoming noisy.
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Important text is easy to scan.
 
-> [!WARNING]  
+> [!WARNING]
 > Warnings stay visible in both light and dark mode.
 
-> [!CAUTION]  
+> [!CAUTION]
 > Caution blocks keep the page rhythm intact.
 
 ## Code
@@ -195,11 +195,11 @@ Diagram source links:
 
 ## Link preview
 
-  
+
     Astro
     The web framework used by this blog and theme wrapper.
     astro.build
-  
+
 
 ## Footnotes
 
@@ -1509,18 +1509,29 @@ feels too detached from the active theme.
 with the current background, text, and accent tokens, so light and dark mode
 switches happen immediately.
 
-`dither` is different. Papyrus generates a monochrome alpha mask at build time,
-then the browser paints that mask with the current accent color. That keeps the
-runtime cheap while still allowing the color to change with the theme.
+`dither` is different. Papyrus generates dark and light alpha masks at build
+time, then the browser paints the active mask with a theme-derived ink color.
+That keeps the runtime cheap while still allowing the color to change with the
+theme.
 
-  
-    
+
+
+
+
+    original
+
+
+
+
+
     tritone
-  
-  
-    
+
+
+
+
+
     dither
-  
+
 
 For a post cover, set the effect in frontmatter:
 

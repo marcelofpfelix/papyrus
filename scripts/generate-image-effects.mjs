@@ -46,8 +46,9 @@ function publicAssetPath(value) {
   return inputExts.has(extname(publicPath).toLowerCase()) ? publicPath : undefined;
 }
 
-function ditherMaskPath(assetPath) {
-  return `/generated/dither/${assetPath.replace(/^\/+/, "").replace(/\.[a-z0-9]+$/i, "")}.png`;
+function ditherMaskPath(assetPath, mode = "dark") {
+  const suffix = mode === "light" ? "-light" : "";
+  return `/generated/dither/${assetPath.replace(/^\/+/, "").replace(/\.[a-z0-9]+$/i, "")}${suffix}.png`;
 }
 
 function markdownFrontmatter(text) {
@@ -122,16 +123,63 @@ async function configuredSources() {
 }
 
 function luminance(r, g, b) {
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
 }
 
-function addError(values, width, height, x, y, error) {
-  if (x < 0 || x >= width || y < 0 || y >= height) return;
-  const index = y * width + x;
-  values[index] = Math.max(0, Math.min(255, values[index] + error));
+function hash(x, y) {
+  let px = fract(x * 0.1031);
+  let py = fract(y * 0.1031);
+  let pz = fract(x * 0.1031);
+  const d = px * (py + 33.33) + py * (pz + 33.33) + pz * (px + 33.33);
+  px += d;
+  py += d;
+  pz += d;
+  return fract((px + py) * pz);
 }
 
-async function generateMask(assetPath) {
+function fract(value) {
+  return value - Math.floor(value);
+}
+
+function smoothstep(edge0, edge1, value) {
+  const t = Math.max(0, Math.min(1, (value - edge0) / (edge1 - edge0)));
+  return t * t * (3 - 2 * t);
+}
+
+function atkinsonThreshold(x, y) {
+  const thresholds = [
+    0, 12, 3, 15,
+    8, 4, 11, 7,
+    2, 14, 1, 13,
+    10, 6, 9, 5,
+  ];
+  return thresholds[(y % 4) * 4 + (x % 4)] / 16;
+}
+
+function ditherAlpha(grayInput, x, y, width, height, sourceAlpha, mode) {
+  const uvX = x / width;
+  const uvY = 1 - y / height;
+  const edgeNoise = hash(x * 0.5, y * 0.5) * 0.15;
+  const fadeLeft = smoothstep(0, 0.1 + edgeNoise, uvX);
+  const fadeRight = smoothstep(0, 0.1 + edgeNoise, 1 - uvX);
+  const fadeBottom = smoothstep(0, 0.1 + edgeNoise, uvY);
+  const fadeTop = smoothstep(0, 0.1 + edgeNoise, 1 - uvY);
+  const fade = fadeLeft * fadeRight * fadeBottom * fadeTop;
+  const isLight = mode === "light" ? 1 : 0;
+  let gray = grayInput;
+
+  gray = gray * fade * (1 - isLight) + (1 - isLight) * 0;
+  if (isLight) gray = 1 + (grayInput - 1) * fade;
+  gray = Math.max(0, Math.min(1, gray * 1.2 - 0.1));
+
+  const thresholdBias = isLight ? -0.1 : 0.1;
+  const thresholdLevel = Math.max(0.001, Math.min(0.999, atkinsonThreshold(x, y) + thresholdBias));
+  const dithered = gray >= thresholdLevel ? 1 : 0;
+  const inkAlpha = isLight ? 1 - dithered : dithered;
+  return Math.round(sourceAlpha * inkAlpha);
+}
+
+async function generateMask(assetPath, mode) {
   const sourcePath = join(publicDir, assetPath.replace(/^\/+/, ""));
   if (!await exists(sourcePath)) {
     console.warn(`Skipping missing dither source ${assetPath}`);
@@ -144,43 +192,26 @@ async function generateMask(assetPath) {
     .raw()
     .toBuffer({ resolveWithObject: true });
   const { width, height, channels } = info;
-  const values = new Float32Array(width * height);
-  const alphas = new Uint8Array(width * height);
-
-  for (let pixel = 0; pixel < width * height; pixel += 1) {
-    const offset = pixel * channels;
-    values[pixel] = luminance(data[offset], data[offset + 1], data[offset + 2]);
-    alphas[pixel] = data[offset + 3] ?? 255;
-  }
-
   const output = Buffer.alloc(width * height * 4);
   for (let y = 0; y < height; y += 1) {
     for (let x = 0; x < width; x += 1) {
       const index = y * width + x;
-      const oldValue = values[index];
-      const newValue = oldValue < 132 ? 0 : 255;
-      const error = (oldValue - newValue) / 8;
-      const alpha = newValue === 0 ? alphas[index] : 0;
+      const sourceOffset = index * channels;
       const offset = index * 4;
+      const gray = luminance(data[sourceOffset], data[sourceOffset + 1], data[sourceOffset + 2]);
+      const alpha = ditherAlpha(gray, x, y, width, height, data[sourceOffset + 3] ?? 255, mode);
 
       output[offset] = 0;
       output[offset + 1] = 0;
       output[offset + 2] = 0;
       output[offset + 3] = alpha;
-
-      addError(values, width, height, x + 1, y, error);
-      addError(values, width, height, x + 2, y, error);
-      addError(values, width, height, x - 1, y + 1, error);
-      addError(values, width, height, x, y + 1, error);
-      addError(values, width, height, x + 1, y + 1, error);
-      addError(values, width, height, x, y + 2, error);
     }
   }
 
-  const maskPath = join(publicDir, ditherMaskPath(assetPath).replace(/^\/+/, ""));
+  const maskPath = join(publicDir, ditherMaskPath(assetPath, mode).replace(/^\/+/, ""));
   await mkdir(dirname(maskPath), { recursive: true });
   await writeFile(maskPath, await sharp(output, { raw: { width, height, channels: 4 } }).png({ compressionLevel: 9 }).toBuffer());
-  console.log(`generated ${ditherMaskPath(assetPath)}`);
+  console.log(`generated ${ditherMaskPath(assetPath, mode)}`);
   return true;
 }
 
@@ -188,7 +219,9 @@ const sources = await configuredSources();
 let generated = 0;
 
 for (const source of sources) {
-  if (await generateMask(source)) generated += 1;
+  const darkGenerated = await generateMask(source, "dark");
+  const lightGenerated = await generateMask(source, "light");
+  if (darkGenerated || lightGenerated) generated += 1;
 }
 
-console.log(`Generated ${generated} dither mask(s).`);
+console.log(`Generated ${generated} dither source(s).`);

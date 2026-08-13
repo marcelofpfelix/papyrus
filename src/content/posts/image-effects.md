@@ -16,17 +16,28 @@ feels too detached from the active theme.
 with the current background, text, and accent tokens, so light and dark mode
 switches happen immediately.
 
-`dither` is different. Papyrus generates a monochrome alpha mask at build time,
-then the browser paints that mask with the current accent color. That keeps the
-runtime cheap while still allowing the color to change with the theme.
+`dither` is different. Papyrus generates dark and light alpha masks at build
+time, then the browser paints the active mask with a theme-derived ink color.
+That keeps the runtime cheap while still allowing the color to change with the
+theme.
 
 <div class="papyrus-effect-demo-grid" data-papyrus-dither-src="/images/papyrus-image-effects-demo.jpg">
-  <figure class="papyrus-image-effect-tritone">
-    <img src="../../images/papyrus-image-effects-demo.jpg" alt="Portrait rendered with the tritone effect" />
+  <figure>
+    <div class="papyrus-effect-demo-media">
+      <img src="../../images/papyrus-image-effects-demo.jpg" alt="Original portrait before applying image effects" />
+    </div>
+    <figcaption>original</figcaption>
+  </figure>
+  <figure>
+    <div class="papyrus-effect-demo-media papyrus-image-effect-tritone">
+      <img src="../../images/papyrus-image-effects-demo.jpg" alt="Portrait rendered with the tritone effect" />
+    </div>
     <figcaption>tritone</figcaption>
   </figure>
-  <figure class="papyrus-image-effect-dither" style="--papyrus-dither-mask: url('../../generated/dither/images/papyrus-image-effects-demo.png')">
-    <img src="../../images/papyrus-image-effects-demo.jpg" alt="Portrait rendered with the dither effect" />
+  <figure>
+    <div class="papyrus-effect-demo-media papyrus-image-effect-dither" style="--papyrus-dither-mask-dark: url('../../generated/dither/images/papyrus-image-effects-demo.png'); --papyrus-dither-mask-light: url('../../generated/dither/images/papyrus-image-effects-demo-light.png')">
+      <img src="../../images/papyrus-image-effects-demo.jpg" alt="Portrait rendered with the dither effect" />
+    </div>
     <figcaption>dither</figcaption>
   </figure>
 </div>

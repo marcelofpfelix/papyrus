@@ -18,13 +18,17 @@ export function imageEffectClass(effect: PapyrusImageEffect | undefined): string
   return !effect || effect === "none" ? undefined : `papyrus-image-effect-${effect}`;
 }
 
-export function ditherMaskPath(assetPath: string): string {
+export function ditherMaskPath(assetPath: string, mode: "dark" | "light" = "dark"): string {
   const cleanPath = assetPath.split(/[?#]/)[0]?.replace(/^\/+/, "") ?? "";
   const withoutExt = cleanPath.replace(/\.[a-z0-9]+$/i, "");
-  return `/generated/dither/${withoutExt}.png`;
+  const suffix = mode === "light" ? "-light" : "";
+  return `/generated/dither/${withoutExt}${suffix}.png`;
 }
 
 export function imageEffectStyle(effect: PapyrusImageEffect | undefined, assetPath: string | undefined): string | undefined {
   if (effect !== "dither" || !assetPath) return undefined;
-  return `--papyrus-dither-mask: url("${withBase(ditherMaskPath(assetPath))}")`;
+  return [
+    `--papyrus-dither-mask-dark: url("${withBase(ditherMaskPath(assetPath, "dark"))}")`,
+    `--papyrus-dither-mask-light: url("${withBase(ditherMaskPath(assetPath, "light"))}")`,
+  ].join("; ");
 }
