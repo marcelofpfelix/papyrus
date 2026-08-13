@@ -46,9 +46,10 @@ function publicAssetPath(value) {
   return inputExts.has(extname(publicPath).toLowerCase()) ? publicPath : undefined;
 }
 
-function ditherMaskPath(assetPath, mode = "dark", effect = "dither") {
+function ditherMaskPath(assetPath, mode = "dark", effect = "dither", frame = 1) {
+  const frameSuffix = frame > 1 ? `-${frame}` : "";
   const suffix = mode === "light" ? "-light" : "";
-  return `/generated/${effect}/${assetPath.replace(/^\/+/, "").replace(/\.[a-z0-9]+$/i, "")}${suffix}.png`;
+  return `/generated/${effect}/${assetPath.replace(/^\/+/, "").replace(/\.[a-z0-9]+$/i, "")}${frameSuffix}${suffix}.png`;
 }
 
 function markdownFrontmatter(text) {
@@ -171,10 +172,11 @@ function atkinsonThreshold(x, y) {
   return thresholds[(y % 4) * 4 + (x % 4)] / 16;
 }
 
-function ditherAlpha(grayInput, x, y, width, height, sourceAlpha, themeMode, effect) {
+function ditherAlpha(grayInput, x, y, width, height, sourceAlpha, themeMode, effect, frame = 1) {
   const uvX = x / width;
   const uvY = 1 - y / height;
-  const edgeNoise = hash(x * 0.5, y * 0.5) * 0.15;
+  const frameOffset = (frame - 1) * 97.13;
+  const edgeNoise = hash(x * 0.5 + frameOffset, y * 0.5 + frameOffset) * 0.15;
   const fadeLeft = smoothstep(0, 0.1 + edgeNoise, uvX);
   const fadeRight = smoothstep(0, 0.1 + edgeNoise, 1 - uvX);
   const fadeBottom = smoothstep(0, 0.1 + edgeNoise, uvY);
@@ -187,10 +189,10 @@ function ditherAlpha(grayInput, x, y, width, height, sourceAlpha, themeMode, eff
   if (isLight) gray = 1 + (grayInput - 1) * fade;
   if (effect === "dither") gray = Math.max(0, Math.min(1, gray * 1.2 - 0.1));
 
-  const threshold = effect === "dithernoise" ? hash(x, y) : atkinsonThreshold(x, y);
+  const threshold = effect === "dithernoise" ? hash(x + frameOffset, y - frameOffset) : atkinsonThreshold(x, y);
   const thresholdBias = isLight ? -0.1 : 0.1;
-  const noise = hash(x * 0.15, y * 0.15) - 0.5;
-  const flicker = 0.08 * Math.sin(hash(x * 0.2, y * 0.2) * 6.28);
+  const noise = hash(x * 0.15 + frameOffset, y * 0.15 - frameOffset) - 0.5;
+  const flicker = 0.08 * Math.sin(hash(x * 0.2 + frameOffset, y * 0.2) * 6.28);
   const effectIntensity = effect === "dithernoise" ? smoothstep(0.05, 0.3, gray) : 0;
   const thresholdLevel = Math.max(0.001, Math.min(0.999, threshold + thresholdBias + (noise * 0.15 + flicker) * effectIntensity));
   const dithered = gray >= thresholdLevel ? 1 : 0;
@@ -198,7 +200,7 @@ function ditherAlpha(grayInput, x, y, width, height, sourceAlpha, themeMode, eff
   return Math.round(sourceAlpha * inkAlpha);
 }
 
-async function generateMask(assetPath, themeMode, effect) {
+async function generateMask(assetPath, themeMode, effect, frame = 1) {
   const sourcePath = join(publicDir, assetPath.replace(/^\/+/, ""));
   if (!await exists(sourcePath)) {
     console.warn(`Skipping missing dither source ${assetPath}`);
@@ -218,7 +220,7 @@ async function generateMask(assetPath, themeMode, effect) {
       const sourceOffset = index * channels;
       const offset = index * 4;
       const gray = luminance(data[sourceOffset], data[sourceOffset + 1], data[sourceOffset + 2]);
-      const alpha = ditherAlpha(gray, x, y, width, height, data[sourceOffset + 3] ?? 255, themeMode, effect);
+      const alpha = ditherAlpha(gray, x, y, width, height, data[sourceOffset + 3] ?? 255, themeMode, effect, frame);
 
       output[offset] = 0;
       output[offset + 1] = 0;
@@ -227,10 +229,10 @@ async function generateMask(assetPath, themeMode, effect) {
     }
   }
 
-  const maskPath = join(publicDir, ditherMaskPath(assetPath, themeMode, effect).replace(/^\/+/, ""));
+  const maskPath = join(publicDir, ditherMaskPath(assetPath, themeMode, effect, frame).replace(/^\/+/, ""));
   await mkdir(dirname(maskPath), { recursive: true });
   await writeFile(maskPath, await sharp(output, { raw: { width, height, channels: 4 } }).png({ compressionLevel: 9 }).toBuffer());
-  console.log(`generated ${ditherMaskPath(assetPath, themeMode, effect)}`);
+  console.log(`generated ${ditherMaskPath(assetPath, themeMode, effect, frame)}`);
   return true;
 }
 
@@ -240,6 +242,10 @@ let generated = 0;
 for (const { effect, assetPath } of sources) {
   const darkGenerated = await generateMask(assetPath, "dark", effect);
   const lightGenerated = await generateMask(assetPath, "light", effect);
+  if (effect === "dithernoise") {
+    await generateMask(assetPath, "dark", effect, 2);
+    await generateMask(assetPath, "light", effect, 2);
+  }
   if (darkGenerated || lightGenerated) generated += 1;
 }
 

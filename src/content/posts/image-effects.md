@@ -47,7 +47,7 @@ uses the same edge cut with a noise threshold.
     <figcaption>dither</figcaption>
   </figure>
   <figure>
-    <div class="papyrus-effect-demo-media papyrus-image-effect-dithernoise" style="--papyrus-dither-mask-dark: url('../../generated/dithernoise/images/papyrus-image-effects-demo.png'); --papyrus-dither-mask-light: url('../../generated/dithernoise/images/papyrus-image-effects-demo-light.png')">
+    <div class="papyrus-effect-demo-media papyrus-image-effect-dithernoise" style="--papyrus-dither-mask-dark: url('../../generated/dithernoise/images/papyrus-image-effects-demo.png'); --papyrus-dither-mask-light: url('../../generated/dithernoise/images/papyrus-image-effects-demo-light.png'); --papyrus-dither-mask-dark-2: url('../../generated/dithernoise/images/papyrus-image-effects-demo-2.png'); --papyrus-dither-mask-light-2: url('../../generated/dithernoise/images/papyrus-image-effects-demo-2-light.png')">
       <img src="../../images/papyrus-image-effects-demo.jpg" alt="Portrait rendered with the dithernoise effect" />
     </div>
     <figcaption>dithernoise</figcaption>

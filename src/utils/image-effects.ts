@@ -18,11 +18,12 @@ export function imageEffectClass(effect: PapyrusImageEffect | undefined): string
   return !effect || effect === "none" ? undefined : `papyrus-image-effect-${effect}`;
 }
 
-export function ditherMaskPath(assetPath: string, mode: "dark" | "light" = "dark", effect: "dither" | "dithernoise" = "dither"): string {
+export function ditherMaskPath(assetPath: string, mode: "dark" | "light" = "dark", effect: "dither" | "dithernoise" = "dither", frame = 1): string {
   const cleanPath = assetPath.split(/[?#]/)[0]?.replace(/^\/+/, "") ?? "";
   const withoutExt = cleanPath.replace(/\.[a-z0-9]+$/i, "");
+  const frameSuffix = frame > 1 ? `-${frame}` : "";
   const suffix = mode === "light" ? "-light" : "";
-  return `/generated/${effect}/${withoutExt}${suffix}.png`;
+  return `/generated/${effect}/${withoutExt}${frameSuffix}${suffix}.png`;
 }
 
 export function imageEffectStyle(effect: PapyrusImageEffect | undefined, assetPath: string | undefined): string | undefined {
@@ -30,5 +31,11 @@ export function imageEffectStyle(effect: PapyrusImageEffect | undefined, assetPa
   return [
     `--papyrus-dither-mask-dark: url("${withBase(ditherMaskPath(assetPath, "dark", effect))}")`,
     `--papyrus-dither-mask-light: url("${withBase(ditherMaskPath(assetPath, "light", effect))}")`,
+    ...(effect === "dithernoise"
+      ? [
+          `--papyrus-dither-mask-dark-2: url("${withBase(ditherMaskPath(assetPath, "dark", effect, 2))}")`,
+          `--papyrus-dither-mask-light-2: url("${withBase(ditherMaskPath(assetPath, "light", effect, 2))}")`,
+        ]
+      : []),
   ].join("; ");
 }
