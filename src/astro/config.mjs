@@ -1,9 +1,9 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, svgoOptimizer } from "astro/config";
-import { loadPapyrusConfig } from "../config/index.ts";
-import papyrus from "../integration.ts";
+import { loadPapyrusConfig } from "../config/index.mjs";
+import papyrus from "../integration.mjs";
 import { papyrusMarkdown } from "../markdown/config.mjs";
-import { createPapyrusSitemapFilter } from "../sitemap.ts";
+import { createPapyrusSitemapFilter } from "../sitemap.mjs";
 
 export async function definePapyrusAstroConfig(options = {}) {
   const siteConfig = await loadPapyrusConfig(options.configPath, options.cwd);

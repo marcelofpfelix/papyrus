@@ -73,9 +73,9 @@ preferred_languages = "en, pt"
 policy = "https://site.test/security-policy"
 `);
 
-assert(packageJson.exports?.["./config"] === "./src/config/index.ts", "package export ./config missing");
+assert(packageJson.exports?.["./config"] === "./src/config/index.mjs", "package export ./config missing");
 assert(packageJson.exports?.["./content"] === "./src/content.ts", "package export ./content missing");
-assert(packageJson.exports?.["./integration"] === "./src/integration.ts", "package export ./integration missing");
+assert(packageJson.exports?.["./integration"] === "./src/integration.mjs", "package export ./integration missing");
 assert(packageJson.scripts?.["verify:config"] === "node .agents/scripts/verify-config-loader.mjs", "verify:config script missing");
 
 for (const symbol of ["PapyrusSiteConfig", "definePapyrusConfig", "resolvePapyrusConfig", "parsePapyrusConfigToml", "loadPapyrusConfig"]) {
