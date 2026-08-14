@@ -11,6 +11,7 @@ const readme = await readFile(join(root, "README.md"), "utf8");
 const changelog = await readFile(join(root, "CHANGELOG.md"), "utf8");
 const license = await readFile(join(root, "LICENSE"), "utf8");
 const releaseDocs = await readFile(join(root, "src/content/posts/docs/deploy/31-release-checklist.md"), "utf8");
+const releaseWorkflow = await readFile(join(root, ".github/workflows/release.yml"), "utf8");
 const pnpmWorkspace = await readFile(join(root, "pnpm-workspace.yaml"), "utf8");
 const failures = [];
 let packedTarball;
@@ -27,7 +28,7 @@ function exactVersion(value) {
   return value?.replace(/^[~^]/, "");
 }
 
-assert(packageJson.name === "astro-theme-papyrus", "package name must be astro-theme-papyrus");
+assert(packageJson.name === "astro-papyrus", "package name must be astro-papyrus");
 assert(packageJson.private === false, "package must not be private");
 assert(/^\d+\.\d+\.\d+/.test(packageJson.version), "package version must be semver-like");
 assert(
@@ -58,12 +59,13 @@ assert(existsSync(join(root, "LICENSE")), "LICENSE file missing");
 assert(existsSync(join(root, "CHANGELOG.md")), "CHANGELOG.md file missing");
 assert(!packageJson.files?.includes("docs"), "package files should not include deleted top-level docs folder");
 assert(existsSync(join(root, "src/content/posts/docs/deploy/31-release-checklist.md")), "release checklist post missing");
+assert(existsSync(join(root, ".github/workflows/release.yml")), "release workflow missing");
 
 for (const phrase of [
-  "\"astro-theme-papyrus\": \"^0.2.0\"",
-  "astro-theme-papyrus/components",
-  "astro-theme-papyrus/utils",
-  "astro-theme-papyrus/papyrus.css",
+  "\"astro-papyrus\": \"^0.2.2\"",
+  "astro-papyrus/components",
+  "astro-papyrus/utils",
+  "astro-papyrus/papyrus.css",
 ]) {
   assert(readme.includes(phrase), `README missing install/import phrase: ${phrase}`);
 }
@@ -72,7 +74,7 @@ for (const phrase of ["MIT License", "Permission is hereby granted", "Marcelo Fe
   assert(license.includes(phrase), `LICENSE missing phrase: ${phrase}`);
 }
 
-for (const phrase of ["## 0.2.0", "## 0.1.0", "astro-theme-papyrus"]) {
+for (const phrase of ["## 0.2.0", "## 0.1.0", "astro-papyrus"]) {
   assert(changelog.includes(phrase), `CHANGELOG missing phrase: ${phrase}`);
 }
 
@@ -86,8 +88,22 @@ for (const phrase of [
   "publishConfig.provenance",
   "npm pack --dry-run --json",
   "temporary Astro fixture",
+  "Release Please",
+  "Trusted Publishing",
+  "pnpm publish --access public --provenance",
 ]) {
   assert(releaseDocs.includes(phrase), `release docs missing phrase: ${phrase}`);
+}
+
+for (const phrase of [
+  "googleapis/release-please-action@v4",
+  "release-type: node",
+  "package-name: astro-papyrus",
+  "id-token: write",
+  "pnpm run verify:release",
+  "pnpm publish --access public --provenance",
+]) {
+  assert(releaseWorkflow.includes(phrase), `release workflow missing phrase: ${phrase}`);
 }
 
 const npmCache = await mkdtemp(join(tmpdir(), "papyrus-npm-cache-"));
@@ -116,8 +132,8 @@ try {
 
     const entry = parsed?.[0];
     const packedPaths = entry?.files?.map((file) => file.path) ?? [];
-    assert(entry?.name === "astro-theme-papyrus", "packed package name is wrong");
-    assert(entry?.filename?.startsWith("astro-theme-papyrus-"), "packed filename is wrong");
+    assert(entry?.name === "astro-papyrus", "packed package name is wrong");
+    assert(entry?.filename?.startsWith("astro-papyrus-"), "packed filename is wrong");
     assert(entry?.entryCount > 0, "packed package should include files");
 
     for (const path of [
@@ -170,7 +186,7 @@ try {
       },
       dependencies: {
         astro: exactVersion(packageJson.devDependencies?.astro),
-        "astro-theme-papyrus": `file:${packedTarball}`,
+        "astro-papyrus": `file:${packedTarball}`,
       },
     }, null, 2)}\n`);
     await writeFile(join(smokeDir, "pnpm-workspace.yaml"), `minimumReleaseAge: 10080
@@ -191,9 +207,9 @@ href = "/"
 label = "Home"
 `);
     await writeFile(join(smokeDir, "src/pages/index.astro"), `---
-import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
-import { loadPapyrusConfig } from "astro-theme-papyrus/config";
-import "astro-theme-papyrus/papyrus.css";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-papyrus/components";
+import { loadPapyrusConfig } from "astro-papyrus/config";
+import "astro-papyrus/papyrus.css";
 
 const config = await loadPapyrusConfig();
 ---
@@ -207,9 +223,10 @@ const config = await loadPapyrusConfig();
 </PapyrusBaseLayout>
 `);
 
-    const install = spawnSync("pnpm", ["install", "--ignore-scripts"], {
+    const install = spawnSync("pnpm", ["install", "--ignore-scripts", "--reporter=append-only"], {
       cwd: smokeDir,
       encoding: "utf8",
+      timeout: 120_000,
       env: {
         ...process.env,
         CI: "true",
@@ -221,6 +238,7 @@ const config = await loadPapyrusConfig();
       const build = spawnSync("pnpm", ["exec", "astro", "build"], {
         cwd: smokeDir,
         encoding: "utf8",
+        timeout: 120_000,
         env: {
           ...process.env,
           CI: "true",

@@ -150,6 +150,42 @@ Acceptance criteria for implementation:
 - Add one demo image that clearly shows why the override exists.
 - Update config, content schema, profile data, and image-effect verifiers.
 
+## Deferred theme-aware SVG authoring
+
+Tracking row: `PP-203`.
+
+Theme-aware SVGs are not image effects. Do not treat them as dither, duotone,
+or tritone. The goal is to let SVGs that are authored for Papyrus follow the
+active theme colors.
+
+Preferred authoring rules:
+
+- Single-color icons and marks should use `currentColor`.
+- Multi-color SVGs should use semantic CSS variables:
+  - `var(--papyrus-bg)` for page/background areas.
+  - `var(--papyrus-fg)` for main strokes/fills.
+  - `var(--papyrus-accent)` for highlights.
+- Generated Papyrus SVGs should prefer those variables instead of hardcoded
+  colors when the SVG is intended to sit inside the theme.
+- Do not promise automatic recoloring for arbitrary uploaded SVG files.
+
+Important limitation:
+
+- An SVG used through `<img src="/image.svg">` is a separate document and
+  usually cannot see page-level CSS variables.
+- Inline SVG can use `currentColor` and page CSS variables directly.
+- `<object>` can load an SVG document, but it is heavier and not a good default
+  for simple content images.
+
+Preferred future implementation:
+
+- Document the contract with small examples for `currentColor` and theme vars.
+- Keep normal SVG uploads unchanged by default.
+- Update Papyrus-generated SVG assets where practical.
+- Add a browser verifier that toggles the theme and checks one inline SVG
+  changes computed color.
+- Add a helper/component only if repeated examples make it worth the API.
+
 ## Performance guidance
 
 Default implementation should be build-time for static images:

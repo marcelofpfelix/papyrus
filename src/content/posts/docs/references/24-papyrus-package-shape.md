@@ -38,8 +38,8 @@ features, exports components and helpers, and lets the site override content,
 config, and routes.
 
 ```ts
-import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
-import { publishedPosts } from "astro-theme-papyrus/utils";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-papyrus/components";
+import { publishedPosts } from "astro-papyrus/utils";
 ```
 
 The goal is small imports, little local code, and theme updates in one package.

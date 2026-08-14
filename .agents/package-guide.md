@@ -30,41 +30,41 @@ API or injected template routes.
 
 Main imports:
 
-- `astro-theme-papyrus/components`
-- `astro-theme-papyrus/PapyrusBaseLayout.astro`
-- `astro-theme-papyrus/PapyrusPostLayout.astro`
-- `astro-theme-papyrus/PapyrusHeader.astro`
-- `astro-theme-papyrus/PapyrusFooter.astro`
-- `astro-theme-papyrus/PapyrusPostList.astro`
-- `astro-theme-papyrus/PapyrusCvProfile.astro`
-- `astro-theme-papyrus/PapyrusCvHero.astro`
-- `astro-theme-papyrus/PapyrusCvLinks.astro`
-- `astro-theme-papyrus/PapyrusCvSections.astro`
-- `astro-theme-papyrus/PapyrusCvExportActions.astro`
-- `astro-theme-papyrus/PapyrusCvA4Page.astro`
-- `astro-theme-papyrus/PapyrusJekyllCvPage.astro`
-- `astro-theme-papyrus/PapyrusAiMetadata.astro`
-- `astro-theme-papyrus/runtime/PapyrusBackToTopRuntime.astro`
-- `astro-theme-papyrus/runtime/PapyrusMediaRuntime.astro`
-- `astro-theme-papyrus/runtime/PapyrusPostActionsRuntime.astro`
-- `astro-theme-papyrus/papyrus.css`
-- `astro-theme-papyrus/themes/pure.css`
-- `astro-theme-papyrus/themes/catppuccin.css`
-- `astro-theme-papyrus/themes/tokyo-night.css`
-- `astro-theme-papyrus/themes/kanagawa.css`
-- `astro-theme-papyrus/themes/rose-pine.css`
-- `astro-theme-papyrus/themes/everforest.css`
-- `astro-theme-papyrus/themes/dracula.css`
-- `astro-theme-papyrus/themes/gruvbox.css`
-- `astro-theme-papyrus/themes/nord.css`
-- `astro-theme-papyrus/utils`
-- `astro-theme-papyrus/pure`
-- `astro-theme-papyrus/pure/user`
-- `astro-theme-papyrus/pure/advanced`
-- `astro-theme-papyrus/pure/pages`
-- `astro-theme-papyrus/pure/basic`
-- `astro-theme-papyrus/pure/utils`
-- `astro-theme-papyrus/pure/libs`
+- `astro-papyrus/components`
+- `astro-papyrus/PapyrusBaseLayout.astro`
+- `astro-papyrus/PapyrusPostLayout.astro`
+- `astro-papyrus/PapyrusHeader.astro`
+- `astro-papyrus/PapyrusFooter.astro`
+- `astro-papyrus/PapyrusPostList.astro`
+- `astro-papyrus/PapyrusCvProfile.astro`
+- `astro-papyrus/PapyrusCvHero.astro`
+- `astro-papyrus/PapyrusCvLinks.astro`
+- `astro-papyrus/PapyrusCvSections.astro`
+- `astro-papyrus/PapyrusCvExportActions.astro`
+- `astro-papyrus/PapyrusCvA4Page.astro`
+- `astro-papyrus/PapyrusJekyllCvPage.astro`
+- `astro-papyrus/PapyrusAiMetadata.astro`
+- `astro-papyrus/runtime/PapyrusBackToTopRuntime.astro`
+- `astro-papyrus/runtime/PapyrusMediaRuntime.astro`
+- `astro-papyrus/runtime/PapyrusPostActionsRuntime.astro`
+- `astro-papyrus/papyrus.css`
+- `astro-papyrus/themes/pure.css`
+- `astro-papyrus/themes/catppuccin.css`
+- `astro-papyrus/themes/tokyo-night.css`
+- `astro-papyrus/themes/kanagawa.css`
+- `astro-papyrus/themes/rose-pine.css`
+- `astro-papyrus/themes/everforest.css`
+- `astro-papyrus/themes/dracula.css`
+- `astro-papyrus/themes/gruvbox.css`
+- `astro-papyrus/themes/nord.css`
+- `astro-papyrus/utils`
+- `astro-papyrus/pure`
+- `astro-papyrus/pure/user`
+- `astro-papyrus/pure/advanced`
+- `astro-papyrus/pure/pages`
+- `astro-papyrus/pure/basic`
+- `astro-papyrus/pure/utils`
+- `astro-papyrus/pure/libs`
 
 Useful utility exports:
 
@@ -76,9 +76,9 @@ Useful utility exports:
 
 Markdown helpers:
 
-- `astro-theme-papyrus/remark-artifact-links`
-- `astro-theme-papyrus/remark-mermaid-blocks`
-- `astro-theme-papyrus/rehype-task-list-labels`
+- `astro-papyrus/remark-artifact-links`
+- `astro-papyrus/remark-mermaid-blocks`
+- `astro-papyrus/rehype-task-list-labels`
 
 CLI helpers:
 
@@ -289,9 +289,9 @@ The theme owns markdown presentation:
 Use the exported markdown helpers from a site Astro config:
 
 ```js
-import remarkArtifactLinks from "astro-theme-papyrus/remark-artifact-links";
-import remarkMermaidBlocks from "astro-theme-papyrus/remark-mermaid-blocks";
-import rehypeTaskListLabels from "astro-theme-papyrus/rehype-task-list-labels";
+import remarkArtifactLinks from "astro-papyrus/remark-artifact-links";
+import remarkMermaidBlocks from "astro-papyrus/remark-mermaid-blocks";
+import rehypeTaskListLabels from "astro-papyrus/rehype-task-list-labels";
 import rehypeCallouts from "rehype-callouts";
 import {
   addCollapse,
@@ -302,7 +302,7 @@ import {
   transformerNotationHighlight,
   transformerRemoveNotationEscape,
   updateStyle,
-} from "astro-theme-papyrus/shiki";
+} from "astro-papyrus/shiki";
 ```
 
 Configure Astro/Shiki with the Pure transformer order:
@@ -391,7 +391,7 @@ For custom pages, import the metadata component directly:
 
 ```astro
 ---
-import { PapyrusAiMetadata } from "astro-theme-papyrus/components";
+import { PapyrusAiMetadata } from "astro-papyrus/components";
 ---
 
 <PapyrusAiMetadata
@@ -505,7 +505,7 @@ feature config:
 
 ```astro
 ---
-import { PapyrusPostLayout } from "astro-theme-papyrus/components";
+import { PapyrusPostLayout } from "astro-papyrus/components";
 
 const features = {
   header: true,
@@ -595,10 +595,10 @@ describe markdown/runtime helpers installed by the site or package demo. This
 is intentional: the consuming Astro app controls routes, imports,
 markdown plugins, credentials, and data sources.
 
-Utilities are exported from `astro-theme-papyrus/utils`:
+Utilities are exported from `astro-papyrus/utils`:
 
 ```ts
-import { defaultPapyrusFeatures, resolvePapyrusFeatures } from "astro-theme-papyrus/utils";
+import { defaultPapyrusFeatures, resolvePapyrusFeatures } from "astro-papyrus/utils";
 ```
 
 Community plugins use the same feature config surface. A plugin declares
@@ -606,7 +606,7 @@ capabilities and optional feature defaults; the consuming site still decides
 what to render and where credentials/config live:
 
 ```ts
-import { definePapyrusPlugin, resolvePapyrusPluginConfig } from "astro-theme-papyrus/utils";
+import { definePapyrusPlugin, resolvePapyrusPluginConfig } from "astro-papyrus/utils";
 
 const commentsPlugin = definePapyrusPlugin({
   name: "papyrus-giscus",
@@ -655,7 +655,7 @@ plugin capability list.
 
 The repository also ships a tiny external package fixture at
 `examples/papyrus-kbd-plugin`. It imports `definePapyrusPlugin` from the public
-`astro-theme-papyrus/utils` entrypoint, declares peer dependencies on `astro-theme-papyrus` and
+`astro-papyrus/utils` entrypoint, declares peer dependencies on `astro-papyrus` and
 `astro`, exports a default plugin definition with a setup lifecycle, and is covered by
 `make verify-features`. Treat that fixture as the minimum package shape for
 community plugins: a separate package declares capabilities, and the consuming
@@ -703,7 +703,7 @@ Comments are optional adapters, not required theme state. The package exports `P
 
 ```astro
 ---
-import PapyrusGiscusComments from "astro-theme-papyrus/PapyrusGiscusComments.astro";
+import PapyrusGiscusComments from "astro-papyrus/PapyrusGiscusComments.astro";
 ---
 
 <PapyrusGiscusComments
@@ -823,7 +823,7 @@ sections, and the original made-with footer shape.
 
 ```astro
 ---
-import { PapyrusJekyllCvPage } from "astro-theme-papyrus/components";
+import { PapyrusJekyllCvPage } from "astro-papyrus/components";
 ---
 
 <PapyrusJekyllCvPage user={user} />
@@ -866,7 +866,7 @@ import {
   PapyrusCvHero,
   PapyrusCvLinks,
   PapyrusCvSections,
-} from "astro-theme-papyrus/components";
+} from "astro-papyrus/components";
 ---
 
 <section class="my-cv-template">
@@ -881,8 +881,8 @@ For a dedicated print route, render only the A4 component in a standalone page:
 
 ```astro
 ---
-import { PapyrusCvA4Page } from "astro-theme-papyrus/components";
-import "astro-theme-papyrus/papyrus.css";
+import { PapyrusCvA4Page } from "astro-papyrus/components";
+import "astro-papyrus/papyrus.css";
 ---
 
 <main class="papyrus-cv-print-shell">
@@ -907,7 +907,7 @@ Old jekyllcv visual parity still needs a separate source/screenshot comparison.
 The first adapter covers the upstream jekyllcv shape:
 
 ```ts
-import { cvToJson, cvToMarkdown, normalizeJekyllCvUser } from "astro-theme-papyrus/utils";
+import { cvToJson, cvToMarkdown, normalizeJekyllCvUser } from "astro-papyrus/utils";
 
 const user = normalizeJekyllCvUser(parsedUsersToml);
 const json = cvToJson(user);
@@ -920,8 +920,8 @@ TOML example in a consuming site:
 ---
 import { readFile } from "node:fs/promises";
 import { parse } from "smol-toml";
-import { PapyrusCvA4Page } from "astro-theme-papyrus/components";
-import { normalizeJekyllCvUser } from "astro-theme-papyrus/utils";
+import { PapyrusCvA4Page } from "astro-papyrus/components";
+import { normalizeJekyllCvUser } from "astro-papyrus/utils";
 
 const source = await readFile("src/data/users.toml", "utf8");
 const user = normalizeJekyllCvUser(parse(source));

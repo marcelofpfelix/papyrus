@@ -12,7 +12,7 @@ tags:
 
 Papyrus is a reusable Astro theme for personal sites, technical notes, project
 pages, and profile/CV pages. Start from `papyrus-template`, keep your content
-in that site, and let `astro-theme-papyrus` provide the shared routes and
+in that site, and let `astro-papyrus` provide the shared routes and
 components.
 
 ## Read first

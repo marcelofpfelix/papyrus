@@ -32,31 +32,46 @@ The template depends on the package:
 ```json title="package.json"
 {
   "dependencies": {
-    "astro-theme-papyrus": "^0.2.1"
+    "astro-papyrus": "^0.2.2"
   }
 }
 ```
 
+Use the npm package for normal sites. It is the stable path for template users
+because it resolves like any other dependency:
+
+```sh
+pnpm add astro-papyrus@^0.2.2
+```
+
+Use a pinned GitHub dependency only when testing unreleased Papyrus work or
+waiting for a new npm release to pass the registry maturity window:
+
+```sh
+pnpm add github:marcelofpfelix/papyrus#0.2.2
+```
+
+A branch name is convenient for preview work, but a tag or commit SHA is safer
+for real sites because it makes rebuilds repeatable.
+
 It enables Papyrus in Astro:
 
 ```js title="astro.config.mjs"
-import sitemap from "@astrojs/sitemap";
-import { defineConfig } from "astro/config";
-import { loadPapyrusConfig } from "astro-theme-papyrus/config";
-import papyrus from "astro-theme-papyrus/integration";
+import { definePapyrusAstroConfig } from "astro-papyrus/astro";
 
-const site = await loadPapyrusConfig();
+export default definePapyrusAstroConfig();
+```
 
-export default defineConfig({
-  site: site.site,
-  integrations: [papyrus(), sitemap()],
-});
+Custom routes can read the same TOML file through `loadPapyrusConfig`:
+
+```ts
+import { loadPapyrusConfig } from "astro-papyrus/config";
 ```
 
 It also reuses the Papyrus content collection:
 
 ```ts title="src/content.config.ts"
-export { collections } from "astro-theme-papyrus/content";
+export { collections } from "astro-papyrus/content";
 ```
 
 Papyrus adds these routes:

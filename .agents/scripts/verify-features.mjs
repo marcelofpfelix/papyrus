@@ -36,7 +36,7 @@ try {
   const pluginsPath = await transpileModule("src/utils/plugins.ts", "plugins.mjs");
   const examplePluginPackage = JSON.parse(await readFile("examples/papyrus-kbd-plugin/package.json", "utf8"));
   const examplePluginSource = (await readFile("examples/papyrus-kbd-plugin/src/index.ts", "utf8"))
-    .replace('"astro-theme-papyrus/utils"', JSON.stringify(pathToFileURL(pluginsPath).href));
+    .replace('"astro-papyrus/utils"', JSON.stringify(pathToFileURL(pluginsPath).href));
   const examplePluginPath = join(tmp, "papyrus-kbd-plugin.mjs");
   await writeFile(examplePluginPath, ts.transpileModule(examplePluginSource, {
     compilerOptions: {
@@ -228,7 +228,7 @@ try {
 
   assert(examplePluginPackage.name === "@example/papyrus-kbd", "example plugin package name changed");
   assert(examplePluginPackage.exports["."] === "./src/index.ts", "example plugin should export its default entry");
-  assert(examplePluginPackage.peerDependencies["astro-theme-papyrus"] === "*", "example plugin should peer-depend on astro-theme-papyrus");
+  assert(examplePluginPackage.peerDependencies["astro-papyrus"] === "*", "example plugin should peer-depend on astro-papyrus");
   assert(examplePluginPackage.peerDependencies.astro === ">=6.0.0", "example plugin should peer-depend on Astro");
   assert(examplePlugin.default.name === "papyrus-kbd", "example plugin default export missing plugin definition");
   same(examplePlugin.default.capabilities.map(capability => `${capability.kind}:${capability.name}`), [

@@ -1,4 +1,4 @@
-import { definePapyrusPlugin } from "astro-theme-papyrus/utils";
+import { definePapyrusPlugin } from "astro-papyrus/utils";
 
 export const papyrusPureKbdPlugin = definePapyrusPlugin({
   name: "papyrus-kbd",

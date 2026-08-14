@@ -1,6 +1,6 @@
 {
-  "name": "astro-theme-papyrus",
-  "version": "0.2.1",
+  "name": "astro-papyrus",
+  "version": "0.2.2",
   "packageManager": "pnpm@11.9.0",
   "type": "module",
   "private": false,
@@ -30,6 +30,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./components": "./src/components/index.ts",
+    "./astro": "./src/astro/config.mjs",
     "./config": "./src/config/index.ts",
     "./content": "./src/content.ts",
     "./integration": "./src/integration.ts",
@@ -59,8 +60,11 @@
     "./runtime/PapyrusPostActionsRuntime.astro": "./src/components/runtime/PapyrusPostActionsRuntime.astro",
     "./remark-artifact-links": "./src/markdown/remark-artifact-links.mjs",
     "./remark-mermaid-blocks": "./src/markdown/remark-mermaid-blocks.mjs",
+    "./markdown": "./src/markdown/config.mjs",
+    "./rehype-callout-icons": "./src/markdown/rehype-callout-icons.mjs",
     "./rehype-task-list-labels": "./src/markdown/rehype-task-list-labels.mjs",
     "./shiki": "./src/shiki/index.mjs",
+    "./sitemap": "./src/sitemap.ts",
     "./utils": "./src/utils/index.ts",
     "./papyrus.css": "./src/styles/papyrus.css",
     "./themes/pure.css": "./src/styles/themes/pure.css",
@@ -97,8 +101,10 @@
     "./template/pages/tag/index.astro": "./src/template/pages/tag/index.astro",
     "./template/pages/tag/[tag].astro": "./src/template/pages/tag/[tag].astro",
     "./template/pages/404.astro": "./src/template/pages/404.astro",
+    "./template/pages/llms.txt.ts": "./src/template/pages/llms.txt.ts",
     "./template/pages/rss.xml.ts": "./src/template/pages/rss.xml.ts",
     "./template/pages/robots.txt.ts": "./src/template/pages/robots.txt.ts",
+    "./template/pages/security.txt.ts": "./src/template/pages/security.txt.ts",
     "./pure": "./src/pure/index.ts",
     "./pure/advanced": "./src/pure/advanced.ts",
     "./pure/basic": "./src/pure/basic.ts",
@@ -185,7 +191,9 @@
     "audit:status": "node .agents/scripts/audit-status.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
     "@astrojs/rss": "^4.0.19",
+    "@astrojs/markdown-remark": "^7.2.0",
     "@pagefind/default-ui": "^1.5.2",
     "astro-pure": "^1.4.6",
     "hastscript": "^9.0.1",
@@ -199,8 +207,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
-    "@astrojs/markdown-remark": "^7.2.0",
-    "@astrojs/sitemap": "^3.7.2",
     "astro": "^7.0.4",
     "lighthouse": "^13.4.0",
     "pagefind": "^1.5.2",

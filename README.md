@@ -1,4 +1,4 @@
-# astro-theme-papyrus
+# astro-papyrus
 
 Papyrus is a reusable Astro theme package for quiet blogs, documentation,
 project pages, and profile/CV sites. It wraps
@@ -32,16 +32,23 @@ pnpm dev
 ```
 
 ```json
-"astro-theme-papyrus": "^0.2.0"
+"astro-papyrus": "^0.2.2"
+```
+
+For unreleased testing, pin a GitHub tag or commit instead of floating on a
+branch:
+
+```json
+"astro-papyrus": "github:marcelofpfelix/papyrus#0.2.2"
 ```
 
 Consuming sites can also import the public API directly:
 
 ```astro
 ---
-import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
-import { publishedPosts } from "astro-theme-papyrus/utils";
-import "astro-theme-papyrus/papyrus.css";
+import { PapyrusBaseLayout } from "astro-papyrus/components";
+import { publishedPosts } from "astro-papyrus/utils";
+import "astro-papyrus/papyrus.css";
 ---
 ```
 
@@ -62,7 +69,7 @@ consuming site.
 
 `papyrus-template` is the recommended starting point. It keeps only
 `papyrus.config.toml`, `src/data/profile.toml`, one example post, and asset
-overrides. The standard pages are injected by `astro-theme-papyrus/integration`.
+overrides. The standard pages are injected by `astro-papyrus/integration`.
 
 `marcelofelix` is the real showcase site. It keeps its own content and
 configuration while importing Papyrus through the package or a local `file:`

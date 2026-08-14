@@ -114,13 +114,13 @@
     "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/",
     "sourcePath": "src/content/posts/docs/start/00-papyrus-docs.md",
     "description": "Start with papyrus-template, then edit config, Markdown, profile data, and assets.",
-    "excerpt": "Papyrus is a reusable Astro theme for personal sites, technical notes, project pages, and profile/CV pages. Start from `papyrus-template`, keep your content in that site, and let `astro-theme-papyrus` provide the shared routes and components. Read first - [Install and configure P",
+    "excerpt": "Papyrus is a reusable Astro theme for personal sites, technical notes, project pages, and profile/CV pages. Start from `papyrus-template`, keep your content in that site, and let `astro-papyrus` provide the shared routes and components. Read first - [Install and configure Papyrus",
     "tags": [
       "papyrus",
       "docs",
       "astro"
     ],
-    "text": "Papyrus docs\nStart with papyrus-template, then edit config, Markdown, profile data, and assets.\nPapyrus is a reusable Astro theme for personal sites, technical notes, project pages, and profile/CV pages. Start from `papyrus-template`, keep your content in that site, and let `astro-theme-papyrus` provide the shared routes and components. Read first - [Install and configure P\npapyrus docs astro"
+    "text": "Papyrus docs\nStart with papyrus-template, then edit config, Markdown, profile data, and assets.\nPapyrus is a reusable Astro theme for personal sites, technical notes, project pages, and profile/CV pages. Start from `papyrus-template`, keep your content in that site, and let `astro-papyrus` provide the shared routes and components. Read first - [Install and configure Papyrus\npapyrus docs astro"
   },
   {
     "id": "post:install-configure-papyrus",

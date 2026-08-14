@@ -28,6 +28,10 @@ metadata. Use `src/data/projects.toml` for project cards and
 | `[home]` | Homepage counts and layout-facing defaults |
 | `[profile.images]` | Default visual treatment for profile images |
 | `[pages.<name>]` | Optional text overrides for inherited page descriptions |
+| `[verification]` and `[[verification_meta]]` | Search engine and service verification meta tags |
+| `[analytics]` | Optional production-only analytics script |
+| `[head]` | Constrained site-owned meta, link, and external script entries |
+| `[security_txt]` | Optional vulnerability disclosure contact for `security.txt` |
 | `[features]` | Optional UI, metadata, comments, search, graph, media, and profile features |
 | `[post_card]` | Post-list tags, read time, fresh indicators, updated-date behavior, and default limit |
 | `[[nav]]` | Header navigation links |
@@ -124,6 +128,70 @@ This site is where I keep technical notes, project logs, and occasional side int
 
 Blank lines in `content` create separate paragraphs. The About page keeps this
 body focused and adds a profile link at the end.
+
+## Verification, analytics, and head entries
+
+Keep verification and analytics disabled until the site has real provider
+values. Papyrus keeps the Google shorthand, but the generic verification table
+also covers Bing and other services:
+
+```toml title="papyrus.config.toml"
+[seo]
+google_verification = "google-search-console-token"
+
+[verification]
+bing = "bing-webmaster-token"
+
+[[verification_meta]]
+name = "p:domain_verify"
+content = "pinterest-token"
+```
+
+Analytics is opt-in and does not load during local development unless
+`include_in_dev = true` is set. Supported providers are `ga4`, `plausible`,
+`umami`, `goatcounter`, and `custom`:
+
+```toml title="papyrus.config.toml"
+[analytics]
+enabled = true
+provider = "plausible"
+domain = "site.test"
+```
+
+Use `[head]` for small, typed additions that belong to the site. It accepts
+meta tags, link tags, and external scripts. It does not accept raw HTML strings.
+
+```toml title="papyrus.config.toml"
+[[head.meta]]
+name = "fediverse:creator"
+content = "@site@example.social"
+
+[[head.link]]
+rel = "me"
+href = "https://example.social/@site"
+
+[[head.script]]
+src = "https://example.test/script.js"
+defer = true
+```
+
+Footer links already use `[[social]]` and the shared footer. Add provider
+widgets as normal links when possible; only use `[head]` when a provider really
+needs a document-level tag or script.
+
+## Security.txt
+
+Configure `security.txt` only when the site has a public vulnerability
+disclosure contact. With no contact, Papyrus returns a 404 for
+`/.well-known/security.txt` and `/security.txt` instead of publishing a
+placeholder file.
+
+```toml title="papyrus.config.toml"
+[security_txt]
+contact = ["mailto:security@example.com"]
+preferred_languages = "en, pt"
+policy = "https://site.test/security"
+```
 
 ## Feature flags
 

@@ -78,24 +78,27 @@ body {
 }
 
 .papyrus-image-effect-duotone::before {
-  background: var(--papyrus-fg);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--papyrus-fg) 82%, transparent),
+    color-mix(in srgb, var(--papyrus-bg) 42%, transparent)
+  );
   content: "";
   inset: 0;
-  mix-blend-mode: lighten;
-  opacity: 0.34;
+  mix-blend-mode: color;
+  opacity: 0.7;
   pointer-events: none;
   position: absolute;
   z-index: 1;
 }
 
 .dark .papyrus-image-effect-duotone::before {
-  mix-blend-mode: screen;
-  opacity: 0.28;
+  opacity: 0.62;
 }
 
 .papyrus-image-effect-duotone > img,
 img.papyrus-image-effect-duotone {
-  filter: grayscale(1) contrast(1.34);
+  filter: grayscale(1) contrast(1.85) brightness(0.98);
   mix-blend-mode: luminosity;
   position: relative;
   z-index: 0;
@@ -103,20 +106,28 @@ img.papyrus-image-effect-duotone {
 
 .papyrus-image-effect-tritone::before {
   background:
-    linear-gradient(180deg, color-mix(in srgb, var(--papyrus-bg) 45%, transparent), transparent 38%),
-    radial-gradient(circle at 72% 74%, color-mix(in srgb, var(--papyrus-fg) 62%, transparent), transparent 44%);
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--papyrus-fg) 76%, var(--papyrus-accent)),
+      color-mix(in srgb, var(--papyrus-bg) 48%, var(--papyrus-accent))
+    ),
+    radial-gradient(circle at 72% 74%, color-mix(in srgb, var(--papyrus-accent) 68%, transparent), transparent 44%);
   content: "";
   inset: 0;
-  mix-blend-mode: overlay;
-  opacity: 0.82;
+  mix-blend-mode: color;
+  opacity: 0.72;
   pointer-events: none;
   position: absolute;
   z-index: 1;
 }
 
+.dark .papyrus-image-effect-tritone::before {
+  opacity: 0.64;
+}
+
 .papyrus-image-effect-tritone > img,
 img.papyrus-image-effect-tritone {
-  filter: grayscale(1) contrast(1.42) brightness(1.02);
+  filter: grayscale(1) contrast(1.85) brightness(0.98);
   mix-blend-mode: luminosity;
   position: relative;
   z-index: 0;

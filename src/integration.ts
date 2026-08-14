@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import type { AstroIntegration } from "astro";
+import { loadPapyrusConfig } from "./config";
 
 function templateRoute(path: string) {
   return fileURLToPath(new URL(path, import.meta.url));
@@ -33,18 +34,31 @@ const defaultRoutes: DefaultRoute[] = [
   { pattern: "/tag", entrypoint: templateRoute("./template/pages/tag/index.astro"), localFiles: ["src/pages/tag/index.astro", "src/pages/tag.astro"] },
   { pattern: "/tag/[tag]", entrypoint: templateRoute("./template/pages/tag/[tag].astro"), localFiles: ["src/pages/tag/[tag].astro"] },
   { pattern: "/404", entrypoint: templateRoute("./template/pages/404.astro"), localFiles: ["src/pages/404.astro"] },
+  { pattern: "/llms.txt", entrypoint: templateRoute("./template/pages/llms.txt.ts"), localFiles: ["src/pages/llms.txt.ts", "src/pages/llms.txt.js", "public/llms.txt"] },
   { pattern: "/rss.xml", entrypoint: templateRoute("./template/pages/rss.xml.ts"), localFiles: ["src/pages/rss.xml.ts", "src/pages/rss.xml.js"] },
   { pattern: "/robots.txt", entrypoint: templateRoute("./template/pages/robots.txt.ts"), localFiles: ["src/pages/robots.txt.ts", "src/pages/robots.txt.js"] },
+];
+
+const securityTxtRoutes: DefaultRoute[] = [
+  { pattern: "/.well-known/security.txt", entrypoint: templateRoute("./template/pages/security.txt.ts"), localFiles: ["src/pages/.well-known/security.txt.ts", "src/pages/.well-known/security.txt.js", "public/.well-known/security.txt"] },
+  { pattern: "/security.txt", entrypoint: templateRoute("./template/pages/security.txt.ts"), localFiles: ["src/pages/security.txt.ts", "src/pages/security.txt.js", "public/security.txt"] },
 ] as const;
 
 export default function papyrus(): AstroIntegration {
   return {
-    name: "astro-theme-papyrus",
+    name: "astro-papyrus",
     hooks: {
-      "astro:config:setup": ({ injectRoute }) => {
+      "astro:config:setup": async ({ injectRoute }) => {
+        const site = await loadPapyrusConfig();
         for (const { pattern, entrypoint, localFiles } of defaultRoutes) {
           if (localRouteExists(localFiles)) continue;
           injectRoute({ pattern, entrypoint });
+        }
+        if (site.securityTxt.contacts.length > 0) {
+          for (const { pattern, entrypoint, localFiles } of securityTxtRoutes) {
+            if (localRouteExists(localFiles)) continue;
+            injectRoute({ pattern, entrypoint });
+          }
         }
       },
     },

@@ -18,23 +18,24 @@ This is the follow-up task for `PP-197`.
   personal content/data/config/assets.
 - Shared pages and routes are inherited from Papyrus unless the consumer has a
   real reason to override copy or composition.
-- npm publishing is ready, but consumers can keep using the GitHub branch until
-  the package is available on npm.
+- `astro-papyrus@0.2.2` is published to npm, but consumers can keep using the
+  GitHub branch until the local 7-day package maturity policy allows installing
+  the fresh npm release.
 - After publishing, consumers can switch from:
 
 ```json
-"astro-theme-papyrus": "github:marcelofpfelix/papyrus#0.2.2"
+"astro-papyrus": "github:marcelofpfelix/papyrus#0.2.2"
 ```
 
 to:
 
 ```sh
-pnpm add astro-theme-papyrus@^0.2.2
+pnpm add astro-papyrus@^0.2.2
 ```
 
 - The template README documents both paths clearly:
-  - current GitHub dependency path for unreleased development;
-  - npm dependency path after publish;
+  - current GitHub dependency path for unreleased or too-fresh development;
+  - npm dependency path after publish and the maturity gate;
   - cloning the template remains the recommended beginner flow.
 
 ## Package-boundary candidates
@@ -50,7 +51,7 @@ Move or expose these from Papyrus so consumers do not carry copies:
 - Timeline route aliases or redirects when the consumer only repeats package
   behavior.
 - Content collection exports: consumers should prefer
-  `export { collections } from "astro-theme-papyrus/content"`.
+  `export { collections } from "astro-papyrus/content"`.
 - Site config glue that only exists because inherited pages are not complete.
 - Profile/project data helpers that are currently hardcoded inside consumer
   source files instead of local TOML/data files or Papyrus conventions.
@@ -97,8 +98,9 @@ Remove or stop copying demo assets into consuming repos:
 3. Reduce `marcelofelix` to local config/content/data/assets only.
 4. Run focused builds for Papyrus, `papyrus-template`, and `marcelofelix`.
 5. Prepare npm metadata, files list, changelog, version, and release check.
-6. Publish `astro-theme-papyrus` when authorized.
-7. Switch consumers to npm after publish and refresh lockfiles.
+6. Publish `astro-papyrus` when authorized. Done for `0.2.2` on 2026-08-13.
+7. Switch consumers to npm after the package passes `minimumReleaseAge: 10080`
+   and refresh lockfiles. Do not bypass this policy unless explicitly requested.
 
 ## Validation
 

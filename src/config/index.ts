@@ -53,6 +53,58 @@ export type PapyrusSourceConfig = {
   branch?: string;
 };
 
+export type PapyrusVerificationConfig = {
+  name: string;
+  content: string;
+};
+
+export type PapyrusAnalyticsProvider = "ga4" | "plausible" | "umami" | "goatcounter" | "custom";
+
+export type PapyrusAnalyticsConfig = {
+  enabled: boolean;
+  provider?: PapyrusAnalyticsProvider;
+  id?: string;
+  domain?: string;
+  src?: string;
+  includeInDev: boolean;
+};
+
+export type PapyrusHeadMetaConfig = {
+  name?: string;
+  property?: string;
+  content: string;
+};
+
+export type PapyrusHeadLinkConfig = {
+  rel: string;
+  href: string;
+  type?: string;
+  title?: string;
+};
+
+export type PapyrusHeadScriptConfig = {
+  src: string;
+  async?: boolean;
+  defer?: boolean;
+};
+
+export type PapyrusHeadConfig = {
+  meta: PapyrusHeadMetaConfig[];
+  links: PapyrusHeadLinkConfig[];
+  scripts: PapyrusHeadScriptConfig[];
+};
+
+export type PapyrusSecurityTxtConfig = {
+  contacts: string[];
+  expires?: string;
+  preferredLanguages?: string;
+  canonical?: string;
+  policy?: string;
+  acknowledgments?: string;
+  encryption?: string;
+  hiring?: string;
+};
+
 export type PapyrusPageConfig = {
   content?: string;
   description?: string | false;
@@ -67,6 +119,10 @@ export type PapyrusSiteConfig = {
   dir: "ltr" | "rtl" | "auto";
   timezone?: string;
   googleVerification?: string;
+  verification: PapyrusVerificationConfig[];
+  analytics: PapyrusAnalyticsConfig;
+  head: PapyrusHeadConfig;
+  securityTxt: PapyrusSecurityTxtConfig;
   brandTitle?: string;
   brandMark: "twinkle" | "terminal" | string;
   headerTitle?: string;
@@ -84,7 +140,7 @@ export type PapyrusSiteConfig = {
   postCard: PapyrusPostCardConfig;
 };
 
-export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "home" | "profile" | "nav" | "socialLinks" | "source">> & {
+export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "home" | "profile" | "nav" | "socialLinks" | "source" | "analytics" | "head" | "securityTxt">> & {
   features?: PapyrusFeatureConfig;
   postCard?: Partial<PapyrusPostCardConfig>;
   home?: Partial<PapyrusHomeConfig>;
@@ -94,6 +150,9 @@ export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "p
   projects?: PapyrusProjectConfig[];
   pages?: Record<string, PapyrusPageConfig>;
   source?: PapyrusSourceConfig;
+  analytics?: Partial<PapyrusAnalyticsConfig>;
+  head?: Partial<PapyrusHeadConfig>;
+  securityTxt?: Partial<PapyrusSecurityTxtConfig>;
 };
 
 const defaultPostCard = {
@@ -114,6 +173,17 @@ const defaultProfile = {
     effect: "none",
   },
 } satisfies PapyrusProfileConfig;
+
+const defaultAnalytics = {
+  enabled: false,
+  includeInDev: false,
+} satisfies PapyrusAnalyticsConfig;
+
+const defaultHead = {
+  meta: [],
+  links: [],
+  scripts: [],
+} satisfies PapyrusHeadConfig;
 
 const defaultPages: Record<string, PapyrusPageConfig> = {
   posts: { description: false },
@@ -139,6 +209,10 @@ const defaultConfig = {
   profile: defaultProfile,
   pages: defaultPages,
   source: {},
+  verification: [],
+  analytics: defaultAnalytics,
+  head: defaultHead,
+  securityTxt: { contacts: [] },
   features: defaultPapyrusFeatures,
   postCard: defaultPostCard,
 } satisfies PapyrusSiteConfig;
@@ -161,6 +235,16 @@ function asNumber(value: unknown): number | undefined {
 
 function asImageEffect(value: unknown): PapyrusImageEffect | undefined {
   return isPapyrusImageEffect(value) ? value : undefined;
+}
+
+function asStringArray(value: unknown): string[] {
+  const single = asString(value);
+  if (single) return [single];
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item) => {
+    const text = asString(item);
+    return text ? [text] : [];
+  });
 }
 
 function asLinks(value: unknown): PapyrusLinkConfig[] {
@@ -225,6 +309,99 @@ function asSourceConfig(value: unknown): PapyrusSourceConfig {
   return {
     ...(asString(record.repo) ? { repo: asString(record.repo) } : {}),
     ...(asString(record.branch) ? { branch: asString(record.branch) } : {}),
+  };
+}
+
+function asVerificationConfig(value: unknown): PapyrusVerificationConfig[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item) => {
+    const record = asRecord(item);
+    const name = asString(record.name);
+    const content = asString(record.content);
+    if (!name || !content) return [];
+    return [{ name, content }];
+  });
+}
+
+function asAnalyticsProvider(value: unknown): PapyrusAnalyticsProvider | undefined {
+  const provider = asString(value);
+  return provider && ["ga4", "plausible", "umami", "goatcounter", "custom"].includes(provider)
+    ? provider as PapyrusAnalyticsProvider
+    : undefined;
+}
+
+function asAnalyticsConfig(value: unknown): Partial<PapyrusAnalyticsConfig> {
+  const record = asRecord(value);
+  const id = asString(record.id ?? record.measurement_id ?? record.website_id ?? record.code);
+  return {
+    ...(asBoolean(record.enabled) !== undefined ? { enabled: asBoolean(record.enabled)! } : {}),
+    ...(asAnalyticsProvider(record.provider) ? { provider: asAnalyticsProvider(record.provider) } : {}),
+    ...(id ? { id } : {}),
+    ...(asString(record.domain) ? { domain: asString(record.domain) } : {}),
+    ...(asString(record.src ?? record.script) ? { src: asString(record.src ?? record.script) } : {}),
+    ...(asBoolean(record.includeInDev ?? record.include_in_dev) !== undefined ? { includeInDev: asBoolean(record.includeInDev ?? record.include_in_dev)! } : {}),
+  };
+}
+
+function asHeadConfig(value: unknown): Partial<PapyrusHeadConfig> {
+  const record = asRecord(value);
+  const linkInput = record.link ?? record.links;
+  const scriptInput = record.script ?? record.scripts;
+  const meta = Array.isArray(record.meta)
+    ? record.meta.flatMap((item) => {
+      const entry = asRecord(item);
+      const content = asString(entry.content);
+      const name = asString(entry.name);
+      const property = asString(entry.property);
+      if (!content || (!name && !property)) return [];
+      return [{ ...(name ? { name } : {}), ...(property ? { property } : {}), content }];
+    })
+    : [];
+  const links = Array.isArray(linkInput)
+    ? linkInput.flatMap((item) => {
+      const entry = asRecord(item);
+      const rel = asString(entry.rel);
+      const href = asString(entry.href);
+      if (!rel || !href) return [];
+      return [{
+        rel,
+        href,
+        ...(asString(entry.type) ? { type: asString(entry.type) } : {}),
+        ...(asString(entry.title) ? { title: asString(entry.title) } : {}),
+      }];
+    })
+    : [];
+  const scripts = Array.isArray(scriptInput)
+    ? scriptInput.flatMap((item) => {
+      const entry = asRecord(item);
+      const src = asString(entry.src);
+      if (!src) return [];
+      return [{
+        src,
+        ...(asBoolean(entry.async) !== undefined ? { async: asBoolean(entry.async) } : {}),
+        ...(asBoolean(entry.defer) !== undefined ? { defer: asBoolean(entry.defer) } : {}),
+      }];
+    })
+    : [];
+
+  return {
+    ...(meta.length ? { meta } : {}),
+    ...(links.length ? { links } : {}),
+    ...(scripts.length ? { scripts } : {}),
+  };
+}
+
+function asSecurityTxtConfig(value: unknown): PapyrusSecurityTxtConfig {
+  const record = asRecord(value);
+  return {
+    contacts: asStringArray(record.contact ?? record.contacts),
+    ...(asString(record.expires) ? { expires: asString(record.expires) } : {}),
+    ...(asString(record.preferredLanguages ?? record.preferred_languages) ? { preferredLanguages: asString(record.preferredLanguages ?? record.preferred_languages) } : {}),
+    ...(asString(record.canonical) ? { canonical: asString(record.canonical) } : {}),
+    ...(asString(record.policy) ? { policy: asString(record.policy) } : {}),
+    ...(asString(record.acknowledgments) ? { acknowledgments: asString(record.acknowledgments) } : {}),
+    ...(asString(record.encryption) ? { encryption: asString(record.encryption) } : {}),
+    ...(asString(record.hiring) ? { hiring: asString(record.hiring) } : {}),
   };
 }
 
@@ -309,6 +486,23 @@ export function resolvePapyrusConfig(config: PapyrusConfigInput = {}): PapyrusSi
     },
     pages: mergePages(config.pages),
     source: config.source ?? defaultConfig.source,
+    verification: [
+      ...(config.googleVerification ? [{ name: "google-site-verification", content: config.googleVerification }] : []),
+      ...(config.verification ?? defaultConfig.verification),
+    ].filter((item, index, items) => items.findIndex(other => other.name === item.name && other.content === item.content) === index),
+    analytics: {
+      ...defaultAnalytics,
+      ...(config.analytics ?? {}),
+    },
+    head: {
+      meta: config.head?.meta ?? defaultHead.meta,
+      links: config.head?.links ?? defaultHead.links,
+      scripts: config.head?.scripts ?? defaultHead.scripts,
+    },
+    securityTxt: {
+      ...defaultConfig.securityTxt,
+      ...(config.securityTxt ?? {}),
+    },
     features: {
       ...defaultPapyrusFeatures,
       ...(config.features ?? {}),
@@ -326,9 +520,11 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
   const brand = asRecord(parsed.brand);
   const theme = asRecord(parsed.theme);
   const seo = asRecord(parsed.seo);
+  const verification = asRecord(parsed.verification);
   const sourceConfig = asRecord(parsed.source);
   const home = asRecord(parsed.home);
   const profile = asRecord(parsed.profile);
+  const security = asRecord(parsed.security_txt ?? parsed.securityTxt ?? parsed.security);
 
   return resolvePapyrusConfig({
     title: asString(site.title ?? parsed.title),
@@ -339,6 +535,17 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
     dir: (asString(site.dir ?? parsed.dir) as PapyrusSiteConfig["dir"] | undefined),
     timezone: asString(site.timezone ?? parsed.timezone),
     googleVerification: asString(seo.googleVerification ?? seo.google_verification ?? parsed.googleVerification ?? parsed.google_verification),
+    verification: [
+      ...asVerificationConfig(parsed.verification_meta ?? parsed.verificationMeta),
+      ...asVerificationConfig(verification.meta),
+      ...["bing", "msvalidate", "yandex", "pinterest", "facebook"].flatMap((key) => {
+        const content = asString(verification[key] ?? seo[key]);
+        return content ? [{ name: key === "bing" || key === "msvalidate" ? "msvalidate.01" : `${key}-site-verification`, content }] : [];
+      }),
+    ],
+    analytics: asAnalyticsConfig(parsed.analytics),
+    head: asHeadConfig(parsed.head),
+    securityTxt: asSecurityTxtConfig(security),
     brandTitle: asString(brand.title ?? parsed.brandTitle ?? parsed.brand_title),
     brandMark: asString(brand.mark ?? parsed.brandMark ?? parsed.brand_mark),
     headerTitle: asString(brand.headerTitle ?? brand.header_title ?? parsed.headerTitle ?? parsed.header_title),

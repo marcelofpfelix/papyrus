@@ -12,6 +12,42 @@ Tracking row: `PP-200`.
 - Configuration documentation for feed icons, search providers, SEO, comments,
   analytics, and webmaster verification.
 
+## 2026 theme and analytics research
+
+Static themes do not agree on one "best" analytics provider. The stronger
+pattern is to keep analytics disabled by default, provide one or two documented
+examples, and leave a clean extension point for site-owned snippets.
+
+- Broad website usage still strongly favors Google Analytics/GA4. W3Techs
+  reported Google Analytics at 43.1% of all websites and 78.2% traffic-analysis
+  market share on 2026-05-16. Wappalyzer also lists Google Analytics as the
+  largest named analytics technology in its current analytics category.
+- Astro's ecosystem has multiple approaches rather than one standard. Astro
+  documents Partytown as a way to move resource-heavy third-party scripts such
+  as analytics off the main thread, the Astro integrations directory lists
+  several analytics integrations, Astro Cactus documents analytics as a theme
+  feature, and Astro Sienna exposes optional GA4 plus GoatCounter through
+  Partytown.
+- Hugo themes and Hugo-adjacent docs also keep the matrix open. Hugo has an
+  embedded GA4 template, Blowfish documents Fathom, Google Analytics, Umami,
+  Seline, and custom partials, and HugoBlox documents Pirsch, Fathom,
+  Plausible, Google Analytics, Google Tag Manager, Microsoft Clarity, Baidu,
+  and custom hooks.
+- Eleventy examples are similarly site-owned. Google's
+  `eleventy-high-performance-blog` uses Google Analytics-oriented metadata and
+  performance patterns, while other starters mix Plausible, Simple Analytics,
+  Google Analytics, and comment-provider switches.
+- Reddit-style 2026 summaries are useful as community sentiment, but not strong
+  enough to claim a single consensus. They usually criticize GA4's complexity
+  and recommend Plausible or Fathom for small sites, Umami for self-hosting,
+  Matomo for full-control analytics, PostHog for product analytics, and
+  Microsoft Clarity for heatmaps/session recordings.
+
+Papyrus direction: support analytics as an opt-in theme feature or constrained
+head hook, keep no analytics as the default, use a privacy-first provider such
+as Plausible or Umami in examples, and still support GA4 because it remains the
+most common production choice.
+
 ## Features Papyrus already covers
 
 - Package/theme consumption instead of copying all theme internals.
@@ -46,6 +82,11 @@ yet. Create a dedicated `PP-*` row before implementing any of them.
   posts without custom route files.
 - Maybe: custom head/footer hooks. Limited user-provided slots or components for
   analytics, verification tags, banners, or site-specific snippets.
+- Maybe: opt-in analytics config. Disabled by default, production-only by
+  default, with examples for GA4, Plausible, Umami, GoatCounter, and custom
+  snippets instead of a heavy provider dependency.
+- Maybe: broader webmaster verification. Keep the existing Google Search
+  Console shorthand, but allow Bing/Yandex/generic verification meta tags.
 - Maybe: sidebar blocks. Optional custom sidebar content/navigation for long pages or
   collection sections.
 
@@ -72,6 +113,8 @@ small:
 3. Gallery/figure/video helpers.
 4. Page class/style hooks.
 5. Small custom head/footer extension points.
+6. Opt-in analytics and broader verification only after the extension-point shape
+   is clear.
 
 These fit Papyrus because they reduce copied page/component code in consumers
 without making the package feel like a large CMS.

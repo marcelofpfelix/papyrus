@@ -8,6 +8,6 @@
   },
   "peerDependencies": {
     "astro": ">=6.0.0",
-    "astro-theme-papyrus": "*"
+    "astro-papyrus": "*"
   }
 }

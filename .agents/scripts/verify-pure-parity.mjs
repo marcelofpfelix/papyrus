@@ -304,7 +304,7 @@ assert(
   "pure parity doc should record the stricter Pure timeline/profile wrapper task",
 );
 assert(
-  doc.includes("Pure public exports") && doc.includes("astro-theme-papyrus/pure") && doc.includes("pass-through exports"),
+  doc.includes("Pure public exports") && doc.includes("astro-papyrus/pure") && doc.includes("pass-through exports"),
   "pure parity doc should record Pure public pass-through export task",
 );
 assert(
@@ -372,9 +372,9 @@ assert(
 );
 assert(
   doc.includes("## Pure wrapper decisions") &&
-    doc.includes("Direct pass-through via `astro-theme-papyrus/pure/user`") &&
-    doc.includes("Pure's component remains available through `astro-theme-papyrus/pure/advanced`") &&
-    doc.includes("Pure page components remain available through `astro-theme-papyrus/pure/pages`") &&
+    doc.includes("Direct pass-through via `astro-papyrus/pure/user`") &&
+    doc.includes("Pure's component remains available through `astro-papyrus/pure/advanced`") &&
+    doc.includes("Pure page components remain available through `astro-papyrus/pure/pages`") &&
     doc.includes("Use split Papyrus runtime components"),
   "pure parity doc should record component-by-component Pure wrapper decisions",
 );

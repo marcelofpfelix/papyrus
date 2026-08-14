@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import PapyrusHeader from "../components/PapyrusHeader.astro";
 import PapyrusFooter from "../components/PapyrusFooter.astro";
 import PapyrusThemeProvider from "../components/PapyrusThemeProvider.astro";
+import { loadPapyrusConfig, type PapyrusAnalyticsConfig, type PapyrusHeadConfig, type PapyrusVerificationConfig } from "../config";
 import { resolvePapyrusFeatures, type PapyrusFeatureConfig } from "../utils/features";
 import { getAssetPath, stripBase, withBase } from "../utils/withBase";
 import "../styles/papyrus.css";
@@ -27,6 +28,9 @@ interface Props {
   ogImage?: string;
   robots?: string;
   googleVerification?: string;
+  verification?: PapyrusVerificationConfig[];
+  analytics?: PapyrusAnalyticsConfig;
+  head?: PapyrusHeadConfig;
   nav?: NavItem[];
   footerLinks?: NavItem[];
   socialLinks?: Array<{ href: string; label: string; icon?: string }>;
@@ -51,6 +55,9 @@ const {
   ogImage,
   robots,
   googleVerification,
+  verification,
+  analytics,
+  head,
   nav = [],
   footerLinks = [],
   socialLinks = [],
@@ -60,6 +67,7 @@ const {
   features,
 } = Astro.props;
 
+const configuredSite = await loadPapyrusConfig();
 const pageTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
 const resolvedFeatures = resolvePapyrusFeatures({
   poweredBy,
@@ -79,6 +87,16 @@ const resolvedNav = nav.map(item => ({ ...item, href: withBase(item.href) }));
 const resolvedFooterLinks = footerLinks.map(item => ({ ...item, href: withBase(item.href) }));
 const resolvedSocialLinks = socialLinks.map(item => ({ ...item, href: withBase(item.href) }));
 const headerHomeHref = withBase("/");
+const resolvedVerification = [
+  ...(googleVerification ? [{ name: "google-site-verification", content: googleVerification }] : []),
+  ...(verification ?? configuredSite.verification),
+].filter((item, index, items) => items.findIndex(other => other.name === item.name && other.content === item.content) === index);
+const resolvedAnalytics = analytics ?? configuredSite.analytics;
+const resolvedHead = head ?? configuredSite.head;
+const showAnalytics = resolvedAnalytics.enabled && (import.meta.env.PROD || resolvedAnalytics.includeInDev);
+const analyticsProvider = resolvedAnalytics.provider;
+const analyticsId = resolvedAnalytics.id;
+const plausibleDomain = resolvedAnalytics.domain ?? (Astro.site ?? Astro.url).hostname;
 ---
 
 <!doctype html>
@@ -88,7 +106,33 @@ const headerHomeHref = withBase("/");
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {description && <meta name="description" content={description} />}
     {robots && <meta name="robots" content={robots} />}
-    {googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+    {resolvedVerification.map(item => <meta name={item.name} content={item.content} />)}
+    {resolvedHead.meta.map(item => <meta {...item} />)}
+    {resolvedHead.links.map(item => <link {...item} />)}
+    {showAnalytics && analyticsProvider === "ga4" && analyticsId && (
+      <>
+        <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(analyticsId)}`}></script>
+        <script is:inline define:vars={{ analyticsId }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag("js", new Date());
+          gtag("config", analyticsId);
+        </script>
+      </>
+    )}
+    {showAnalytics && analyticsProvider === "plausible" && (
+      <script is:inline defer data-domain={plausibleDomain} src={resolvedAnalytics.src ?? "https://plausible.io/js/script.js"}></script>
+    )}
+    {showAnalytics && analyticsProvider === "umami" && analyticsId && (
+      <script is:inline defer src={resolvedAnalytics.src ?? "https://cloud.umami.is/script.js"} data-website-id={analyticsId}></script>
+    )}
+    {showAnalytics && analyticsProvider === "goatcounter" && analyticsId && (
+      <script is:inline async src={resolvedAnalytics.src ?? "https://gc.zgo.at/count.js"} data-goatcounter={`https://${analyticsId}.goatcounter.com/count`}></script>
+    )}
+    {showAnalytics && analyticsProvider === "custom" && resolvedAnalytics.src && (
+      <script is:inline defer src={resolvedAnalytics.src}></script>
+    )}
+    {resolvedHead.scripts.map(item => <script is:inline {...item}></script>)}
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#FCFCFD" />
     <link rel="icon" href={getAssetPath("/favicon.svg")} type="image/svg+xml" />

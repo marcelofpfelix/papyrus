@@ -21,7 +21,7 @@ The public Papyrus site builds a Pagefind index from generated static HTML. A sm
 
 ```astro
 ---
-import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout } from "astro-papyrus/components";
 ---
 
 <PapyrusBaseLayout
