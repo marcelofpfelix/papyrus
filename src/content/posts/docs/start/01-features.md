@@ -4,7 +4,7 @@ description: Grouped feature toggles for Papyrus layouts.
 slug: features
 pubDatetime: 2026-07-01T09:10:00.000Z
 category: Docs
-hidden: true
+license: CC-BY-4.0
 tags:
   - papyrus
   - docs

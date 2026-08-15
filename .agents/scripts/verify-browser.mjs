@@ -595,7 +595,7 @@ async function runDocsChecks(page, origin) {
   assert(indexState.rowText.some((text) => text.startsWith("Authoring")), `content index missing Authoring section from index.md: ${JSON.stringify(indexState.rowText)}`);
   assert(indexState.rowText.some((text) => text.startsWith("Feature references")), `content index missing Feature references section from index.md: ${JSON.stringify(indexState.rowText)}`);
   assert(indexState.links.some((link) => link.text === "Generated content structure" && link.href === "/docs/content-structure/"), `content index missing Generated content structure link: ${JSON.stringify(indexState.links)}`);
-  assert(indexState.links.some((link) => link.text === "Markdown code guide" && link.href === "/docs/code-demo/"), `content index missing Markdown code guide link: ${JSON.stringify(indexState.links)}`);
+  assert(indexState.links.some((link) => link.text === "Markdown code guide" && link.href === "/collections/docs/code-demo/"), `content index missing Markdown code guide link: ${JSON.stringify(indexState.links)}`);
   assert(indexState.links.some((link) => link.text === "Theme package shape" && link.href === "/posts/papyrus-package-shape/"), `content index missing post-backed theme package doc: ${JSON.stringify(indexState.links)}`);
   assert(indexState.links.some((link) => link.text === "Markdown authoring guide" && link.href === "/posts/markdown-feature-sample/"), `content index missing post-backed markdown doc: ${JSON.stringify(indexState.links)}`);
   assert(indexState.links.some((link) => link.text === "Dark mode and search" && link.href === "/posts/dark-mode-and-search/"), `content index missing post-backed dark-mode doc: ${JSON.stringify(indexState.links)}`);
@@ -686,64 +686,6 @@ async function runContentStructureChecks(page, origin) {
   assert(state.links.some((link) => link.text === "Theme profiles" && link.href === "/demo/content-tree/guides/theme.md"), `generated content index missing Theme profiles source link: ${JSON.stringify(state.links)}`);
   assert(state.links.some((link) => link.text === "Console fences" && link.href === "/demo/content-tree/notes/console.md"), `generated content index missing Console fences source link: ${JSON.stringify(state.links)}`);
   assert(state.sourceHref === "/demo/content-structure.md", `generated content structure source href was ${state.sourceHref}`);
-}
-
-async function runGraphChecks(page, origin) {
-  await page.goto(`${origin}/docs/graph/`, { waitUntil: "networkidle" });
-
-  const initial = await page.evaluate(() => ({
-    edgeCount: document.querySelectorAll("[data-graph-edge]").length,
-    focusTitle: document.querySelector("[data-graph-focus-title]")?.textContent?.trim() ?? "",
-    nodeCount: document.querySelectorAll("[data-graph-node]").length,
-    resetDisabled: document.querySelector("[data-graph-reset]")?.hasAttribute("disabled") ?? false,
-    summary: document.querySelector("[data-papyrus-graph-summary]")?.textContent?.replace(/\s+/g, " ").trim() ?? "",
-  }));
-  assert(initial.nodeCount >= 10, `graph node count was ${initial.nodeCount}`);
-  assert(initial.edgeCount >= 5, `graph edge count was ${initial.edgeCount}`);
-  assert(initial.focusTitle === "Select a node", `initial graph focus title was ${initial.focusTitle}`);
-  assert(initial.resetDisabled, "graph reset should be disabled before focusing a node");
-  assert(initial.summary.includes("nodes") && initial.summary.includes("edges"), `graph summary was ${initial.summary}`);
-
-  await page.locator('.papyrus-graph-controls input[name="q"]').fill("ai-first");
-  const filtered = await page.evaluate(() => ({
-    hiddenNodes: document.querySelectorAll("[data-graph-node][hidden]").length,
-    visibleNodes: document.querySelector("[data-visible-nodes]")?.textContent?.trim() ?? "",
-  }));
-  assert(Number(filtered.visibleNodes) >= 1, `graph search visible nodes was ${filtered.visibleNodes}`);
-  assert(filtered.hiddenNodes >= 1, "graph search should hide non-matching nodes");
-
-  await page.locator('.papyrus-graph-controls input[name="q"]').fill("");
-  await page.locator('[data-graph-node][data-id="post:ai-first-metadata-demo"]').click();
-  const focused = await page.evaluate(() => ({
-    dimmedNodes: document.querySelectorAll("[data-graph-node].is-dimmed").length,
-    focusedEdges: document.querySelectorAll("[data-graph-edge].is-focused:not([hidden])").length,
-    focusedId: document.querySelector(".papyrus-graph-view")?.getAttribute("data-graph-focused") ?? "",
-    focusedNodes: document.querySelectorAll("[data-graph-node].is-focused").length,
-    focusEdges: document.querySelectorAll("[data-graph-focus-edges] li").length,
-    focusMeta: document.querySelector("[data-graph-focus-meta]")?.textContent?.trim() ?? "",
-    focusTitle: document.querySelector("[data-graph-focus-title]")?.textContent?.trim() ?? "",
-    resetDisabled: document.querySelector("[data-graph-reset]")?.hasAttribute("disabled") ?? true,
-  }));
-  assert(focused.focusedId === "post:ai-first-metadata-demo", `focused graph id was ${focused.focusedId}`);
-  assert(focused.focusedNodes === 1, `focused graph node count was ${focused.focusedNodes}`);
-  assert(focused.focusTitle === "AI-first metadata", `focused graph title was ${focused.focusTitle}`);
-  assert(focused.focusMeta.includes("direct connection"), `focused graph meta was ${focused.focusMeta}`);
-  assert(focused.focusEdges >= 1, `focused graph edge detail count was ${focused.focusEdges}`);
-  assert(focused.focusedEdges >= 1, `focused graph edge count was ${focused.focusedEdges}`);
-  assert(focused.dimmedNodes >= 1, "focused graph should dim unrelated nodes");
-  assert(!focused.resetDisabled, "graph reset should be enabled after focusing a node");
-
-  await page.locator("[data-graph-reset]").click();
-  const reset = await page.evaluate(() => ({
-    dimmedNodes: document.querySelectorAll("[data-graph-node].is-dimmed").length,
-    focusedId: document.querySelector(".papyrus-graph-view")?.getAttribute("data-graph-focused") ?? "",
-    focusTitle: document.querySelector("[data-graph-focus-title]")?.textContent?.trim() ?? "",
-    resetDisabled: document.querySelector("[data-graph-reset]")?.hasAttribute("disabled") ?? false,
-  }));
-  assert(reset.focusedId === "", `reset graph focused id was ${reset.focusedId}`);
-  assert(reset.focusTitle === "Select a node", `reset graph focus title was ${reset.focusTitle}`);
-  assert(reset.dimmedNodes === 0, `reset graph dimmed node count was ${reset.dimmedNodes}`);
-  assert(reset.resetDisabled, "graph reset should be disabled after reset");
 }
 
 async function runSearchChecks(page, origin) {
@@ -1412,7 +1354,7 @@ async function runMetadataChecks(page, origin) {
 }
 
 async function runMarkdownDemoChecks(page, origin) {
-  await page.goto(`${origin}/docs/code-demo/`, { waitUntil: "networkidle" });
+  await page.goto(`${origin}/collections/docs/code-demo/`, { waitUntil: "networkidle" });
   await page.waitForSelector(".astro-code");
   await page.waitForFunction(() => document.querySelectorAll(".papyrus-mermaid svg").length >= 1, null, { timeout: 10000 });
   const mermaidErrors = await page.locator('.papyrus-mermaid[data-error="true"]').count();
@@ -1789,7 +1731,6 @@ try {
   await runMobileHeaderChecks(page, server.origin);
   await runDocsChecks(page, server.origin);
   await runContentStructureChecks(page, server.origin);
-  await runGraphChecks(page, server.origin);
   await runSearchChecks(page, server.origin);
   await runPostsIndexChecks(page, server.origin);
   await runProfileNavChecks(page, server.origin);

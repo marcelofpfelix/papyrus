@@ -5,6 +5,7 @@ slug: theme-spec
 pubDatetime: 2026-07-14T08:00:00.000Z
 category: Docs
 hidden: true
+license: CC-BY-4.0
 tags:
   - papyrus
   - docs
@@ -65,7 +66,7 @@ The package owns:
 Site repos own:
 
 - content files
-- site identity, social links, profile data, and project data
+- site identity, footer links, social links, profile data, and project data
 - deployment configuration
 - site-specific page composition
 - private or production-only data
@@ -77,6 +78,10 @@ otherwise copy it.
 
 Site behavior MUST be configurable through site-owned config/data rather than
 hardcoded inside components.
+
+Footer extension points MUST stay constrained. Use `[[footer]]` for normal
+text links and `[[social]]` for icon links. Do not accept arbitrary footer HTML
+or scripts; provider scripts belong in typed `[head]` entries.
 
 The supported post-card configuration includes:
 
@@ -293,6 +298,22 @@ caution MUST also be visually distinguishable.
 Unsupported markdown features SHOULD remain visibly documented in demos instead
 of silently pretending to work.
 
+Markdown prose styling SHOULD be configurable through constrained named presets,
+not custom per-element colors. The supported site config surface is:
+
+- `link_style`: `accent`, `underline`, `accent-underline`, `accent-hover-underline`
+- `heading_style`: `plain`, `accent`, `muted-accent`
+- `marker_style`: `plain`, `muted`, `accent`
+- `blockquote_style`: `muted-bar`, `accent-bar`, `panel`
+- `table_style`: `none`, `horizontal`, `grid`
+- `table_header_style`: `plain`, `muted`, `panel`
+- `inline_code_style`: `plain`, `panel`, `accent-soft`
+
+These presets MUST map to theme tokens such as foreground, muted, accent, panel,
+border, and code colors. They MUST NOT introduce per-site hex colors,
+per-heading-level controls, separate bullet and ordered-list controls, or table
+border color knobs until a real use case justifies that extra surface.
+
 ## Theme and visual system
 
 Theme profiles MUST be token-driven CSS files with light and dark variants.
@@ -313,6 +334,14 @@ Every theme profile MUST define:
 The default package theme MAY differ from a site's default theme.
 Site repos MUST be able to set their own default theme profile and font
 profile.
+
+Theme-aware SVGs MUST be explicit. Single-color inline SVGs SHOULD use
+`currentColor`; multi-color inline SVGs SHOULD use semantic Papyrus variables
+such as `--papyrus-bg`, `--papyrus-fg`, `--papyrus-muted`,
+`--papyrus-panel`, and `--papyrus-accent`. SVGs loaded through `<img>` are
+separate documents, so they MUST include their own `var(--papyrus-*, fallback)`
+values if they want theme-like colors. Papyrus MUST NOT promise automatic
+recoloring for arbitrary uploaded SVG files.
 
 Footer controls MUST expose:
 

@@ -35,6 +35,20 @@
       <description>Route-by-route guide to public Papyrus features.</description>
     </item>
     <item>
+      <title>Generated content structure</title>
+      <link>/posts/content-structure/</link>
+      <guid>/posts/content-structure/</guid>
+      <pubDate>Wed, 01 Jul 2026 13:10:00 GMT</pubDate>
+      <description>How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.</description>
+    </item>
+    <item>
+      <title>Feature config</title>
+      <link>/posts/features/</link>
+      <guid>/posts/features/</guid>
+      <pubDate>Wed, 01 Jul 2026 09:10:00 GMT</pubDate>
+      <description>Grouped feature toggles for Papyrus layouts.</description>
+    </item>
+    <item>
       <title>Papyrus docs</title>
       <link>/posts/papyrus-docs/</link>
       <guid>/posts/papyrus-docs/</guid>

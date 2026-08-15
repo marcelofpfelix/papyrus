@@ -46,8 +46,14 @@
   {
     "id": "tag:authoring",
     "tag": "authoring",
-    "count": 1,
+    "count": 2,
     "posts": [
+      {
+        "id": "post:code-demo",
+        "slug": "code-demo",
+        "title": "Markdown code guide",
+        "url": "https://papyrus.marcelofelix.com/posts/code-demo/"
+      },
       {
         "id": "post:markdown-feature-sample",
         "slug": "markdown-feature-sample",
@@ -70,6 +76,19 @@
     ]
   },
   {
+    "id": "tag:code",
+    "tag": "code",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:code-demo",
+        "slug": "code-demo",
+        "title": "Markdown code guide",
+        "url": "https://papyrus.marcelofelix.com/posts/code-demo/"
+      }
+    ]
+  },
+  {
     "id": "tag:collections",
     "tag": "collections",
     "count": 1,
@@ -85,13 +104,32 @@
   {
     "id": "tag:config",
     "tag": "config",
-    "count": 1,
+    "count": 2,
     "posts": [
+      {
+        "id": "post:features",
+        "slug": "features",
+        "title": "Feature config",
+        "url": "https://papyrus.marcelofelix.com/posts/features/"
+      },
       {
         "id": "post:site-config",
         "slug": "site-config",
         "title": "Site config",
         "url": "https://papyrus.marcelofelix.com/posts/site-config/"
+      }
+    ]
+  },
+  {
+    "id": "tag:content",
+    "tag": "content",
+    "count": 1,
+    "posts": [
+      {
+        "id": "post:content-structure",
+        "slug": "content-structure",
+        "title": "Generated content structure",
+        "url": "https://papyrus.marcelofelix.com/posts/content-structure/"
       }
     ]
   },
@@ -137,8 +175,14 @@
   {
     "id": "tag:docs",
     "tag": "docs",
-    "count": 5,
+    "count": 7,
     "posts": [
+      {
+        "id": "post:content-structure",
+        "slug": "content-structure",
+        "title": "Generated content structure",
+        "url": "https://papyrus.marcelofelix.com/posts/content-structure/"
+      },
       {
         "id": "post:deploy",
         "slug": "deploy",
@@ -164,6 +208,12 @@
         "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/"
       },
       {
+        "id": "post:features",
+        "slug": "features",
+        "title": "Feature config",
+        "url": "https://papyrus.marcelofelix.com/posts/features/"
+      },
+      {
         "id": "post:install-configure-papyrus",
         "slug": "install-configure-papyrus",
         "title": "Install and configure Papyrus",
@@ -187,8 +237,14 @@
   {
     "id": "tag:markdown",
     "tag": "markdown",
-    "count": 1,
+    "count": 2,
     "posts": [
+      {
+        "id": "post:code-demo",
+        "slug": "code-demo",
+        "title": "Markdown code guide",
+        "url": "https://papyrus.marcelofelix.com/posts/code-demo/"
+      },
       {
         "id": "post:markdown-feature-sample",
         "slug": "markdown-feature-sample",
@@ -213,8 +269,14 @@
   {
     "id": "tag:papyrus",
     "tag": "papyrus",
-    "count": 8,
+    "count": 10,
     "posts": [
+      {
+        "id": "post:content-structure",
+        "slug": "content-structure",
+        "title": "Generated content structure",
+        "url": "https://papyrus.marcelofelix.com/posts/content-structure/"
+      },
       {
         "id": "post:feature-map",
         "slug": "feature-map",
@@ -244,6 +306,12 @@
         "slug": "papyrus-docs",
         "title": "Papyrus docs",
         "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/"
+      },
+      {
+        "id": "post:features",
+        "slug": "features",
+        "title": "Feature config",
+        "url": "https://papyrus.marcelofelix.com/posts/features/"
       },
       {
         "id": "post:install-configure-papyrus",

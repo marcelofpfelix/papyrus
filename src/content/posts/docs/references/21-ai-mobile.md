@@ -4,6 +4,7 @@ description: AI metadata, generated indexes, and mobile-ready defaults in a Papy
 slug: ai-mobile
 pubDatetime: 2026-07-01T14:10:00.000Z
 category: Docs
+license: CC-BY-4.0
 tags:
   - ai
   - mobile

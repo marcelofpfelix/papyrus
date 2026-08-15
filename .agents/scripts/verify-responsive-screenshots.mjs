@@ -12,7 +12,7 @@ const outputDir = join(root, ".screenshots", "responsive");
 const routes = [
   { name: "home", path: "/", required: [".papyrus-header", ".papyrus-footer", ".papyrus-post-list"] },
   { name: "posts", path: "/posts/", required: [".papyrus-header", ".papyrus-footer", ".papyrus-post-list"] },
-  { name: "code-demo", path: "/docs/code-demo/", required: [".papyrus-header", ".papyrus-footer", ".astro-code"] },
+  { name: "code-demo", path: "/collections/docs/code-demo/", required: [".papyrus-header", ".papyrus-footer", ".astro-code"] },
   { name: "cv-profile", path: "/posts/cv-profile/", required: [".papyrus-header", ".papyrus-footer", ".papyrus-link-preview"] },
   { name: "cv-demo", path: "/docs/cv-demo/", required: [".papyrus-header", ".papyrus-footer", ".papyrus-cv-controls", ".papyrus-cv"] },
 ];

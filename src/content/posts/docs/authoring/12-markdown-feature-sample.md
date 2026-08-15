@@ -50,6 +50,33 @@ Escaped characters remain literal: \*not italic\* and \`not code\`.
 
 ![Papyrus dark mode preview](/images/papyrus-dark.svg)
 
+## Theme-aware SVGs
+
+Inline SVGs can follow the active theme when they use `currentColor` or Papyrus
+CSS variables:
+
+```html
+<svg viewBox="0 0 80 40" role="img" aria-label="Theme-aware mark">
+  <rect width="80" height="40" rx="8" fill="var(--papyrus-panel)" />
+  <path d="M18 20h44" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+  <circle cx="40" cy="20" r="8" fill="var(--papyrus-accent)" />
+</svg>
+```
+
+<svg viewBox="0 0 80 40" role="img" aria-label="Theme-aware mark" style="color: var(--papyrus-fg); max-width: 160px;">
+  <rect width="80" height="40" rx="8" fill="var(--papyrus-panel)" />
+  <path d="M18 20h44" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+  <circle cx="40" cy="20" r="8" fill="var(--papyrus-accent)" />
+</svg>
+
+Use `currentColor` for single-color icons. Use `var(--papyrus-bg)`,
+`var(--papyrus-fg)`, `var(--papyrus-muted)`, `var(--papyrus-panel)`, and
+`var(--papyrus-accent)` for multi-color SVGs that belong to the theme.
+
+An SVG loaded through `<img src="/image.svg">` is its own document. It should
+include its own `var(--papyrus-*, fallback)` colors if it needs theme-like
+colors; Papyrus does not recolor arbitrary uploaded SVG files.
+
 ## Lists
 
 Unordered list:

@@ -12,11 +12,16 @@
   {
     "tag": "authoring",
     "feed": "/rss/tags/authoring.xml",
-    "count": 1
+    "count": 2
   },
   {
     "tag": "changelog",
     "feed": "/rss/tags/changelog.xml",
+    "count": 1
+  },
+  {
+    "tag": "code",
+    "feed": "/rss/tags/code.xml",
     "count": 1
   },
   {
@@ -27,6 +32,11 @@
   {
     "tag": "config",
     "feed": "/rss/tags/config.xml",
+    "count": 2
+  },
+  {
+    "tag": "content",
+    "feed": "/rss/tags/content.xml",
     "count": 1
   },
   {
@@ -47,7 +57,7 @@
   {
     "tag": "docs",
     "feed": "/rss/tags/docs.xml",
-    "count": 5
+    "count": 7
   },
   {
     "tag": "images",
@@ -57,7 +67,7 @@
   {
     "tag": "markdown",
     "feed": "/rss/tags/markdown.xml",
-    "count": 1
+    "count": 2
   },
   {
     "tag": "mobile",
@@ -67,7 +77,7 @@
   {
     "tag": "papyrus",
     "feed": "/rss/tags/papyrus.xml",
-    "count": 8
+    "count": 10
   },
   {
     "tag": "portuguese-food",

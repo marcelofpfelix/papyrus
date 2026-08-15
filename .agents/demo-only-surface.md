@@ -66,7 +66,6 @@ payload:
   cover images, and demo site data.
 - `public/assets/img/user/**`: demo profile images.
 - `public/images/**`: demo cover/brand images.
-- `public/icons/**`: demo static icon assets.
 
 The npm `files` list should keep these out of the published package. Check with
 `pnpm pack --dry-run` after changing package boundaries.

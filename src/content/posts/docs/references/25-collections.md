@@ -4,6 +4,7 @@ description: What Papyrus collections are and how folder-backed collection route
 slug: collections
 pubDatetime: 2026-07-13T08:10:00.000Z
 category: Docs
+license: CC-BY-4.0
 tags:
   - papyrus
   - collections

@@ -21,6 +21,16 @@ const defaultProfile = {
   },
 };
 
+const defaultMarkdown = {
+  linkStyle: "accent-hover-underline",
+  headingStyle: "plain",
+  markerStyle: "accent",
+  blockquoteStyle: "accent-bar",
+  tableStyle: "horizontal",
+  tableHeaderStyle: "muted",
+  inlineCodeStyle: "panel",
+};
+
 const defaultAnalytics = {
   enabled: false,
   includeInDev: false,
@@ -71,10 +81,12 @@ const defaultConfig = {
   defaultThemeProfile: "gruvbox",
   defaultFontProfile: "readable",
   nav: [],
+  footerLinks: [],
   socialLinks: [],
   projects: [],
   home: defaultHome,
   profile: defaultProfile,
+  markdown: defaultMarkdown,
   pages: defaultPages,
   source: {},
   verification: [],
@@ -113,6 +125,10 @@ function asStringArray(value) {
 
 function asImageEffect(value) {
   return ["none", "duotone", "tritone", "dither", "dithernoise"].includes(value) ? value : undefined;
+}
+
+function enumValue(value, allowed) {
+  return typeof value === "string" && allowed.includes(value) ? value : undefined;
 }
 
 function asLinks(value) {
@@ -313,6 +329,25 @@ function readProfileConfig(record) {
   };
 }
 
+function readMarkdownConfig(record) {
+  const linkStyle = enumValue(record.linkStyle ?? record.link_style, ["accent", "underline", "accent-underline", "accent-hover-underline"]);
+  const headingStyle = enumValue(record.headingStyle ?? record.heading_style, ["plain", "accent", "muted-accent"]);
+  const markerStyle = enumValue(record.markerStyle ?? record.marker_style, ["plain", "muted", "accent"]);
+  const blockquoteStyle = enumValue(record.blockquoteStyle ?? record.blockquote_style, ["muted-bar", "accent-bar", "panel"]);
+  const tableStyle = enumValue(record.tableStyle ?? record.table_style, ["none", "horizontal", "grid"]);
+  const tableHeaderStyle = enumValue(record.tableHeaderStyle ?? record.table_header_style, ["plain", "muted", "panel"]);
+  const inlineCodeStyle = enumValue(record.inlineCodeStyle ?? record.inline_code_style, ["plain", "panel", "accent-soft"]);
+  return {
+    ...(linkStyle ? { linkStyle } : {}),
+    ...(headingStyle ? { headingStyle } : {}),
+    ...(markerStyle ? { markerStyle } : {}),
+    ...(blockquoteStyle ? { blockquoteStyle } : {}),
+    ...(tableStyle ? { tableStyle } : {}),
+    ...(tableHeaderStyle ? { tableHeaderStyle } : {}),
+    ...(inlineCodeStyle ? { inlineCodeStyle } : {}),
+  };
+}
+
 function mergePages(pages = {}) {
   return Object.fromEntries(
     Array.from(new Set([...Object.keys(defaultConfig.pages), ...Object.keys(pages)])).map((key) => [
@@ -334,6 +369,7 @@ export function resolvePapyrusConfig(config = {}) {
     ...defaultConfig,
     ...config,
     nav: config.nav ?? defaultConfig.nav,
+    footerLinks: config.footerLinks ?? defaultConfig.footerLinks,
     socialLinks: config.socialLinks ?? defaultConfig.socialLinks,
     projects: config.projects ?? defaultConfig.projects,
     home: { ...defaultHome, ...(config.home ?? {}) },
@@ -345,6 +381,7 @@ export function resolvePapyrusConfig(config = {}) {
         ...(config.profile?.images ?? {}),
       },
     },
+    markdown: { ...defaultMarkdown, ...(config.markdown ?? {}) },
     pages: mergePages(config.pages),
     source: config.source ?? defaultConfig.source,
     verification: [
@@ -373,6 +410,7 @@ export function parsePapyrusConfigToml(source) {
   const sourceConfig = asRecord(parsed.source);
   const home = asRecord(parsed.home);
   const profile = asRecord(parsed.profile);
+  const markdown = asRecord(parsed.markdown);
   const security = asRecord(parsed.security_txt ?? parsed.securityTxt ?? parsed.security);
 
   return resolvePapyrusConfig({
@@ -402,10 +440,12 @@ export function parsePapyrusConfigToml(source) {
     defaultThemeProfile: asString(theme.profile ?? theme.defaultThemeProfile ?? theme.default_theme_profile ?? parsed.defaultThemeProfile ?? parsed.default_theme_profile),
     defaultFontProfile: asString(theme.fontProfile ?? theme.font_profile ?? parsed.defaultFontProfile ?? parsed.default_font_profile),
     nav: asLinks(parsed.nav),
+    footerLinks: asLinks(parsed.footer ?? parsed.footerLinks ?? parsed.footer_links),
     socialLinks: asLinks(parsed.social ?? parsed.socialLinks ?? parsed.social_links),
     projects: asProjects(parsed.project ?? parsed.projects),
     home: readHomeConfig(home),
     profile: readProfileConfig(profile),
+    markdown: readMarkdownConfig(markdown),
     pages: asPages(parsed.pages ?? parsed.page),
     source: asSourceConfig(sourceConfig),
     features: readFeatureConfig(asRecord(parsed.features)),

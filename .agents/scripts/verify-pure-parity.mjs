@@ -6,6 +6,7 @@ const doc = await readFile(".agents/pure-parity.md", "utf8");
 const agents = await readFile("AGENTS.md", "utf8");
 const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 const astroConfig = await readFile("astro.config.mjs", "utf8");
+const markdownConfig = await readFile("src/markdown/config.mjs", "utf8");
 const shikiExport = await readFile("src/shiki/index.mjs", "utf8");
 const shikiCustom = await readFile("src/shiki/shiki-custom-transformers.mjs", "utf8");
 const shikiOfficial = await readFile("src/shiki/shiki-official/transformers.mjs", "utf8");
@@ -21,14 +22,17 @@ const papyrusFooter = await readFile("src/components/PapyrusFooter.astro", "utf8
 const papyrusGithubCard = await readFile("src/components/PapyrusGithubCard.astro", "utf8");
 const papyrusPostList = await readFile("src/components/PapyrusPostList.astro", "utf8");
 const papyrusPostLayout = await readFile("src/layouts/PapyrusPostLayout.astro", "utf8");
-const papyrusPostsIndex = await readFile("src/pages/posts/index.astro", "utf8");
+const papyrusPostsIndex = await readFile("src/template/pages/posts/index.astro", "utf8");
 const papyrusThemeProvider = await readFile("src/components/PapyrusThemeProvider.astro", "utf8");
 const papyrusTimeline = await readFile("src/components/PapyrusTimeline.astro", "utf8");
 const papyrusBackToTopRuntime = await readFile("src/components/runtime/PapyrusBackToTopRuntime.astro", "utf8");
 const papyrusMediaRuntime = await readFile("src/components/runtime/PapyrusMediaRuntime.astro", "utf8");
 const papyrusPostActionsRuntime = await readFile("src/components/runtime/PapyrusPostActionsRuntime.astro", "utf8");
-const profilePage = await readFile("src/pages/profile/index.astro", "utf8");
-const codeDemo = await readFile("src/pages/docs/code-demo.md", "utf8");
+const profilePage =
+  (await readFile("src/pages/profile/index.astro", "utf8")) +
+  "\n" +
+  (await readFile("src/components/PapyrusProfilePage.astro", "utf8"));
+const codeDemo = await readFile("src/content/posts/docs/authoring/10-code-demo.md", "utf8");
 const papyrusCss = await readFile("src/styles/papyrus.css", "utf8");
 
 function assert(condition, message) {
@@ -263,9 +267,11 @@ for (const phrase of [
 }
 
 for (const phrase of [
-  "hiddenPosts(demoPosts)",
-  "publishedPosts(demoPosts)",
-  "sortPostsWithPinned(publishedPosts(demoPosts))",
+  'getCollection("posts")',
+  "hiddenPosts(allPosts)",
+  "publishedPosts(allPosts)",
+  "sortPostsWithPinned(publishedPosts(allPosts))",
+  "scheduledListPosts(posts, postLimit)",
   "view=\"list\"",
   "withBase(\"/posts/timeline/\")",
   "withBase(\"/tag/\")",
@@ -277,7 +283,7 @@ for (const phrase of [
 assert(!papyrusPostsIndex.includes('data-posts-view="compact"'), "posts index should not render the compact post-list option directly");
 assert(!papyrusPostsIndex.includes('data-posts-view="cards"'), "posts index should not render the cards post-list option directly");
 
-const packageShapePost = await readFile("src/content/posts/papyrus-package-shape.md", "utf8");
+const packageShapePost = await readFile("src/content/posts/docs/references/24-papyrus-package-shape.md", "utf8");
 for (const phrase of [
   "PapyrusPostList posts={posts} view=\"list\"",
   "PapyrusPostList posts={posts} view=\"compact\"",
@@ -288,8 +294,8 @@ for (const phrase of [
 
 assert(papyrusCss.includes('@import "rehype-callouts/theme/obsidian"'), "papyrus.css should import the rehype-callouts Obsidian theme");
 assert(JSON.stringify(packageJson).includes('"rehype-callouts"'), "package should depend on rehype-callouts");
-assert(astroConfig.includes("rehypeCallouts") && astroConfig.includes("rehypePlugins: [rehypeCallouts"), "Astro config should wire rehype-callouts as a rehype plugin");
-assert(!astroConfig.includes("remarkGithubAlerts"), "Astro config should not use the old custom GitHub alert plugin");
+assert(markdownConfig.includes("rehypeCallouts") && markdownConfig.includes("rehypePlugins: ["), "Markdown config should wire rehype-callouts as a rehype plugin");
+assert(!astroConfig.includes("remarkGithubAlerts") && !markdownConfig.includes("remarkGithubAlerts"), "Markdown config should not use the old custom GitHub alert plugin");
 assert(doc.includes("AstroPapyrus v6.1") && doc.includes("rehype-callouts") && doc.includes("Obsidian theme CSS"), "pure parity doc should record the AstroPapyrus callout decision");
 assert(
   doc.includes("Theme controls are adapted from Pure") && doc.includes("three-icon mode button"),
@@ -312,18 +318,19 @@ assert(
   "pure parity doc should record the upstream Pure Shiki transformer boundary",
 );
 assert(
-  astroConfig.includes('theme: "css-variables"') &&
-    astroConfig.includes("transformerNotationDiff()") &&
-    astroConfig.includes("transformerNotationHighlight()") &&
-    astroConfig.includes("transformerRemoveNotationEscape()") &&
-    astroConfig.includes("updateStyle()") &&
-    astroConfig.includes("addTitle()") &&
-    astroConfig.includes("addLanguage()") &&
-    astroConfig.includes("addCopyButton(2000)") &&
-    astroConfig.includes("addCollapse(15)") &&
-    !astroConfig.includes("rehypePapyrusCode") &&
-    !astroConfig.includes("remarkCodeMeta"),
-  "astro config should follow upstream Pure's css-variables Shiki transformer setup without old code wrappers",
+  astroConfig.includes("papyrusMarkdown") &&
+    markdownConfig.includes('theme: "css-variables"') &&
+    markdownConfig.includes("transformerNotationDiff()") &&
+    markdownConfig.includes("transformerNotationHighlight()") &&
+    markdownConfig.includes("transformerRemoveNotationEscape()") &&
+    markdownConfig.includes("updateStyle()") &&
+    markdownConfig.includes("addTitle()") &&
+    markdownConfig.includes("addLanguage()") &&
+    markdownConfig.includes("addCopyButton(options.copyDuration ?? 2000)") &&
+    markdownConfig.includes("addCollapse(options.collapseLines ?? 15)") &&
+    !markdownConfig.includes("rehypePapyrusCode") &&
+    !markdownConfig.includes("remarkCodeMeta"),
+  "markdown config should follow upstream Pure's css-variables Shiki transformer setup without old code wrappers",
 );
 assert(
   !existsSync("src/markdown/rehype-papyrus-code.mjs") &&
@@ -340,6 +347,9 @@ assert(
     shikiCustom.includes("navigator.clipboard.writeText(this.dataset.code)") &&
     shikiCustom.includes("this.classList.add('copied')") &&
     shikiCustom.includes("this.parentElement.classList.toggle('collapsed')") &&
+    shikiCustom.includes('fill: "currentColor"') &&
+    !shikiCustom.includes("/icons/code.svg") &&
+    !existsSync("public/icons/code.svg") &&
     shikiOfficial.includes("transformerNotationDiff") &&
     shikiOfficial.includes("transformerNotationHighlight") &&
     shikiOfficial.includes("transformerRemoveNotationEscape"),

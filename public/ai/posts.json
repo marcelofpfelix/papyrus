@@ -1,5 +1,43 @@
 [
   {
+    "id": "post:code-demo",
+    "type": "post",
+    "slug": "code-demo",
+    "url": "https://papyrus.marcelofelix.com/posts/code-demo/",
+    "sourcePath": "src/content/posts/docs/authoring/10-code-demo.md",
+    "title": "Markdown code guide",
+    "description": "Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.",
+    "excerpt": "This route is a compact rendering reference for Markdown-heavy posts. It shows how callouts, code fences, tables, diagrams, media, and fallback artifact links look inside the same article layout used by regular Papyrus posts. Inline samples such as `inline code`, ~~strikethrough~",
+    "tags": [
+      "authoring",
+      "markdown",
+      "code"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2026-07-01T13:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:content-structure",
+    "type": "post",
+    "slug": "content-structure",
+    "url": "https://papyrus.marcelofelix.com/posts/content-structure/",
+    "sourcePath": "src/content/posts/docs/authoring/11-content-structure.md",
+    "title": "Generated content structure",
+    "description": "How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.",
+    "excerpt": "Use folder metadata when a site needs nested notes, guides, or knowledge-base pages without turning source paths into fragile public URLs. What gets generated Papyrus can read a folder tree, combine explicit frontmatter with folder-level labels, and render a public index that sti",
+    "tags": [
+      "papyrus",
+      "docs",
+      "content"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2026-07-01T13:10:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
     "id": "post:markdown-feature-sample",
     "type": "post",
     "slug": "markdown-feature-sample",
@@ -33,7 +71,7 @@
       "docs",
       "astro"
     ],
-    "license": "",
+    "license": "CC-BY-4.0",
     "created": "2026-07-01T15:00:00.000Z",
     "updated": "",
     "draft": false
@@ -52,7 +90,7 @@
       "docs",
       "reference"
     ],
-    "license": "",
+    "license": "CC-BY-4.0",
     "created": "2026-07-01T14:00:00.000Z",
     "updated": "",
     "draft": false
@@ -71,7 +109,7 @@
       "mobile",
       "docs"
     ],
-    "license": "",
+    "license": "CC-BY-4.0",
     "created": "2026-07-01T14:10:00.000Z",
     "updated": "",
     "draft": false
@@ -110,7 +148,7 @@
       "collections",
       "reference"
     ],
-    "license": "",
+    "license": "CC-BY-4.0",
     "created": "2026-07-13T08:10:00.000Z",
     "updated": "",
     "draft": false
@@ -130,7 +168,7 @@
       "cv",
       "reference"
     ],
-    "license": "",
+    "license": "CC-BY-4.0",
     "created": "2026-07-13T08:20:00.000Z",
     "updated": "",
     "draft": false
@@ -149,8 +187,27 @@
       "docs",
       "astro"
     ],
-    "license": "",
+    "license": "CC-BY-4.0",
     "created": "2026-07-01T09:00:00.000Z",
+    "updated": "",
+    "draft": false
+  },
+  {
+    "id": "post:features",
+    "type": "post",
+    "slug": "features",
+    "url": "https://papyrus.marcelofelix.com/posts/features/",
+    "sourcePath": "src/content/posts/docs/start/01-features.md",
+    "title": "Feature config",
+    "description": "Grouped feature toggles for Papyrus layouts.",
+    "excerpt": "Use one typed config object to disable optional layout and post features without copying theme components. Base layout Post layout SEO and social metadata Papyrus layouts emit the metadata a small public site normally needs: titles, descriptions, canonical URLs, Open Graph, Twitt",
+    "tags": [
+      "papyrus",
+      "docs",
+      "config"
+    ],
+    "license": "CC-BY-4.0",
+    "created": "2026-07-01T09:10:00.000Z",
     "updated": "",
     "draft": false
   },
@@ -187,7 +244,7 @@
       "config",
       "start"
     ],
-    "license": "",
+    "license": "CC-BY-4.0",
     "created": "2026-07-13T08:00:00.000Z",
     "updated": "",
     "draft": false
@@ -565,7 +622,7 @@
       "papyrus",
       "images"
     ],
-    "license": "",
+    "license": "CC-BY-4.0",
     "created": "2026-08-13",
     "updated": "",
     "draft": false

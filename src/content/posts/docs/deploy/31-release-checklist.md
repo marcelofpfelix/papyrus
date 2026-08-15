@@ -5,6 +5,7 @@ slug: release-checklist
 pubDatetime: 2026-07-14T08:30:00.000Z
 category: Docs
 hidden: true
+license: CC-BY-4.0
 tags:
   - papyrus
   - deploy
