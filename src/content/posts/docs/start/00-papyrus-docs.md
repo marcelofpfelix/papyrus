@@ -4,6 +4,7 @@ description: Start with papyrus-template, then edit config, Markdown, profile da
 slug: papyrus-docs
 pubDatetime: 2026-07-01T09:00:00.000Z
 category: Docs
+license: CC-BY-4.0
 tags:
   - papyrus
   - docs
@@ -42,3 +43,5 @@ Most sites only need these files:
 
 The package repo has more files because it is the theme. A site made from
 `papyrus-template` should stay much smaller.
+
+Repo-only notes stay under `.agents/`; public docs live in this collection.

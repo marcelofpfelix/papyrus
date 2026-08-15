@@ -5,6 +5,8 @@ import { join, resolve } from "node:path";
 
 const root = resolve(new URL("../..", import.meta.url).pathname);
 const failures = [];
+const codeDemoRoute = "/collections/docs/code-demo/";
+const codeDemoSource = "src/content/posts/docs/authoring/10-code-demo.md";
 
 function fail(message) {
   failures.push(message);
@@ -26,30 +28,31 @@ function exists(relativePath) {
   if (!existsSync(join(root, relativePath))) fail(`missing file: ${relativePath}`);
 }
 
-const codeDemo = await text("src/pages/docs/code-demo.md");
-const astroConfig = await text("astro.config.mjs");
+const codeDemo = await text(codeDemoSource);
+const markdownGuide = await text("src/content/posts/docs/authoring/12-markdown-feature-sample.md");
+const markdownConfig = await text("src/markdown/config.mjs");
 const publicPost = await text("public/demo/post-demo.md");
 const excalidrawFixture = JSON.parse(await text("public/demo/sketch.excalidraw"));
 const featureCoverage = JSON.parse(await text(".agents/fixtures/markdown-feature-coverage.json"));
 
-includes(astroConfig, "remarkArtifactLinks", "artifact-link remark plugin");
-includes(astroConfig, "rehypeCallouts", "rehype-callouts plugin");
-includes(astroConfig, "rehype-callouts", "AstroPapyrus-style callouts dependency import");
-includes(astroConfig, "remarkMermaidBlocks", "Mermaid fence remark plugin");
-includes(astroConfig, "shikiConfig", "Astro Shiki config");
-includes(astroConfig, 'theme: "css-variables"', "Pure-style css-variables Shiki theme");
-includes(astroConfig, "transformerNotationDiff()", "Pure-style Shiki diff transformer");
-includes(astroConfig, "transformerNotationHighlight()", "Pure-style Shiki highlight transformer");
-includes(astroConfig, "transformerRemoveNotationEscape()", "Pure-style Shiki escape transformer");
-includes(astroConfig, "updateStyle()", "Pure-style Shiki wrapper transformer");
-includes(astroConfig, "addTitle()", "Pure-style Shiki title transformer");
-includes(astroConfig, "addLanguage()", "Pure-style Shiki language transformer");
-includes(astroConfig, "addCopyButton(2000)", "Pure-style Shiki copy transformer");
-includes(astroConfig, "addCollapse(15)", "Pure-style Shiki collapse transformer");
-includes(astroConfig, "./src/shiki/index.mjs", "local Pure Shiki transformer copy");
-excludes(astroConfig, "@shikijs/transformers", "direct custom Shiki transformer package");
-excludes(astroConfig, "remarkCodeMeta", "custom code metadata wrapper");
-excludes(astroConfig, "rehypePapyrusCode", "custom code block wrapper");
+includes(markdownConfig, "remarkArtifactLinks", "artifact-link remark plugin");
+includes(markdownConfig, "rehypeCallouts", "rehype-callouts plugin");
+includes(markdownConfig, "rehype-callouts", "AstroPapyrus-style callouts dependency import");
+includes(markdownConfig, "remarkMermaidBlocks", "Mermaid fence remark plugin");
+includes(markdownConfig, "shikiConfig", "Astro Shiki config");
+includes(markdownConfig, 'theme: "css-variables"', "Pure-style css-variables Shiki theme");
+includes(markdownConfig, "transformerNotationDiff()", "Pure-style Shiki diff transformer");
+includes(markdownConfig, "transformerNotationHighlight()", "Pure-style Shiki highlight transformer");
+includes(markdownConfig, "transformerRemoveNotationEscape()", "Pure-style Shiki escape transformer");
+includes(markdownConfig, "updateStyle()", "Pure-style Shiki wrapper transformer");
+includes(markdownConfig, "addTitle()", "Pure-style Shiki title transformer");
+includes(markdownConfig, "addLanguage()", "Pure-style Shiki language transformer");
+includes(markdownConfig, "addCopyButton(options.copyDuration ?? 2000)", "Pure-style Shiki copy transformer");
+includes(markdownConfig, "addCollapse(options.collapseLines ?? 15)", "Pure-style Shiki collapse transformer");
+includes(markdownConfig, "../shiki/index.mjs", "local Pure Shiki transformer copy");
+excludes(markdownConfig, "@shikijs/transformers", "direct custom Shiki transformer package");
+excludes(markdownConfig, "remarkCodeMeta", "custom code metadata wrapper");
+excludes(markdownConfig, "rehypePapyrusCode", "custom code block wrapper");
 
 const codeDemoChecks = [
   ['```rust title="src/main.rs"', "Rust titled code fence"],
@@ -87,6 +90,17 @@ const codeDemoChecks = [
 
 for (const [needle, label] of codeDemoChecks) includes(codeDemo, needle, label);
 
+for (const [needle, label] of [
+  ["## Theme-aware SVGs", "theme-aware SVG authoring section"],
+  ["currentColor", "currentColor SVG guidance"],
+  ["var(--papyrus-panel)", "Papyrus panel token SVG example"],
+  ["var(--papyrus-accent)", "Papyrus accent token SVG example"],
+  ["Papyrus does not recolor arbitrary uploaded SVG files", "external SVG limitation"],
+  ['aria-label="Theme-aware mark"', "rendered inline SVG example"],
+]) {
+  includes(markdownGuide, needle, label);
+}
+
 const requiredFeatures = [
   "rust-code",
   "diff-code",
@@ -109,8 +123,8 @@ for (const feature of requiredFeatures) {
     continue;
   }
 
-  if (item.route !== "/docs/code-demo/") fail(`${feature} coverage should point at /docs/code-demo/`);
-  if (item.source !== "src/pages/docs/code-demo.md") fail(`${feature} coverage should point at code-demo source`);
+  if (item.route !== codeDemoRoute) fail(`${feature} coverage should point at ${codeDemoRoute}`);
+  if (item.source !== codeDemoSource) fail(`${feature} coverage should point at code-demo source`);
   if (!item.sourceNeedle || !codeDemo.includes(item.sourceNeedle)) fail(`${feature} sourceNeedle not found in code demo`);
   if (!item.selector) fail(`${feature} coverage missing rendered selector`);
   if (!Array.isArray(item.screenshots) || item.screenshots.length !== 3) fail(`${feature} coverage should map to desktop/tablet/mobile screenshots`);

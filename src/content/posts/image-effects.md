@@ -1,7 +1,9 @@
 ---
 title: Theme-aware image effects
 description: Configure duotone, tritone, and dithered image treatments for covers and profile photos.
+slug: image-effects
 date: 2026-08-13
+license: CC-BY-4.0
 tags:
   - papyrus
   - images

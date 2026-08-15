@@ -4,7 +4,7 @@ description: Markdown route showing Pure-style Astro/Shiki code blocks, callouts
 slug: code-demo
 pubDatetime: 2026-07-01T13:00:00.000Z
 category: Docs
-hidden: true
+license: CC-BY-4.0
 tags:
   - authoring
   - markdown
@@ -14,6 +14,10 @@ tags:
 This route is a compact rendering reference for Markdown-heavy posts. It shows
 how callouts, code fences, tables, diagrams, media, and fallback artifact links
 look inside the same article layout used by regular Papyrus posts.
+
+Inline samples such as `inline code`, ~~strikethrough~~, and
+https://github.com/marcelofpfelix/papyrus keep the prose checks close to the
+code checks.
 
 ## Obsidian callout syntax
 
@@ -32,6 +36,12 @@ look inside the same article layout used by regular Papyrus posts.
 
 > [!CAUTION]
 > Caution callouts stay readable in light and dark modes.
+
+> [!WARNING]- Collapsed warning
+> Collapsed callouts keep long warnings available without dominating the page.
+
+> [!TIP]+ Expanded tip
+> Expanded callouts can stay open when the content is immediately useful.
 
 ## Code title
 
@@ -68,6 +78,27 @@ int main(void) {
 site$ pnpm install
 site# pnpm build
 site> pnpm preview
+```
+
+## Collapsible code
+
+```rust title="src/server.rs"
+use std::net::TcpListener;
+
+fn main() -> std::io::Result<()> {
+    let listener = TcpListener::bind("127.0.0.1:4321")?;
+
+    for stream in listener.incoming() {
+        let stream = stream?;
+        handle(stream);
+    }
+
+    Ok(())
+}
+
+fn handle<T>(_stream: T) {
+    println!("papyrus");
+}
 ```
 
 ## Kamailio fences
@@ -124,3 +155,10 @@ flowchart LR
 Some GitHub-style or diagram-adjacent formats need a site-owned plugin or
 renderer. Papyrus keeps the source visible so authors can choose the right
 integration for their site.
+
+| Feature | Expected fallback |
+| --- | --- |
+| PlantUML inline rendering | Keep as a file link |
+| Excalidraw inline rendering | Keep as a file link |
+| Wiki links like `[[topic]]` | Keep as plain text |
+| Footnotes like `[^1]` | Render when a consuming site adds a plugin |

@@ -11,8 +11,11 @@ function assert(condition, message) {
 const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 const configSource = await readFile("src/config/index.ts", "utf8");
 const configToml = await readFile("papyrus.config.toml", "utf8");
+const baseLayout = await readFile("src/layouts/PapyrusBaseLayout.astro", "utf8");
+const papyrusCss = await readFile("src/styles/papyrus.css", "utf8");
 const installGuide = await readFile("src/content/posts/docs/start/02-install-configure-papyrus.md", "utf8");
 const siteConfigGuide = await readFile("src/content/posts/docs/start/03-site-config.md", "utf8");
+const themeSpec = await readFile("src/content/posts/docs/references/27-theme-spec.md", "utf8");
 const demoNav = await readFile("src/data/demo-nav.ts", "utf8");
 const demoSite = await readFile("src/data/demo-site.ts", "utf8");
 const siteConfigSource = await readFile("scripts/site-config.mjs", "utf8");
@@ -89,6 +92,7 @@ assert(parsed.timezone === "Europe/Lisbon", "parsed timezone should come from pa
 assert(parsed.defaultThemeProfile === "gruvbox", "parsed theme profile should come from papyrus.config.toml");
 assert(parsed.defaultFontProfile === "readable", "parsed font profile should come from papyrus.config.toml");
 assert(parsed.nav.length === 5 && parsed.nav[0].href === "/posts/", "parsed nav should contain five TOML links");
+assert(parsed.footerLinks.length === 1 && parsed.footerLinks[0]?.href === "/collections/docs/", "parsed footer links should come from TOML");
 assert(parsed.socialLinks[0]?.href === "https://github.com/marcelofpfelix/papyrus", "parsed social link should come from TOML");
 assert(parsed.features.search === true && parsed.features.sourceActions === true, "parsed feature flags should merge with defaults");
 assert(parsed.postCard.tags === false, "parsed post-card tags flag should come from TOML");
@@ -96,6 +100,13 @@ assert(parsed.postCard.readTime === false, "parsed post-card read time flag shou
 assert(parsed.postCard.updatedDateOnly === true, "parsed post-card updated-date flag should come from TOML");
 assert(parsed.postCard.limit === 20, "parsed post-card limit should come from TOML");
 assert(parsed.profile.images.effect === "tritone", "parsed profile image effect should come from TOML");
+assert(parsed.markdown.linkStyle === "accent-hover-underline", "parsed markdown link style should come from TOML");
+assert(parsed.markdown.headingStyle === "plain", "parsed markdown heading style should come from TOML");
+assert(parsed.markdown.markerStyle === "accent", "parsed markdown marker style should come from TOML");
+assert(parsed.markdown.blockquoteStyle === "accent-bar", "parsed markdown blockquote style should come from TOML");
+assert(parsed.markdown.tableStyle === "horizontal", "parsed markdown table style should come from TOML");
+assert(parsed.markdown.tableHeaderStyle === "muted", "parsed markdown table header style should come from TOML");
+assert(parsed.markdown.inlineCodeStyle === "panel", "parsed markdown inline code style should come from TOML");
 assert(defaults.postCard.tags === false, "default post-card tags should be hidden");
 assert(defaults.postCard.readTime === false, "default post-card read time should be hidden");
 assert(defaults.postCard.freshIndicators === true, "default post-card fresh indicators should be enabled");
@@ -103,10 +114,18 @@ assert(defaults.postCard.freshIndicatorText === true, "default post-card fresh i
 assert(defaults.postCard.updatedDateOnly === true, "default post-card updated date only should be enabled");
 assert(defaults.postCard.limit === 20, "default post-card limit should be 20");
 assert(defaults.profile.images.effect === "none", "default profile image effect should be disabled");
+assert(defaults.markdown.linkStyle === "accent-hover-underline", "default markdown link style should use accent hover underline");
+assert(defaults.markdown.headingStyle === "plain", "default markdown heading style should be plain");
+assert(defaults.markdown.markerStyle === "accent", "default markdown marker style should be accent");
+assert(defaults.markdown.blockquoteStyle === "accent-bar", "default markdown blockquote style should use accent bar");
+assert(defaults.markdown.tableStyle === "horizontal", "default markdown table style should be horizontal");
+assert(defaults.markdown.tableHeaderStyle === "muted", "default markdown table header style should be muted");
+assert(defaults.markdown.inlineCodeStyle === "panel", "default markdown inline code style should use panel");
 assert(defaults.verification.length === 0, "default verification meta should be empty");
 assert(defaults.analytics.enabled === false, "default analytics should be disabled");
 assert(defaults.analytics.includeInDev === false, "default analytics should not load in dev");
 assert(defaults.head.meta.length === 0 && defaults.head.links.length === 0 && defaults.head.scripts.length === 0, "default head entries should be empty");
+assert(defaults.footerLinks.length === 0, "default footer links should be empty");
 assert(defaults.securityTxt.contacts.length === 0, "default security.txt contacts should be empty");
 for (const page of ["posts", "timeline", "tags", "search", "projects", "about"]) {
   assert(defaults.pages[page]?.description === false, `default ${page} page description should be hidden`);
@@ -119,6 +138,10 @@ const profileOnly = configModule.resolvePapyrusConfig({ profile: { images: { eff
 assert(profileOnly.profile.images.effect === "tritone", "profile image effect override should be preserved");
 const ditherProfile = configModule.resolvePapyrusConfig({ profile: { images: { effect: "dither" } } });
 assert(ditherProfile.profile.images.effect === "dither", "profile image dither effect override should be preserved");
+const markdownOverride = configModule.resolvePapyrusConfig({ markdown: { linkStyle: "underline", tableStyle: "grid", inlineCodeStyle: "accent-soft" } });
+assert(markdownOverride.markdown.linkStyle === "underline", "markdown link style override should be preserved");
+assert(markdownOverride.markdown.tableStyle === "grid", "markdown table style override should be preserved");
+assert(markdownOverride.markdown.inlineCodeStyle === "accent-soft", "markdown inline code style override should be preserved");
 assert(parsedProjectConfig.projects.length === 1, "parsed project config should include one TOML project");
 assert(parsedProjectConfig.projects[0]?.title === "Template project", "parsed project title should come from TOML");
 assert(parsedProjectConfig.projects[0]?.links?.[0]?.text === "site-owner/template", "parsed project link text should come from TOML");
@@ -138,7 +161,21 @@ assert(parsedOpsConfig.securityTxt.contacts.length === 2, "security.txt contacts
 assert(parsedOpsConfig.securityTxt.preferredLanguages === "en, pt", "security.txt preferred languages should parse");
 assert(parsedOpsConfig.securityTxt.policy === "https://site.test/security-policy", "security.txt policy should parse");
 assert(loaded.title === parsed.title && loaded.nav.length === parsed.nav.length, "loadPapyrusConfig should load papyrus.config.toml by default");
+assert(loaded.footerLinks.length === parsed.footerLinks.length, "loadPapyrusConfig should load footer links from papyrus.config.toml");
 assert(scriptConfig.title === parsed.title && scriptConfig.defaultThemeProfile === parsed.defaultThemeProfile, "script siteConfig should prefer papyrus.config.toml");
+assert(baseLayout.includes("configuredSite.footerLinks"), "base layout should use configured footer links when no page override is provided");
+for (const attr of [
+  "data-papyrus-markdown-link-style",
+  "data-papyrus-markdown-heading-style",
+  "data-papyrus-markdown-marker-style",
+  "data-papyrus-markdown-blockquote-style",
+  "data-papyrus-markdown-table-style",
+  "data-papyrus-markdown-table-header-style",
+  "data-papyrus-markdown-inline-code-style",
+]) {
+  assert(baseLayout.includes(attr), `base layout missing markdown style attribute: ${attr}`);
+  assert(papyrusCss.includes(attr), `papyrus CSS missing markdown style selector: ${attr}`);
+}
 
 assert(demoNav.includes("../../papyrus.config.toml?raw"), "demo nav should load the root papyrus.config.toml fixture");
 assert(demoNav.includes("parsePapyrusConfigToml"), "demo nav should parse TOML through the package loader");
@@ -166,10 +203,25 @@ for (const phrase of [
   "provider = \"plausible\"",
   "include_in_dev",
   "[head]",
+  "[[footer]]",
   "[security_txt]",
+  "[markdown]",
+  "accent-hover-underline",
+  "inline_code_style",
   "no contact",
 ]) {
   assert(siteConfigGuide.includes(phrase), `site config guide missing phrase: ${phrase}`);
+}
+
+for (const phrase of [
+  "Markdown prose styling SHOULD be configurable",
+  "Footer extension points MUST stay constrained",
+  "[[footer]]",
+  "link_style",
+  "inline_code_style",
+  "per-heading-level controls",
+]) {
+  assert(themeSpec.includes(phrase), `theme spec missing markdown styling phrase: ${phrase}`);
 }
 
 if (failures.length) {

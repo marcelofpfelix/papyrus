@@ -88,8 +88,8 @@ Papyrus adds these routes:
 | `/rss.xml` | Main RSS feed |
 | `/robots.txt` | Robots file with sitemap URL |
 
-The template does not need a `src/pages` tree unless your site adds custom
-routes.
+Because the pages are injected by the package, the template does not need a
+`src/pages` tree unless your site adds custom routes.
 
 ## Know `src` vs `public`
 

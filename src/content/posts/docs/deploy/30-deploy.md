@@ -4,6 +4,7 @@ description: Static hosting, build settings, metadata URLs, and base-path notes 
 slug: deploy
 pubDatetime: 2026-07-01T15:00:00.000Z
 category: Docs
+license: CC-BY-4.0
 tags:
   - deploy
   - docs

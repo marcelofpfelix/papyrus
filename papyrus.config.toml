@@ -18,6 +18,15 @@ font_profile = "readable"
 [profile.images]
 effect = "tritone"
 
+[markdown]
+link_style = "accent-hover-underline"
+heading_style = "plain"
+marker_style = "accent"
+blockquote_style = "accent-bar"
+table_style = "horizontal"
+table_header_style = "muted"
+inline_code_style = "panel"
+
 [source]
 repo = "marcelofpfelix/papyrus"
 branch = "0.2.2"
@@ -60,6 +69,10 @@ label = "Profile"
 [[nav]]
 href = "/about/"
 label = "About"
+
+[[footer]]
+href = "/collections/docs/"
+label = "Docs"
 
 [[social]]
 href = "https://github.com/marcelofpfelix/papyrus"

@@ -3,7 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import PapyrusHeader from "../components/PapyrusHeader.astro";
 import PapyrusFooter from "../components/PapyrusFooter.astro";
 import PapyrusThemeProvider from "../components/PapyrusThemeProvider.astro";
-import { loadPapyrusConfig, type PapyrusAnalyticsConfig, type PapyrusHeadConfig, type PapyrusVerificationConfig } from "../config";
+import { loadPapyrusConfig, type PapyrusAnalyticsConfig, type PapyrusHeadConfig, type PapyrusMarkdownStyleConfig, type PapyrusVerificationConfig } from "../config";
 import { resolvePapyrusFeatures, type PapyrusFeatureConfig } from "../utils/features";
 import { getAssetPath, stripBase, withBase } from "../utils/withBase";
 import "../styles/papyrus.css";
@@ -31,6 +31,7 @@ interface Props {
   verification?: PapyrusVerificationConfig[];
   analytics?: PapyrusAnalyticsConfig;
   head?: PapyrusHeadConfig;
+  markdown?: Partial<PapyrusMarkdownStyleConfig>;
   nav?: NavItem[];
   footerLinks?: NavItem[];
   socialLinks?: Array<{ href: string; label: string; icon?: string }>;
@@ -58,8 +59,9 @@ const {
   verification,
   analytics,
   head,
+  markdown,
   nav = [],
-  footerLinks = [],
+  footerLinks,
   socialLinks = [],
   rssHref = "/rss.xml",
   poweredBy = true,
@@ -84,7 +86,7 @@ const resolvedCanonicalURL = canonicalURL ? new URL(withBase(canonicalURL), Astr
 const resolvedOgImage = ogImage ? new URL(getAssetPath(ogImage), Astro.site ?? Astro.url).href : undefined;
 const resolvedPageUrl = resolvedCanonicalURL ?? new URL(withBase(stripBase(Astro.url.pathname)), Astro.site ?? Astro.url).href;
 const resolvedNav = nav.map(item => ({ ...item, href: withBase(item.href) }));
-const resolvedFooterLinks = footerLinks.map(item => ({ ...item, href: withBase(item.href) }));
+const resolvedFooterLinks = (footerLinks ?? configuredSite.footerLinks).map(item => ({ ...item, href: withBase(item.href) }));
 const resolvedSocialLinks = socialLinks.map(item => ({ ...item, href: withBase(item.href) }));
 const headerHomeHref = withBase("/");
 const resolvedVerification = [
@@ -93,6 +95,10 @@ const resolvedVerification = [
 ].filter((item, index, items) => items.findIndex(other => other.name === item.name && other.content === item.content) === index);
 const resolvedAnalytics = analytics ?? configuredSite.analytics;
 const resolvedHead = head ?? configuredSite.head;
+const resolvedMarkdown = {
+  ...configuredSite.markdown,
+  ...(markdown ?? {}),
+};
 const showAnalytics = resolvedAnalytics.enabled && (import.meta.env.PROD || resolvedAnalytics.includeInDev);
 const analyticsProvider = resolvedAnalytics.provider;
 const analyticsId = resolvedAnalytics.id;
@@ -100,7 +106,16 @@ const plausibleDomain = resolvedAnalytics.domain ?? (Astro.site ?? Astro.url).ho
 ---
 
 <!doctype html>
-<html lang="en">
+<html
+  lang="en"
+  data-papyrus-markdown-link-style={resolvedMarkdown.linkStyle}
+  data-papyrus-markdown-heading-style={resolvedMarkdown.headingStyle}
+  data-papyrus-markdown-marker-style={resolvedMarkdown.markerStyle}
+  data-papyrus-markdown-blockquote-style={resolvedMarkdown.blockquoteStyle}
+  data-papyrus-markdown-table-style={resolvedMarkdown.tableStyle}
+  data-papyrus-markdown-table-header-style={resolvedMarkdown.tableHeaderStyle}
+  data-papyrus-markdown-inline-code-style={resolvedMarkdown.inlineCodeStyle}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

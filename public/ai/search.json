@@ -1,5 +1,35 @@
 [
   {
+    "id": "post:code-demo",
+    "type": "post",
+    "title": "Markdown code guide",
+    "url": "https://papyrus.marcelofelix.com/posts/code-demo/",
+    "sourcePath": "src/content/posts/docs/authoring/10-code-demo.md",
+    "description": "Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.",
+    "excerpt": "This route is a compact rendering reference for Markdown-heavy posts. It shows how callouts, code fences, tables, diagrams, media, and fallback artifact links look inside the same article layout used by regular Papyrus posts. Inline samples such as `inline code`, ~~strikethrough~",
+    "tags": [
+      "authoring",
+      "markdown",
+      "code"
+    ],
+    "text": "Markdown code guide\nMarkdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.\nThis route is a compact rendering reference for Markdown-heavy posts. It shows how callouts, code fences, tables, diagrams, media, and fallback artifact links look inside the same article layout used by regular Papyrus posts. Inline samples such as `inline code`, ~~strikethrough~\nauthoring markdown code"
+  },
+  {
+    "id": "post:content-structure",
+    "type": "post",
+    "title": "Generated content structure",
+    "url": "https://papyrus.marcelofelix.com/posts/content-structure/",
+    "sourcePath": "src/content/posts/docs/authoring/11-content-structure.md",
+    "description": "How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.",
+    "excerpt": "Use folder metadata when a site needs nested notes, guides, or knowledge-base pages without turning source paths into fragile public URLs. What gets generated Papyrus can read a folder tree, combine explicit frontmatter with folder-level labels, and render a public index that sti",
+    "tags": [
+      "papyrus",
+      "docs",
+      "content"
+    ],
+    "text": "Generated content structure\nHow Papyrus turns nested Markdown folders and folder metadata into a readable public content index.\nUse folder metadata when a site needs nested notes, guides, or knowledge-base pages without turning source paths into fragile public URLs. What gets generated Papyrus can read a folder tree, combine explicit frontmatter with folder-level labels, and render a public index that sti\npapyrus docs content"
+  },
+  {
     "id": "post:markdown-feature-sample",
     "type": "post",
     "title": "Markdown authoring guide",
@@ -121,6 +151,21 @@
       "astro"
     ],
     "text": "Papyrus docs\nStart with papyrus-template, then edit config, Markdown, profile data, and assets.\nPapyrus is a reusable Astro theme for personal sites, technical notes, project pages, and profile/CV pages. Start from `papyrus-template`, keep your content in that site, and let `astro-papyrus` provide the shared routes and components. Read first - [Install and configure Papyrus\npapyrus docs astro"
+  },
+  {
+    "id": "post:features",
+    "type": "post",
+    "title": "Feature config",
+    "url": "https://papyrus.marcelofelix.com/posts/features/",
+    "sourcePath": "src/content/posts/docs/start/01-features.md",
+    "description": "Grouped feature toggles for Papyrus layouts.",
+    "excerpt": "Use one typed config object to disable optional layout and post features without copying theme components. Base layout Post layout SEO and social metadata Papyrus layouts emit the metadata a small public site normally needs: titles, descriptions, canonical URLs, Open Graph, Twitt",
+    "tags": [
+      "papyrus",
+      "docs",
+      "config"
+    ],
+    "text": "Feature config\nGrouped feature toggles for Papyrus layouts.\nUse one typed config object to disable optional layout and post features without copying theme components. Base layout Post layout SEO and social metadata Papyrus layouts emit the metadata a small public site normally needs: titles, descriptions, canonical URLs, Open Graph, Twitt\npapyrus docs config"
   },
   {
     "id": "post:install-configure-papyrus",

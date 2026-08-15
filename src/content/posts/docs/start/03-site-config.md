@@ -4,6 +4,7 @@ description: What papyrus.config.toml controls and how a site should edit it.
 slug: site-config
 pubDatetime: 2026-07-13T08:00:00.000Z
 category: Docs
+license: CC-BY-4.0
 tags:
   - papyrus
   - config
@@ -27,6 +28,7 @@ metadata. Use `src/data/projects.toml` for project cards and
 | `[theme]` | Default color profile and font profile |
 | `[home]` | Homepage counts and layout-facing defaults |
 | `[profile.images]` | Default visual treatment for profile images |
+| `[markdown]` | Prose styling presets for links, headings, lists, quotes, tables, and inline code |
 | `[pages.<name>]` | Optional text overrides for inherited page descriptions |
 | `[verification]` and `[[verification_meta]]` | Search engine and service verification meta tags |
 | `[analytics]` | Optional production-only analytics script |
@@ -35,7 +37,8 @@ metadata. Use `src/data/projects.toml` for project cards and
 | `[features]` | Optional UI, metadata, comments, search, graph, media, and profile features |
 | `[post_card]` | Post-list tags, read time, fresh indicators, updated-date behavior, and default limit |
 | `[[nav]]` | Header navigation links |
-| `[[social]]` | Social links used by the header and footer |
+| `[[footer]]` | Footer text links |
+| `[[social]]` | Footer social icon links |
 
 Papyrus reads this file with `loadPapyrusConfig()`. If it is missing, package
 defaults are used so a minimal template can still build.
@@ -175,9 +178,9 @@ src = "https://example.test/script.js"
 defer = true
 ```
 
-Footer links already use `[[social]]` and the shared footer. Add provider
-widgets as normal links when possible; only use `[head]` when a provider really
-needs a document-level tag or script.
+Footer links use `[[footer]]` for normal text links and `[[social]]` for icon
+links. Add provider widgets as normal links when possible; only use `[head]`
+when a provider really needs a document-level tag or script.
 
 ## Security.txt
 
@@ -223,6 +226,35 @@ colors. `tritone` also uses the accent color. `dither` and `dithernoise`
 generate masks at build time and color them with theme-aware ink. A profile data
 file can still override the default for its own avatar with `avatar_effect`.
 
+## Markdown styling
+
+Markdown styling uses named presets instead of custom per-element colors. The
+presets map to the active theme tokens, so they keep working when the reader
+switches color mode or theme profile.
+
+```toml title="papyrus.config.toml"
+[markdown]
+link_style = "accent-hover-underline"
+heading_style = "plain"
+marker_style = "accent"
+blockquote_style = "accent-bar"
+table_style = "horizontal"
+table_header_style = "muted"
+inline_code_style = "panel"
+```
+
+Supported values:
+
+| Option | Values |
+| --- | --- |
+| `link_style` | `accent`, `underline`, `accent-underline`, `accent-hover-underline` |
+| `heading_style` | `plain`, `accent`, `muted-accent` |
+| `marker_style` | `plain`, `muted`, `accent` |
+| `blockquote_style` | `muted-bar`, `accent-bar`, `panel` |
+| `table_style` | `none`, `horizontal`, `grid` |
+| `table_header_style` | `plain`, `muted`, `panel` |
+| `inline_code_style` | `plain`, `panel`, `accent-soft` |
+
 ## Post-list defaults
 
 Post-card options apply to normal post lists such as home and `/posts/`:
@@ -243,10 +275,14 @@ updated posts while the post page can still show both created and updated dates.
 
 ## Projects and links
 
-Use repeated TOML tables for navigation and social links in
+Use repeated TOML tables for navigation, footer links, and social links in
 `papyrus.config.toml`:
 
 ```toml title="papyrus.config.toml"
+[[footer]]
+href = "/collections/docs/"
+label = "Docs"
+
 [[social]]
 href = "https://github.com/site-owner"
 label = "GitHub"

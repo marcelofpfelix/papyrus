@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { access, mkdtemp, readFile, readdir, rm } from "node:fs/promises";
+import { access, mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { execFile } from "node:child_process";
@@ -29,29 +29,6 @@ async function readJson(path) {
   return JSON.parse(await readFile(path, "utf8"));
 }
 
-async function walkDocs(dir) {
-  const entries = await readdir(dir, { withFileTypes: true });
-  const files = [];
-  for (const entry of entries) {
-    const fullPath = join(dir, entry.name);
-    if (entry.isDirectory()) {
-      files.push(...await walkDocs(fullPath));
-    } else if (/\.(astro|md|mdx)$/i.test(entry.name)) {
-      files.push(fullPath);
-    }
-  }
-  return files;
-}
-
-function docsUrlFor(file) {
-  const relative = file
-    .replace(/^src\/pages\/docs\/?/, "")
-    .replace(/\.(astro|md|mdx)$/i, "");
-  const parts = relative.split("/").filter(part => part && part !== "index");
-  const pathname = `/docs/${parts.length > 0 ? `${parts.join("/")}/` : ""}`;
-  return new URL(pathname, siteUrl.endsWith("/") ? siteUrl : `${siteUrl}/`).toString();
-}
-
 async function compareGenerated(relativePath) {
   const generated = await readFile(join(publicOut, relativePath), "utf8");
   const currentPath = join("public", relativePath);
@@ -79,7 +56,7 @@ function withoutGeneratedAt(value) {
 }
 
 try {
-  await execFileAsync("node", ["scripts/generate-llms.mjs", "src/content/posts", publicOut, siteUrl, "src/pages/docs"]);
+  await execFileAsync("node", ["scripts/generate-llms.mjs", "src/content/posts", publicOut, siteUrl]);
   await execFileAsync("node", ["scripts/generate-ai-indexes.mjs", "src/content/posts", aiOut, siteUrl, "public/demo/site-data.json"]);
   await execFileAsync("node", ["scripts/generate-tag-rss.mjs", "src/content/posts", rssOut]);
   await execFileAsync("node", ["scripts/validate-ai-metadata.mjs", "src/content/posts", "public/demo/site-data.json"]);
@@ -87,29 +64,21 @@ try {
   const llms = await readFile(join(publicOut, "llms.txt"), "utf8");
   const full = await readFile(join(publicOut, "llms-full.txt"), "utf8");
   assert(llms.includes("# Content index"), "llms.txt missing content index heading");
-  assert(llms.includes("AI-first metadata"), "llms.txt missing AI metadata post");
-  assert(llms.includes(`${siteUrl}/posts/ai-first-metadata-demo/`), "llms.txt missing absolute post URL");
-  assert(llms.includes("# Documentation URLs"), "llms.txt missing documentation URLs heading");
-  assert(llms.includes(`${siteUrl}/docs/`), "llms.txt missing docs index URL");
-  assert(llms.includes(`${siteUrl}/docs/code-demo/`), "llms.txt missing code demo docs URL");
-  const docsFiles = await walkDocs("src/pages/docs");
-  const docsUrls = docsFiles.map(docsUrlFor);
-  assert(docsUrls.length >= 10, `expected at least 10 docs URLs, found ${docsUrls.length}`);
-  for (const url of docsUrls) {
-    assert(llms.includes(url), `llms.txt missing documentation URL ${url}`);
-  }
+  assert(llms.includes("AI and mobile readiness"), "llms.txt missing AI metadata post");
+  assert(llms.includes(`${siteUrl}/posts/ai-mobile/`), "llms.txt missing absolute post URL");
+  assert(llms.includes(`${siteUrl}/posts/papyrus-docs/`), "llms.txt missing docs overview post URL");
+  assert(llms.includes(`${siteUrl}/posts/feature-map/`), "llms.txt missing feature map post URL");
   assert(full.includes("# Full content corpus"), "llms-full.txt missing corpus heading");
-  assert(full.includes("Source: src/content/posts/ai-first-demo.md"), "llms-full.txt missing source path");
-  assert(full.includes("Source: src/pages/docs/index.astro"), "llms-full.txt missing docs index source path");
-  assert(full.includes("Open the Markdown guide to review code, alerts, diagrams, artifact links, and Markdown behavior."), "llms-full.txt missing public docs index copy");
+  assert(full.includes("Source: src/content/posts/docs/references/21-ai-mobile.md"), "llms-full.txt missing AI metadata source path");
+  assert(full.includes("Source: src/content/posts/docs/start/00-papyrus-docs.md"), "llms-full.txt missing docs overview source path");
+  assert(full.includes("Source: src/content/posts/docs/references/20-feature-map.md"), "llms-full.txt missing feature map source path");
+  assert(full.includes("Start with papyrus-template, then edit config, Markdown, profile data, and assets."), "llms-full.txt missing docs overview copy");
   assert(full.includes("Deploy Papyrus"), "llms-full.txt missing public deploy docs copy");
-  assert(full.includes("Every public feature has a route"), "llms-full.txt missing public feature-map docs copy");
+  assert(full.includes("This is a map of the demo site"), "llms-full.txt missing public feature-map docs copy");
   assert(full.includes('<PapyrusPostList posts={posts} view="list" />'), "llms-full.txt should preserve fenced Astro component examples");
-  assert(full.includes('<PapyrusBaseLayout title="Posts" description="All posts.">'), "llms-full.txt should preserve fenced layout examples");
   assert(!full.includes("Folder tags for nested posts"), "llms-full.txt should exclude hidden posts");
   assert(!full.includes('import { demoNav }'), "llms-full.txt should not expose Astro docs implementation imports");
   assert(!full.includes("const demoPlugins"), "llms-full.txt should not expose Astro docs implementation constants");
-  assert(!full.includes("const features ="), "llms-full.txt should not expose Astro docs implementation arrays");
   assert(!full.includes("baseExample") && !full.includes("postExample") && !full.includes("commentsExample") && !full.includes("pluginExample"), "llms-full.txt should not expose Astro docs expression placeholders");
 
   const posts = await readJson(join(aiOut, "posts.json"));
@@ -122,15 +91,15 @@ try {
   const index = await readJson(join(aiOut, "index.json"));
 
   assert(Array.isArray(posts) && posts.length >= 1, "posts.json should contain posts");
-  assert(posts.some(post => post.id === "post:ai-first-metadata-demo" && post.slug === "ai-first-metadata-demo" && post.sourcePath === "src/content/posts/ai-first-demo.md"), "posts.json missing stable AI metadata post source metadata");
+  assert(posts.some(post => post.id === "post:ai-mobile" && post.slug === "ai-mobile" && post.sourcePath === "src/content/posts/docs/references/21-ai-mobile.md"), "posts.json missing stable AI metadata post source metadata");
   assert(!posts.some(post => post.slug === "folder-tags-demo" || post.id === "post:folder-tags-demo"), "posts.json should exclude hidden posts");
   assert(Array.isArray(tags) && tags.some(tag => tag.id === "tag:ai" && tag.tag === "ai" && tag.count >= 1), "tags.json missing stable #ai tag");
-  assert(Array.isArray(projects) && projects.some(project => project.id === "project:papyrus"), "projects.json should contain stable demo projects");
-  assert(Array.isArray(notes) && notes.some(note => note.id === "note:pure-shiki-code"), "notes.json should contain stable demo notes");
+  assert(Array.isArray(projects) && projects.some(project => project.id === "project:papyrus-theme"), "projects.json should contain stable demo projects");
+  assert(Array.isArray(notes) && notes.some(note => note.id === "note:template-first"), "notes.json should contain stable demo notes");
   assert(Array.isArray(cv) && cv.some(item => item.id === "cv:mira-lee" && item.type === "cv" && item.name === "Mira Lee"), "cv.json should contain stable CV metadata");
-  assert(Array.isArray(search) && search.some(item => item.id === "post:ai-first-metadata-demo" && item.type === "post" && item.text.includes("same public content set")), "search.json missing searchable stable post text");
-  assert(search.some(item => item.id === "project:ai-indexes" && item.text.includes("Static JSON")), "search.json missing searchable project text");
-  assert(Array.isArray(graph.nodes) && graph.nodes.some(node => node.id === "post:ai-first-metadata-demo"), "graph.json missing post node");
+  assert(Array.isArray(search) && search.some(item => item.id === "post:ai-mobile" && item.type === "post" && item.text.includes("generated indexes")), "search.json missing searchable stable post text");
+  assert(search.some(item => item.id === "project:papyrus-theme" && item.text.includes("Reusable Astro theme package")), "search.json missing searchable project text");
+  assert(Array.isArray(graph.nodes) && graph.nodes.some(node => node.id === "post:ai-mobile"), "graph.json missing post node");
   assert(Array.isArray(graph.edges) && graph.edges.some(edge => edge.relation === "has-tag"), "graph.json missing tag edges");
   assert(index.files?.posts === "posts.json" && index.files?.search === "search.json" && index.files?.graph === "graph.json", "ai/index.json missing generated file map");
 
@@ -139,7 +108,7 @@ try {
   const astroFeed = await readFile(join(rssOut, "astro.xml"), "utf8");
   assert(Array.isArray(rssIndex) && rssIndex.some(item => item.tag === "ai" && item.feed === "/rss/tags/ai.xml"), "RSS tag index missing #ai feed");
   assert(aiFeed.includes("<title>#ai posts</title>"), "ai RSS feed missing title");
-  assert(aiFeed.includes("/posts/ai-first-metadata-demo/"), "ai RSS feed missing post URL");
+  assert(aiFeed.includes("/posts/ai-mobile/"), "ai RSS feed missing post URL");
   assert(!astroFeed.includes("/posts/folder-tags-demo/"), "tag RSS feeds should exclude hidden posts");
 
   await compareGenerated("llms.txt");
@@ -161,7 +130,7 @@ try {
   assert(metadataComponent.includes('"@id": stableId'), "PapyrusAiMetadata should emit JSON-LD @id");
   assert(postLayout.includes('id={canonicalUrl ? `${canonicalUrl.replace(/#.*$/, "")}#post` : undefined}'), "PapyrusPostLayout should pass a stable post JSON-LD id");
 
-  console.log("Verified llms files with all docs URLs, stable AI JSON indexes, search index, graph export, metadata validation, and tag RSS feeds.");
+  console.log("Verified llms files, stable AI JSON indexes, search index, graph export, metadata validation, and tag RSS feeds.");
 } finally {
   await rm(tmp, { recursive: true, force: true });
 }

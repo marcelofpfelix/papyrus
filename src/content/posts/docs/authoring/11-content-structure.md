@@ -4,7 +4,7 @@ description: How Papyrus turns nested Markdown folders and folder metadata into 
 slug: content-structure
 pubDatetime: 2026-07-01T13:10:00.000Z
 category: Docs
-hidden: true
+license: CC-BY-4.0
 tags:
   - papyrus
   - docs

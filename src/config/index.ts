@@ -32,6 +32,24 @@ export type PapyrusPostCardConfig = {
   limit?: number;
 };
 
+export type PapyrusMarkdownLinkStyle = "accent" | "underline" | "accent-underline" | "accent-hover-underline";
+export type PapyrusMarkdownHeadingStyle = "plain" | "accent" | "muted-accent";
+export type PapyrusMarkdownMarkerStyle = "plain" | "muted" | "accent";
+export type PapyrusMarkdownBlockquoteStyle = "muted-bar" | "accent-bar" | "panel";
+export type PapyrusMarkdownTableStyle = "none" | "horizontal" | "grid";
+export type PapyrusMarkdownTableHeaderStyle = "plain" | "muted" | "panel";
+export type PapyrusMarkdownInlineCodeStyle = "plain" | "panel" | "accent-soft";
+
+export type PapyrusMarkdownStyleConfig = {
+  linkStyle: PapyrusMarkdownLinkStyle;
+  headingStyle: PapyrusMarkdownHeadingStyle;
+  markerStyle: PapyrusMarkdownMarkerStyle;
+  blockquoteStyle: PapyrusMarkdownBlockquoteStyle;
+  tableStyle: PapyrusMarkdownTableStyle;
+  tableHeaderStyle: PapyrusMarkdownTableHeaderStyle;
+  inlineCodeStyle: PapyrusMarkdownInlineCodeStyle;
+};
+
 export type PapyrusHomeConfig = {
   projectLimit: number;
 };
@@ -130,22 +148,26 @@ export type PapyrusSiteConfig = {
   defaultThemeProfile: string;
   defaultFontProfile: string;
   nav: PapyrusLinkConfig[];
+  footerLinks: PapyrusLinkConfig[];
   socialLinks: PapyrusLinkConfig[];
   projects: PapyrusProjectConfig[];
   home: PapyrusHomeConfig;
   profile: PapyrusProfileConfig;
+  markdown: PapyrusMarkdownStyleConfig;
   pages: Record<string, PapyrusPageConfig>;
   source: PapyrusSourceConfig;
   features: Required<PapyrusFeatureConfig>;
   postCard: PapyrusPostCardConfig;
 };
 
-export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "home" | "profile" | "nav" | "socialLinks" | "source" | "analytics" | "head" | "securityTxt">> & {
+export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "home" | "profile" | "markdown" | "nav" | "footerLinks" | "socialLinks" | "source" | "analytics" | "head" | "securityTxt">> & {
   features?: PapyrusFeatureConfig;
   postCard?: Partial<PapyrusPostCardConfig>;
   home?: Partial<PapyrusHomeConfig>;
   profile?: PapyrusProfileConfigInput;
+  markdown?: Partial<PapyrusMarkdownStyleConfig>;
   nav?: PapyrusLinkConfig[];
+  footerLinks?: PapyrusLinkConfig[];
   socialLinks?: PapyrusLinkConfig[];
   projects?: PapyrusProjectConfig[];
   pages?: Record<string, PapyrusPageConfig>;
@@ -173,6 +195,16 @@ const defaultProfile = {
     effect: "none",
   },
 } satisfies PapyrusProfileConfig;
+
+const defaultMarkdown = {
+  linkStyle: "accent-hover-underline",
+  headingStyle: "plain",
+  markerStyle: "accent",
+  blockquoteStyle: "accent-bar",
+  tableStyle: "horizontal",
+  tableHeaderStyle: "muted",
+  inlineCodeStyle: "panel",
+} satisfies PapyrusMarkdownStyleConfig;
 
 const defaultAnalytics = {
   enabled: false,
@@ -203,10 +235,12 @@ const defaultConfig = {
   defaultThemeProfile: "gruvbox",
   defaultFontProfile: "readable",
   nav: [],
+  footerLinks: [],
   socialLinks: [],
   projects: [],
   home: defaultHome,
   profile: defaultProfile,
+  markdown: defaultMarkdown,
   pages: defaultPages,
   source: {},
   verification: [],
@@ -235,6 +269,10 @@ function asNumber(value: unknown): number | undefined {
 
 function asImageEffect(value: unknown): PapyrusImageEffect | undefined {
   return isPapyrusImageEffect(value) ? value : undefined;
+}
+
+function enumValue<const T extends readonly string[]>(value: unknown, allowed: T): T[number] | undefined {
+  return typeof value === "string" && allowed.includes(value) ? value : undefined;
 }
 
 function asStringArray(value: unknown): string[] {
@@ -449,6 +487,25 @@ function readProfileConfig(record: Record<string, unknown>): PapyrusProfileConfi
   };
 }
 
+function readMarkdownConfig(record: Record<string, unknown>): Partial<PapyrusMarkdownStyleConfig> {
+  const linkStyle = enumValue(record.linkStyle ?? record.link_style, ["accent", "underline", "accent-underline", "accent-hover-underline"] as const);
+  const headingStyle = enumValue(record.headingStyle ?? record.heading_style, ["plain", "accent", "muted-accent"] as const);
+  const markerStyle = enumValue(record.markerStyle ?? record.marker_style, ["plain", "muted", "accent"] as const);
+  const blockquoteStyle = enumValue(record.blockquoteStyle ?? record.blockquote_style, ["muted-bar", "accent-bar", "panel"] as const);
+  const tableStyle = enumValue(record.tableStyle ?? record.table_style, ["none", "horizontal", "grid"] as const);
+  const tableHeaderStyle = enumValue(record.tableHeaderStyle ?? record.table_header_style, ["plain", "muted", "panel"] as const);
+  const inlineCodeStyle = enumValue(record.inlineCodeStyle ?? record.inline_code_style, ["plain", "panel", "accent-soft"] as const);
+  return {
+    ...(linkStyle ? { linkStyle } : {}),
+    ...(headingStyle ? { headingStyle } : {}),
+    ...(markerStyle ? { markerStyle } : {}),
+    ...(blockquoteStyle ? { blockquoteStyle } : {}),
+    ...(tableStyle ? { tableStyle } : {}),
+    ...(tableHeaderStyle ? { tableHeaderStyle } : {}),
+    ...(inlineCodeStyle ? { inlineCodeStyle } : {}),
+  };
+}
+
 function mergePages(pages: Record<string, PapyrusPageConfig> = {}): Record<string, PapyrusPageConfig> {
   return Object.fromEntries(
     Array.from(new Set([...Object.keys(defaultConfig.pages), ...Object.keys(pages)])).map((key) => [
@@ -470,6 +527,7 @@ export function resolvePapyrusConfig(config: PapyrusConfigInput = {}): PapyrusSi
     ...defaultConfig,
     ...config,
     nav: config.nav ?? defaultConfig.nav,
+    footerLinks: config.footerLinks ?? defaultConfig.footerLinks,
     socialLinks: config.socialLinks ?? defaultConfig.socialLinks,
     projects: config.projects ?? defaultConfig.projects,
     home: {
@@ -483,6 +541,10 @@ export function resolvePapyrusConfig(config: PapyrusConfigInput = {}): PapyrusSi
         ...defaultProfile.images,
         ...(config.profile?.images ?? {}),
       },
+    },
+    markdown: {
+      ...defaultMarkdown,
+      ...(config.markdown ?? {}),
     },
     pages: mergePages(config.pages),
     source: config.source ?? defaultConfig.source,
@@ -524,6 +586,7 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
   const sourceConfig = asRecord(parsed.source);
   const home = asRecord(parsed.home);
   const profile = asRecord(parsed.profile);
+  const markdown = asRecord(parsed.markdown);
   const security = asRecord(parsed.security_txt ?? parsed.securityTxt ?? parsed.security);
 
   return resolvePapyrusConfig({
@@ -553,10 +616,12 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
     defaultThemeProfile: asString(theme.profile ?? theme.defaultThemeProfile ?? theme.default_theme_profile ?? parsed.defaultThemeProfile ?? parsed.default_theme_profile),
     defaultFontProfile: asString(theme.fontProfile ?? theme.font_profile ?? parsed.defaultFontProfile ?? parsed.default_font_profile),
     nav: asLinks(parsed.nav),
+    footerLinks: asLinks(parsed.footer ?? parsed.footerLinks ?? parsed.footer_links),
     socialLinks: asLinks(parsed.social ?? parsed.socialLinks ?? parsed.social_links),
     projects: asProjects(parsed.project ?? parsed.projects),
     home: readHomeConfig(home),
     profile: readProfileConfig(profile),
+    markdown: readMarkdownConfig(markdown),
     pages: asPages(parsed.pages ?? parsed.page),
     source: asSourceConfig(sourceConfig),
     features: readFeatureConfig(asRecord(parsed.features)),

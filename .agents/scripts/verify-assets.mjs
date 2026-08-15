@@ -14,6 +14,8 @@ const manifestPath = join(publicDir, "site.webmanifest");
 const appleTouchPath = join(publicDir, "apple-touch-icon.png");
 const icon192Path = join(publicDir, "icon-192.png");
 const icon512Path = join(publicDir, "icon-512.png");
+const packageShapePath = join(publicDir, "images/papyrus-package-shape.svg");
+const markdownCoverPath = join(publicDir, "demo/covers/markdown.svg");
 const baseLayoutPath = resolve("src/layouts/PapyrusBaseLayout.astro");
 const logoScriptPath = resolve("scripts/create-logo-svg.mjs");
 const mobileIconScriptPath = resolve("scripts/create-mobile-icons.mjs");
@@ -46,9 +48,11 @@ try {
   await execFileAsync("node", ["scripts/create-mobile-icons.mjs", "~ $", generatedTerminalIconsDir], { cwd: root });
   await execFileAsync("node", ["scripts/create-webmanifest.mjs", "papyrus", generatedManifest, "/logo.svg"], { cwd: root });
 
-  const [logo, favicon, expectedLogo, terminalLogo, manifestText, expectedManifestText, appleTouch, icon192, icon512, expectedAppleTouch, expectedIcon192, expectedIcon512, terminalIcon192, baseLayout, logoScript, mobileIconScript] = await Promise.all([
+  const [logo, favicon, packageShape, markdownCover, expectedLogo, terminalLogo, manifestText, expectedManifestText, appleTouch, icon192, icon512, expectedAppleTouch, expectedIcon192, expectedIcon512, terminalIcon192, baseLayout, logoScript, mobileIconScript] = await Promise.all([
     readFile(logoPath, "utf8"),
     readFile(faviconPath, "utf8"),
+    readFile(packageShapePath, "utf8"),
+    readFile(markdownCoverPath, "utf8"),
     readFile(generatedLogo, "utf8"),
     readFile(generatedTerminalLogo, "utf8"),
     readFile(manifestPath, "utf8"),
@@ -73,6 +77,8 @@ try {
   assert(logo.includes("fill=\"var(--papyrus-bg, #f9f5d7)\""), "logo background does not use the default theme background fallback");
   assert(logo.includes("fill: var(--papyrus-fg, #654735)"), "logo foreground does not use the default theme foreground fallback");
   assert(logo.includes("var(--papyrus-accent"), "logo does not use the theme accent on hover");
+  assert(packageShape.includes("var(--papyrus-bg") && packageShape.includes("var(--papyrus-fg") && packageShape.includes("var(--papyrus-accent"), "package-shape SVG should use Papyrus theme variables");
+  assert(markdownCover.includes("var(--papyrus-bg") && markdownCover.includes("var(--papyrus-fg") && markdownCover.includes("var(--papyrus-accent"), "markdown cover SVG should use Papyrus theme variables");
   assert(logo.includes("@keyframes twinkle"), "Twinkling logo is missing twinkle keyframes");
   assert(logo.includes("animation: twinkle 2.6s ease-in-out infinite"), "Twinkling logo is missing twinkle animation");
   assert(logo.includes("prefers-reduced-motion: reduce"), "Twinkling logo is missing reduced-motion CSS");

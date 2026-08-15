@@ -2969,6 +2969,109 @@ a {
   padding-left: 16px;
 }
 
+:root[data-papyrus-markdown-link-style="accent"] .papyrus-prose a {
+  color: var(--papyrus-accent);
+  text-decoration: none;
+}
+
+:root[data-papyrus-markdown-link-style="underline"] .papyrus-prose a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+:root[data-papyrus-markdown-link-style="accent-underline"] .papyrus-prose a {
+  color: var(--papyrus-accent);
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+:root[data-papyrus-markdown-link-style="accent-hover-underline"] .papyrus-prose a {
+  color: var(--papyrus-accent);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+:root[data-papyrus-markdown-link-style="accent"] .papyrus-prose a:hover,
+:root[data-papyrus-markdown-link-style="accent"] .papyrus-prose a:focus-visible,
+:root[data-papyrus-markdown-link-style="accent-hover-underline"] .papyrus-prose a:hover,
+:root[data-papyrus-markdown-link-style="accent-hover-underline"] .papyrus-prose a:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.18em;
+}
+
+:root[data-papyrus-markdown-heading-style="accent"] .papyrus-prose :where(h2, h3, h4) {
+  color: var(--papyrus-accent);
+}
+
+:root[data-papyrus-markdown-heading-style="muted-accent"] .papyrus-prose :where(h2, h3, h4) {
+  color: var(--papyrus-muted);
+}
+
+:root[data-papyrus-markdown-heading-style="muted-accent"] .papyrus-prose :where(h2, h3, h4)::first-letter {
+  color: var(--papyrus-accent);
+}
+
+:root[data-papyrus-markdown-marker-style="muted"] .papyrus-prose :where(li)::marker {
+  color: var(--papyrus-muted);
+}
+
+:root[data-papyrus-markdown-marker-style="accent"] .papyrus-prose :where(li)::marker {
+  color: var(--papyrus-accent);
+}
+
+:root[data-papyrus-markdown-blockquote-style="muted-bar"] .papyrus-prose blockquote {
+  border-left-color: var(--papyrus-muted);
+}
+
+:root[data-papyrus-markdown-blockquote-style="panel"] .papyrus-prose blockquote {
+  background: var(--papyrus-panel);
+  border: 1px solid var(--papyrus-border);
+  border-left: 3px solid var(--papyrus-accent);
+  border-radius: var(--papyrus-radius);
+  padding: 14px 16px;
+}
+
+:root[data-papyrus-markdown-table-style="none"] .papyrus-prose :where(th, td) {
+  border-bottom: 0;
+}
+
+:root[data-papyrus-markdown-table-style="grid"] .papyrus-prose :where(th, td) {
+  border-bottom: 1px solid var(--papyrus-border);
+  border-right: 1px solid var(--papyrus-border);
+}
+
+:root[data-papyrus-markdown-table-style="grid"] .papyrus-prose :where(th:first-child, td:first-child) {
+  border-left: 1px solid var(--papyrus-border);
+}
+
+:root[data-papyrus-markdown-table-style="grid"] .papyrus-prose :where(tr:first-child th, tr:first-child td) {
+  border-top: 1px solid var(--papyrus-border);
+}
+
+:root[data-papyrus-markdown-table-header-style="plain"] .papyrus-prose :where(th) {
+  color: var(--papyrus-fg);
+}
+
+:root[data-papyrus-markdown-table-header-style="panel"] .papyrus-prose :where(th) {
+  background: var(--papyrus-panel);
+  color: var(--papyrus-fg);
+}
+
+:root[data-papyrus-markdown-inline-code-style="plain"] .papyrus-prose :where(:not(pre) > code) {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+:root[data-papyrus-markdown-inline-code-style="accent-soft"] .papyrus-prose :where(:not(pre) > code) {
+  background: color-mix(in srgb, var(--papyrus-accent) 14%, transparent);
+  color: var(--papyrus-accent);
+}
+
 @media (max-width: 640px) {
   .papyrus-scroll-progress {
     display: block;

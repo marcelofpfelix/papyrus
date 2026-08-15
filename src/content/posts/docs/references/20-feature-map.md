@@ -4,6 +4,7 @@ description: Route-by-route guide to public Papyrus features.
 slug: feature-map
 pubDatetime: 2026-07-01T14:00:00.000Z
 category: Docs
+license: CC-BY-4.0
 tags:
   - papyrus
   - docs

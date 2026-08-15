@@ -4,6 +4,7 @@ description: What the Papyrus profile data file controls and how profile, print,
 slug: profile
 pubDatetime: 2026-07-13T08:20:00.000Z
 category: Docs
+license: CC-BY-4.0
 tags:
   - papyrus
   - profile
