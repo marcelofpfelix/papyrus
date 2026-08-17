@@ -144,11 +144,11 @@
   ],
   "scripts": {
     "check": "astro check",
-    "build": "pnpm run image:effects && pnpm run social:images && pnpm run cv:export && pnpm run build:llms && pnpm run ai:indexes -- src/content/posts public/ai ${SITE_URL:-https://papyrus.marcelofelix.com} public/demo/site-data.json && pnpm run rss:tags && astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
+    "build": "pnpm run image:effects && pnpm run social:images && pnpm run cv:export && pnpm run build:llms && pnpm run ai:indexes -- src/content/posts public/ai ${SITE_URL:-${CF_PAGES_URL:-https://papyrus.marcelofelix.com}} public/demo/site-data.json && pnpm run rss:tags && astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
     "cv:export": "node scripts/export-cv.mjs src/data/profile.toml public/cv/profile",
     "cv:check": "node scripts/export-cv.mjs src/data/profile.toml public/cv/profile --check",
     "precommit": "pnpm run cv:export",
-    "build:llms": "node scripts/generate-llms.mjs src/content/posts public ${SITE_URL:-https://papyrus.marcelofelix.com}",
+    "build:llms": "node scripts/generate-llms.mjs src/content/posts public ${SITE_URL:-${CF_PAGES_URL:-https://papyrus.marcelofelix.com}}",
     "logo": "node scripts/create-logo-svg.mjs --twinkle public/logo.svg && node scripts/create-logo-svg.mjs --twinkle public/favicon.svg",
     "mobile-icons": "node scripts/create-mobile-icons.mjs",
     "manifest": "node scripts/create-webmanifest.mjs",
