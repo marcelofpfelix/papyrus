@@ -115,6 +115,9 @@ for (const project of demoSiteData.projects ?? []) {
 const homeHtml = await readFile("dist/index.html", "utf8");
 assert(homeHtml.includes("/collections/docs/") && homeHtml.includes("/posts/") && homeHtml.includes("/projects/"), "home page should link core public surfaces");
 assert(homeHtml.includes("Papyrus theme") && homeHtml.includes("Papyrus template"), "home page should show current Papyrus projects");
+assert(homeHtml.includes('name="twitter:card" content="summary_large_image"'), "home page should use a large social card");
+assert(homeHtml.includes('property="og:image" content="https://papyrus.marcelofelix.com/generated/social/home.svg"'), "home page should use the generated site social image");
+assert(homeHtml.includes('name="twitter:image:alt" content="papyrus"'), "home page social card should have alt text");
 
 const docsIndexHtml = await readFile("dist/collections/docs/index.html", "utf8");
 for (const repoOnlyDoc of ["guide", "request-audit", "status-roadmap", "pure-parity"]) {
@@ -146,6 +149,15 @@ assert(metadataDemoHtml.includes("Post layout reference for published date, upda
 const installPostHtml = await readFile("dist/posts/install-configure-papyrus/index.html", "utf8");
 assert(installPostHtml.includes("email_user") && installPostHtml.includes("email_domain"), "install guide should document supported split email TOML fields");
 assert(llmsFull.includes("minimumReleaseAge"), "public docs should document the pnpm mature-release gate");
+assert(installPostHtml.includes('name="twitter:card" content="summary_large_image"'), "cover post should use a large social card");
+assert(installPostHtml.includes('property="og:image" content="https://papyrus.marcelofelix.com/generated/social/posts/install-configure-papyrus.svg"'), "cover post should use its generated post social image");
+
+const noCoverPostHtml = await readFile("dist/posts/hidden-post-demo/index.html", "utf8");
+assert(noCoverPostHtml.includes('name="twitter:card" content="summary_large_image"'), "no-cover post should still use a large social card");
+assert(noCoverPostHtml.includes('property="og:image" content="https://papyrus.marcelofelix.com/generated/social/posts/hidden-post-demo.svg"'), "no-cover post should use its generated post social image");
+
+const imageEffectsSocial = await readFile("public/generated/social/posts/image-effects.svg", "utf8");
+assert(imageEffectsSocial.includes('href="/images/papyrus-image-effects-demo.jpg"'), "cover posts should use the cover inside the generated social image");
 
 const featuresHtml = await readFile("dist/collections/docs/features/index.html", "utf8");
 for (const phrase of ["SEO and social metadata", "Base path deploys", "Search, tags, sitemap, and robots", "Plugin contract"]) {

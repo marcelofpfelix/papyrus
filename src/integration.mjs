@@ -1,6 +1,7 @@
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { loadPapyrusConfig } from "./config/index.mjs";
+import { generateSocialImages } from "../scripts/generate-social-images.mjs";
 
 function templateRoute(path) {
   return fileURLToPath(new URL(path, import.meta.url));
@@ -53,6 +54,9 @@ export default function papyrus() {
             injectRoute({ pattern, entrypoint });
           }
         }
+      },
+      "astro:build:start": async () => {
+        await generateSocialImages();
       },
     },
   };

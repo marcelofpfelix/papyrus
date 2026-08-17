@@ -836,9 +836,21 @@ Set site-wide avatar treatment in `papyrus.config.toml`:
 effect = "tritone"
 ```
 
-Use `avatar_effect` in this file only when one profile should override that
-site default. Supported values are `none`, `duotone`, `tritone`, `dither`, and
-`dithernoise`.
+The site default applies to profile-page images such as the avatar and company
+or education logos. Use `avatar_effect` in this file only when one profile
+should override that site default for the avatar. Supported values are `none`,
+`duotone`, `tritone`, `dither`, and `dithernoise`.
+
+Hide profile tabs per profile with `[user.profile_tabs]`:
+
+```toml title="src/data/profile.toml"
+[user.profile_tabs]
+timeline = false
+projects = false
+```
+
+Available keys are `resume`, `timeline`, `projects`, and `skills`. Omitted keys
+default to visible.
 
 Use `email_user` and `email_domain` instead of a single literal email address
 when you want the page to assemble the visible contact with less obvious static
@@ -1027,6 +1039,11 @@ JSON-LD. Hidden posts stay out of public indexes. Use explicit
 `robots` frontmatter when a direct page should emit directives such as
 `noindex, follow`.
 
+The build also generates social preview images for the homepage and every post.
+When a post has `cover`, the generated card can use that image as part of the
+card while still keeping the final output at the correct social-card size. Posts
+without a visible cover still get a generated Open Graph and X card.
+
 `papyrus.config.toml` also supports generic verification meta tags, opt-in
 analytics, typed custom head entries, and optional `security.txt` output. Keep
 analytics disabled by default, then enable only the provider a site actually
@@ -1202,7 +1219,27 @@ Write the post body in Markdown.
 ```
 
 Papyrus handles list pages, detail pages, adjacent links, tags, scheduled posts,
-reading time, cover images, RSS entries, and generated route paths.
+reading time, cover images, RSS entries, generated route paths, and generated
+social preview cards. A post does not need `cover` frontmatter to get an Open
+Graph/X sharing image. When a post has a cover, Papyrus uses it inside the
+generated social card instead of pointing `og:image` directly at the original
+cover file.
+
+Use `ogSourceImage` when the best social-card visual is an image from the post
+body instead of the article cover:
+
+```md
+---
+title: Publishing with Papyrus
+description: A short implementation note published from a Papyrus-powered site.
+date: 2026-07-10T09:00:00.000Z
+cover: /images/article-cover.jpg
+ogSourceImage: /images/body-diagram.jpg
+---
+```
+
+Use `ogImage` only when you already have a finished `1200x630` social image and
+want to bypass the generated card for that post.
 
 ## Edit the profile
 
@@ -1244,6 +1281,12 @@ Use it for site identity, navigation, social links, theme defaults, feature
 flags, homepage behavior, and post-list behavior. Use frontmatter for per-post
 metadata. Use `src/data/projects.toml` for project cards and
 `src/data/profile.toml` for profile and CV data.
+
+Papyrus generates a homepage social card from site title and description and a
+post-specific social card for every Markdown post. `cover` is used as the visual
+source inside the generated card when it is present. Use `ogSourceImage` when a
+different post image should feed the generated card, or `ogImage` when a post
+needs to point at a finished custom social image.
 
 ## What it controls
 
@@ -1447,10 +1490,16 @@ Use `src/data/profile.toml` for profile content and asset paths. Use
 effect = "tritone"
 ```
 
-The default is `none`. `duotone` uses the current background and foreground
-colors. `tritone` also uses the accent color. `dither` and `dithernoise`
-generate masks at build time and color them with theme-aware ink. A profile data
-file can still override the default for its own avatar with `avatar_effect`.
+The default is `none`. The configured effect applies to profile-page images such
+as the avatar and company or education logos. `duotone` uses the current
+background and foreground colors. `tritone` also uses the accent color. `dither`
+and `dithernoise` generate masks at build time and color them with theme-aware
+ink. A profile data file can still override the default for its own avatar with
+`avatar_effect`.
+
+Profile-local tab visibility belongs in `src/data/profile.toml` under
+`[user.profile_tabs]`, with keys such as `timeline = false` or
+`projects = false`.
 
 ## Markdown styling
 

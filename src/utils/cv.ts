@@ -81,6 +81,7 @@ export type PapyrusCvUser = {
   nationality?: PapyrusCvNamedFlag[];
   languages?: PapyrusCvNamedFlag[];
   roles?: string[];
+  profileTabs?: Partial<Record<"resume" | "timeline" | "projects" | "skills", boolean>>;
   links?: PapyrusCvLink[];
   sections?: PapyrusCvSection[];
 };
@@ -93,6 +94,10 @@ function record(value: unknown): JekyllCvRecord {
 
 function stringValue(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value.trim() : undefined;
+}
+
+function booleanValue(value: unknown): boolean | undefined {
+  return typeof value === "boolean" ? value : undefined;
 }
 
 function stringList(value: unknown): string[] {
@@ -199,6 +204,7 @@ export function normalizeJekyllCvUser(input: unknown): PapyrusCvUser {
     domainParts: emailDomain.split(".").filter(Boolean),
   } : undefined;
   const linkKeys = stringList(user.links);
+  const profileTabs = record(user.profile_tabs ?? user.profileTabs);
 
   return {
     name: stringValue(user.name) ?? "Unnamed profile",
@@ -229,6 +235,12 @@ export function normalizeJekyllCvUser(input: unknown): PapyrusCvUser {
       .map((key) => namedFlagFor(user, key))
       .filter((item): item is PapyrusCvNamedFlag => Boolean(item)),
     roles: stringList(user.roles),
+    profileTabs: {
+      ...(booleanValue(profileTabs.resume) !== undefined ? { resume: booleanValue(profileTabs.resume) } : {}),
+      ...(booleanValue(profileTabs.timeline) !== undefined ? { timeline: booleanValue(profileTabs.timeline) } : {}),
+      ...(booleanValue(profileTabs.projects) !== undefined ? { projects: booleanValue(profileTabs.projects) } : {}),
+      ...(booleanValue(profileTabs.skills) !== undefined ? { skills: booleanValue(profileTabs.skills) } : {}),
+    },
     links: linkKeys.map((key) => linkFor(user, key)).filter((link): link is PapyrusCvLink => Boolean(link)),
     sections: stringList(user.sections)
       .map((sectionKey) => {

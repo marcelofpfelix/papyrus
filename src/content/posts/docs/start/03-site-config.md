@@ -19,6 +19,12 @@ flags, homepage behavior, and post-list behavior. Use frontmatter for per-post
 metadata. Use `src/data/projects.toml` for project cards and
 `src/data/profile.toml` for profile and CV data.
 
+Papyrus generates a homepage social card from site title and description and a
+post-specific social card for every Markdown post. `cover` is used as the visual
+source inside the generated card when it is present. Use `ogSourceImage` when a
+different post image should feed the generated card, or `ogImage` when a post
+needs to point at a finished custom social image.
+
 ## What it controls
 
 | Section | Purpose |
@@ -221,10 +227,16 @@ Use `src/data/profile.toml` for profile content and asset paths. Use
 effect = "tritone"
 ```
 
-The default is `none`. `duotone` uses the current background and foreground
-colors. `tritone` also uses the accent color. `dither` and `dithernoise`
-generate masks at build time and color them with theme-aware ink. A profile data
-file can still override the default for its own avatar with `avatar_effect`.
+The default is `none`. The configured effect applies to profile-page images such
+as the avatar and company or education logos. `duotone` uses the current
+background and foreground colors. `tritone` also uses the accent color. `dither`
+and `dithernoise` generate masks at build time and color them with theme-aware
+ink. A profile data file can still override the default for its own avatar with
+`avatar_effect`.
+
+Profile-local tab visibility belongs in `src/data/profile.toml` under
+`[user.profile_tabs]`, with keys such as `timeline = false` or
+`projects = false`.
 
 ## Markdown styling
 

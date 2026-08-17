@@ -14,6 +14,8 @@ export interface PapyrusPostEntry {
     hidden?: boolean;
     pinned?: boolean | number;
     cover?: string;
+    ogImage?: string;
+    ogSourceImage?: string;
     category?: string;
     tags?: string[];
     editUrl?: string;

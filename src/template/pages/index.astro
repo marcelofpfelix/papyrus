@@ -2,7 +2,7 @@
 import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusPostList, PapyrusProjectList } from "../../components";
 import { pageDescription } from "../../config";
-import { publishedPosts, scheduledListPosts, sortPostsWithPinned, withBase } from "../../utils";
+import { papyrusSiteSocialImage, publishedPosts, scheduledListPosts, sortPostsWithPinned, withBase } from "../../utils";
 import { getTemplateSite } from "../site";
 
 const site = await getTemplateSite();
@@ -12,7 +12,7 @@ const posts = scheduledListPosts(sortPostsWithPinned(publishedPosts(await getCol
 const projects = site.projects.slice(0, site.home.projectLimit);
 ---
 
-<PapyrusBaseLayout title={site.title} description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
+<PapyrusBaseLayout title={site.title} description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} ogImage={papyrusSiteSocialImage} ogImageAlt={site.title} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
   <section class="papyrus-hero papyrus-home-hero">
     <h1>{homeTitle}</h1>
     {description && <p class="papyrus-description">{description}</p>}

@@ -60,6 +60,14 @@ const profileVersionLinks = versionLinks ?? [
 ];
 const visibleProfileProjects = profileProjects.filter((project: ProfileProject) => project.repo);
 const avatarEffectClass = imageEffectClass(profile.avatarEffect);
+const profileImageEffectClass = imageEffectClass(profile.imageEffect);
+const profileTabs = [
+  { id: "resume", label: "Resume", visible: profile.tabs.resume },
+  { id: "timeline", label: "Timeline", visible: profile.tabs.timeline },
+  { id: "projects", label: "Projects", visible: profile.tabs.projects },
+  { id: "skills", label: "Skills", visible: profile.tabs.skills },
+].filter(tab => tab.visible);
+const activeProfileTab = profileTabs[0]?.id ?? "resume";
 
 function cvIcon(name: string) {
   const icons: Record<string, string> = {
@@ -133,15 +141,14 @@ function cvIcon(name: string) {
         />
 
         <div class="cv-template-tabs" role="tablist" aria-label="Profile templates">
-          <button type="button" role="tab" aria-selected="true" data-cv-tab="resume">Resume</button>
-          <button type="button" role="tab" aria-selected="false" data-cv-tab="timeline">Timeline</button>
-          <button type="button" role="tab" aria-selected="false" data-cv-tab="projects">Projects</button>
-          <button type="button" role="tab" aria-selected="false" data-cv-tab="skills">Skills</button>
+          {profileTabs.map(tab => (
+            <button type="button" role="tab" aria-selected={tab.id === activeProfileTab} data-cv-tab={tab.id}>{tab.label}</button>
+          ))}
         </div>
       </div>
 
       <div class="cv-template-panels">
-      <section class="cv-template-panel" data-cv-panel="resume">
+      {profile.tabs.resume && <section class="cv-template-panel" data-cv-panel="resume" aria-hidden={activeProfileTab === "resume" ? undefined : "true"} inert={activeProfileTab === "resume" ? undefined : true}>
         {resumeSections.map(section => (
           <section class="cv-section" id={section.id}>
             <h2>
@@ -153,7 +160,11 @@ function cvIcon(name: string) {
               <article class="cv-group">
                 {group.entity && (
                   <a class="cv-entity" href={group.url}>
-                    {group.logo && <img src={getAssetPath(group.logo)} alt="" loading="lazy" />}
+                    {group.logo && (
+                      <span class:list={["cv-entity-logo", profileImageEffectClass]} style={imageEffectStyle(profile.imageEffect, group.logo)}>
+                        <img src={getAssetPath(group.logo)} alt="" loading="lazy" />
+                      </span>
+                    )}
                     <strong>{group.entity}</strong>
                   </a>
                 )}
@@ -174,16 +185,16 @@ function cvIcon(name: string) {
             ))}
           </section>
         ))}
-      </section>
+      </section>}
 
-      <section class="cv-template-panel" data-cv-panel="timeline" aria-hidden="true" inert>
+      {profile.tabs.timeline && <section class="cv-template-panel" data-cv-panel="timeline" aria-hidden={activeProfileTab === "timeline" ? undefined : "true"} inert={activeProfileTab === "timeline" ? undefined : true}>
         <section class="cv-section">
           <h2><span><svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIcon("timeline")} /></span>Timeline</h2>
           <PapyrusTimeline events={timelineEvents} />
         </section>
-      </section>
+      </section>}
 
-      <section class="cv-template-panel" data-cv-panel="projects" aria-hidden="true" inert>
+      {profile.tabs.projects && <section class="cv-template-panel" data-cv-panel="projects" aria-hidden={activeProfileTab === "projects" ? undefined : "true"} inert={activeProfileTab === "projects" ? undefined : true}>
         <section class="cv-section">
           <h2><span><svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIcon("repo")} /></span>Projects</h2>
           <div class="cv-repo-grid">
@@ -192,9 +203,9 @@ function cvIcon(name: string) {
             ))}
           </div>
         </section>
-      </section>
+      </section>}
 
-      <section class="cv-template-panel" data-cv-panel="skills" aria-hidden="true" inert>
+      {profile.tabs.skills && <section class="cv-template-panel" data-cv-panel="skills" aria-hidden={activeProfileTab === "skills" ? undefined : "true"} inert={activeProfileTab === "skills" ? undefined : true}>
         <section class="cv-section cv-skills-panel">
           <h2><span><svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIcon("tools")} /></span>Skills</h2>
           {skillsSection?.groups.map(group => (
@@ -212,7 +223,7 @@ function cvIcon(name: string) {
             </nav>
           )}
         </section>
-      </section>
+      </section>}
       </div>
     </div>
   </section>
@@ -585,9 +596,18 @@ function cvIcon(name: string) {
     text-decoration: none;
   }
 
-  .cv-entity img {
+  .cv-entity-logo {
     border-radius: 5px;
+    display: inline-block;
     height: 36px;
+    overflow: hidden;
+    position: relative;
+    width: 36px;
+  }
+
+  .cv-entity-logo img {
+    display: block;
+    height: 100%;
     object-fit: contain;
     width: 36px;
   }

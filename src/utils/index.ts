@@ -6,5 +6,6 @@ export * from "./cv-profile-links";
 export * from "./features";
 export * from "./image-effects";
 export * from "./plugins";
+export * from "./social-images";
 export * from "./withBase";
 export * from "../config";
