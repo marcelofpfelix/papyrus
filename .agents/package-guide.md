@@ -57,6 +57,7 @@ Main imports:
 - `astro-papyrus/themes/dracula.css`
 - `astro-papyrus/themes/gruvbox.css`
 - `astro-papyrus/themes/nord.css`
+- `astro-papyrus/template/profile`
 - `astro-papyrus/utils`
 - `astro-papyrus/pure`
 - `astro-papyrus/pure/user`
@@ -69,7 +70,6 @@ Main imports:
 Useful utility exports:
 
 - `normalizeJekyllCvUser`
-- `cvToJson`
 - `cvToMarkdown`
 - `cvToJsonResume`
 - `resolvePapyrusFeatures`
@@ -918,10 +918,9 @@ Old jekyllcv visual parity still needs a separate source/screenshot comparison.
 The first adapter covers the upstream jekyllcv shape:
 
 ```ts
-import { cvToJson, cvToJsonResume, cvToMarkdown, normalizeJekyllCvUser } from "astro-papyrus/utils";
+import { cvToJsonResume, cvToMarkdown, normalizeJekyllCvUser } from "astro-papyrus/utils";
 
 const user = normalizeJekyllCvUser(parsedUsersToml);
-const json = cvToJson(user);
 const markdown = cvToMarkdown(user);
 const resumeJson = cvToJsonResume(user);
 ```

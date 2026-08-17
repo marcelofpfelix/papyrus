@@ -138,7 +138,8 @@ assert(contentStructureHtml.includes("User-facing docs now live as regular posts
 assert(contentStructureHtml.includes("Development-only notes stay under <code>.agents/</code>"), "content-structure docs should state repo-only docs boundary");
 
 const profileHtml = await readFile("dist/profile/index.html", "utf8");
-assert(profileHtml.includes(">Source<") && profileHtml.includes("profile.toml") && profileHtml.includes("profile.json") && profileHtml.includes("resume.json") && profileHtml.includes("profile.md"), "profile page should expose canonical source links through the shared action menu");
+assert(profileHtml.includes(">Source<") && profileHtml.includes("profile.toml") && profileHtml.includes("resume.json") && profileHtml.includes("profile.md"), "profile page should expose canonical source links through the shared action menu");
+assert(!profileHtml.includes("profile.json"), "profile page should not expose the old normalized profile JSON export");
 assert(profileHtml.includes("keys.openpgp.org"), "profile page should expose configured PGP key links");
 assert(!profileHtml.includes("Original CV"), "profile page should not use the ambiguous Original CV label");
 

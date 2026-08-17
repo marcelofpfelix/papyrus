@@ -1624,12 +1624,12 @@ async function runCvChecks(page, origin) {
     markdownDownload: document.querySelector('[data-papyrus-cv-download="markdown"]')?.getAttribute("download") ?? "",
     markdownHref: document.querySelector('[data-papyrus-cv-download="markdown"]')?.getAttribute("href") ?? "",
   }));
-  assert(exportState.jsonCopyLabel === "Copy JSON", `JSON copy label was ${exportState.jsonCopyLabel}`);
+  assert(exportState.jsonCopyLabel === "Copy JSON Resume", `JSON copy label was ${exportState.jsonCopyLabel}`);
   assert(exportState.markdownCopyLabel === "Copy Markdown", `Markdown copy label was ${exportState.markdownCopyLabel}`);
-  assert(exportState.jsonDownload === "cv.json", `JSON download filename was ${exportState.jsonDownload}`);
+  assert(exportState.jsonDownload === "resume.json", `JSON download filename was ${exportState.jsonDownload}`);
   assert(exportState.markdownDownload === "cv.md", `Markdown download filename was ${exportState.markdownDownload}`);
   assert(exportState.jsonHref.startsWith("data:application/json"), `JSON download href was ${exportState.jsonHref.slice(0, 40)}`);
-  assert(decodeURIComponent(exportState.jsonHref).includes('"sections"'), "JSON download payload missing sections");
+  assert(decodeURIComponent(exportState.jsonHref).includes('"basics"'), "JSON Resume download payload missing basics");
   assert(exportState.markdownHref.startsWith("data:text/markdown"), `Markdown download href was ${exportState.markdownHref.slice(0, 40)}`);
   assert(decodeURIComponent(exportState.markdownHref).includes("# Mira Lee"), "Markdown download payload missing CV title");
 
@@ -1637,8 +1637,8 @@ async function runCvChecks(page, origin) {
   await page.locator('[data-papyrus-cv-copy="json"]').click();
   await page.waitForFunction(() => document.querySelector('[data-papyrus-cv-copy="json"]')?.getAttribute("data-state") === "copied");
   const copiedJson = await clipboardText(page);
-  assert(copiedJson.includes('"sections"'), "JSON CV copy missing sections");
-  assert(copiedJson.includes('"name": "Mira Lee"'), "JSON CV copy missing normalized name");
+  assert(copiedJson.includes('"basics"'), "JSON Resume CV copy missing basics");
+  assert(copiedJson.includes('"name": "Mira Lee"'), "JSON Resume CV copy missing name");
 
   await page.locator(".papyrus-cv-export-card").nth(1).locator("summary").click();
   await page.locator('[data-papyrus-cv-copy="markdown"]').click();

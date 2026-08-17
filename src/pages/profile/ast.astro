@@ -13,7 +13,6 @@ const currentCvHref = profile.canonicalCv;
 const cvMarkdownHref = withBase("/cv/profile.md");
 const profileSourceLinks = [
   { label: "TOML", href: githubSourceUrl(site, "src/data/profile.toml") },
-  { label: "JSON", href: githubSourceUrl(site, "public/cv/profile.json") },
   { label: "JSON Resume", href: githubSourceUrl(site, "public/cv/resume.json") },
   { label: "Markdown", href: githubSourceUrl(site, "public/cv/profile.md") },
 ].filter((link): link is { label: string; href: string } => Boolean(link.href));

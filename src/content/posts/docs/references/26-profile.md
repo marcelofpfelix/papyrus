@@ -163,10 +163,9 @@ Run the export command after editing profile data:
 pnpm run cv:export
 ```
 
-The command writes `public/cv/profile.json`, `public/cv/profile.md`, and
-`public/cv/resume.json`. Web routes use the TOML source. The generated files are
-useful for sharing, source actions, external review, and tools that understand
-the JSON Resume shape.
+The command writes `public/cv/resume.json` and `public/cv/profile.md`. Web
+routes use the TOML source. The generated files are useful for sharing, source
+actions, external review, and tools that understand the JSON Resume shape.
 
 The profile page links to print routes. The modern print route and classic ATS
 route use the same data, so the site does not maintain multiple resumes by hand.
