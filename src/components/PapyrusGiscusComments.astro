@@ -1,4 +1,7 @@
 ---
+import { papyrusThemeProfiles } from "../utils/theme-profiles";
+import { withBase } from "../utils/withBase";
+
 interface Props {
   enabled?: boolean;
   repo?: string;
@@ -39,16 +42,26 @@ const {
   inputPosition = "bottom",
   lang = "en",
   theme = "preferred_color_scheme",
-  lightTheme = "light",
-  darkTheme = "dark_dimmed",
+  lightTheme = "papyrus",
+  darkTheme = "papyrus",
   loading = "lazy",
   fallbackText = "Comments are disabled until the site configures its Giscus repository and category IDs.",
 } = Astro.props;
 
 const isConfigured = enabled && repo && repoId && category && categoryId;
+const themeBasePath = withBase("/giscus/");
+const themeProfiles = Array.from(papyrusThemeProfiles);
 ---
 
-<section id="comments" class="papyrus-comments" aria-label="Comments" data-papyrus-giscus data-light-theme={lightTheme} data-dark-theme={darkTheme}>
+<section
+  id="comments"
+  class="papyrus-comments"
+  aria-label="Comments"
+  data-papyrus-giscus
+  data-light-theme={lightTheme}
+  data-dark-theme={darkTheme}
+  data-theme-base-path={themeBasePath}
+>
   {
     isConfigured ? (
       <script
@@ -81,14 +94,29 @@ const isConfigured = enabled && repo && repoId && category && categoryId;
 
 {
   isConfigured && (
-    <script>
-      function syncPapyrusGiscusTheme(event?: Event) {
+    <script is:inline define:vars={{ themeProfiles }}>
+      const PAPYRUS_GISCUS_THEME_PROFILES = new Set(themeProfiles);
+
+      function papyrusGiscusThemeProfile(profile) {
+        return profile && PAPYRUS_GISCUS_THEME_PROFILES.has(profile) ? profile : "gruvbox";
+      }
+
+      function papyrusGiscusThemeValue(root, theme, mode, profile) {
+        if (!theme || theme !== "papyrus") return theme;
+
+        const basePath = root.dataset.themeBasePath || "/giscus/";
+        const normalizedBase = basePath.endsWith("/") ? basePath : `${basePath}/`;
+        return new URL(`${normalizedBase}${papyrusGiscusThemeProfile(profile)}/${mode}.css`, window.location.href).href;
+      }
+
+      function syncPapyrusGiscusTheme(event) {
         const detail = event instanceof CustomEvent ? event.detail : {};
         const mode = detail.mode ?? (document.documentElement.classList.contains("dark") ? "dark" : "light");
+        const profile = detail.profile ?? document.documentElement.dataset.papyrusTheme;
 
-        document.querySelectorAll<HTMLElement>("[data-papyrus-giscus]").forEach(root => {
-          const theme = mode === "dark" ? root.dataset.darkTheme : root.dataset.lightTheme;
-          const frame = root.querySelector<HTMLIFrameElement>("iframe.giscus-frame");
+        document.querySelectorAll("[data-papyrus-giscus]").forEach(root => {
+          const theme = papyrusGiscusThemeValue(root, mode === "dark" ? root.dataset.darkTheme : root.dataset.lightTheme, mode, profile);
+          const frame = root.querySelector("iframe.giscus-frame");
           if (!theme || !frame?.contentWindow) return;
           frame.contentWindow.postMessage({ giscus: { setConfig: { theme } } }, "https://giscus.app");
         });

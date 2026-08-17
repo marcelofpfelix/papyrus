@@ -46,8 +46,8 @@ const defaultComments = {
   emitMetadata: false,
   inputPosition: "bottom",
   theme: "preferred_color_scheme",
-  lightTheme: "light",
-  darkTheme: "dark_dimmed",
+  lightTheme: "papyrus",
+  darkTheme: "papyrus",
   lang: "en",
   loading: "lazy",
 };

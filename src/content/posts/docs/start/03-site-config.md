@@ -184,9 +184,11 @@ Use a GitHub Discussions category with the `Announcements` format when possible.
 That lets Giscus create post discussions while preventing normal repository
 visitors from manually opening unrelated discussions in the comments category.
 Papyrus defaults to the Giscus provider, `Announcements` category,
-`preferred_color_scheme`, and built-in `light` / `dark_dimmed` themes. Override
-`category`, `theme`, `light_theme`, or `dark_theme` only when your site needs
-different values.
+`preferred_color_scheme`, and `papyrus` comments themes. `papyrus` means
+Giscus loads a same-origin CSS file generated from the active Papyrus theme
+profile, such as `/giscus/gruvbox/dark.css` or `/giscus/catppuccin/light.css`.
+Override `category`, `theme`, `light_theme`, or `dark_theme` only when your
+site needs built-in Giscus themes or a custom CSS URL.
 
 Keep custom Giscus CSS on a URL you control. Giscus loads that stylesheet inside
 its iframe, so avoid example URLs or third-party CSS you do not trust.

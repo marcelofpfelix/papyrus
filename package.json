@@ -104,6 +104,7 @@
     "./template/pages/llms.txt.ts": "./src/template/pages/llms.txt.ts",
     "./template/pages/rss.xml.ts": "./src/template/pages/rss.xml.ts",
     "./template/pages/robots.txt.ts": "./src/template/pages/robots.txt.ts",
+    "./template/pages/giscus/[profile]/[mode].css.ts": "./src/template/pages/giscus/[profile]/[mode].css.ts",
     "./template/pages/security.txt.ts": "./src/template/pages/security.txt.ts",
     "./pure": "./src/pure/index.ts",
     "./pure/advanced": "./src/pure/advanced.ts",

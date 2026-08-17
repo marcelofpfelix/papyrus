@@ -152,8 +152,8 @@ assert(defaults.comments.enabled === false, "default comments should be disabled
 assert(defaults.comments.provider === "giscus", "default comments provider should be giscus");
 assert(defaults.comments.category === "Announcements", "default comments category should be Announcements");
 assert(defaults.comments.mapping === "pathname", "default comments mapping should use pathname");
-assert(defaults.comments.lightTheme === "light", "default comments light theme should be light");
-assert(defaults.comments.darkTheme === "dark_dimmed", "default comments dark theme should be dark_dimmed");
+assert(defaults.comments.lightTheme === "papyrus", "default comments light theme should be papyrus");
+assert(defaults.comments.darkTheme === "papyrus", "default comments dark theme should be papyrus");
 assert(defaults.head.meta.length === 0 && defaults.head.links.length === 0 && defaults.head.scripts.length === 0, "default head entries should be empty");
 assert(defaults.footerLinks.length === 0, "default footer links should be empty");
 assert(defaults.securityTxt.contacts.length === 0, "default security.txt contacts should be empty");
