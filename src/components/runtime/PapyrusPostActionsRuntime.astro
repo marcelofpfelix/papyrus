@@ -1,4 +1,5 @@
 <script>
+  import QRCode from "qrcode";
   import { copyPapyrusText } from "./papyrusClipboard";
 
   function setActionButtonState(button: HTMLButtonElement, label: string, restore = "Copy code") {
@@ -72,6 +73,48 @@
       const citation = `${pageTitle}. ${url}`;
       await copyPapyrusText(citation, "Copy title + link");
       setActionButtonState(button, "Title + link copied", "Copy title + link");
+    });
+  });
+
+  document.querySelectorAll<HTMLButtonElement>("[data-papyrus-qr]").forEach((button) => {
+    const wrapper = button.closest<HTMLElement>(".papyrus-qr-action");
+    const popover = wrapper?.querySelector<HTMLElement>("[data-papyrus-qr-popover]");
+    if (!wrapper || !popover) return;
+
+    button.addEventListener("click", async () => {
+      const expanded = button.getAttribute("aria-expanded") === "true";
+      if (expanded) {
+        button.setAttribute("aria-expanded", "false");
+        popover.hidden = true;
+        return;
+      }
+
+      if (!popover.dataset.papyrusQrReady) {
+        const svg = await QRCode.toString(window.location.href, {
+          type: "svg",
+          errorCorrectionLevel: "M",
+          margin: 1,
+          width: 164,
+        });
+        popover.innerHTML = `${svg}<span>${window.location.href}</span>`;
+        popover.dataset.papyrusQrReady = "true";
+      }
+
+      button.setAttribute("aria-expanded", "true");
+      popover.hidden = false;
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape" || popover.hidden) return;
+      button.setAttribute("aria-expanded", "false");
+      popover.hidden = true;
+      button.focus();
+    });
+
+    document.addEventListener("click", (event) => {
+      if (popover.hidden || wrapper.contains(event.target as Node)) return;
+      button.setAttribute("aria-expanded", "false");
+      popover.hidden = true;
     });
   });
 </script>

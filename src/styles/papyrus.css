@@ -1767,6 +1767,50 @@ a {
   padding: 2px 0;
 }
 
+.papyrus-qr-action {
+  display: none;
+  position: relative;
+}
+
+.papyrus-qr-popover {
+  background: var(--papyrus-panel);
+  border: 1px solid var(--papyrus-border);
+  box-shadow: 0 12px 32px rgb(24 24 27 / 0.18);
+  color: var(--papyrus-muted);
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  padding: 12px;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  width: 188px;
+  z-index: 5;
+}
+
+.papyrus-qr-popover svg {
+  background: #fff;
+  color: #111;
+  display: block;
+  height: 164px;
+  width: 164px;
+}
+
+.papyrus-qr-popover span {
+  display: block;
+  font-family: var(--papyrus-font-mono);
+  font-size: 0.68rem;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .papyrus-qr-action {
+    display: inline-flex;
+  }
+}
+
 .papyrus-share-icon {
   align-items: center;
   background: transparent;

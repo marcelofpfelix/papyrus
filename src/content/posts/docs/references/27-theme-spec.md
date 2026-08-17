@@ -224,7 +224,8 @@ Immediately after article content ends, the page SHOULD show:
 
 The source/copy/share controls MUST:
 
-- use consistent icon and text labels: `Copy`, `Source`, `Share`
+- use consistent icon and text labels: `Copy`, `Source`, `Share`, and desktop
+  `QR`
 - use a copy icon for the copy action
 - avoid excess spacing between icon and text
 - avoid background-color treatments that do not match other icon links
@@ -233,6 +234,9 @@ The source/copy/share controls MUST:
 The share action MUST use the Web Share API when available. It MUST fall back to
 the existing copy-link behavior when native sharing is unavailable or cannot
 share the current page.
+
+The QR action MUST be desktop-only. On mobile, native share and copy-link
+fallbacks are the expected sharing paths.
 
 The source action MAY link to a GitHub source URL, JSON source, TOML source, or
 Markdown source when configured.

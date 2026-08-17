@@ -149,17 +149,24 @@ blogs.
 
 ## Export and print
 
+Optional encrypted-contact links can be configured without changing the profile
+component:
+
+```toml title="src/data/profile.toml"
+pgp_key = "https://keys.openpgp.org/search?q=0123456789ABCDEF"
+pgp_fingerprint = "0123 4567 89AB CDEF"
+```
+
 Run the export command after editing profile data:
 
 ```sh
 pnpm run cv:export
 ```
 
-The command writes `public/cv/profile.json` and `public/cv/profile.md`. Web
-routes use the TOML source. The generated files are useful for sharing, source
-actions, and external review. The Papyrus JSON export keeps the normalized
-Papyrus CV shape. A JSON Resume-compatible export is a planned optional output
-for tools that expect `resume.json`.
+The command writes `public/cv/profile.json`, `public/cv/profile.md`, and
+`public/cv/resume.json`. Web routes use the TOML source. The generated files are
+useful for sharing, source actions, external review, and tools that understand
+the JSON Resume shape.
 
 The profile page links to print routes. The modern print route and classic ATS
 route use the same data, so the site does not maintain multiple resumes by hand.
