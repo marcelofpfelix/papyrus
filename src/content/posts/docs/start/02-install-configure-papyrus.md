@@ -169,6 +169,13 @@ ogSourceImage: /images/body-diagram.jpg
 ---
 ```
 
+The preview image order is:
+
+1. `ogImage` points to a finished custom social card.
+2. `ogSourceImage` feeds a body image into the generated social card.
+3. `cover` feeds the visible post cover into the generated social card.
+4. no image creates a generated text-only social card.
+
 Use `ogImage` only when you already have a finished `1200x630` social image and
 want to bypass the generated card for that post.
 
