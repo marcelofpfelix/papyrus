@@ -87,6 +87,25 @@ export type PapyrusAnalyticsConfig = {
   includeInDev: boolean;
 };
 
+export type PapyrusCommentsConfig = {
+  enabled: boolean;
+  provider: "giscus";
+  repo?: string;
+  repoId?: string;
+  category?: string;
+  categoryId?: string;
+  mapping: "pathname" | "url" | "title" | "og:title" | "specific" | "number";
+  strict: boolean;
+  reactionsEnabled: boolean;
+  emitMetadata: boolean;
+  inputPosition: "top" | "bottom";
+  theme: string;
+  lightTheme: string;
+  darkTheme: string;
+  lang: string;
+  loading: "lazy" | "eager";
+};
+
 export type PapyrusHeadMetaConfig = {
   name?: string;
   property?: string;
@@ -139,6 +158,7 @@ export type PapyrusSiteConfig = {
   googleVerification?: string;
   verification: PapyrusVerificationConfig[];
   analytics: PapyrusAnalyticsConfig;
+  comments: PapyrusCommentsConfig;
   head: PapyrusHeadConfig;
   securityTxt: PapyrusSecurityTxtConfig;
   brandTitle?: string;
@@ -160,7 +180,7 @@ export type PapyrusSiteConfig = {
   postCard: PapyrusPostCardConfig;
 };
 
-export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "home" | "profile" | "markdown" | "nav" | "footerLinks" | "socialLinks" | "source" | "analytics" | "head" | "securityTxt">> & {
+export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "postCard" | "home" | "profile" | "markdown" | "nav" | "footerLinks" | "socialLinks" | "source" | "analytics" | "comments" | "head" | "securityTxt">> & {
   features?: PapyrusFeatureConfig;
   postCard?: Partial<PapyrusPostCardConfig>;
   home?: Partial<PapyrusHomeConfig>;
@@ -173,6 +193,7 @@ export type PapyrusConfigInput = Partial<Omit<PapyrusSiteConfig, "features" | "p
   pages?: Record<string, PapyrusPageConfig>;
   source?: PapyrusSourceConfig;
   analytics?: Partial<PapyrusAnalyticsConfig>;
+  comments?: Partial<PapyrusCommentsConfig>;
   head?: Partial<PapyrusHeadConfig>;
   securityTxt?: Partial<PapyrusSecurityTxtConfig>;
 };
@@ -211,6 +232,21 @@ const defaultAnalytics = {
   includeInDev: false,
 } satisfies PapyrusAnalyticsConfig;
 
+const defaultComments = {
+  enabled: false,
+  provider: "giscus",
+  mapping: "pathname",
+  strict: false,
+  reactionsEnabled: true,
+  emitMetadata: false,
+  inputPosition: "bottom",
+  theme: "preferred_color_scheme",
+  lightTheme: "light",
+  darkTheme: "dark_dimmed",
+  lang: "en",
+  loading: "lazy",
+} satisfies PapyrusCommentsConfig;
+
 const defaultHead = {
   meta: [],
   links: [],
@@ -243,9 +279,10 @@ const defaultConfig = {
   markdown: defaultMarkdown,
   pages: defaultPages,
   source: {},
-  verification: [],
-  analytics: defaultAnalytics,
-  head: defaultHead,
+    verification: [],
+    analytics: defaultAnalytics,
+    comments: defaultComments,
+    head: defaultHead,
   securityTxt: { contacts: [] },
   features: defaultPapyrusFeatures,
   postCard: defaultPostCard,
@@ -378,6 +415,35 @@ function asAnalyticsConfig(value: unknown): Partial<PapyrusAnalyticsConfig> {
     ...(asString(record.domain) ? { domain: asString(record.domain) } : {}),
     ...(asString(record.src ?? record.script) ? { src: asString(record.src ?? record.script) } : {}),
     ...(asBoolean(record.includeInDev ?? record.include_in_dev) !== undefined ? { includeInDev: asBoolean(record.includeInDev ?? record.include_in_dev)! } : {}),
+  };
+}
+
+function asCommentsConfig(value: unknown): Partial<PapyrusCommentsConfig> {
+  const record = asRecord(value);
+  const provider = asString(record.provider);
+  const mapping = enumValue(record.mapping, ["pathname", "url", "title", "og:title", "specific", "number"] as const);
+  const inputPosition = enumValue(record.inputPosition ?? record.input_position, ["top", "bottom"] as const);
+  const loading = enumValue(record.loading, ["lazy", "eager"] as const);
+  const strict = asBoolean(record.strict ?? record.strict_title_matching);
+  const reactionsEnabled = asBoolean(record.reactionsEnabled ?? record.reactions_enabled);
+  const emitMetadata = asBoolean(record.emitMetadata ?? record.emit_metadata);
+  return {
+    ...(asBoolean(record.enabled) !== undefined ? { enabled: asBoolean(record.enabled)! } : {}),
+    ...(provider === "giscus" ? { provider } : {}),
+    ...(asString(record.repo) ? { repo: asString(record.repo) } : {}),
+    ...(asString(record.repoId ?? record.repo_id) ? { repoId: asString(record.repoId ?? record.repo_id) } : {}),
+    ...(asString(record.category) ? { category: asString(record.category) } : {}),
+    ...(asString(record.categoryId ?? record.category_id) ? { categoryId: asString(record.categoryId ?? record.category_id) } : {}),
+    ...(mapping ? { mapping } : {}),
+    ...(strict !== undefined ? { strict } : {}),
+    ...(reactionsEnabled !== undefined ? { reactionsEnabled } : {}),
+    ...(emitMetadata !== undefined ? { emitMetadata } : {}),
+    ...(inputPosition ? { inputPosition } : {}),
+    ...(asString(record.theme) ? { theme: asString(record.theme) } : {}),
+    ...(asString(record.lightTheme ?? record.light_theme) ? { lightTheme: asString(record.lightTheme ?? record.light_theme) } : {}),
+    ...(asString(record.darkTheme ?? record.dark_theme) ? { darkTheme: asString(record.darkTheme ?? record.dark_theme) } : {}),
+    ...(asString(record.lang) ? { lang: asString(record.lang) } : {}),
+    ...(loading ? { loading } : {}),
   };
 }
 
@@ -556,6 +622,10 @@ export function resolvePapyrusConfig(config: PapyrusConfigInput = {}): PapyrusSi
       ...defaultAnalytics,
       ...(config.analytics ?? {}),
     },
+    comments: {
+      ...defaultComments,
+      ...(config.comments ?? {}),
+    },
     head: {
       meta: config.head?.meta ?? defaultHead.meta,
       links: config.head?.links ?? defaultHead.links,
@@ -607,6 +677,7 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
       }),
     ],
     analytics: asAnalyticsConfig(parsed.analytics),
+    comments: asCommentsConfig(parsed.comments),
     head: asHeadConfig(parsed.head),
     securityTxt: asSecurityTxtConfig(security),
     brandTitle: asString(brand.title ?? parsed.brandTitle ?? parsed.brand_title),

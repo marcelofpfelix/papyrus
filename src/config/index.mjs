@@ -36,6 +36,21 @@ const defaultAnalytics = {
   includeInDev: false,
 };
 
+const defaultComments = {
+  enabled: false,
+  provider: "giscus",
+  mapping: "pathname",
+  strict: false,
+  reactionsEnabled: true,
+  emitMetadata: false,
+  inputPosition: "bottom",
+  theme: "preferred_color_scheme",
+  lightTheme: "light",
+  darkTheme: "dark_dimmed",
+  lang: "en",
+  loading: "lazy",
+};
+
 const defaultHead = {
   meta: [],
   links: [],
@@ -91,6 +106,7 @@ const defaultConfig = {
   source: {},
   verification: [],
   analytics: defaultAnalytics,
+  comments: defaultComments,
   head: defaultHead,
   securityTxt: { contacts: [] },
   features: defaultFeatures,
@@ -227,6 +243,35 @@ function asAnalyticsConfig(value) {
     ...(asString(record.domain) ? { domain: asString(record.domain) } : {}),
     ...(asString(record.src ?? record.script) ? { src: asString(record.src ?? record.script) } : {}),
     ...(includeInDev !== undefined ? { includeInDev } : {}),
+  };
+}
+
+function asCommentsConfig(value) {
+  const record = asRecord(value);
+  const provider = asString(record.provider);
+  const mapping = enumValue(record.mapping, ["pathname", "url", "title", "og:title", "specific", "number"]);
+  const inputPosition = enumValue(record.inputPosition ?? record.input_position, ["top", "bottom"]);
+  const loading = enumValue(record.loading, ["lazy", "eager"]);
+  const strict = asBoolean(record.strict ?? record.strict_title_matching);
+  const reactionsEnabled = asBoolean(record.reactionsEnabled ?? record.reactions_enabled);
+  const emitMetadata = asBoolean(record.emitMetadata ?? record.emit_metadata);
+  return {
+    ...(asBoolean(record.enabled) !== undefined ? { enabled: asBoolean(record.enabled) } : {}),
+    ...(provider === "giscus" ? { provider } : {}),
+    ...(asString(record.repo) ? { repo: asString(record.repo) } : {}),
+    ...(asString(record.repoId ?? record.repo_id) ? { repoId: asString(record.repoId ?? record.repo_id) } : {}),
+    ...(asString(record.category) ? { category: asString(record.category) } : {}),
+    ...(asString(record.categoryId ?? record.category_id) ? { categoryId: asString(record.categoryId ?? record.category_id) } : {}),
+    ...(mapping ? { mapping } : {}),
+    ...(strict !== undefined ? { strict } : {}),
+    ...(reactionsEnabled !== undefined ? { reactionsEnabled } : {}),
+    ...(emitMetadata !== undefined ? { emitMetadata } : {}),
+    ...(inputPosition ? { inputPosition } : {}),
+    ...(asString(record.theme) ? { theme: asString(record.theme) } : {}),
+    ...(asString(record.lightTheme ?? record.light_theme) ? { lightTheme: asString(record.lightTheme ?? record.light_theme) } : {}),
+    ...(asString(record.darkTheme ?? record.dark_theme) ? { darkTheme: asString(record.darkTheme ?? record.dark_theme) } : {}),
+    ...(asString(record.lang) ? { lang: asString(record.lang) } : {}),
+    ...(loading ? { loading } : {}),
   };
 }
 
@@ -389,6 +434,7 @@ export function resolvePapyrusConfig(config = {}) {
       ...(config.verification ?? defaultConfig.verification),
     ].filter((item, index, items) => items.findIndex(other => other.name === item.name && other.content === item.content) === index),
     analytics: { ...defaultAnalytics, ...(config.analytics ?? {}) },
+    comments: { ...defaultComments, ...(config.comments ?? {}) },
     head: {
       meta: config.head?.meta ?? defaultHead.meta,
       links: config.head?.links ?? defaultHead.links,
@@ -431,6 +477,7 @@ export function parsePapyrusConfigToml(source) {
       }),
     ],
     analytics: asAnalyticsConfig(parsed.analytics),
+    comments: asCommentsConfig(parsed.comments),
     head: asHeadConfig(parsed.head),
     securityTxt: asSecurityTxtConfig(security),
     brandTitle: asString(brand.title ?? parsed.brandTitle ?? parsed.brand_title),

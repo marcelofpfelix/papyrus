@@ -1238,6 +1238,13 @@ ogSourceImage: /images/body-diagram.jpg
 ---
 ```
 
+The preview image order is:
+
+1. `ogImage` points to a finished custom social card.
+2. `ogSourceImage` feeds a body image into the generated social card.
+3. `cover` feeds the visible post cover into the generated social card.
+4. no image creates a generated text-only social card.
+
 Use `ogImage` only when you already have a finished `1200x630` social image and
 want to bypass the generated card for that post.
 
@@ -1429,6 +1436,32 @@ enabled = true
 provider = "plausible"
 domain = "site.test"
 ```
+
+Comments are also opt-in. Papyrus renders Giscus on post pages only when both
+`[features].comments` and `[comments].enabled` are true and the Giscus repo and
+category IDs are configured:
+
+```toml title="papyrus.config.toml"
+[features]
+comments = true
+
+[comments]
+enabled = true
+provider = "giscus"
+repo = "site-owner/site-repo"
+repo_id = "R_..."
+category = "Announcements"
+category_id = "DIC_..."
+theme = "preferred_color_scheme"
+light_theme = "light"
+dark_theme = "dark_dimmed"
+```
+
+Use a GitHub Discussions category with the `Announcements` format when possible.
+That lets Giscus create post discussions while preventing normal repository
+visitors from manually opening unrelated discussions in the comments category.
+Papyrus updates Giscus when the site switches light/dark mode. `light_theme` and
+`dark_theme` can be built-in Giscus theme names or full custom CSS URLs.
 
 Use `[head]` for small, typed additions that belong to the site. It accepts
 meta tags, link tags, and external scripts. It does not accept raw HTML strings.
