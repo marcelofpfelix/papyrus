@@ -31,6 +31,7 @@ const defaultRoutes = [
   { pattern: "/llms.txt", entrypoint: templateRoute("./template/pages/llms.txt.ts"), localFiles: ["src/pages/llms.txt.ts", "src/pages/llms.txt.js", "public/llms.txt"] },
   { pattern: "/rss.xml", entrypoint: templateRoute("./template/pages/rss.xml.ts"), localFiles: ["src/pages/rss.xml.ts", "src/pages/rss.xml.js"] },
   { pattern: "/robots.txt", entrypoint: templateRoute("./template/pages/robots.txt.ts"), localFiles: ["src/pages/robots.txt.ts", "src/pages/robots.txt.js"] },
+  { pattern: "/giscus/[profile]/[mode].css", entrypoint: templateRoute("./template/pages/giscus/[profile]/[mode].css.ts"), localFiles: ["src/pages/giscus/[profile]/[mode].css.ts", "src/pages/giscus/[profile]/[mode].css.js"] },
 ];
 
 const securityTxtRoutes = [
