@@ -95,6 +95,10 @@ export type PapyrusCommentsConfig = {
   category?: string;
   categoryId?: string;
   mapping: "pathname" | "url" | "title" | "og:title" | "specific" | "number";
+  term?: string;
+  number?: number;
+  description?: string;
+  backLink?: string;
   strict: boolean;
   reactionsEnabled: boolean;
   emitMetadata: boolean;
@@ -435,6 +439,10 @@ function asCommentsConfig(value: unknown): Partial<PapyrusCommentsConfig> {
     ...(asString(record.category) ? { category: asString(record.category) } : {}),
     ...(asString(record.categoryId ?? record.category_id) ? { categoryId: asString(record.categoryId ?? record.category_id) } : {}),
     ...(mapping ? { mapping } : {}),
+    ...(asString(record.term) ? { term: asString(record.term) } : {}),
+    ...(typeof record.number === "number" ? { number: record.number } : {}),
+    ...(asString(record.description) ? { description: asString(record.description) } : {}),
+    ...(asString(record.backLink ?? record.back_link) ? { backLink: asString(record.backLink ?? record.back_link) } : {}),
     ...(strict !== undefined ? { strict } : {}),
     ...(reactionsEnabled !== undefined ? { reactionsEnabled } : {}),
     ...(emitMetadata !== undefined ? { emitMetadata } : {}),

@@ -68,6 +68,10 @@ content = "pinterest-token"
 	category = "Announcements"
 	category_id = "DIC_test"
 	mapping = "pathname"
+	term = "custom-discussion-term"
+	number = 42
+	description = "Comments for a custom discussion."
+	back_link = "https://site.test/posts/custom/"
 	strict = false
 	reactions_enabled = true
 	emit_metadata = false
@@ -186,6 +190,10 @@ assert(parsedOpsConfig.comments.repoId === "R_test", "comments repo_id should pa
 assert(parsedOpsConfig.comments.category === "Announcements", "comments category should parse");
 assert(parsedOpsConfig.comments.categoryId === "DIC_test", "comments category_id should parse");
 assert(parsedOpsConfig.comments.mapping === "pathname", "comments mapping should parse");
+assert(parsedOpsConfig.comments.term === "custom-discussion-term", "comments term should parse");
+assert(parsedOpsConfig.comments.number === 42, "comments number should parse");
+assert(parsedOpsConfig.comments.description === "Comments for a custom discussion.", "comments description should parse");
+assert(parsedOpsConfig.comments.backLink === "https://site.test/posts/custom/", "comments back_link should parse");
 assert(parsedOpsConfig.comments.strict === false, "comments strict flag should parse");
 assert(parsedOpsConfig.comments.reactionsEnabled === true, "comments reactions_enabled should parse");
 assert(parsedOpsConfig.comments.emitMetadata === false, "comments emit_metadata should parse");
@@ -209,6 +217,10 @@ assert(postLayout.includes("PapyrusGiscusComments"), "post layout should render 
 assert(postLayout.includes("configuredSite.comments"), "post layout should read comments from site config");
 assert(giscusComponent.includes("data-loading={loading}"), "Giscus component should support lazy loading config");
 assert(giscusComponent.includes("data-strict={strict ? \"1\" : \"0\"}"), "Giscus component should support strict mapping config");
+assert(giscusComponent.includes("data-term={term}"), "Giscus component should support specific mapping terms");
+assert(giscusComponent.includes("data-number={number}"), "Giscus component should support discussion number mapping");
+assert(giscusComponent.includes("data-back-link={backLink}"), "Giscus component should support explicit back links");
+assert(giscusComponent.includes("emitMetadata = false"), "Giscus component should default metadata emission off");
 assert(giscusComponent.includes("papyrus:theme-change"), "Giscus component should sync with Papyrus theme changes");
 assert(giscusComponent.includes("setConfig: { theme }"), "Giscus component should update the iframe theme through setConfig");
 for (const attr of [
@@ -255,6 +267,9 @@ for (const phrase of [
 	  "Announcements",
 	  "light_theme",
 	  "dark_theme",
+	  "giscus.json",
+	  "defaultCommentOrder",
+	  "back_link",
 	  "include_in_dev",
   "[head]",
   "[[footer]]",

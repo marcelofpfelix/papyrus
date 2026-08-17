@@ -83,7 +83,7 @@ const defaultFeatures = {
   postSideLinks: true,
   adjacentPosts: true,
   backToTop: true,
-  comments: false,
+  comments: true,
   graph: true,
 };
 
@@ -263,6 +263,10 @@ function asCommentsConfig(value) {
     ...(asString(record.category) ? { category: asString(record.category) } : {}),
     ...(asString(record.categoryId ?? record.category_id) ? { categoryId: asString(record.categoryId ?? record.category_id) } : {}),
     ...(mapping ? { mapping } : {}),
+    ...(asString(record.term) ? { term: asString(record.term) } : {}),
+    ...(typeof record.number === "number" ? { number: record.number } : {}),
+    ...(asString(record.description) ? { description: asString(record.description) } : {}),
+    ...(asString(record.backLink ?? record.back_link) ? { backLink: asString(record.backLink ?? record.back_link) } : {}),
     ...(strict !== undefined ? { strict } : {}),
     ...(reactionsEnabled !== undefined ? { reactionsEnabled } : {}),
     ...(emitMetadata !== undefined ? { emitMetadata } : {}),

@@ -6,6 +6,10 @@ interface Props {
   category?: string;
   categoryId?: string;
   mapping?: "pathname" | "url" | "title" | "og:title" | "specific" | "number";
+  term?: string;
+  number?: number;
+  description?: string;
+  backLink?: string;
   strict?: boolean;
   reactionsEnabled?: boolean;
   emitMetadata?: boolean;
@@ -25,9 +29,13 @@ const {
   category,
   categoryId,
   mapping = "pathname",
+  term,
+  number,
+  description,
+  backLink,
   strict = false,
   reactionsEnabled = true,
-  emitMetadata = true,
+  emitMetadata = false,
   inputPosition = "bottom",
   lang = "en",
   theme = "preferred_color_scheme",
@@ -40,7 +48,7 @@ const {
 const isConfigured = enabled && repo && repoId && category && categoryId;
 ---
 
-<section class="papyrus-comments" aria-label="Comments" data-papyrus-giscus data-light-theme={lightTheme} data-dark-theme={darkTheme}>
+<section id="comments" class="papyrus-comments" aria-label="Comments" data-papyrus-giscus data-light-theme={lightTheme} data-dark-theme={darkTheme}>
   {
     isConfigured ? (
       <script
@@ -51,6 +59,10 @@ const isConfigured = enabled && repo && repoId && category && categoryId;
         data-category={category}
         data-category-id={categoryId}
         data-mapping={mapping}
+        data-term={term}
+        data-number={number}
+        data-description={description}
+        data-back-link={backLink}
         data-strict={strict ? "1" : "0"}
         data-reactions-enabled={reactionsEnabled ? "1" : "0"}
         data-emit-metadata={emitMetadata ? "1" : "0"}
