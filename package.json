@@ -94,6 +94,7 @@
     "./template/pages/profile/index.astro": "./src/template/pages/profile/index.astro",
     "./template/pages/profile/print.astro": "./src/template/pages/profile/print.astro",
     "./template/pages/profile/ast.astro": "./src/template/pages/profile/ast.astro",
+    "./template/profile": "./src/template/profile.ts",
     "./template/pages/collections.astro": "./src/template/pages/collections.astro",
     "./template/pages/collections/[slug].astro": "./src/template/pages/collections/[slug].astro",
     "./template/pages/collections/[collection]/[...slug].astro": "./src/template/pages/collections/[collection]/[...slug].astro",

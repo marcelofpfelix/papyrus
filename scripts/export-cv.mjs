@@ -176,10 +176,6 @@ function normalizeCv(source) {
   };
 }
 
-function jsonExport(cv) {
-  return `${JSON.stringify(cv, null, 2)}\n`;
-}
-
 function plainText(value) {
   return value
     ?.replace(/<\/li>\s*<li>/gi, "\n- ")
@@ -336,10 +332,9 @@ const outputBase = resolve(process.cwd(), outputBaseArg);
 try {
   const source = parse(await readFile(sourcePath, "utf8"));
   const cv = normalizeCv(source);
-  await writeOrCheck(`${outputBase}.json`, jsonExport(cv), check);
   await writeOrCheck(`${outputBase}.md`, markdownExport(cv), check);
   await writeOrCheck(`${dirname(outputBase)}/resume.json`, jsonResumeExport(cv), check);
-  console.log(check ? "CV exports are current." : `Wrote ${outputBase}.json, ${outputBase}.md, and ${dirname(outputBase)}/resume.json.`);
+  console.log(check ? "CV exports are current." : `Wrote ${outputBase}.md and ${dirname(outputBase)}/resume.json.`);
 } catch (error) {
   console.error(error instanceof Error ? error.message : String(error));
   process.exit(1);

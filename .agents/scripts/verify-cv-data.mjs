@@ -108,10 +108,6 @@ try {
   assert(user.sections?.[0]?.groups?.[0]?.items?.[0]?.range?.start === "2020-01-01", "range start was not normalized");
   assert(user.sections?.[0]?.groups?.[0]?.items?.[0]?.description?.includes("Runs SIP.\nBuilds tooling."), "HTML line breaks were not converted");
 
-  const json = cv.cvToJson(user);
-  const parsed = JSON.parse(json);
-  assert(parsed.name === "Marcelo", "cvToJson output is not valid normalized JSON");
-  assert(json.includes('"sections"'), "cvToJson is missing sections");
   const jsonResume = JSON.parse(cv.cvToJsonResume(user));
   assert(jsonResume.basics?.name === "Marcelo", "cvToJsonResume missing basics.name");
   assert(jsonResume.basics?.email === "marcelo＠example.net", "cvToJsonResume should preserve obfuscated split email");
@@ -138,7 +134,7 @@ try {
   assert(!packageJson.dependencies?.yaml && !packageJson.devDependencies?.yaml, "papyrus should not force a yaml parser dependency");
   assert(packageJson.dependencies?.["smol-toml"] || packageJson.devDependencies?.["smol-toml"], "papyrus should include the TOML parser used by CV exports");
   assert(guide.includes("normalizeJekyllCvUser"), "guide should document CV normalization utility");
-  assert(guide.includes("cvToJson") && guide.includes("cvToMarkdown") && guide.includes("cvToJsonResume"), "guide should document JSON/Markdown/JSON Resume export helpers");
+  assert(guide.includes("cvToMarkdown") && guide.includes("cvToJsonResume"), "guide should document Markdown and JSON Resume export helpers");
 
   for (const phrase of [
     "### CV template contract",

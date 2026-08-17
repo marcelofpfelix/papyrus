@@ -1,9 +1,9 @@
 import { parse } from "smol-toml";
 import profileSource from "./profile.toml?raw";
-import { cvToJson, cvToMarkdown, normalizeJekyllCvUser } from "../utils/cv";
+import { cvToJsonResume, cvToMarkdown, normalizeJekyllCvUser } from "../utils/cv";
 
 export const demoCvUser = normalizeJekyllCvUser(parse(profileSource));
-export const demoCvJson = cvToJson(demoCvUser);
+export const demoCvJson = cvToJsonResume(demoCvUser);
 export const demoCvMarkdown = cvToMarkdown(demoCvUser);
 
 export const demoCvTemplates = [

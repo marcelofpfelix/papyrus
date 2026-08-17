@@ -15,12 +15,12 @@ const markdownHref = markdown ? `data:text/markdown;charset=utf-8,${encodeURICom
   <div class="papyrus-cv-export-actions">
     {json && (
       <details class="papyrus-cv-export-card">
-        <summary>JSON export</summary>
+        <summary>JSON Resume export</summary>
         <div class="papyrus-cv-export-toolbar">
           <button type="button" data-papyrus-cv-copy="json" data-papyrus-cv-payload={json}>
-            <span class="papyrus-button-label">Copy JSON</span>
+            <span class="papyrus-button-label">Copy JSON Resume</span>
           </button>
-          <a href={jsonHref} download="cv.json" data-papyrus-cv-download="json">Download JSON</a>
+          <a href={jsonHref} download="resume.json" data-papyrus-cv-download="json">Download JSON Resume</a>
         </div>
         <pre><code>{json}</code></pre>
       </details>
