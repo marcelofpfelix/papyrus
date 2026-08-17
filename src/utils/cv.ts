@@ -147,6 +147,14 @@ function linkFor(user: JekyllCvRecord, key: string): PapyrusCvLink | undefined {
   };
 }
 
+function pgpLinkFor(user: JekyllCvRecord): PapyrusCvLink | undefined {
+  const href = cvHref(stringValue(user.pgp_key) ?? stringValue(user.pgp_url) ?? stringValue(user.pgpKey) ?? stringValue(user.pgpUrl));
+  if (!href) return undefined;
+  const fingerprint = stringValue(user.pgp_fingerprint) ?? stringValue(user.pgpFingerprint);
+  const label = stringValue(user.pgp_label) ?? stringValue(user.pgpLabel) ?? (fingerprint ? `PGP ${fingerprint.slice(-8)}` : "PGP");
+  return { label, href, icon: "pgp" };
+}
+
 function namedFlagFor(user: JekyllCvRecord, key: string): PapyrusCvNamedFlag | undefined {
   const item = record(user[key]);
   const name = stringValue(item.name);
@@ -241,7 +249,10 @@ export function normalizeJekyllCvUser(input: unknown): PapyrusCvUser {
       ...(booleanValue(profileTabs.projects) !== undefined ? { projects: booleanValue(profileTabs.projects) } : {}),
       ...(booleanValue(profileTabs.skills) !== undefined ? { skills: booleanValue(profileTabs.skills) } : {}),
     },
-    links: linkKeys.map((key) => linkFor(user, key)).filter((link): link is PapyrusCvLink => Boolean(link)),
+    links: [
+      ...linkKeys.map((key) => linkFor(user, key)).filter((link): link is PapyrusCvLink => Boolean(link)),
+      pgpLinkFor(user),
+    ].filter((link): link is PapyrusCvLink => Boolean(link)),
     sections: stringList(user.sections)
       .map((sectionKey) => {
         const section = record(record(user.data)[sectionKey]);
@@ -264,6 +275,79 @@ export function normalizeJekyllCvUser(input: unknown): PapyrusCvUser {
 
 export function cvToJson(user: PapyrusCvUser): string {
   return JSON.stringify(user, null, 2);
+}
+
+function plainText(value: string | undefined): string | undefined {
+  return value
+    ?.replace(/<\/li>\s*<li>/gi, "\n- ")
+    .replace(/<li>/gi, "- ")
+    .replace(/<\/li>/gi, "")
+    .replace(/<\/?(ul|ol)>/gi, "\n")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>\s*<p>/gi, "\n\n")
+    .replace(/^<p>|<\/p>$/gi, "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function sectionById(user: PapyrusCvUser, pattern: RegExp): PapyrusCvSection[] {
+  return (user.sections ?? []).filter(section => pattern.test(`${section.id ?? ""} ${section.title}`));
+}
+
+export function cvToJsonResume(user: PapyrusCvUser): string {
+  const email = user.emailParts ? `${user.emailParts.user}＠${user.emailParts.domain}` : user.email?.replace("@", "＠");
+  const profiles = (user.links ?? []).map(link => ({
+    network: link.icon ?? link.label,
+    username: link.label,
+    url: link.href,
+  })).filter(profile => profile.url);
+  const work = sectionById(user, /experience|work|employment/i).flatMap(section => (section.groups ?? []).flatMap(group => (group.items ?? []).map(item => ({
+    name: group.title,
+    position: item.title,
+    url: group.url,
+    startDate: item.range?.start,
+    endDate: item.range?.end,
+    summary: plainText(item.description),
+    highlights: item.tags,
+  }))));
+  const education = sectionById(user, /education|school|university/i).flatMap(section => (section.groups ?? []).flatMap(group => (group.items ?? []).map(item => ({
+    institution: group.title,
+    url: group.url,
+    area: item.title,
+    startDate: item.range?.start,
+    endDate: item.range?.end,
+    summary: plainText(item.description),
+  }))));
+  const skills = sectionById(user, /skills|tools|technologies/i).flatMap(section => (section.groups ?? []).flatMap(group => (group.items ?? []).map(item => ({
+    name: item.title ?? group.title ?? section.title,
+    keywords: item.tags ?? plainText(item.description)?.split(/\n+/).map(skill => skill.replace(/^[-*]\s*/, "").trim()).filter(Boolean),
+  }))));
+
+  return JSON.stringify({
+    basics: {
+      name: user.name,
+      label: user.bio,
+      image: user.avatar,
+      email,
+      url: user.url ?? user.canonicalCv,
+      summary: user.summary,
+      location: user.location ? { address: user.location } : undefined,
+      profiles,
+    },
+    work,
+    education,
+    skills,
+    languages: (user.languages ?? []).map(language => ({ language: language.name, fluency: language.flag })),
+    interests: sectionById(user, /interests/i).flatMap(section => (section.groups ?? []).flatMap(group => (group.items ?? []).map(item => ({
+      name: item.title ?? section.title,
+      keywords: item.tags ?? plainText(item.description)?.split(/,\s*/).filter(Boolean),
+    })))),
+    meta: {
+      canonical: user.canonicalCv,
+      source: "Papyrus CV TOML",
+    },
+  }, null, 2);
 }
 
 function sameTitle(a: string | undefined, b: string | undefined): boolean {

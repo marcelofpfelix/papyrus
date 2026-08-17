@@ -1,0 +1,98 @@
+{
+  "basics": {
+    "name": "Mira Lee",
+    "label": "Documentation engineer for content systems",
+    "image": "demo/demo-profile-avatar.svg",
+    "email": "mira＠site.test",
+    "url": "https://github.com/marcelofpfelix/papyrus",
+    "location": {
+      "address": "Remote"
+    },
+    "profiles": [
+      {
+        "network": "linkedin",
+        "username": "papyrus-theme",
+        "url": "https://www.linkedin.com/in/papyrus-theme"
+      },
+      {
+        "network": "github",
+        "username": "papyrus-theme",
+        "url": "https://github.com/papyrus-theme"
+      },
+      {
+        "network": "telegram",
+        "username": "papyrus-theme",
+        "url": "https://t.me/papyrus-theme"
+      },
+      {
+        "network": "keybase",
+        "username": "papyrus-theme",
+        "url": "https://keybase.io/papyrus-theme"
+      },
+      {
+        "network": "pgp",
+        "username": "PGP 123 4567",
+        "url": "https://keys.openpgp.org/search?q=0123456789ABCDEF0123456789ABCDEF01234567"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Papyrus Theme",
+      "position": "Theme maintainer",
+      "url": "https://github.com/marcelofpfelix/papyrus",
+      "startDate": "2024-01-01T00:00:00",
+      "summary": "Designs reusable Astro pages, docs, post layouts, profile templates, search, tag pages, and RSS guidance so consuming sites can stay focused on their own content."
+    },
+    {
+      "name": "Pure-style content system",
+      "position": "Documentation engineer",
+      "url": "https://astro.build/",
+      "startDate": "2022-01-01T00:00:00",
+      "endDate": "2024-01-01T00:00:00",
+      "summary": "Built markdown-first guides, code examples, accessibility checks, content indexes, and release notes for a small technical publishing site."
+    }
+  ],
+  "education": [
+    {
+      "institution": "Open Web Academy",
+      "url": "https://developer.mozilla.org/",
+      "area": "Frontend documentation and accessibility",
+      "summary": "Studied semantic HTML, accessible navigation, structured content, responsive layouts, and maintainable documentation systems."
+    }
+  ],
+  "skills": [
+    {
+      "name": "skills",
+      "keywords": [
+        "astro",
+        "markdown",
+        "theme",
+        "search",
+        "code",
+        "docs"
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "gb"
+    }
+  ],
+  "interests": [
+    {
+      "name": "interests",
+      "keywords": [
+        "Readable docs",
+        "small design systems",
+        "accessible publishing",
+        "static search",
+        "and content that explains why each theme feature exists."
+      ]
+    }
+  ],
+  "meta": {
+    "source": "Papyrus CV TOML"
+  }
+}

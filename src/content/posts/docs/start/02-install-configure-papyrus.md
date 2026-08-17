@@ -110,7 +110,8 @@ Use `public/` for files that should keep the same URL and contents after build:
 - `public/logo.svg`, `public/favicon.svg`, and `public/site.webmanifest`
 - `public/images/*` for covers, avatars, and project images
 - generated artifacts such as `public/cv/profile.json`, `public/cv/profile.md`,
-  `public/ai/*`, `public/rss/tags/*`, and `public/pagefind/*`
+  `public/cv/resume.json`, `public/ai/*`, `public/rss/tags/*`, and
+  `public/pagefind/*`
 
 Do not hand-edit generated files in `public/`. Edit the source in `src/`,
 `papyrus.config.toml`, or `src/data/profile.toml`, then regenerate artifacts.

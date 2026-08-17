@@ -52,6 +52,11 @@
       "label": "papyrus-theme",
       "href": "https://keybase.io/papyrus-theme",
       "icon": "keybase"
+    },
+    {
+      "label": "PGP 123 4567",
+      "href": "https://keys.openpgp.org/search?q=0123456789ABCDEF0123456789ABCDEF01234567",
+      "icon": "pgp"
     }
   ],
   "sections": [

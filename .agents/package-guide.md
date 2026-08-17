@@ -71,6 +71,7 @@ Useful utility exports:
 - `normalizeJekyllCvUser`
 - `cvToJson`
 - `cvToMarkdown`
+- `cvToJsonResume`
 - `resolvePapyrusFeatures`
 - `defaultPapyrusFeatures`
 
@@ -93,6 +94,7 @@ CLI helpers:
 - `papyrus-ai-indexes`
 - `papyrus-ai-validate`
 - `papyrus-tag-rss`
+- `papyrus-artifacts`
 
 ## Reference order
 
@@ -473,13 +475,21 @@ Implemented:
 - Mermaid diagrams preserve their source and re-render when the theme mode or theme profile changes
 - post images and Mermaid SVGs can be zoomed in an overlay
 - PlantUML and Excalidraw source links become explicit artifact cards
+- `papyrus-artifacts` can render artifact SVGs when local renderers are installed
 
 Not implemented:
 
-- PlantUML inline SVG rendering
-- Excalidraw inline rendering/export
+- PlantUML inline SVG rendering without a local renderer
+- Excalidraw inline rendering/export without a local renderer
 
-Do not fake PlantUML or Excalidraw rendering. Source cards are honest until a renderer is chosen.
+```sh
+pnpm papyrus-artifacts public public/generated/artifacts
+pnpm papyrus-artifacts public public/generated/artifacts --strict
+```
+
+Without `--strict`, missing local renderers are reported and skipped. With
+`--strict`, missing renderers fail CI. Do not fake PlantUML or Excalidraw
+rendering. Source cards are honest until a renderer is chosen.
 
 ## Link previews and cards
 
@@ -741,6 +751,7 @@ pnpm papyrus-compress public/images
 pnpm papyrus-cover src/content/posts/example.md public/images/example-cover.svg
 pnpm papyrus-card-cover src/content/posts/example.md public/images/example-card.svg ./fonts/Inter-Regular.ttf
 pnpm papyrus-post-date check src/content/posts
+pnpm papyrus-artifacts public public/generated/artifacts
 ```
 
 Image compression is deliberate, not part of `make build`, because it mutates
@@ -907,11 +918,12 @@ Old jekyllcv visual parity still needs a separate source/screenshot comparison.
 The first adapter covers the upstream jekyllcv shape:
 
 ```ts
-import { cvToJson, cvToMarkdown, normalizeJekyllCvUser } from "astro-papyrus/utils";
+import { cvToJson, cvToJsonResume, cvToMarkdown, normalizeJekyllCvUser } from "astro-papyrus/utils";
 
 const user = normalizeJekyllCvUser(parsedUsersToml);
 const json = cvToJson(user);
 const markdown = cvToMarkdown(user);
+const resumeJson = cvToJsonResume(user);
 ```
 
 TOML example in a consuming site:

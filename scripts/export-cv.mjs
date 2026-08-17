@@ -57,6 +57,14 @@ function linkFor(user, key) {
   };
 }
 
+function pgpLinkFor(user) {
+  const href = cvHref(stringValue(user.pgp_key) || stringValue(user.pgp_url) || stringValue(user.pgpKey) || stringValue(user.pgpUrl));
+  if (!href) return undefined;
+  const fingerprint = stringValue(user.pgp_fingerprint) || stringValue(user.pgpFingerprint);
+  const label = stringValue(user.pgp_label) || stringValue(user.pgpLabel) || (fingerprint ? `PGP ${fingerprint.slice(-8)}` : "PGP");
+  return { label, href, icon: "pgp" };
+}
+
 function namedFlagFor(user, key) {
   const item = objectValue(user[key]);
   const name = stringValue(item.name);
@@ -125,7 +133,10 @@ function normalizeCv(source) {
     domainParts: emailDomain.split(".").filter(Boolean),
     display: `${emailUser}＠${emailDomain}`,
   } : undefined;
-  const links = stringList(user.links).map(key => linkFor(user, key)).filter(Boolean);
+  const links = [
+    ...stringList(user.links).map(key => linkFor(user, key)).filter(Boolean),
+    pgpLinkFor(user),
+  ].filter(Boolean);
   const sections = stringList(user.sections)
     .map(sectionKey => {
       const section = objectValue(objectValue(user.data)[sectionKey]);
@@ -167,6 +178,77 @@ function normalizeCv(source) {
 
 function jsonExport(cv) {
   return `${JSON.stringify(cv, null, 2)}\n`;
+}
+
+function plainText(value) {
+  return value
+    ?.replace(/<\/li>\s*<li>/gi, "\n- ")
+    .replace(/<li>/gi, "- ")
+    .replace(/<\/li>/gi, "")
+    .replace(/<\/?(ul|ol)>/gi, "\n")
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>\s*<p>/gi, "\n\n")
+    .replace(/^<p>|<\/p>$/gi, "")
+    .replace(/<[^>]+>/g, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function sectionsById(cv, pattern) {
+  return (cv.sections ?? []).filter(section => pattern.test(`${section.id ?? ""} ${section.title ?? ""}`));
+}
+
+function jsonResumeExport(cv) {
+  const work = sectionsById(cv, /experience|work|employment/i).flatMap(section => (section.groups ?? []).flatMap(group => (group.items ?? []).map(item => ({
+    name: group.title,
+    position: item.title,
+    url: group.url,
+    startDate: item.range?.start,
+    endDate: item.range?.end,
+    summary: plainText(item.description),
+    highlights: item.tags,
+  }))));
+  const education = sectionsById(cv, /education|school|university/i).flatMap(section => (section.groups ?? []).flatMap(group => (group.items ?? []).map(item => ({
+    institution: group.title,
+    url: group.url,
+    area: item.title,
+    startDate: item.range?.start,
+    endDate: item.range?.end,
+    summary: plainText(item.description),
+  }))));
+  const skills = sectionsById(cv, /skills|tools|technologies/i).flatMap(section => (section.groups ?? []).flatMap(group => (group.items ?? []).map(item => ({
+    name: item.title ?? group.title ?? section.title,
+    keywords: item.tags ?? plainText(item.description)?.split(/\n+/).map(skill => skill.replace(/^[-*]\s*/, "").trim()).filter(Boolean),
+  }))));
+
+  return `${JSON.stringify({
+    basics: {
+      name: cv.name,
+      label: cv.bio,
+      image: cv.avatar,
+      email: cv.emailParts?.display ?? cv.email,
+      url: cv.url ?? cv.canonicalCv,
+      summary: cv.summary,
+      location: cv.location ? { address: cv.location } : undefined,
+      profiles: (cv.links ?? []).map(link => ({
+        network: link.icon ?? link.label,
+        username: link.label,
+        url: link.href,
+      })).filter(profile => profile.url),
+    },
+    work,
+    education,
+    skills,
+    languages: (cv.languages ?? []).map(language => ({ language: language.name, fluency: language.flag })),
+    interests: sectionsById(cv, /interests/i).flatMap(section => (section.groups ?? []).flatMap(group => (group.items ?? []).map(item => ({
+      name: item.title ?? section.title,
+      keywords: item.tags ?? plainText(item.description)?.split(/,\s*/).filter(Boolean),
+    })))),
+    meta: {
+      canonical: cv.canonicalCv,
+      source: "Papyrus CV TOML",
+    },
+  }, null, 2)}\n`;
 }
 
 function sameTitle(a, b) {
@@ -256,7 +338,8 @@ try {
   const cv = normalizeCv(source);
   await writeOrCheck(`${outputBase}.json`, jsonExport(cv), check);
   await writeOrCheck(`${outputBase}.md`, markdownExport(cv), check);
-  console.log(check ? "CV exports are current." : `Wrote ${outputBase}.json and ${outputBase}.md.`);
+  await writeOrCheck(`${dirname(outputBase)}/resume.json`, jsonResumeExport(cv), check);
+  console.log(check ? "CV exports are current." : `Wrote ${outputBase}.json, ${outputBase}.md, and ${dirname(outputBase)}/resume.json.`);
 } catch (error) {
   console.error(error instanceof Error ? error.message : String(error));
   process.exit(1);

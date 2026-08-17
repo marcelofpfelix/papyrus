@@ -130,6 +130,7 @@
     "papyrus-ai-indexes": "scripts/generate-ai-indexes.mjs",
     "papyrus-ai-validate": "scripts/validate-ai-metadata.mjs",
     "papyrus-tag-rss": "scripts/generate-tag-rss.mjs",
+    "papyrus-artifacts": "scripts/render-artifacts.mjs",
     "papyrus-check-links": "scripts/check-built-links.mjs",
     "papyrus-serve-static": "scripts/serve-static.rb",
     "papyrus-cv-export": "scripts/export-cv.mjs"
@@ -165,6 +166,7 @@
     "ai:indexes": "node scripts/generate-ai-indexes.mjs",
     "ai:validate": "node scripts/validate-ai-metadata.mjs",
     "rss:tags": "node scripts/generate-tag-rss.mjs",
+    "artifacts": "node scripts/render-artifacts.mjs",
     "verify:a4": "node .agents/scripts/verify-a4-cv.mjs",
     "verify:assets": "node .agents/scripts/verify-assets.mjs",
     "verify:theme": "node .agents/scripts/verify-theme.mjs",
@@ -195,13 +197,14 @@
     "audit:status": "node .agents/scripts/audit-status.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.2",
-    "@astrojs/rss": "^4.0.19",
     "@astrojs/markdown-remark": "^7.2.0",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.2",
     "@pagefind/default-ui": "^1.5.2",
     "astro-pure": "^1.4.6",
     "hastscript": "^9.0.1",
     "mermaid": "^11.16.0",
+    "qrcode": "^1.5.4",
     "rehype-callouts": "^2.2.0",
     "satori": "^0.26.0",
     "smol-toml": "^1.7.0"
@@ -211,6 +214,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
+    "@types/qrcode": "^1.5.6",
     "astro": "^7.0.4",
     "lighthouse": "^13.4.0",
     "pagefind": "^1.5.2",

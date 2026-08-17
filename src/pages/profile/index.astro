@@ -12,6 +12,7 @@ const availablePostTags = getAllTags(publishedPosts(await getCollection("posts")
 const sourceLinks = [
   { label: "TOML", href: githubSourceUrl(site, "src/data/profile.toml") },
   { label: "JSON", href: githubSourceUrl(site, "public/cv/profile.json") },
+  { label: "JSON Resume", href: githubSourceUrl(site, "public/cv/resume.json") },
   { label: "Markdown", href: githubSourceUrl(site, "public/cv/profile.md") },
 ].filter((link): link is { label: string; href: string } => Boolean(link.href));
 const versionLinks = [
