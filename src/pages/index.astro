@@ -9,6 +9,7 @@ import { getCollection } from "astro:content";
 import { readFile } from "node:fs/promises";
 import { demoNav, demoSocialLinks } from "../data/demo-nav";
 import { demoSite } from "../data/demo-site";
+import { papyrusSiteSocialImage } from "../utils/social-images";
 import { pinRank, publishedPosts, sortPosts, sortPostsWithPinned } from "../utils/posts";
 import { withBase } from "../utils/withBase";
 
@@ -71,6 +72,8 @@ const postListProps = {
   title="papyrus"
   description="Reusable Astro theme package for posts, docs, projects, profile/CV pages, search, RSS, and generated metadata."
   siteTitle="papyrus"
+  ogImage={papyrusSiteSocialImage}
+  ogImageAlt="papyrus"
   nav={demoNav}
   socialLinks={demoSocialLinks}
 >

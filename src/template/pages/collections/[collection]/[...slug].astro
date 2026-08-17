@@ -3,6 +3,7 @@ import { getCollection, render } from "astro:content";
 import { PapyrusCollectionIndex } from "../../../../components";
 import PapyrusPostLayout from "../../../../layouts/PapyrusPostLayout.astro";
 import { collectionOrderedPosts, collectionTocLinks, getPostCollections } from "../../../../utils/collections";
+import { papyrusSocialImageForPost } from "../../../../utils/social-images";
 import { postDate, postHref, postSlug, postTags, readingTime } from "../../../../utils/posts";
 import { getTemplateSite } from "../../../site";
 
@@ -46,7 +47,7 @@ const collectionLinks = [
 ];
 ---
 
-<PapyrusPostLayout title={post.data.title} description={post.data.description} siteTitle={site.title} pubDatetime={postDate(post)} modDatetime={post.data.modDatetime} cover={post.data.cover} coverEffect={post.data.coverEffect ?? post.data.cover_effect} tags={postTags(post)} readingTime={readingTime(post.body)} headings={headings} tocLinks={collectionLinks} showToc={true} canonicalUrl={postHref(post)} robots={post.data.robots} previous={adjacent.previous} next={adjacent.next} adjacentBasePath={collectionBasePath} backHref={`${collectionBasePath}/`} morePostsHref={`${collectionBasePath}/`} nav={site.nav} socialLinks={site.socialLinks}>
+<PapyrusPostLayout title={post.data.title} description={post.data.description} siteTitle={site.title} pubDatetime={postDate(post)} modDatetime={post.data.modDatetime} cover={post.data.cover} ogImage={papyrusSocialImageForPost(post)} ogImageAlt={post.data.title} coverEffect={post.data.coverEffect ?? post.data.cover_effect} tags={postTags(post)} readingTime={readingTime(post.body)} headings={headings} tocLinks={collectionLinks} showToc={true} canonicalUrl={postHref(post)} robots={post.data.robots} previous={adjacent.previous} next={adjacent.next} adjacentBasePath={collectionBasePath} backHref={`${collectionBasePath}/`} morePostsHref={`${collectionBasePath}/`} nav={site.nav} socialLinks={site.socialLinks}>
   <Content />
 
   {showCollectionFooter && (

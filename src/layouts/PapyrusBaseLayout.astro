@@ -26,6 +26,7 @@ interface Props {
   defaultFontProfile?: string;
   canonicalURL?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   robots?: string;
   googleVerification?: string;
   verification?: PapyrusVerificationConfig[];
@@ -54,6 +55,7 @@ const {
   defaultFontProfile = "readable",
   canonicalURL,
   ogImage,
+  ogImageAlt,
   robots,
   googleVerification,
   verification,
@@ -161,10 +163,12 @@ const plausibleDomain = resolvedAnalytics.domain ?? (Astro.site ?? Astro.url).ho
     <meta property="og:url" content={resolvedPageUrl} />
     {description && <meta property="og:description" content={description} />}
     {resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+    {resolvedOgImage && ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
     <meta name="twitter:card" content={resolvedOgImage ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={pageTitle} />
     {description && <meta name="twitter:description" content={description} />}
     {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
+    {resolvedOgImage && ogImageAlt && <meta name="twitter:image:alt" content={ogImageAlt} />}
     <title>{pageTitle}</title>
     <PapyrusThemeProvider defaultThemeProfile={defaultThemeProfile} defaultFontProfile={defaultFontProfile} />
     <ClientRouter />

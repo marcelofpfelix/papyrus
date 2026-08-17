@@ -150,7 +150,27 @@ Write the post body in Markdown.
 ```
 
 Papyrus handles list pages, detail pages, adjacent links, tags, scheduled posts,
-reading time, cover images, RSS entries, and generated route paths.
+reading time, cover images, RSS entries, generated route paths, and generated
+social preview cards. A post does not need `cover` frontmatter to get an Open
+Graph/X sharing image. When a post has a cover, Papyrus uses it inside the
+generated social card instead of pointing `og:image` directly at the original
+cover file.
+
+Use `ogSourceImage` when the best social-card visual is an image from the post
+body instead of the article cover:
+
+```md
+---
+title: Publishing with Papyrus
+description: A short implementation note published from a Papyrus-powered site.
+date: 2026-07-10T09:00:00.000Z
+cover: /images/article-cover.jpg
+ogSourceImage: /images/body-diagram.jpg
+---
+```
+
+Use `ogImage` only when you already have a finished `1200x630` social image and
+want to bypass the generated card for that post.
 
 ## Edit the profile
 

@@ -451,9 +451,14 @@ Pages shared to social media SHOULD render useful previews through properly
 configured Open Graph and social metadata, including preview images when
 available.
 
-Cover images and generated preview images SHOULD be supported for posts and
-profile pages. Missing preview images should be treated as a regression for
-public pages that advertise share previews.
+Generated preview images MUST be produced for the homepage and for every post,
+including posts without visible `cover` frontmatter. Post-specific generated
+cards SHOULD be preferred over a site-default fallback. If a post has `cover`,
+the generated card SHOULD use the cover as an input while still outputting a
+proper social-card image. `ogSourceImage` MAY select a different post image as
+the generated-card input. `ogImage` MAY point to a finished custom social image
+and bypass the generated post card. Missing preview images should be treated as
+a regression for public pages that advertise share previews.
 
 The sitemap MUST be generated dynamically so every public page, post, tag page,
 category-like page, and generated route can be included without manual updates.

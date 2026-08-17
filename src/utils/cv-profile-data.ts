@@ -5,6 +5,7 @@ import type { PapyrusImageEffect } from "./image-effects";
 const DEFAULT_PRINT_COLOR = "#37474F";
 const DEFAULT_PRINT_LINKS = ["email", "linkedin", "github", "website"];
 type ProfileImageEffect = PapyrusImageEffect;
+type ProfileTabName = "resume" | "timeline" | "projects" | "skills";
 
 export type ProfileDataOptions = {
   imageEffect?: ProfileImageEffect;
@@ -54,6 +55,7 @@ export type ProfileData = {
     headline: string;
     avatar: string;
     avatarEffect: ProfileImageEffect;
+    imageEffect: ProfileImageEffect;
     favicon: string;
     ogImage: string;
     canonicalCv: string;
@@ -63,6 +65,7 @@ export type ProfileData = {
     emailParts?: PapyrusCvEmailParts;
     printColor: string;
     pages: number;
+    tabs: Record<ProfileTabName, boolean>;
     meta: ProfileMeta[];
   };
   profileLinks: {
@@ -298,6 +301,7 @@ export function profileDataFromJekyllCvUser(user: PapyrusCvUser, projects: Profi
       headline: user.bio ?? "",
       avatar,
       avatarEffect: user.avatarEffect ?? options.imageEffect ?? "none",
+      imageEffect: options.imageEffect ?? "none",
       favicon: assetPath(user.favicon, "/favicon.svg"),
       ogImage: assetPath(user.ogImage, avatar),
       canonicalCv,
@@ -307,6 +311,12 @@ export function profileDataFromJekyllCvUser(user: PapyrusCvUser, projects: Profi
       emailParts: user.emailParts,
       printColor: user.printColor ?? DEFAULT_PRINT_COLOR,
       pages,
+      tabs: {
+        resume: user.profileTabs?.resume ?? true,
+        timeline: user.profileTabs?.timeline ?? true,
+        projects: user.profileTabs?.projects ?? true,
+        skills: user.profileTabs?.skills ?? true,
+      },
       meta: profileMetaFor(user),
     },
     profileLinks,

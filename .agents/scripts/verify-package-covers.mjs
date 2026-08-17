@@ -112,14 +112,30 @@ const cardCoverFont = [
 
 try {
   const sourcePost = join(tmp, "post.md");
+  const socialPostsDir = join(tmp, "posts");
+  const socialOutDir = join(tmp, "social");
   const generatedCover = join(coverTestDir, "cover.svg");
   const generatedCardCover = join(tmp, "card-cover.svg");
+  const generatedSocialHome = join(socialOutDir, "home.svg");
+  const generatedSocialPost = join(socialOutDir, "posts", "auto-social.svg");
   await writeFile(
     sourcePost,
     `---
 title: "A long generated papyrus cover title that should wrap cleanly"
 description: "Theme-aware cover description"
 cover: /.agent-cover-test/cover.svg
+---
+`,
+    "utf8"
+  );
+  await mkdir(socialPostsDir, { recursive: true });
+  await writeFile(
+    join(socialPostsDir, "auto-social.md"),
+    `---
+title: "Auto social card"
+description: "Post-specific generated sharing image"
+date: 2026-08-17
+cover: /images/package-cover.jpg
 ---
 `,
     "utf8"
@@ -194,6 +210,29 @@ cover: /.agent-cover-test/cover.svg
     }
   }
 
+  const socialResult = spawnSync(
+    process.execPath,
+    [join(root, "scripts/generate-social-images.mjs"), socialPostsDir, socialOutDir],
+    { cwd: root, encoding: "utf8" }
+  );
+  if (socialResult.status !== 0) {
+    fail(`generate-social-images failed: ${socialResult.stderr || socialResult.stdout}`);
+  } else {
+    const homeSocial = await readFile(generatedSocialHome, "utf8");
+    const postSocial = await readFile(generatedSocialPost, "utf8");
+    for (const [label, svg] of [["home", homeSocial], ["post", postSocial]]) {
+      if (!svg.includes('viewBox="0 0 1200 630"')) fail(`${label} social SVG does not use 1200x630 viewBox`);
+      if (!svg.includes("var(--papyrus-bg")) fail(`${label} social SVG does not use theme background token`);
+      if (!svg.includes("var(--papyrus-accent")) fail(`${label} social SVG does not use accent token`);
+    }
+    if (!postSocial.includes("Auto social card") || !postSocial.includes("Post-specific generated sharing image")) {
+      fail("post social SVG should use post title and description");
+    }
+    if (!postSocial.includes('href="/images/package-cover.jpg"')) {
+      fail("post social SVG should include the post cover as a generated-card source image");
+    }
+  }
+
   const orphanPost = join(tmp, "orphan.md");
   const orphanCover = join(coverTestDir, "orphan.svg");
   await mkdir(coverTestDir, { recursive: true });
@@ -232,4 +271,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("Verified package exports, bin targets, Pure dependency boundary, and generated cover/card-cover SVGs.");
+console.log("Verified package exports, bin targets, Pure dependency boundary, and generated cover/card-cover/social SVGs.");

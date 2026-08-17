@@ -45,9 +45,21 @@ Set site-wide avatar treatment in `papyrus.config.toml`:
 effect = "tritone"
 ```
 
-Use `avatar_effect` in this file only when one profile should override that
-site default. Supported values are `none`, `duotone`, `tritone`, `dither`, and
-`dithernoise`.
+The site default applies to profile-page images such as the avatar and company
+or education logos. Use `avatar_effect` in this file only when one profile
+should override that site default for the avatar. Supported values are `none`,
+`duotone`, `tritone`, `dither`, and `dithernoise`.
+
+Hide profile tabs per profile with `[user.profile_tabs]`:
+
+```toml title="src/data/profile.toml"
+[user.profile_tabs]
+timeline = false
+projects = false
+```
+
+Available keys are `resume`, `timeline`, `projects`, and `skills`. Omitted keys
+default to visible.
 
 Use `email_user` and `email_domain` instead of a single literal email address
 when you want the page to assemble the visible contact with less obvious static

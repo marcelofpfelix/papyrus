@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Tripas a Moda do Porto">
+  <style>
+    rect.bg { fill: var(--papyrus-bg, #f9f5d7); }
+    text { fill: var(--papyrus-fg, #654735); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .brand { fill: var(--papyrus-accent, #d8a657); font-size: 38px; font-weight: 700; }
+    .brand-mark { fill: var(--papyrus-accent, #d8a657); }
+    .title { font-size: 62px; font-weight: 800; letter-spacing: 0; }
+    .desc { fill: var(--papyrus-muted, #928374); font-size: 30px; }
+    .label { fill: var(--papyrus-muted, #928374); font-size: 24px; }
+    .fade { fill: var(--papyrus-bg, #f9f5d7); opacity: .92; }
+  </style>
+  <rect class="bg" width="1200" height="630" rx="0"/>
+  
+  <g class="brand-mark" transform="translate(72 70) scale(.52)">
+    <path d="m61.383 45.285 10.68-14.574c0.36719-0.50391-0.19531-1.1562-0.74609-0.86328l-16.598 8.7695-4.1328-31.031c-0.089844-0.67969-1.0703-0.67969-1.1641 0l-4.1328 31.031-14.621-8.7578c-0.52344-0.3125-1.1172 0.28125-0.80469 0.80469l8.7578 14.621-31.031 4.1328c-0.67969 0.089843-0.67969 1.0703 0 1.1641l31.031 4.1328-8.7578 14.621c-0.3125 0.52344 0.28125 1.1172 0.80469 0.80469l14.621-8.7578 4.1328 31.031c0.089844 0.67969 1.0703 0.67969 1.1641 0l4.1328-31.031 14.621 8.7578c0.52344 0.3125 1.1172-0.28125 0.80469-0.80469l-8.7578-14.621 31.031-4.1328c0.67969-0.089843 0.67969-1.0703 0-1.1641l-31.031-4.1328z"/>
+  </g>
+  <text x="136" y="120" class="brand">papyrus</text>
+  <text x="72" y="205" class="title">Tripas a Moda do Porto</text>
+  <text x="72" y="472" class="desc">Porto-style tripe stew with beans, smoked meats, carrot,</text>
+  <text x="72" y="510" class="desc">and cumin.</text>
+  <text x="72" y="582" class="label">papyrus</text>
+</svg>

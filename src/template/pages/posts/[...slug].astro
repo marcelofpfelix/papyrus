@@ -4,6 +4,7 @@ import { PapyrusPostLayout } from "../../../components";
 import { githubSourceUrl } from "../../../config";
 import { getPostCollections } from "../../../utils/collections";
 import { getAdjacentPosts, postDate, postSlug, postSourcePath, postTags, publishedPosts, readingTime, routablePosts } from "../../../utils";
+import { papyrusSocialImageForPost } from "../../../utils";
 import { getTemplateSite } from "../../site";
 
 export async function getStaticPaths() {
@@ -32,7 +33,7 @@ const sourceUrl = githubSourceUrl(site, sourcePath, "raw");
 const sourceLinkUrl = githubSourceUrl(site, sourcePath);
 ---
 
-<PapyrusPostLayout title={post.data.title} description={post.data.description} pubDatetime={postDate(post)} modDatetime={post.data.modDatetime} cover={post.data.cover} coverEffect={post.data.coverEffect ?? post.data.cover_effect} tags={postTags(post)} readingTime={readingTime(post.body)} headings={headings} showToc={true} canonicalUrl={`/posts/${slug}/`} sourceUrl={sourceUrl} sourceLinkUrl={sourceLinkUrl} previous={adjacent.previous} next={adjacent.next} robots={post.data.hidden ? "noindex, follow" : undefined} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+<PapyrusPostLayout title={post.data.title} description={post.data.description} pubDatetime={postDate(post)} modDatetime={post.data.modDatetime} cover={post.data.cover} ogImage={papyrusSocialImageForPost(post)} ogImageAlt={post.data.title} coverEffect={post.data.coverEffect ?? post.data.cover_effect} tags={postTags(post)} readingTime={readingTime(post.body)} headings={headings} showToc={true} canonicalUrl={`/posts/${slug}/`} sourceUrl={sourceUrl} sourceLinkUrl={sourceLinkUrl} previous={adjacent.previous} next={adjacent.next} robots={post.data.hidden ? "noindex, follow" : undefined} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
   <Content />
 
   {

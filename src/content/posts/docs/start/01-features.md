@@ -68,6 +68,11 @@ JSON-LD. Hidden posts stay out of public indexes. Use explicit
 `robots` frontmatter when a direct page should emit directives such as
 `noindex, follow`.
 
+The build also generates social preview images for the homepage and every post.
+When a post has `cover`, the generated card can use that image as part of the
+card while still keeping the final output at the correct social-card size. Posts
+without a visible cover still get a generated Open Graph and X card.
+
 `papyrus.config.toml` also supports generic verification meta tags, opt-in
 analytics, typed custom head entries, and optional `security.txt` output. Keep
 analytics disabled by default, then enable only the provider a site actually

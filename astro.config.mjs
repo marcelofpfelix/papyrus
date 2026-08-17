@@ -5,8 +5,10 @@ import kamailioLang from "./src/shiki/langs/kamailio.mjs";
 import { papyrusMarkdown } from "./src/markdown/config.mjs";
 import { createPapyrusSitemapFilter } from "./src/sitemap";
 
+const site = process.env.SITE_URL ?? "https://papyrus.marcelofelix.com";
+
 export default defineConfig({
-  site: "https://papyrus.marcelofelix.com",
+  site,
   experimental: {
     svgOptimizer: svgoOptimizer(),
   },
