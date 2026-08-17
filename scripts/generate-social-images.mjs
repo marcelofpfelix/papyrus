@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, join, relative, resolve, sep } from "node:path";
+import { dirname, extname, join, relative, resolve, sep } from "node:path";
 import { configuredBrand, siteConfig } from "./site-config.mjs";
 import { themeTokens } from "./theme-colors.mjs";
 
@@ -14,6 +14,11 @@ function escapeXml(value) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
+}
+
+function frontmatterBlock(text) {
+  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  return match?.[1] ?? "";
 }
 
 function frontmatterValue(text, key) {
@@ -44,6 +49,37 @@ function assetHref(value) {
   if (!value) return undefined;
   if (/^(https?:|data:|\/)/i.test(value)) return value;
   return `/${value.replace(/^\.?\//, "")}`;
+}
+
+function mimeType(path) {
+  switch (extname(path).toLowerCase()) {
+    case ".jpg":
+    case ".jpeg":
+      return "image/jpeg";
+    case ".png":
+      return "image/png";
+    case ".webp":
+      return "image/webp";
+    case ".gif":
+      return "image/gif";
+    case ".svg":
+      return "image/svg+xml";
+    default:
+      return "application/octet-stream";
+  }
+}
+
+async function socialImageHref(root, value) {
+  const href = assetHref(value);
+  if (!href || /^(https?:|data:)/i.test(href)) return href;
+
+  try {
+    const file = resolve(root, "public", href.replace(/^\/+/, ""));
+    const data = await readFile(file);
+    return `data:${mimeType(file)};base64,${data.toString("base64")}`;
+  } catch {
+    return href;
+  }
 }
 
 function postSlugFromPath(file, postsDir, frontmatterSlug) {
@@ -83,8 +119,7 @@ function brandSvg({ brandMark, brandTitle }) {
   <text x="136" y="120" class="brand">${escapeXml(brandTitle)}</text>`;
 }
 
-function sourceImageSvg(sourceImage) {
-  const sourceHref = assetHref(sourceImage);
+function sourceImageSvg(sourceHref) {
   if (!sourceHref) return "";
 
   const href = escapeXml(sourceHref);
@@ -155,12 +190,13 @@ export async function generateSocialImages(options = {}) {
 
   for (const file of await walkMarkdown(postsDir)) {
     const text = await readFile(file, "utf8");
-    const title = frontmatterValue(text, "title");
+    const frontmatter = frontmatterBlock(text);
+    const title = frontmatterValue(frontmatter, "title");
     if (!title) continue;
 
-    const slug = postSlugFromPath(file, postsDir, frontmatterValue(text, "slug"));
-    const description = frontmatterValue(text, "description") ?? siteDescription;
-    const sourceImage = frontmatterValue(text, "ogSourceImage") ?? frontmatterValue(text, "cover");
+    const slug = postSlugFromPath(file, postsDir, frontmatterValue(frontmatter, "slug"));
+    const description = frontmatterValue(frontmatter, "description") ?? siteDescription;
+    const sourceImage = await socialImageHref(root, frontmatterValue(frontmatter, "ogSourceImage") ?? frontmatterValue(frontmatter, "cover"));
     const output = join(outputDir, "posts", `${slug}.svg`);
     await mkdir(dirname(output), { recursive: true });
     await writeFile(output, socialSvg({
