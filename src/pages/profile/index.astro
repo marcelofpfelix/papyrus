@@ -1,11 +1,14 @@
 ---
+import { getCollection } from "astro:content";
 import PapyrusProfilePage from "../../components/PapyrusProfilePage.astro";
 import { githubSourceUrl, loadPapyrusConfig } from "../../config";
 import { demoNav, demoSocialLinks } from "../../data/demo-nav";
 import { cvSections, profile, profileLinks, profileProjects, timelineEvents } from "../../data/profile";
+import { getAllTags, publishedPosts } from "../../utils";
 import { withBase } from "../../utils/withBase";
 
 const site = await loadPapyrusConfig();
+const availablePostTags = getAllTags(publishedPosts(await getCollection("posts")));
 const sourceLinks = [
   { label: "TOML", href: githubSourceUrl(site, "src/data/profile.toml") },
   { label: "JSON", href: githubSourceUrl(site, "public/cv/profile.json") },
@@ -28,4 +31,5 @@ const versionLinks = [
   profileProjects={profileProjects}
   sourceLinks={sourceLinks}
   versionLinks={versionLinks}
+  availablePostTags={availablePostTags}
 />

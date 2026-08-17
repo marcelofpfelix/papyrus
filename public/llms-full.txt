@@ -915,7 +915,9 @@ dated material.
 ## Skills
 
 Skills can be written as tags and prose. Tag-style skills can link naturally to
-tag pages when the site uses matching post tags.
+tag pages when the site uses matching post tags. Papyrus only links a skill tag
+when a public post already has that tag, so the profile does not create dead tag
+links.
 
 ```toml title="src/data/profile.toml"
 [user.data.skills.skills.skills]
@@ -923,6 +925,18 @@ tags = ["astro", "markdown", "theme", "search"]
 description = """-- Astro content collections and static builds.<br>
 -- Markdown rendering, callouts, code blocks, and diagrams."""
 ```
+
+Keep skill icons optional. If a site uses technology logos, prefer a maintained
+set such as Devicon or skill-icons, and keep the printable CV mostly text-first.
+Skill chips should help readers find related writing or projects, not behave
+like subjective progress bars.
+
+## Topic feeds
+
+Papyrus can generate one RSS feed per tag with `pnpm run rss-tags`. This lets
+readers subscribe only to the topics they care about, such as release notes,
+technical posts, or personal notes, without splitting the site into separate
+blogs.
 
 ## Export and print
 
@@ -934,7 +948,9 @@ pnpm run cv:export
 
 The command writes `public/cv/profile.json` and `public/cv/profile.md`. Web
 routes use the TOML source. The generated files are useful for sharing, source
-actions, and external review.
+actions, and external review. The Papyrus JSON export keeps the normalized
+Papyrus CV shape. A JSON Resume-compatible export is a planned optional output
+for tools that expect `resume.json`.
 
 The profile page links to print routes. The modern print route and classic ATS
 route use the same data, so the site does not maintain multiple resumes by hand.

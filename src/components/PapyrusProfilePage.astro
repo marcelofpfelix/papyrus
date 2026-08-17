@@ -7,6 +7,7 @@ import PapyrusTimeline from "./PapyrusTimeline.astro";
 import { cvIconSvg } from "../utils/cv-icons";
 import { shouldShowCvItemTitle } from "../utils/cv";
 import { imageEffectClass, imageEffectStyle } from "../utils/image-effects";
+import { tagSlug } from "../utils/posts";
 import { getAssetPath, withBase } from "../utils/withBase";
 import type { ProfileData, ProfileProject } from "../utils/cv-profile-data";
 
@@ -28,6 +29,7 @@ type Props = ProfileData & {
   sourceLinks?: { label: string; href: string }[];
   versionLinks?: { label: string; href: string }[];
   markdownHref?: string;
+  availablePostTags?: string[];
 };
 
 const {
@@ -40,19 +42,22 @@ const {
   sourceLinks,
   versionLinks,
   markdownHref,
+  availablePostTags,
 } = Astro.props as Props;
 
 const cvMarkdownHref = withBase(markdownHref ?? "/cv/profile.md");
 const visibleProfileLinks = profileLinks.filter(link => link.href !== profile.canonicalCv);
 const resumeSections = cvSections.filter(section => section.id !== "interests");
 const skillsSection = cvSections.find(section => section.id === "skills" || section.title.toLowerCase() === "skills");
+const availablePostTagSlugs = availablePostTags ? new Set(availablePostTags.map(tag => tagSlug(tag))) : undefined;
 const skillTags = Array.from(new Set(
   (skillsSection?.groups ?? [])
     .flatMap(group => group.items)
     .flatMap(item => item.tags ?? [])
     .map(tag => tag.trim())
     .filter(Boolean)
-)).map(tag => ({ label: `#${tag}`, href: withBase(`/tag/${tag}/`) }));
+)).filter(tag => !availablePostTagSlugs || availablePostTagSlugs.has(tagSlug(tag)))
+  .map(tag => ({ label: `#${tag}`, href: withBase(`/tag/${tagSlug(tag)}/`) }));
 const profileSourceLinks = sourceLinks ?? [];
 const profileVersionLinks = versionLinks ?? [
   { label: "Modern", href: withBase("/profile/print/") },
