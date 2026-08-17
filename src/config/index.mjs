@@ -39,6 +39,7 @@ const defaultAnalytics = {
 const defaultComments = {
   enabled: false,
   provider: "giscus",
+  category: "Announcements",
   mapping: "pathname",
   strict: false,
   reactionsEnabled: true,

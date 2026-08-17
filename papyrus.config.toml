@@ -33,21 +33,15 @@ branch = "0.2.2"
 
 [comments]
 enabled = true
-provider = "giscus"
 repo = "marcelofpfelix/papyrus"
 repo_id = "R_kgDOTU1y-A"
-category = "Announcements"
 category_id = "DIC_kwDOTU1y-M4DDluk"
-theme = "preferred_color_scheme"
-light_theme = "light"
-dark_theme = "dark_dimmed"
 
 [features]
 search = true
 rss = true
 themeControls = true
 share = true
-comments = true
 toc = true
 postTags = true
 aiMetadata = true
