@@ -150,6 +150,7 @@ assert(defaults.analytics.enabled === false, "default analytics should be disabl
 assert(defaults.analytics.includeInDev === false, "default analytics should not load in dev");
 assert(defaults.comments.enabled === false, "default comments should be disabled");
 assert(defaults.comments.provider === "giscus", "default comments provider should be giscus");
+assert(defaults.comments.category === "Announcements", "default comments category should be Announcements");
 assert(defaults.comments.mapping === "pathname", "default comments mapping should use pathname");
 assert(defaults.comments.lightTheme === "light", "default comments light theme should be light");
 assert(defaults.comments.darkTheme === "dark_dimmed", "default comments dark theme should be dark_dimmed");
@@ -261,7 +262,6 @@ for (const phrase of [
 	  "[analytics]",
 	  "provider = \"plausible\"",
 	  "[comments]",
-	  "provider = \"giscus\"",
 	  "repo_id",
 	  "category_id",
 	  "Announcements",

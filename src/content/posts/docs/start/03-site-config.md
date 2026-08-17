@@ -167,31 +167,26 @@ provider = "plausible"
 domain = "site.test"
 ```
 
-Comments are also opt-in. Papyrus renders Giscus on post pages only when both
-`[features].comments` and `[comments].enabled` are true and the Giscus repo and
-category IDs are configured:
+Comments are also opt-in. Papyrus renders Giscus on post pages when
+`[comments].enabled` is true and the Giscus repo and category IDs are
+configured. The feature flag defaults on; disable it with
+`[features].comments = false` only if you want to turn comments off globally.
 
 ```toml title="papyrus.config.toml"
-[features]
-comments = true
-
 [comments]
 enabled = true
-provider = "giscus"
 repo = "site-owner/site-repo"
 repo_id = "R_..."
-category = "Announcements"
 category_id = "DIC_..."
-theme = "preferred_color_scheme"
-light_theme = "light"
-dark_theme = "dark_dimmed"
 ```
 
 Use a GitHub Discussions category with the `Announcements` format when possible.
 That lets Giscus create post discussions while preventing normal repository
 visitors from manually opening unrelated discussions in the comments category.
-Papyrus updates Giscus when the site switches light/dark mode. `light_theme` and
-`dark_theme` can be built-in Giscus theme names or full custom CSS URLs.
+Papyrus defaults to the Giscus provider, `Announcements` category,
+`preferred_color_scheme`, and built-in `light` / `dark_dimmed` themes. Override
+`category`, `theme`, `light_theme`, or `dark_theme` only when your site needs
+different values.
 
 Keep custom Giscus CSS on a URL you control. Giscus loads that stylesheet inside
 its iframe, so avoid example URLs or third-party CSS you do not trust.
