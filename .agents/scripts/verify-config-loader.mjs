@@ -12,6 +12,8 @@ const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 const configSource = await readFile("src/config/index.ts", "utf8");
 const configToml = await readFile("papyrus.config.toml", "utf8");
 const baseLayout = await readFile("src/layouts/PapyrusBaseLayout.astro", "utf8");
+const postLayout = await readFile("src/layouts/PapyrusPostLayout.astro", "utf8");
+const giscusComponent = await readFile("src/components/PapyrusGiscusComments.astro", "utf8");
 const papyrusCss = await readFile("src/styles/papyrus.css", "utf8");
 const installGuide = await readFile("src/content/posts/docs/start/02-install-configure-papyrus.md", "utf8");
 const siteConfigGuide = await readFile("src/content/posts/docs/start/03-site-config.md", "utf8");
@@ -52,13 +54,31 @@ yandex = "yandex-token"
 name = "p:domain_verify"
 content = "pinterest-token"
 
-[analytics]
-enabled = true
-provider = "plausible"
-domain = "site.test"
-include_in_dev = false
+	[analytics]
+	enabled = true
+	provider = "plausible"
+	domain = "site.test"
+	include_in_dev = false
 
-[[head.meta]]
+	[comments]
+	enabled = true
+	provider = "giscus"
+	repo = "site-owner/site-repo"
+	repo_id = "R_test"
+	category = "Announcements"
+	category_id = "DIC_test"
+	mapping = "pathname"
+	strict = false
+	reactions_enabled = true
+	emit_metadata = false
+	input_position = "bottom"
+	theme = "preferred_color_scheme"
+	light_theme = "light"
+	dark_theme = "dark_dimmed"
+	lang = "en"
+	loading = "lazy"
+	
+	[[head.meta]]
 name = "fediverse:creator"
 content = "@site@example.social"
 
@@ -124,6 +144,11 @@ assert(defaults.markdown.inlineCodeStyle === "panel", "default markdown inline c
 assert(defaults.verification.length === 0, "default verification meta should be empty");
 assert(defaults.analytics.enabled === false, "default analytics should be disabled");
 assert(defaults.analytics.includeInDev === false, "default analytics should not load in dev");
+assert(defaults.comments.enabled === false, "default comments should be disabled");
+assert(defaults.comments.provider === "giscus", "default comments provider should be giscus");
+assert(defaults.comments.mapping === "pathname", "default comments mapping should use pathname");
+assert(defaults.comments.lightTheme === "light", "default comments light theme should be light");
+assert(defaults.comments.darkTheme === "dark_dimmed", "default comments dark theme should be dark_dimmed");
 assert(defaults.head.meta.length === 0 && defaults.head.links.length === 0 && defaults.head.scripts.length === 0, "default head entries should be empty");
 assert(defaults.footerLinks.length === 0, "default footer links should be empty");
 assert(defaults.securityTxt.contacts.length === 0, "default security.txt contacts should be empty");
@@ -154,6 +179,22 @@ assert(parsedOpsConfig.analytics.enabled === true, "analytics enabled flag shoul
 assert(parsedOpsConfig.analytics.provider === "plausible", "analytics provider should parse");
 assert(parsedOpsConfig.analytics.domain === "site.test", "analytics domain should parse");
 assert(parsedOpsConfig.analytics.includeInDev === false, "analytics include_in_dev should parse");
+assert(parsedOpsConfig.comments.enabled === true, "comments enabled flag should parse");
+assert(parsedOpsConfig.comments.provider === "giscus", "comments provider should parse");
+assert(parsedOpsConfig.comments.repo === "site-owner/site-repo", "comments repo should parse");
+assert(parsedOpsConfig.comments.repoId === "R_test", "comments repo_id should parse");
+assert(parsedOpsConfig.comments.category === "Announcements", "comments category should parse");
+assert(parsedOpsConfig.comments.categoryId === "DIC_test", "comments category_id should parse");
+assert(parsedOpsConfig.comments.mapping === "pathname", "comments mapping should parse");
+assert(parsedOpsConfig.comments.strict === false, "comments strict flag should parse");
+assert(parsedOpsConfig.comments.reactionsEnabled === true, "comments reactions_enabled should parse");
+assert(parsedOpsConfig.comments.emitMetadata === false, "comments emit_metadata should parse");
+assert(parsedOpsConfig.comments.inputPosition === "bottom", "comments input_position should parse");
+assert(parsedOpsConfig.comments.theme === "preferred_color_scheme", "comments theme should parse");
+assert(parsedOpsConfig.comments.lightTheme === "light", "comments light_theme should parse");
+assert(parsedOpsConfig.comments.darkTheme === "dark_dimmed", "comments dark_theme should parse");
+assert(parsedOpsConfig.comments.lang === "en", "comments lang should parse");
+assert(parsedOpsConfig.comments.loading === "lazy", "comments loading should parse");
 assert(parsedOpsConfig.head.meta[0]?.name === "fediverse:creator", "head meta entries should parse");
 assert(parsedOpsConfig.head.links[0]?.rel === "me", "head link entries should parse");
 assert(parsedOpsConfig.head.scripts[0]?.defer === true, "head script entries should parse defer");
@@ -164,6 +205,12 @@ assert(loaded.title === parsed.title && loaded.nav.length === parsed.nav.length,
 assert(loaded.footerLinks.length === parsed.footerLinks.length, "loadPapyrusConfig should load footer links from papyrus.config.toml");
 assert(scriptConfig.title === parsed.title && scriptConfig.defaultThemeProfile === parsed.defaultThemeProfile, "script siteConfig should prefer papyrus.config.toml");
 assert(baseLayout.includes("configuredSite.footerLinks"), "base layout should use configured footer links when no page override is provided");
+assert(postLayout.includes("PapyrusGiscusComments"), "post layout should render configured Giscus comments");
+assert(postLayout.includes("configuredSite.comments"), "post layout should read comments from site config");
+assert(giscusComponent.includes("data-loading={loading}"), "Giscus component should support lazy loading config");
+assert(giscusComponent.includes("data-strict={strict ? \"1\" : \"0\"}"), "Giscus component should support strict mapping config");
+assert(giscusComponent.includes("papyrus:theme-change"), "Giscus component should sync with Papyrus theme changes");
+assert(giscusComponent.includes("setConfig: { theme }"), "Giscus component should update the iframe theme through setConfig");
 for (const attr of [
   "data-papyrus-markdown-link-style",
   "data-papyrus-markdown-heading-style",
@@ -198,10 +245,17 @@ for (const phrase of [
 }
 
 for (const phrase of [
-  "verification_meta",
-  "[analytics]",
-  "provider = \"plausible\"",
-  "include_in_dev",
+	  "verification_meta",
+	  "[analytics]",
+	  "provider = \"plausible\"",
+	  "[comments]",
+	  "provider = \"giscus\"",
+	  "repo_id",
+	  "category_id",
+	  "Announcements",
+	  "light_theme",
+	  "dark_theme",
+	  "include_in_dev",
   "[head]",
   "[[footer]]",
   "[security_txt]",

@@ -2,6 +2,7 @@
 import PapyrusBaseLayout from "./PapyrusBaseLayout.astro";
 import PapyrusAdjacentPosts from "../components/PapyrusAdjacentPosts.astro";
 import PapyrusAiMetadata from "../components/PapyrusAiMetadata.astro";
+import PapyrusGiscusComments from "../components/PapyrusGiscusComments.astro";
 import PapyrusToc from "../components/PapyrusToc.astro";
 import PapyrusBackToTopRuntime from "../components/runtime/PapyrusBackToTopRuntime.astro";
 import PapyrusMediaRuntime from "../components/runtime/PapyrusMediaRuntime.astro";
@@ -10,6 +11,7 @@ import { resolvePapyrusFeatures, type PapyrusFeatureConfig } from "../utils/feat
 import { imageEffectClass, imageEffectStyle, type PapyrusImageEffect } from "../utils/image-effects";
 import { formatPostDate, tagHref, toTransitionName } from "../utils/posts";
 import { getAssetPath, withBase } from "../utils/withBase";
+import { loadPapyrusConfig } from "../config";
 
 interface Heading {
   depth: number;
@@ -135,6 +137,9 @@ const resolvedFeatures = resolvePapyrusFeatures({
   toc: showToc,
   ...features,
 });
+const configuredSite = await loadPapyrusConfig();
+const comments = configuredSite.comments;
+const showComments = resolvedFeatures.comments && comments.enabled && comments.provider === "giscus";
 const published = pubDatetime ?? date;
 const formattedDate = formatPostDate(published);
 const formattedUpdated = formatPostDate(modDatetime);
@@ -281,6 +286,27 @@ function icon(name: string) {
     }
     <slot name="stats" />
     <slot name="after" />
+    {
+      showComments && (
+        <PapyrusGiscusComments
+          enabled={comments.enabled}
+          repo={comments.repo}
+          repoId={comments.repoId}
+          category={comments.category}
+          categoryId={comments.categoryId}
+          mapping={comments.mapping}
+          strict={comments.strict}
+          reactionsEnabled={comments.reactionsEnabled}
+          emitMetadata={comments.emitMetadata}
+          inputPosition={comments.inputPosition}
+          lang={comments.lang}
+          theme={comments.theme}
+          lightTheme={comments.lightTheme}
+          darkTheme={comments.darkTheme}
+          loading={comments.loading}
+        />
+      )
+    }
     {
       showPostFooter && (
         <footer class="papyrus-post-footer">
