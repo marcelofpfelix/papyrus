@@ -4,10 +4,7 @@ import { loadPapyrusConfig } from "../config/index.mjs";
 import papyrus from "../integration.mjs";
 import { papyrusMarkdown } from "../markdown/config.mjs";
 import { createPapyrusSitemapFilter } from "../sitemap.mjs";
-
-function deploymentSiteUrl(fallback) {
-  return process.env.SITE_URL ?? process.env.CF_PAGES_URL ?? fallback;
-}
+import { deploymentSiteUrl } from "./site-url.mjs";
 
 export async function definePapyrusAstroConfig(options = {}) {
   const siteConfig = await loadPapyrusConfig(options.configPath, options.cwd);
