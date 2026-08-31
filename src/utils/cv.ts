@@ -1,3 +1,5 @@
+import { isPapyrusImageEffect, type PapyrusImageEffect } from "./image-effects";
+
 export type PapyrusCvItem = {
   title?: string;
   dates?: string;
@@ -62,6 +64,7 @@ export type PapyrusCvUser = {
   name: string;
   handle?: string;
   avatar?: string;
+  avatarEffect?: PapyrusImageEffect;
   favicon?: string;
   ogImage?: string;
   canonicalCv?: string;
@@ -201,6 +204,11 @@ export function normalizeJekyllCvUser(input: unknown): PapyrusCvUser {
     name: stringValue(user.name) ?? "Unnamed profile",
     handle: stringValue(user.handle),
     avatar: stringValue(user.avatar),
+    avatarEffect: isPapyrusImageEffect(stringValue(user.avatar_effect))
+      ? stringValue(user.avatar_effect) as PapyrusImageEffect
+      : isPapyrusImageEffect(stringValue(user.avatarEffect))
+        ? stringValue(user.avatarEffect) as PapyrusImageEffect
+        : undefined,
     favicon: stringValue(user.favicon),
     ogImage: stringValue(user.og_image) ?? stringValue(user.ogImage),
     canonicalCv: cvHref(stringValue(user.canonical_cv) ?? stringValue(user.canonicalCv)),

@@ -12,6 +12,7 @@ import {
   tagHref,
   toTransitionName,
 } from "../utils/posts";
+import { imageEffectClass, imageEffectStyle, type PapyrusImageEffect } from "../utils/image-effects";
 import { getAssetPath } from "../utils/withBase";
 import PapyrusScheduledPostsRuntime from "./runtime/PapyrusScheduledPostsRuntime.astro";
 
@@ -28,6 +29,8 @@ interface PostItem {
     date?: Date | string;
     pinned?: boolean | number;
     cover?: string;
+    coverEffect?: PapyrusImageEffect;
+    cover_effect?: PapyrusImageEffect;
     tags?: string[];
   };
 }
@@ -88,6 +91,11 @@ function primaryDateIcon(post: PostItem) {
 function publishAt(post: PostItem) {
   return isScheduledPost(post) ? String(postPublishTimestamp(post)) : undefined;
 }
+
+function coverEffect(post: PostItem) {
+  return post.data.coverEffect ?? post.data.cover_effect ?? "none";
+}
+
 ---
 
 <ul class:list={["papyrus-post-list", `papyrus-post-list-${view}`]}>
@@ -95,7 +103,11 @@ function publishAt(post: PostItem) {
     posts.map(post => (
       <li class:list={[post.data.pinned && "papyrus-post-list-pinned"]} hidden={isScheduledPost(post)} data-papyrus-publish-at={publishAt(post)}>
         <a href={postHref(post, basePath)}>
-          {post.data.cover && <img class="papyrus-post-cover" src={getAssetPath(post.data.cover)} alt="" loading="lazy" />}
+          {post.data.cover && (
+            <span class:list={["papyrus-post-cover-wrap", imageEffectClass(coverEffect(post))]} style={imageEffectStyle(coverEffect(post), post.data.cover)}>
+              <img class="papyrus-post-cover" src={getAssetPath(post.data.cover)} alt="" loading="lazy" />
+            </span>
+          )}
           <span class="papyrus-post-title" transition:name={toTransitionName(post.data.title)}>{post.data.title}</span>
           {post.data.description && <span class="papyrus-post-description">{post.data.description}</span>}
           <span class="papyrus-post-meta">

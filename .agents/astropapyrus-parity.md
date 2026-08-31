@@ -8,7 +8,7 @@ choice explicit before a release note says the feature exists.
 
 | Feature area | Decision | Evidence or follow-up |
 | --- | --- | --- |
-| Typed central config resolver | Implemented in Papyrus | Tracked by PP-158. `astro-theme-papyrus/config` loads `papyrus.config.toml`; the remaining follow-up is consuming-site migration. |
+| Typed central config resolver | Implemented in Papyrus | Tracked by PP-158. `astro-papyrus/config` loads `papyrus.config.toml`; the remaining follow-up is consuming-site migration. |
 | Pagefind search option | Implemented as demo pattern | `/search/`, Pagefind build output, and browser verification cover the current package demo. `papyrus.config.toml` now carries the `features.search` flag consumed by layouts. |
 | Dynamic OG image route | Defer | Static cover/card-cover generation exists. A dynamic HTTP route needs its own design so package and consuming sites can choose routing and caching. |
 | Edit/source post links | Implemented | `PapyrusPostLayout` supports source actions, source copy, source link copy, and Web Share fallback behavior. |

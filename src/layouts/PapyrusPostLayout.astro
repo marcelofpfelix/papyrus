@@ -7,6 +7,7 @@ import PapyrusBackToTopRuntime from "../components/runtime/PapyrusBackToTopRunti
 import PapyrusMediaRuntime from "../components/runtime/PapyrusMediaRuntime.astro";
 import PapyrusPostActionsRuntime from "../components/runtime/PapyrusPostActionsRuntime.astro";
 import { resolvePapyrusFeatures, type PapyrusFeatureConfig } from "../utils/features";
+import { imageEffectClass, imageEffectStyle, type PapyrusImageEffect } from "../utils/image-effects";
 import { formatPostDate, tagHref, toTransitionName } from "../utils/posts";
 import { getAssetPath, withBase } from "../utils/withBase";
 
@@ -43,6 +44,8 @@ interface Props {
   showToc?: boolean;
   tocCollapsed?: boolean;
   cover?: string;
+  coverEffect?: PapyrusImageEffect;
+  cover_effect?: PapyrusImageEffect;
   editUrl?: string;
   canonicalUrl?: string;
   sourceUrl?: string;
@@ -95,6 +98,8 @@ const {
   showToc = false,
   tocCollapsed = true,
   cover,
+  coverEffect,
+  cover_effect,
   editUrl,
   canonicalUrl,
   sourceUrl,
@@ -134,6 +139,8 @@ const showPostMeta = Boolean(formattedDate || showUpdated || readingTime);
 const resolvedSourceLinkUrl = sourceLinkUrl ?? editUrl ?? sourceUrl;
 const showPostActions = Boolean((resolvedFeatures.sourceActions && (editUrl || sourceUrl || sourceLinkUrl)) || resolvedFeatures.share);
 const showPostFooter = Boolean(showPostMeta || (resolvedFeatures.postTags && tags.length > 0));
+const resolvedCoverEffect = coverEffect ?? cover_effect ?? "none";
+const coverEffectClass = imageEffectClass(resolvedCoverEffect);
 const shouldIndexWithPagefind = !robots?.toLowerCase().includes("noindex");
 const sideLinks = [
   moreAboutHref && { href: moreAboutHref, label: moreAboutLabel },
@@ -190,7 +197,7 @@ function icon(name: string) {
     )}
     {
       cover && (
-        <figure class="papyrus-post-cover-frame">
+        <figure class:list={["papyrus-post-cover-frame", coverEffectClass]} style={imageEffectStyle(resolvedCoverEffect, cover)}>
           <img src={getAssetPath(cover)} alt="" decoding="async" fetchpriority="high" />
         </figure>
       )
@@ -315,11 +322,12 @@ function icon(name: string) {
     {resolvedFeatures.adjacentPosts && <PapyrusAdjacentPosts previous={previous} next={next} basePath={adjacentBasePath} />}
   </article>
   {((resolvedFeatures.sourceActions && (sourceUrl || resolvedSourceLinkUrl)) || resolvedFeatures.share) && <PapyrusPostActionsRuntime />}
-  {(resolvedFeatures.artifactLinks || resolvedFeatures.imageZoom || resolvedFeatures.mermaid) && (
+  {(resolvedFeatures.artifactLinks || resolvedFeatures.imageZoom || resolvedFeatures.mermaid || resolvedFeatures.videoDither) && (
     <PapyrusMediaRuntime
       artifactLinks={resolvedFeatures.artifactLinks}
       imageZoom={resolvedFeatures.imageZoom}
       mermaid={resolvedFeatures.mermaid}
+      videoDither={resolvedFeatures.videoDither}
     />
   )}
   {resolvedFeatures.backToTop && <PapyrusBackToTopRuntime />}

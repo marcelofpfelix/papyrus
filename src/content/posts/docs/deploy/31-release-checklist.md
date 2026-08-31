@@ -11,7 +11,7 @@ tags:
   - docs
 ---
 
-Papyrus publishes as `astro-theme-papyrus`. Do not reserve or publish an empty package name.
+Papyrus publishes as `astro-papyrus`. Do not reserve or publish an empty package name.
 A release must ship usable exports, docs, styles, scripts, and examples that
 can be installed by another Astro site.
 
@@ -46,11 +46,28 @@ can be installed by another Astro site.
    ```
 
 7. Smoke install the packed tarball in a clean temporary Astro fixture before publishing.
-   The fixture should import `astro-theme-papyrus/components`,
-   `astro-theme-papyrus/config`, and `astro-theme-papyrus/papyrus.css`.
+   The fixture should import `astro-papyrus/components`,
+   `astro-papyrus/config`, and `astro-papyrus/papyrus.css`.
 8. Publish only from an npm account with 2FA enabled. Keep
    `publishConfig.provenance` enabled so supported CI releases attach npm
    provenance.
+
+## Automated release flow
+
+The `Release` GitHub Actions workflow uses Release Please on pushes to `main`.
+Release Please opens a release PR that updates `package.json`,
+`CHANGELOG.md`, and the GitHub release/tag from Conventional Commits.
+
+When the GitHub release is published, the publish job installs dependencies,
+runs `pnpm run verify:release`, builds the package, and runs:
+
+```sh
+pnpm publish --access public --provenance
+```
+
+Configure npm Trusted Publishing for `marcelofpfelix/papyrus` before relying on
+that job. The workflow needs GitHub-hosted runners and `id-token: write`; it
+does not need a long-lived npm token when trusted publishing is configured.
 
 ## Pack check
 

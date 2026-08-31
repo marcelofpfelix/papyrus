@@ -114,13 +114,13 @@
     "url": "https://papyrus.marcelofelix.com/posts/papyrus-docs/",
     "sourcePath": "src/content/posts/docs/start/00-papyrus-docs.md",
     "description": "Start with papyrus-template, then edit config, Markdown, profile data, and assets.",
-    "excerpt": "Papyrus is a reusable Astro theme for personal sites, technical notes, project pages, and profile/CV pages. Start from `papyrus-template`, keep your content in that site, and let `astro-theme-papyrus` provide the shared routes and components. Read first - [Install and configure P",
+    "excerpt": "Papyrus is a reusable Astro theme for personal sites, technical notes, project pages, and profile/CV pages. Start from `papyrus-template`, keep your content in that site, and let `astro-papyrus` provide the shared routes and components. Read first - [Install and configure Papyrus",
     "tags": [
       "papyrus",
       "docs",
       "astro"
     ],
-    "text": "Papyrus docs\nStart with papyrus-template, then edit config, Markdown, profile data, and assets.\nPapyrus is a reusable Astro theme for personal sites, technical notes, project pages, and profile/CV pages. Start from `papyrus-template`, keep your content in that site, and let `astro-theme-papyrus` provide the shared routes and components. Read first - [Install and configure P\npapyrus docs astro"
+    "text": "Papyrus docs\nStart with papyrus-template, then edit config, Markdown, profile data, and assets.\nPapyrus is a reusable Astro theme for personal sites, technical notes, project pages, and profile/CV pages. Start from `papyrus-template`, keep your content in that site, and let `astro-papyrus` provide the shared routes and components. Read first - [Install and configure Papyrus\npapyrus docs astro"
   },
   {
     "id": "post:install-configure-papyrus",
@@ -144,13 +144,13 @@
     "url": "https://papyrus.marcelofelix.com/posts/site-config/",
     "sourcePath": "src/content/posts/docs/start/03-site-config.md",
     "description": "What papyrus.config.toml controls and how a site should edit it.",
-    "excerpt": "`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, project cards, theme defaults, feature flags, and post-list behavior. Use frontmatter for per-post metadat",
+    "excerpt": "`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, theme defaults, feature flags, homepage behavior, and post-list behavior. Use frontmatter for per-post met",
     "tags": [
       "papyrus",
       "config",
       "start"
     ],
-    "text": "Site config\nWhat papyrus.config.toml controls and how a site should edit it.\n`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, project cards, theme defaults, feature flags, and post-list behavior. Use frontmatter for per-post metadat\npapyrus config start"
+    "text": "Site config\nWhat papyrus.config.toml controls and how a site should edit it.\n`papyrus.config.toml` is the site control file. Edit this before copying theme code into `src/pages` or local components. Use it for site identity, navigation, social links, theme defaults, feature flags, homepage behavior, and post-list behavior. Use frontmatter for per-post met\npapyrus config start"
   },
   {
     "id": "post:choco-frito",
@@ -431,6 +431,20 @@
       "portuguese-food"
     ],
     "text": "Cabrito Assado\nRoast kid goat with garlic, white wine, bay leaf, potatoes, and paprika.\nCabrito Assado is a celebratory roast, often served with potatoes and greens. Ingredients - Kid goat pieces - Garlic, bay leaf, paprika, and white wine - Olive oil - Potatoes - Parsley and lemon Method Marinate overnight, roast slowly with potatoes, and baste until the meat is te\nrecipe portuguese-food"
+  },
+  {
+    "id": "post:image-effects",
+    "type": "post",
+    "title": "Theme-aware image effects",
+    "url": "https://papyrus.marcelofelix.com/posts/image-effects/",
+    "sourcePath": "src/content/posts/image-effects.md",
+    "description": "Configure duotone, tritone, and dithered image treatments for covers and profile photos.",
+    "excerpt": "Papyrus image effects are configured per image. Use them when a normal photo feels too detached from the active theme. `duotone` and `tritone` are CSS effects. The browser keeps the original image and recolors it with the current theme tokens, so light and dark mode switches happ",
+    "tags": [
+      "papyrus",
+      "images"
+    ],
+    "text": "Theme-aware image effects\nConfigure duotone, tritone, and dithered image treatments for covers and profile photos.\nPapyrus image effects are configured per image. Use them when a normal photo feels too detached from the active theme. `duotone` and `tritone` are CSS effects. The browser keeps the original image and recolors it with the current theme tokens, so light and dark mode switches happ\npapyrus images"
   },
   {
     "id": "project:papyrus-theme",

@@ -20,6 +20,7 @@ export type PapyrusFeatureConfig = {
   mermaid?: boolean;
   artifactLinks?: boolean;
   imageZoom?: boolean;
+  videoDither?: boolean;
   notes?: boolean;
   projects?: boolean;
   graph?: boolean;
@@ -51,6 +52,7 @@ export const defaultPapyrusFeatures = {
   mermaid: true,
   artifactLinks: true,
   imageZoom: true,
+  videoDither: true,
   notes: true,
   projects: true,
   graph: true,

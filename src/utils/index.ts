@@ -4,6 +4,7 @@ export * from "./cv-icons";
 export * from "./cv-profile-data";
 export * from "./cv-profile-links";
 export * from "./features";
+export * from "./image-effects";
 export * from "./plugins";
 export * from "./withBase";
 export * from "../config";

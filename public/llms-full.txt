@@ -45,7 +45,7 @@ Escaped characters remain literal: \*not italic\* and \`not code\`.
 Unordered list:
 
 - keep the site repo focused on content and configuration
-- import reusable components from `astro-theme-papyrus`
+- import reusable components from `astro-papyrus`
 - avoid copying a whole upstream theme into each site
 - keep overrides small enough to review
 
@@ -123,8 +123,8 @@ Inline code like `pnpm build` keeps paragraph line-height calm.
 TypeScript with a title and highlighted lines:
 
 ```ts title="src/pages/posts/index.astro" {1,4}
-import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
-import { publishedPosts } from "astro-theme-papyrus/utils";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-papyrus/components";
+import { publishedPosts } from "astro-papyrus/utils";
 
 const posts = publishedPosts(await getCollection("posts"));
 ```
@@ -446,8 +446,8 @@ features, exports components and helpers, and lets the site override content,
 config, and routes.
 
 ```ts
-import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
-import { publishedPosts } from "astro-theme-papyrus/utils";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-papyrus/components";
+import { publishedPosts } from "astro-papyrus/utils";
 ```
 
 The goal is small imports, little local code, and theme updates in one package.
@@ -609,6 +609,17 @@ roles = ["Software Engineer", "Technical writer"]
 sections = ["about", "experience", "education", "skills"]
 ```
 
+Set site-wide avatar treatment in `papyrus.config.toml`:
+
+```toml title="papyrus.config.toml"
+[profile.images]
+effect = "tritone"
+```
+
+Use `avatar_effect` in this file only when one profile should override that
+site default. Supported values are `none`, `duotone`, `tritone`, `dither`, and
+`dithernoise`.
+
 Use `email_user` and `email_domain` instead of a single literal email address
 when you want the page to assemble the visible contact with less obvious static
 scraping. It is not cryptographic protection; it only avoids the most basic
@@ -702,7 +713,7 @@ Updated: 2026-07-01T09:00:00.000Z
 Source: src/content/posts/docs/start/00-papyrus-docs.md
 Papyrus is a reusable Astro theme for personal sites, technical notes, project
 pages, and profile/CV pages. Start from `papyrus-template`, keep your content
-in that site, and let `astro-theme-papyrus` provide the shared routes and
+in that site, and let `astro-papyrus` provide the shared routes and
 components.
 
 ## Read first
@@ -724,7 +735,8 @@ components.
 
 Most sites only need these files:
 
-- `papyrus.config.toml` for site identity, navigation, projects, theme, and feature flags
+- `papyrus.config.toml` for site identity, navigation, theme, feature flags, and homepage counts
+- `src/data/projects.toml` for project cards
 - `src/content/posts/` for posts, docs, and collections
 - `src/data/profile.toml` for profile and CV data
 - `public/` for images, logos, favicons, and static files
@@ -756,31 +768,46 @@ The template depends on the package:
 ```json title="package.json"
 {
   "dependencies": {
-    "astro-theme-papyrus": "^0.2.1"
+    "astro-papyrus": "^0.2.2"
   }
 }
 ```
 
+Use the npm package for normal sites. It is the stable path for template users
+because it resolves like any other dependency:
+
+```sh
+pnpm add astro-papyrus@^0.2.2
+```
+
+Use a pinned GitHub dependency only when testing unreleased Papyrus work or
+waiting for a new npm release to pass the registry maturity window:
+
+```sh
+pnpm add github:marcelofpfelix/papyrus#0.2.2
+```
+
+A branch name is convenient for preview work, but a tag or commit SHA is safer
+for real sites because it makes rebuilds repeatable.
+
 It enables Papyrus in Astro:
 
 ```js title="astro.config.mjs"
-import sitemap from "@astrojs/sitemap";
-import { defineConfig } from "astro/config";
-import { loadPapyrusConfig } from "astro-theme-papyrus/config";
-import papyrus from "astro-theme-papyrus/integration";
+import { definePapyrusAstroConfig } from "astro-papyrus/astro";
 
-const site = await loadPapyrusConfig();
+export default definePapyrusAstroConfig();
+```
 
-export default defineConfig({
-  site: site.site,
-  integrations: [papyrus(), sitemap()],
-});
+Custom routes can read the same TOML file through `loadPapyrusConfig`:
+
+```ts
+import { loadPapyrusConfig } from "astro-papyrus/config";
 ```
 
 It also reuses the Papyrus content collection:
 
 ```ts title="src/content.config.ts"
-export { collections } from "astro-theme-papyrus/content";
+export { collections } from "astro-papyrus/content";
 ```
 
 Papyrus adds these routes:
@@ -790,7 +817,7 @@ Papyrus adds these routes:
 | `/` | Home page with latest posts and project cards |
 | `/posts/` | Public post list |
 | `/posts/[...slug]/` | Post detail page |
-| `/projects/` | Project cards from `papyrus.config.toml` |
+| `/projects/` | Project cards from `src/data/projects.toml` |
 | `/profile/`, `/profile/print/`, `/profile/ast/` | Profile and CV pages from `src/data/profile.toml` |
 | `/tag/` and `/tag/[tag]/` | Tag index and tag detail pages |
 | `/404.html` | Helpful not-found page |
@@ -830,7 +857,8 @@ For normal site work, start with these files:
 
 | Goal | Edit |
 | --- | --- |
-| Site title, description, navigation, projects, theme, feature flags, and post-card defaults | `papyrus.config.toml` |
+| Site title, description, navigation, theme, feature flags, homepage counts, and post-card defaults | `papyrus.config.toml` |
+| Project cards | `src/data/projects.toml` |
 | Add or edit posts | `src/content/posts/*.md` |
 | Add ordered docs or guide sections | `src/content/posts//.toml` plus Markdown posts |
 | Change the profile, CV, links, skills, dates, and print color | `src/data/profile.toml` |
@@ -896,9 +924,10 @@ Source: src/content/posts/docs/start/03-site-config.md
 `papyrus.config.toml` is the site control file. Edit this before copying theme
 code into `src/pages` or local components.
 
-Use it for site identity, navigation, social links, project cards, theme
-defaults, feature flags, and post-list behavior. Use frontmatter for per-post
-metadata. Use `src/data/profile.toml` for profile and CV data.
+Use it for site identity, navigation, social links, theme defaults, feature
+flags, homepage behavior, and post-list behavior. Use frontmatter for per-post
+metadata. Use `src/data/projects.toml` for project cards and
+`src/data/profile.toml` for profile and CV data.
 
 ## What it controls
 
@@ -907,12 +936,17 @@ metadata. Use `src/data/profile.toml` for profile and CV data.
 | `[site]` | Site title, description, URL, language, text direction, and timezone |
 | `[brand]` | Header brand title, mark, and whether the text title is visible |
 | `[theme]` | Default color profile and font profile |
+| `[home]` | Homepage counts and layout-facing defaults |
+| `[profile.images]` | Default visual treatment for profile images |
 | `[pages.]` | Optional text overrides for inherited page descriptions |
+| `[verification]` and `[[verification_meta]]` | Search engine and service verification meta tags |
+| `[analytics]` | Optional production-only analytics script |
+| `[head]` | Constrained site-owned meta, link, and external script entries |
+| `[security_txt]` | Optional vulnerability disclosure contact for `security.txt` |
 | `[features]` | Optional UI, metadata, comments, search, graph, media, and profile features |
 | `[post_card]` | Post-list tags, read time, fresh indicators, updated-date behavior, and default limit |
 | `[[nav]]` | Header navigation links |
 | `[[social]]` | Social links used by the header and footer |
-| `[[project]]` | Project cards shown by the project list components |
 
 Papyrus reads this file with `loadPapyrusConfig()`. If it is missing, package
 defaults are used so a minimal template can still build.
@@ -937,6 +971,12 @@ show_title = true
 [theme]
 profile = "everforest"
 font_profile = "readable"
+
+[home]
+project_limit = 2
+
+[profile.images]
+effect = "none"
 
 [[nav]]
 href = "/posts/"
@@ -969,8 +1009,8 @@ Vercel, and Netlify. Set `branch = "main"` only when you want a fixed branch.
 
 ## Page descriptions
 
-Inherited routes ship with default intro descriptions. Override or hide those
-without copying route files:
+Inherited routes keep intro descriptions hidden by default. Add text only for
+the pages where the site should show it:
 
 ```toml title="papyrus.config.toml"
 [pages.posts]
@@ -1000,6 +1040,70 @@ This site is where I keep technical notes, project logs, and occasional side int
 Blank lines in `content` create separate paragraphs. The About page keeps this
 body focused and adds a profile link at the end.
 
+## Verification, analytics, and head entries
+
+Keep verification and analytics disabled until the site has real provider
+values. Papyrus keeps the Google shorthand, but the generic verification table
+also covers Bing and other services:
+
+```toml title="papyrus.config.toml"
+[seo]
+google_verification = "google-search-console-token"
+
+[verification]
+bing = "bing-webmaster-token"
+
+[[verification_meta]]
+name = "p:domain_verify"
+content = "pinterest-token"
+```
+
+Analytics is opt-in and does not load during local development unless
+`include_in_dev = true` is set. Supported providers are `ga4`, `plausible`,
+`umami`, `goatcounter`, and `custom`:
+
+```toml title="papyrus.config.toml"
+[analytics]
+enabled = true
+provider = "plausible"
+domain = "site.test"
+```
+
+Use `[head]` for small, typed additions that belong to the site. It accepts
+meta tags, link tags, and external scripts. It does not accept raw HTML strings.
+
+```toml title="papyrus.config.toml"
+[[head.meta]]
+name = "fediverse:creator"
+content = "@site@example.social"
+
+[[head.link]]
+rel = "me"
+href = "https://example.social/@site"
+
+[[head.script]]
+src = "https://example.test/script.js"
+defer = true
+```
+
+Footer links already use `[[social]]` and the shared footer. Add provider
+widgets as normal links when possible; only use `[head]` when a provider really
+needs a document-level tag or script.
+
+## Security.txt
+
+Configure `security.txt` only when the site has a public vulnerability
+disclosure contact. With no contact, Papyrus returns a 404 for
+`/.well-known/security.txt` and `/security.txt` instead of publishing a
+placeholder file.
+
+```toml title="papyrus.config.toml"
+[security_txt]
+contact = ["mailto:security@example.com"]
+preferred_languages = "en, pt"
+policy = "https://site.test/security"
+```
+
 ## Feature flags
 
 Feature flags are booleans. Set only the flags you want to override:
@@ -1015,6 +1119,21 @@ graph = false
 Disable features that need external setup. For example, turn off comments and
 remote post stats until the site has configured those services.
 
+## Profile images
+
+Use `src/data/profile.toml` for profile content and asset paths. Use
+`papyrus.config.toml` for the default image treatment:
+
+```toml title="papyrus.config.toml"
+[profile.images]
+effect = "tritone"
+```
+
+The default is `none`. `duotone` uses the current background and foreground
+colors. `tritone` also uses the accent color. `dither` and `dithernoise`
+generate masks at build time and color them with theme-aware ink. A profile data
+file can still override the default for its own avatar with `avatar_effect`.
+
 ## Post-list defaults
 
 Post-card options apply to normal post lists such as home and `/posts/`:
@@ -1024,7 +1143,7 @@ Post-card options apply to normal post lists such as home and `/posts/`:
 tags = false
 read_time = false
 fresh_indicators = true
-fresh_indicator_text = false
+fresh_indicator_text = true
 updated_date_only = true
 limit = 20
 ```
@@ -1035,14 +1154,19 @@ updated posts while the post page can still show both created and updated dates.
 
 ## Projects and links
 
-Use repeated TOML tables for navigation, social links, and projects:
+Use repeated TOML tables for navigation and social links in
+`papyrus.config.toml`:
 
 ```toml title="papyrus.config.toml"
 [[social]]
 href = "https://github.com/site-owner"
 label = "GitHub"
 icon = "github"
+```
 
+Keep project cards in `src/data/projects.toml`:
+
+```toml title="src/data/projects.toml"
 [[project]]
 title = "My project"
 description = "A short public project summary."
@@ -1457,3 +1581,94 @@ Cabrito Assado is a celebratory roast, often served with potatoes and greens.
 
 Marinate overnight, roast slowly with potatoes, and baste until the meat is
 tender and the potatoes are browned.
+## Theme-aware image effects
+URL: https://papyrus.marcelofelix.com/posts/image-effects/
+Summary: Configure duotone, tritone, and dithered image treatments for covers and profile photos.
+Updated: 2026-08-13
+Source: src/content/posts/image-effects.md
+Papyrus image effects are configured per image. Use them when a normal photo
+feels too detached from the active theme.
+
+`duotone` and `tritone` are CSS effects. The browser keeps the original image
+and recolors it with the current theme tokens, so light and dark mode switches
+happen immediately. Use `duotone` for background and foreground colors only.
+
+`dither` and `dithernoise` are different. Papyrus generates dark and light alpha
+masks at build time, then the browser paints the active mask with a
+theme-derived ink color. `dither` uses an Atkinson-style dot pattern.
+`dithernoise` uses the same pattern and steps through generated noise frames.
+
+  
+    
+      
+    
+    original
+  
+  
+    
+      
+    
+    duotone
+  
+  
+    
+      
+    
+    tritone
+  
+  
+    
+      
+    
+    dither
+  
+  
+    
+      
+    
+    dithernoise
+  
+
+Videos can opt into the runtime effect with the same theme ink. The video stays
+as normal media, and Papyrus upgrades it only when WebGL, motion, and visibility
+allow it.
+
+  Open the video demo
+
+For a post cover, set the effect in frontmatter:
+
+```yaml
+cover: /images/photo.jpg
+cover_effect: duotone
+```
+
+Use `dither` or `dithernoise` when you want a build-time mask:
+
+```yaml
+cover: /images/photo.jpg
+cover_effect: dithernoise
+```
+
+For profile images, set the site default:
+
+```toml
+[profile.images]
+effect = "tritone"
+```
+
+Or override one profile directly:
+
+```toml
+[user]
+avatar = "images/profile.jpg"
+avatar_effect = "dither"
+```
+
+The supported values are `none`, `duotone`, `tritone`, `dither`, and
+`dithernoise`.
+
+For content videos, use `class="papyrus-video-effect-dither"` on a normal
+`` element with a poster. In Markdown, use
+`data-papyrus-video-dither-src` on a placeholder element and keep a simple link
+inside it. Papyrus keeps the video or link as the fallback and uses a lazy
+canvas enhancement for the dithered rendering.

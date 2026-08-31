@@ -12,11 +12,13 @@ const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 const configSource = await readFile("src/config/index.ts", "utf8");
 const configToml = await readFile("papyrus.config.toml", "utf8");
 const installGuide = await readFile("src/content/posts/docs/start/02-install-configure-papyrus.md", "utf8");
+const siteConfigGuide = await readFile("src/content/posts/docs/start/03-site-config.md", "utf8");
 const demoNav = await readFile("src/data/demo-nav.ts", "utf8");
 const demoSite = await readFile("src/data/demo-site.ts", "utf8");
 const siteConfigSource = await readFile("scripts/site-config.mjs", "utf8");
 
 const configModule = await import("../../src/config/index.ts");
+const defaults = configModule.resolvePapyrusConfig();
 const parsed = configModule.parsePapyrusConfigToml(configToml);
 const loaded = await configModule.loadPapyrusConfig();
 const scriptConfig = await siteConfig();
@@ -34,6 +36,41 @@ status = "active"
   href = "https://github.com/site-owner/template"
   label = "repo"
   text = "site-owner/template"
+`);
+const parsedOpsConfig = configModule.parsePapyrusConfigToml(`
+[seo]
+google_verification = "google-token"
+
+[verification]
+bing = "bing-token"
+yandex = "yandex-token"
+
+[[verification_meta]]
+name = "p:domain_verify"
+content = "pinterest-token"
+
+[analytics]
+enabled = true
+provider = "plausible"
+domain = "site.test"
+include_in_dev = false
+
+[[head.meta]]
+name = "fediverse:creator"
+content = "@site@example.social"
+
+[[head.link]]
+rel = "me"
+href = "https://example.social/@site"
+
+[[head.script]]
+src = "https://example.test/script.js"
+defer = true
+
+[security_txt]
+contact = ["mailto:security@example.com", "https://site.test/security"]
+preferred_languages = "en, pt"
+policy = "https://site.test/security-policy"
 `);
 
 assert(packageJson.exports?.["./config"] === "./src/config/index.ts", "package export ./config missing");
@@ -58,10 +95,48 @@ assert(parsed.postCard.tags === false, "parsed post-card tags flag should come f
 assert(parsed.postCard.readTime === false, "parsed post-card read time flag should come from TOML");
 assert(parsed.postCard.updatedDateOnly === true, "parsed post-card updated-date flag should come from TOML");
 assert(parsed.postCard.limit === 20, "parsed post-card limit should come from TOML");
+assert(parsed.profile.images.effect === "tritone", "parsed profile image effect should come from TOML");
+assert(defaults.postCard.tags === false, "default post-card tags should be hidden");
+assert(defaults.postCard.readTime === false, "default post-card read time should be hidden");
+assert(defaults.postCard.freshIndicators === true, "default post-card fresh indicators should be enabled");
+assert(defaults.postCard.freshIndicatorText === true, "default post-card fresh indicator text should be enabled");
+assert(defaults.postCard.updatedDateOnly === true, "default post-card updated date only should be enabled");
+assert(defaults.postCard.limit === 20, "default post-card limit should be 20");
+assert(defaults.profile.images.effect === "none", "default profile image effect should be disabled");
+assert(defaults.verification.length === 0, "default verification meta should be empty");
+assert(defaults.analytics.enabled === false, "default analytics should be disabled");
+assert(defaults.analytics.includeInDev === false, "default analytics should not load in dev");
+assert(defaults.head.meta.length === 0 && defaults.head.links.length === 0 && defaults.head.scripts.length === 0, "default head entries should be empty");
+assert(defaults.securityTxt.contacts.length === 0, "default security.txt contacts should be empty");
+for (const page of ["posts", "timeline", "tags", "search", "projects", "about"]) {
+  assert(defaults.pages[page]?.description === false, `default ${page} page description should be hidden`);
+}
+const aboutOnly = configModule.resolvePapyrusConfig({ pages: { about: { content: "About body" } } });
+assert(aboutOnly.pages.about?.description === false, "page defaults should merge with about content overrides");
+assert(aboutOnly.pages.about?.content === "About body", "about content override should be preserved");
+assert(aboutOnly.pages.posts?.description === false, "page defaults should survive partial page overrides");
+const profileOnly = configModule.resolvePapyrusConfig({ profile: { images: { effect: "tritone" } } });
+assert(profileOnly.profile.images.effect === "tritone", "profile image effect override should be preserved");
+const ditherProfile = configModule.resolvePapyrusConfig({ profile: { images: { effect: "dither" } } });
+assert(ditherProfile.profile.images.effect === "dither", "profile image dither effect override should be preserved");
 assert(parsedProjectConfig.projects.length === 1, "parsed project config should include one TOML project");
 assert(parsedProjectConfig.projects[0]?.title === "Template project", "parsed project title should come from TOML");
 assert(parsedProjectConfig.projects[0]?.links?.[0]?.text === "site-owner/template", "parsed project link text should come from TOML");
 assert(parsedProjectConfig.projects[0]?.pinned === true, "parsed project pinned flag should come from TOML");
+assert(parsedOpsConfig.verification.some(item => item.name === "google-site-verification" && item.content === "google-token"), "Google verification shorthand should become meta config");
+assert(parsedOpsConfig.verification.some(item => item.name === "msvalidate.01" && item.content === "bing-token"), "Bing verification should become msvalidate.01");
+assert(parsedOpsConfig.verification.some(item => item.name === "yandex-site-verification" && item.content === "yandex-token"), "Yandex verification should become provider meta");
+assert(parsedOpsConfig.verification.some(item => item.name === "p:domain_verify" && item.content === "pinterest-token"), "generic verification_meta should be parsed");
+assert(parsedOpsConfig.analytics.enabled === true, "analytics enabled flag should parse");
+assert(parsedOpsConfig.analytics.provider === "plausible", "analytics provider should parse");
+assert(parsedOpsConfig.analytics.domain === "site.test", "analytics domain should parse");
+assert(parsedOpsConfig.analytics.includeInDev === false, "analytics include_in_dev should parse");
+assert(parsedOpsConfig.head.meta[0]?.name === "fediverse:creator", "head meta entries should parse");
+assert(parsedOpsConfig.head.links[0]?.rel === "me", "head link entries should parse");
+assert(parsedOpsConfig.head.scripts[0]?.defer === true, "head script entries should parse defer");
+assert(parsedOpsConfig.securityTxt.contacts.length === 2, "security.txt contacts should parse");
+assert(parsedOpsConfig.securityTxt.preferredLanguages === "en, pt", "security.txt preferred languages should parse");
+assert(parsedOpsConfig.securityTxt.policy === "https://site.test/security-policy", "security.txt policy should parse");
 assert(loaded.title === parsed.title && loaded.nav.length === parsed.nav.length, "loadPapyrusConfig should load papyrus.config.toml by default");
 assert(scriptConfig.title === parsed.title && scriptConfig.defaultThemeProfile === parsed.defaultThemeProfile, "script siteConfig should prefer papyrus.config.toml");
 
@@ -75,14 +150,26 @@ for (const phrase of [
   "papyrus.config.toml",
   "loadPapyrusConfig",
   "papyrus-template",
-  "astro-theme-papyrus/integration",
-  "astro-theme-papyrus/content",
-  "astro-theme-papyrus/config",
-  "\"astro-theme-papyrus\": \"^0.2.1\"",
+  "astro-papyrus/astro",
+  "astro-papyrus/content",
+  "astro-papyrus/config",
+  "\"astro-papyrus\": \"^0.2.2\"",
   "`src/pages` tree",
-  "theme, feature flags, and post-card defaults",
+  "theme, feature flags, homepage counts, and post-card defaults",
 ]) {
   assert(installGuide.includes(phrase), `install guide missing config phrase: ${phrase}`);
+}
+
+for (const phrase of [
+  "verification_meta",
+  "[analytics]",
+  "provider = \"plausible\"",
+  "include_in_dev",
+  "[head]",
+  "[security_txt]",
+  "no contact",
+]) {
+  assert(siteConfigGuide.includes(phrase), `site config guide missing phrase: ${phrase}`);
 }
 
 if (failures.length) {

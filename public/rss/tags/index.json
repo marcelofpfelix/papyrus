@@ -50,6 +50,11 @@
     "count": 5
   },
   {
+    "tag": "images",
+    "feed": "/rss/tags/images.xml",
+    "count": 1
+  },
+  {
     "tag": "markdown",
     "feed": "/rss/tags/markdown.xml",
     "count": 1
@@ -62,7 +67,7 @@
   {
     "tag": "papyrus",
     "feed": "/rss/tags/papyrus.xml",
-    "count": 7
+    "count": 8
   },
   {
     "tag": "portuguese-food",

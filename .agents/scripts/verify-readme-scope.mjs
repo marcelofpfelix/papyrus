@@ -12,7 +12,7 @@ function assert(condition, message) {
 const lines = readme.trimEnd().split("\n");
 assert(lines.length <= 90, `README should stay short, found ${lines.length} lines`);
 
-for (const heading of ["# astro-theme-papyrus", "## Demo", "## Start a Site", "## Features", "## Architecture", "## Documentation"]) {
+for (const heading of ["# astro-papyrus", "## Demo", "## Start a Site", "## Features", "## Architecture", "## Documentation"]) {
   assert(readme.includes(heading), `README missing heading: ${heading}`);
 }
 
@@ -25,7 +25,7 @@ for (const phrase of [
   "Package docs live as a post collection",
   "Open `/collections/docs/` in the public Papyrus site",
   "pnpm create astro@latest -- --template marcelofpfelix/papyrus-template",
-  "\"astro-theme-papyrus\": \"^0.2.0\"",
+  "\"astro-papyrus\": \"^0.2.2\"",
   "Use Papyrus when you want a small content site that feels finished on day one",
   "readable posts, useful docs, searchable archives, social previews, RSS",
   "`marcelofelix` is the real showcase site. It keeps its own content",

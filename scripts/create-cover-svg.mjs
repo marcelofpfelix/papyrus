@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
+import { mkdir, readFile, unlink, writeFile } from "node:fs/promises";
+import { dirname, relative, resolve, sep } from "node:path";
 import { configuredBrand, siteConfig } from "./site-config.mjs";
 import { themeTokens } from "./theme-colors.mjs";
 
@@ -16,9 +16,18 @@ async function textFromInput(value) {
   if (!/\.(md|mdx)$/i.test(value)) return { title: value, description: subtitle };
 
   const text = await readFile(value, "utf8");
+  const cover = text.match(/^cover:\s*["']?(.+?)["']?\s*$/m)?.[1];
   const title = text.match(/^title:\s*["']?(.+?)["']?\s*$/m)?.[1] ?? value;
   const description = text.match(/^description:\s*["']?(.+?)["']?\s*$/m)?.[1] ?? subtitle;
-  return { title, description };
+  return { title, description, cover };
+}
+
+function outputPublicPath(value) {
+  const publicDir = resolve("public");
+  const resolved = resolve(value);
+  const fromPublic = relative(publicDir, resolved);
+  if (fromPublic.startsWith("..") || fromPublic === "" || fromPublic.split(sep).includes("..")) return undefined;
+  return `/${fromPublic.split(sep).join("/")}`;
 }
 
 function escapeXml(value) {
@@ -48,7 +57,17 @@ function wrapWords(value, max = 28) {
   return lines.slice(0, 3);
 }
 
-const { title, description } = await textFromInput(input);
+const { title, description, cover } = await textFromInput(input);
+const expectedCover = outputPublicPath(output);
+
+if (/\.(md|mdx)$/i.test(input) && expectedCover && cover !== expectedCover) {
+  await unlink(target).catch(error => {
+    if (error?.code !== "ENOENT") throw error;
+  });
+  const reason = cover ? `frontmatter cover is ${cover}` : "frontmatter has no cover";
+  console.log(`Skipped ${target}; ${reason}.`);
+  process.exit(0);
+}
 const titleLines = wrapWords(title, 26);
 const descriptionLines = wrapWords(description, 58);
 const titleSvg = titleLines

@@ -18,7 +18,7 @@ copying theme components.
 
 ```astro
 ---
-import { PapyrusBaseLayout } from "astro-theme-papyrus/components";
+import { PapyrusBaseLayout } from "astro-papyrus/components";
 
 const features = {
   header: true,
@@ -40,7 +40,7 @@ const features = {
 
 ```astro
 ---
-import { PapyrusPostLayout } from "astro-theme-papyrus/components";
+import { PapyrusPostLayout } from "astro-papyrus/components";
 
 const features = {
   share: false,
@@ -68,6 +68,11 @@ JSON-LD. Hidden posts stay out of public indexes. Use explicit
 `robots` frontmatter when a direct page should emit directives such as
 `noindex, follow`.
 
+`papyrus.config.toml` also supports generic verification meta tags, opt-in
+analytics, typed custom head entries, and optional `security.txt` output. Keep
+analytics disabled by default, then enable only the provider a site actually
+uses.
+
 ## Base path deploys
 
 Internal URLs in shared layouts and list components go through `withBase()` and
@@ -84,6 +89,10 @@ pages, profile pages, project pages, and collection routes are included
 automatically. Papyrus also includes a dynamic `robots.txt` route that reads the
 site URL, keeps crawl rules near site config, and points crawlers to the sitemap
 index.
+
+When `[security_txt]` has a contact, Papyrus publishes
+`/.well-known/security.txt` and `/security.txt`. Without a contact, those routes
+stay absent.
 
 ## Plugin contract
 

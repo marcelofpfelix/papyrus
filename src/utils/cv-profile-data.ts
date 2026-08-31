@@ -1,8 +1,14 @@
 import { parse } from "smol-toml";
 import { cvHref, normalizeJekyllCvUser, type PapyrusCvEmailParts, type PapyrusCvItem, type PapyrusCvUser } from "./cv";
+import type { PapyrusImageEffect } from "./image-effects";
 
 const DEFAULT_PRINT_COLOR = "#37474F";
 const DEFAULT_PRINT_LINKS = ["email", "linkedin", "github", "website"];
+type ProfileImageEffect = PapyrusImageEffect;
+
+export type ProfileDataOptions = {
+  imageEffect?: ProfileImageEffect;
+};
 
 export type ProfileMeta = {
   label: string;
@@ -47,6 +53,7 @@ export type ProfileData = {
     handle: string;
     headline: string;
     avatar: string;
+    avatarEffect: ProfileImageEffect;
     favicon: string;
     ogImage: string;
     canonicalCv: string;
@@ -251,7 +258,7 @@ function timelineContentFor(section: CvSection, group: CvGroup, item: CvItem): s
   return `<strong>${title}</strong>${entity}${description}`;
 }
 
-export function profileDataFromJekyllCvUser(user: PapyrusCvUser, projects: ProfileProject[] = []): ProfileData {
+export function profileDataFromJekyllCvUser(user: PapyrusCvUser, projects: ProfileProject[] = [], options: ProfileDataOptions = {}): ProfileData {
   const cvSections = (user.sections ?? []).map((section): CvSection => {
     const groups = (section.groups ?? []).map((group): CvGroup => ({
       entity: group.title,
@@ -290,6 +297,7 @@ export function profileDataFromJekyllCvUser(user: PapyrusCvUser, projects: Profi
       handle: handleFrom(user),
       headline: user.bio ?? "",
       avatar,
+      avatarEffect: user.avatarEffect ?? options.imageEffect ?? "none",
       favicon: assetPath(user.favicon, "/favicon.svg"),
       ogImage: assetPath(user.ogImage, avatar),
       canonicalCv,
@@ -316,6 +324,6 @@ export function profileDataFromJekyllCvUser(user: PapyrusCvUser, projects: Profi
   };
 }
 
-export function profileDataFromJekyllCvToml(source: string, projects: ProfileProject[] = []): ProfileData {
-  return profileDataFromJekyllCvUser(normalizeJekyllCvUser(parse(source)), projects);
+export function profileDataFromJekyllCvToml(source: string, projects: ProfileProject[] = [], options: ProfileDataOptions = {}): ProfileData {
+  return profileDataFromJekyllCvUser(normalizeJekyllCvUser(parse(source)), projects, options);
 }

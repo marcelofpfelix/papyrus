@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
@@ -36,7 +36,7 @@ async function walkDirs(dir, relativeDir = "") {
   }
 }
 
-if (packageJson.name !== "astro-theme-papyrus") fail(`package name is ${packageJson.name}, expected astro-theme-papyrus`);
+if (packageJson.name !== "astro-papyrus") fail(`package name is ${packageJson.name}, expected astro-papyrus`);
 if (!packageJson.dependencies?.["astro-pure"]) fail("astro-pure dependency is missing");
 if (packageJson.dependencies?.["astro-papyrus"] || packageJson.devDependencies?.["astro-papyrus"]) {
   fail("astro-papyrus must not be a direct dependency");
@@ -76,6 +76,7 @@ const requiredExports = [
   "./pure/utils",
   "./rehype-task-list-labels",
   "./shiki",
+  "./template/pages/security.txt.ts",
 ];
 
 for (const exportName of requiredExports) {
@@ -98,6 +99,7 @@ for (const [binName, target] of Object.entries(packageJson.bin ?? {})) {
 }
 
 const tmp = await mkdtemp(join(tmpdir(), "papyrus-cover-"));
+const coverTestDir = join(root, "public/.agent-cover-test");
 const cardCoverFont = [
   process.env.PAPYRUS_TEST_FONT,
   "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
@@ -110,13 +112,14 @@ const cardCoverFont = [
 
 try {
   const sourcePost = join(tmp, "post.md");
-  const generatedCover = join(tmp, "cover.svg");
+  const generatedCover = join(coverTestDir, "cover.svg");
   const generatedCardCover = join(tmp, "card-cover.svg");
   await writeFile(
     sourcePost,
     `---
 title: "A long generated papyrus cover title that should wrap cleanly"
 description: "Theme-aware cover description"
+cover: /.agent-cover-test/cover.svg
 ---
 `,
     "utf8"
@@ -190,8 +193,37 @@ description: "Theme-aware cover description"
       }
     }
   }
+
+  const orphanPost = join(tmp, "orphan.md");
+  const orphanCover = join(coverTestDir, "orphan.svg");
+  await mkdir(coverTestDir, { recursive: true });
+  await writeFile(orphanCover, "<svg></svg>\n", "utf8");
+  await writeFile(
+    orphanPost,
+    `---
+title: "Post without a configured cover"
+description: "No cover should be generated."
+---
+`,
+    "utf8"
+  );
+  const orphanResult = spawnSync(
+    process.execPath,
+    [join(root, "scripts/create-cover-svg.mjs"), orphanPost, orphanCover],
+    { cwd: root, encoding: "utf8" }
+  );
+  if (orphanResult.status !== 0) {
+    fail(`create-cover-svg no-cover skip failed: ${orphanResult.stderr || orphanResult.stdout}`);
+  }
+  if (existsSync(orphanCover)) {
+    fail("create-cover-svg should remove an orphan target when frontmatter has no matching cover");
+  }
+  if (!orphanResult.stdout.includes("frontmatter has no cover")) {
+    fail("create-cover-svg should explain skipped no-cover generation");
+  }
 } finally {
   await rm(tmp, { force: true, recursive: true });
+  await rm(coverTestDir, { force: true, recursive: true });
 }
 
 if (failures.length) {

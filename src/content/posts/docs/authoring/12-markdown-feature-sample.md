@@ -7,6 +7,7 @@ modDatetime: 2026-06-30T10:00:00.000Z
 license: CC-BY-4.0
 pinned: 2
 cover: /images/papyrus-layout.svg
+cover_effect: tritone
 tags:
   - markdown
   - theme
@@ -54,7 +55,7 @@ Escaped characters remain literal: \*not italic\* and \`not code\`.
 Unordered list:
 
 - keep the site repo focused on content and configuration
-- import reusable components from `astro-theme-papyrus`
+- import reusable components from `astro-papyrus`
 - avoid copying a whole upstream theme into each site
 - keep overrides small enough to review
 
@@ -132,8 +133,8 @@ Inline code like `pnpm build` keeps paragraph line-height calm.
 TypeScript with a title and highlighted lines:
 
 ```ts title="src/pages/posts/index.astro" {1,4}
-import { PapyrusBaseLayout, PapyrusPostList } from "astro-theme-papyrus/components";
-import { publishedPosts } from "astro-theme-papyrus/utils";
+import { PapyrusBaseLayout, PapyrusPostList } from "astro-papyrus/components";
+import { publishedPosts } from "astro-papyrus/utils";
 
 const posts = publishedPosts(await getCollection("posts"));
 ```

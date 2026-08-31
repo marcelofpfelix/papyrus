@@ -15,9 +15,12 @@ show_title = true
 profile = "gruvbox"
 font_profile = "readable"
 
+[profile.images]
+effect = "tritone"
+
 [source]
 repo = "marcelofpfelix/papyrus"
-branch = "0.2.1"
+branch = "0.2.2"
 
 [features]
 search = true

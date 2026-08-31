@@ -5,7 +5,7 @@ the intended package shape without making papyrus depend on this plugin.
 
 ```ts
 import papyrusPureKbdPlugin from "@example/papyrus-kbd";
-import { resolvePapyrusPluginConfig } from "astro-theme-papyrus/utils";
+import { resolvePapyrusPluginConfig } from "astro-papyrus/utils";
 
 const config = resolvePapyrusPluginConfig([papyrusPureKbdPlugin], {
   rss: false,

@@ -1,6 +1,7 @@
 [user]
 name = "Mira Lee"
 avatar = "demo/demo-profile-avatar.svg"
+avatar_effect = "tritone"
 bio = "Documentation engineer for content systems"
 url = "github.com/marcelofpfelix/papyrus"
 print_color = "#37474F"

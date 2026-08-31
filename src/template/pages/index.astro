@@ -9,7 +9,7 @@ const site = await getTemplateSite();
 const homeTitle = site.homeTitle ?? site.title;
 const description = pageDescription(site, "home", site.description);
 const posts = scheduledListPosts(sortPostsWithPinned(publishedPosts(await getCollection("posts"))), 3);
-const projects = site.projects.slice(0, 2);
+const projects = site.projects.slice(0, site.home.projectLimit);
 ---
 
 <PapyrusBaseLayout title={site.title} description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
