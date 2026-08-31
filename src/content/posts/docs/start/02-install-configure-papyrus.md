@@ -62,6 +62,56 @@ import { definePapyrusAstroConfig } from "astro-papyrus/astro";
 export default definePapyrusAstroConfig();
 ```
 
+## Optional Astro plugins
+
+Papyrus exports small Astro integrations for features that should not be active
+on every site. Add only the ones the site needs:
+
+```js title="astro.config.mjs"
+import { definePapyrusAstroConfig } from "astro-papyrus/astro";
+import {
+  papyrusBasePath,
+  papyrusLinkValidator,
+  papyrusMdTxt,
+  papyrusSiteGraph,
+} from "astro-papyrus/plugins";
+
+export default definePapyrusAstroConfig({
+  plugins: [
+    papyrusBasePath(),
+    papyrusMdTxt(),
+    papyrusSiteGraph(),
+    papyrusLinkValidator(),
+  ],
+});
+```
+
+- `papyrusBasePath()` rewrites root-relative links and images in Markdown when
+  Astro is deployed below a base path. Components continue to use Papyrus's
+  `withBase()` helper.
+- `papyrusMdTxt()` publishes each public post at
+  `/posts/<slug>.md.txt` with minimal title and description frontmatter. Its
+  AST cleaner follows `starlight-md-txt` and removes MDX-only wrappers while
+  preserving their readable content.
+- `papyrusSiteGraph()` adds `/graph/` from the existing
+  `public/ai/graph.json` index. The normal Papyrus build generates that file
+  before Astro runs. Papyrus keeps its small SVG renderer because the current
+  `starlight-site-graph` release does not run correctly with Astro 7.
+- `papyrusLinkValidator()` checks Markdown links with source positions and
+  rendered internal links after the Astro build. It fails on missing routes,
+  including sites deployed below a base path.
+
+These integrations adapt useful ideas from the Starlight plugin ecosystem to
+Papyrus's routes and data. They are not a compatibility layer for running
+arbitrary Starlight plugins unchanged.
+
+Papyrus uses Pagefind as its single search engine. It intentionally does not
+wrap `starlight-telescope`, because that would add Starlight and Fuse to a site
+that already has a generated Pagefind index.
+
+Exact upstream releases, commits, adaptation boundaries, and licenses are
+listed in `THIRD_PARTY_NOTICES.md` in the package.
+
 Custom routes can read the same TOML file through `loadPapyrusConfig`:
 
 ```ts

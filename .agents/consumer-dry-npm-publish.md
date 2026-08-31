@@ -42,8 +42,8 @@ pnpm add astro-papyrus@^0.2.2
 
 Move or expose these from Papyrus so consumers do not carry copies:
 
-- Profile print routes: `src/pages/profile/print.astro` and
-  `src/pages/profile/ast.astro`.
+- Profile print routes now come from `src/template/pages/profile`; consumers and
+  the package demo should not repeat them locally.
 - Markdown defaults currently repeated in consumer `astro.config.mjs`, including
   callouts, Shiki/Pure behavior, custom languages, and hidden-post sitemap
   behavior where it is generic.

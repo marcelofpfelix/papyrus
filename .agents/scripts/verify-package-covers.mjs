@@ -38,6 +38,10 @@ async function walkDirs(dir, relativeDir = "") {
 
 if (packageJson.name !== "astro-papyrus") fail(`package name is ${packageJson.name}, expected astro-papyrus`);
 if (!packageJson.dependencies?.["astro-pure"]) fail("astro-pure dependency is missing");
+if (!packageJson.files?.includes("THIRD_PARTY_NOTICES.md")) {
+  fail("package files must include THIRD_PARTY_NOTICES.md");
+}
+requirePath("third-party notices", "THIRD_PARTY_NOTICES.md");
 if (packageJson.dependencies?.["astro-papyrus"] || packageJson.devDependencies?.["astro-papyrus"]) {
   fail("astro-papyrus must not be a direct dependency");
 }
@@ -74,6 +78,8 @@ const requiredExports = [
   "./pure/pages",
   "./pure/user",
   "./pure/utils",
+  "./plugins",
+  "./PapyrusSiteGraph.astro",
   "./rehype-task-list-labels",
   "./shiki",
   "./template/pages/security.txt.ts",
@@ -84,11 +90,12 @@ for (const exportName of requiredExports) {
 }
 
 for (const [exportName, target] of Object.entries(packageJson.exports ?? {})) {
-  if (typeof target !== "string") {
-    fail(`export ${exportName} is not a string target`);
+  const targets = typeof target === "string" ? [target] : Object.values(target ?? {});
+  if (targets.length === 0 || targets.some((value) => typeof value !== "string")) {
+    fail(`export ${exportName} has an invalid target`);
     continue;
   }
-  requirePath(`export ${exportName}`, target);
+  for (const exportTarget of targets) requirePath(`export ${exportName}`, exportTarget);
 }
 
 for (const [binName, target] of Object.entries(packageJson.bin ?? {})) {

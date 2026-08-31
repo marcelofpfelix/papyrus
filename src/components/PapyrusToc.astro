@@ -1,5 +1,6 @@
 ---
 import PapyrusTocHeading, { type TocItem } from "./PapyrusTocHeading.astro";
+import { TOC as PureToc } from "astro-pure/components/pages";
 
 interface Heading {
   depth: number;
@@ -60,7 +61,6 @@ function generateToc(items: Array<{ href: string; title: string; depth: number }
   return root.subheadings;
 }
 
-const tocItems = generateToc(headingItems);
 const sectionTocItems = generateToc(sectionItems);
 const hasHeadings = headingItems.length > 0;
 const hasSections = sectionItems.length > 0;
@@ -85,9 +85,9 @@ const hasSections = sectionItems.length > 0;
         {hasHeadings && (
           <>
             <p class="papyrus-toc-title">{panelTitle}</p>
-            <ol>
-              {tocItems.map(item => <PapyrusTocHeading heading={item} />)}
-            </ol>
+            <div class="papyrus-pure-toc">
+              <PureToc headings={visibleHeadings} />
+            </div>
           </>
         )}
         {hasSections && (
@@ -189,3 +189,72 @@ const hasSections = sectionItems.length > 0;
     customElements.define("papyrus-toc-runtime", PapyrusTocRuntime);
   }
 </script>
+
+<style is:global>
+  .papyrus-pure-toc toc-heading > h2 {
+    display: none;
+  }
+
+  .papyrus-pure-toc ul {
+    display: grid;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .papyrus-pure-toc li > div {
+    display: grid;
+    grid-template-columns: 2px minmax(0, 1fr);
+    position: relative;
+  }
+
+  .papyrus-pure-toc li > div > span {
+    align-self: stretch;
+    background: transparent;
+    border-radius: 999px;
+    display: block;
+    margin: 3px 0;
+    min-height: 1.6em;
+    position: static;
+    transition: background-color 160ms ease, height 160ms ease;
+    width: 2px;
+  }
+
+  .papyrus-pure-toc li > div > span.is-read {
+    background: var(--papyrus-border);
+  }
+
+  .papyrus-pure-toc li > div > span.highlight-bg {
+    background: var(--papyrus-accent);
+  }
+
+  .papyrus-pure-toc .toc-item {
+    border-radius: 6px;
+    color: var(--papyrus-muted);
+    display: -webkit-box;
+    line-height: 1.35;
+    margin-inline-start: 0;
+    overflow: hidden;
+    padding: 4px 8px;
+    text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .papyrus-pure-toc ul ul .toc-item {
+    padding-inline-start: 26px;
+  }
+
+  .papyrus-pure-toc .toc-item:hover,
+  .papyrus-pure-toc .toc-item:focus-visible,
+  .papyrus-pure-toc .toc-item.highlight {
+    color: var(--papyrus-accent);
+    outline: none;
+  }
+
+  .papyrus-pure-toc .toc-item.highlight-bg-translucent {
+    background: color-mix(in srgb, var(--papyrus-accent) 10%, transparent);
+  }
+</style>

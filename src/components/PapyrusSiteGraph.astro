@@ -1,0 +1,118 @@
+---
+type GraphNode = { id: string; type: string; label: string; url?: string };
+type GraphEdge = { source: string; target: string; relation: string };
+
+const { nodes, edges } = Astro.props as { nodes: GraphNode[]; edges: GraphEdge[] };
+const types = [...new Set(nodes.map((node) => node.type))].sort();
+const columns = new Map(types.map((type) => [type, nodes.filter((node) => node.type === type)]));
+const positioned = new Map<string, GraphNode & { x: number; y: number }>();
+const columnWidth = 180;
+const rowHeight = 48;
+const padding = 28;
+
+types.forEach((type, column) => columns.get(type)?.forEach((node, row) => positioned.set(node.id, {
+  ...node,
+  x: padding + column * columnWidth,
+  y: padding + row * rowHeight,
+})));
+const renderedEdges = edges.flatMap((edge) => {
+  const source = positioned.get(edge.source);
+  const target = positioned.get(edge.target);
+  return source && target ? [{ ...edge, sourceNode: source, targetNode: target }] : [];
+});
+const width = Math.max(360, padding * 2 + Math.max(1, types.length - 1) * columnWidth);
+const height = Math.max(240, padding * 2 + Math.max(1, ...[...columns.values()].map((items) => items.length)) * rowHeight);
+---
+
+<section class="papyrus-site-graph" data-papyrus-site-graph>
+  <form class="papyrus-site-graph__controls" data-papyrus-graph-controls>
+    <label><span>Search</span><input type="search" name="q" placeholder="node or type" autocomplete="off" /></label>
+    <fieldset>
+      <legend>Types</legend>
+      {types.map((type) => <label><input type="checkbox" name="type" value={type} checked /> <span>{type}</span></label>)}
+    </fieldset>
+  </form>
+  <div class="papyrus-site-graph__canvas">
+    <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height} role="group" aria-label={`${nodes.length} nodes and ${renderedEdges.length} edges`}>
+      {renderedEdges.map((edge) => <line x1={edge.sourceNode.x} y1={edge.sourceNode.y} x2={edge.targetNode.x} y2={edge.targetNode.y} data-papyrus-graph-edge data-source={edge.source} data-target={edge.target} />)}
+      {[...positioned.values()].map((node) => (
+        <g transform={`translate(${node.x} ${node.y})`} data-papyrus-graph-node data-id={node.id} data-type={node.type} data-label={node.label} data-url={node.url ?? ""} role="button" tabindex="0" aria-label={`Focus ${node.label}`}>
+          <circle r="9" /><text x="14" y="4">{node.label}</text>
+        </g>
+      ))}
+    </svg>
+  </div>
+  <p class="papyrus-site-graph__summary" aria-live="polite"><span data-papyrus-visible-nodes>{nodes.length}</span> nodes, <span data-papyrus-visible-edges>{renderedEdges.length}</span> edges</p>
+</section>
+
+<script>
+  function bindGraph(root: HTMLElement) {
+    if (root.dataset.bound === "true") return;
+    root.dataset.bound = "true";
+    const search = root.querySelector<HTMLInputElement>('input[name="q"]');
+    const types = [...root.querySelectorAll<HTMLInputElement>('input[name="type"]')];
+    const nodes = [...root.querySelectorAll<SVGGElement>("[data-papyrus-graph-node]")];
+    const edges = [...root.querySelectorAll<SVGLineElement>("[data-papyrus-graph-edge]")];
+    const nodeCount = root.querySelector<HTMLElement>("[data-papyrus-visible-nodes]");
+    const edgeCount = root.querySelector<HTMLElement>("[data-papyrus-visible-edges]");
+    let focused = "";
+
+    function render() {
+      const query = search?.value.trim().toLowerCase() ?? "";
+      const selectedTypes = new Set(types.filter((input) => input.checked).map((input) => input.value));
+      const visible = new Set<string>();
+      nodes.forEach((node) => {
+        const id = node.dataset.id ?? "";
+        const shown = selectedTypes.has(node.dataset.type ?? "") && (!query || `${id} ${node.dataset.label}`.toLowerCase().includes(query));
+        node.toggleAttribute("hidden", !shown);
+        node.classList.toggle("is-focused", id === focused);
+        if (shown) visible.add(id);
+      });
+      let visibleEdges = 0;
+      edges.forEach((edge) => {
+        const source = edge.dataset.source ?? "";
+        const target = edge.dataset.target ?? "";
+        const shown = visible.has(source) && visible.has(target) && (!focused || source === focused || target === focused);
+        edge.toggleAttribute("hidden", !shown);
+        edge.classList.toggle("is-focused", Boolean(focused && shown));
+        if (shown) visibleEdges += 1;
+      });
+      if (nodeCount) nodeCount.textContent = String(visible.size);
+      if (edgeCount) edgeCount.textContent = String(visibleEdges);
+    }
+    function focus(node: SVGGElement) {
+      focused = focused === node.dataset.id ? "" : node.dataset.id ?? "";
+      render();
+    }
+    search?.addEventListener("input", render);
+    types.forEach((input) => input.addEventListener("change", render));
+    nodes.forEach((node) => {
+      node.addEventListener("click", () => focus(node));
+      node.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); focus(node); }
+      });
+    });
+    render();
+  }
+  const bindGraphs = () => document.querySelectorAll<HTMLElement>("[data-papyrus-site-graph]").forEach(bindGraph);
+  bindGraphs();
+  document.addEventListener("astro:page-load", bindGraphs);
+</script>
+
+<style>
+  .papyrus-site-graph { display: grid; gap: 1rem; }
+  .papyrus-site-graph__controls { display: flex; flex-wrap: wrap; align-items: end; gap: 1rem; }
+  .papyrus-site-graph__controls label { display: grid; gap: .25rem; }
+  .papyrus-site-graph__controls fieldset { display: flex; flex-wrap: wrap; gap: .75rem; border: 0; padding: 0; }
+  .papyrus-site-graph__controls fieldset label { display: flex; align-items: center; gap: .3rem; }
+  .papyrus-site-graph__canvas { overflow: auto; background: var(--papyrus-panel); border-radius: var(--papyrus-radius); }
+  .papyrus-site-graph svg { display: block; max-width: none; min-height: 20rem; }
+  .papyrus-site-graph [hidden] { display: none; }
+  .papyrus-site-graph line { stroke: var(--papyrus-border); stroke-width: 1.5; }
+  .papyrus-site-graph line.is-focused { stroke: var(--papyrus-accent); stroke-width: 2.5; }
+  .papyrus-site-graph g { cursor: pointer; color: var(--papyrus-fg); }
+  .papyrus-site-graph g circle { fill: var(--papyrus-accent); stroke: var(--papyrus-bg); stroke-width: 2; }
+  .papyrus-site-graph g text { fill: currentColor; font-size: 11px; }
+  .papyrus-site-graph g.is-focused circle { r: 12px; }
+  .papyrus-site-graph__summary { color: var(--papyrus-muted); margin: 0; }
+</style>

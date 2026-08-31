@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "allowJs": false,
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": false,
+    "outDir": "lib",
+    "rootDir": "src",
+    "rewriteRelativeImportExtensions": true,
+    "target": "ES2022",
+    "types": ["astro/client"]
+  },
+  "include": [
+    "src/config/index.ts",
+    "src/integration.ts"
+  ]
+}

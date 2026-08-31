@@ -1,0 +1,29 @@
+---
+import { GithubCard, LinkPreview, QRCode } from "astro-papyrus/pure/advanced";
+import { Icon } from "astro-papyrus/pure/basic";
+import { BackToTop, TOC } from "astro-papyrus/pure/pages";
+import { Timeline, type TimelineEvent } from "astro-papyrus/pure/user";
+
+const events: TimelineEvent[] = [
+  {
+    date: "2026",
+    content: "Papyrus exposes selected public Pure component groups.",
+  },
+];
+---
+
+<main id="content">
+  <h1>Pure pass-through fixture</h1>
+  <p>
+    This page is intentionally small. It proves consuming sites can import
+    representative Pure public components through Papyrus.
+  </p>
+
+  <Icon name="github" />
+  <GithubCard repo="marcelofpfelix/papyrus" />
+  <LinkPreview url="https://papyrus.marcelofelix.com" />
+  <QRCode content="https://papyrus.marcelofelix.com" />
+  <Timeline events={events} />
+  <TOC />
+  <BackToTop />
+</main>

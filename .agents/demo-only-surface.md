@@ -22,12 +22,14 @@ inherited by every consuming site:
   article.
 - `src/pages/profile/index.astro`: Papyrus demo profile using repo-specific
   source links and print-version links.
-- `src/pages/profile/print.astro`: Papyrus demo modern printable CV route.
-- `src/pages/profile/ast.astro`: Papyrus demo classic/ATS printable CV route.
 
 If any of these routes start representing reusable behavior rather than demo
 copy, promote the generic part into `src/template/pages`, `src/components`, or
 `src/utils` and keep only the demo-specific data/copy here.
+
+The demo inherits `/profile/print` and `/profile/ast` from
+`src/template/pages/profile`; local copies were removed because the template
+already reads the same `src/data/profile.toml` input.
 
 ## Reusable injected routes
 

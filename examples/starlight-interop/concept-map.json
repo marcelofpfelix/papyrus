@@ -1,0 +1,60 @@
+{
+  "decision": "migration-guide",
+  "runtimeDependency": false,
+  "selectedAdapters": {
+    "starlight-site-graph": "papyrusSiteGraph",
+    "starlight-md-txt": "papyrusMdTxt",
+    "starlight-base-path": "papyrusBasePath",
+    "starlight-links-validator": "papyrusLinkValidator"
+  },
+  "components": {
+    "Aside": {
+      "papyrus": "Obsidian-style Markdown callouts",
+      "status": "adapt"
+    },
+    "Tabs": {
+      "papyrus": null,
+      "status": "site-owned"
+    },
+    "TabItem": {
+      "papyrus": null,
+      "status": "site-owned"
+    },
+    "Card": {
+      "papyrus": "Purpose-specific Papyrus cards",
+      "status": "concept-only"
+    },
+    "Icon": {
+      "papyrus": "astro-papyrus/pure/basic",
+      "status": "reuse-pure"
+    }
+  },
+  "navigation": {
+    "sidebarAutogeneration": {
+      "papyrus": "Collections and folder.toml",
+      "status": "adapt"
+    },
+    "componentOverrides": {
+      "papyrus": "Explicit Astro imports and local route overrides",
+      "status": "concept-only"
+    }
+  },
+  "pluginHooks": {
+    "config:setup": {
+      "papyrus": "definePapyrusPlugin().setup",
+      "status": "concept-only"
+    },
+    "i18n:setup": {
+      "papyrus": null,
+      "status": "unsupported"
+    },
+    "addIntegration": {
+      "papyrus": "Consuming astro.config.mjs",
+      "status": "site-owned"
+    },
+    "addRouteMiddleware": {
+      "papyrus": "Consuming astro.config.mjs",
+      "status": "site-owned"
+    }
+  }
+}

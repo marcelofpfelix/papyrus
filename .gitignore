@@ -5,6 +5,7 @@ node_modules/
 # Astro and generated site output
 .astro/
 dist/
+lib/
 .vercel/
 .netlify/
 

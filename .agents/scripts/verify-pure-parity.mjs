@@ -16,6 +16,8 @@ const pureGithubCard = await readFile("node_modules/astro-pure/components/advanc
 const pureHeader = await readFile("node_modules/astro-pure/components/basic/Header.astro", "utf8");
 const pureIntegration = await readFile("node_modules/astro-pure/index.ts", "utf8");
 const purePostPreview = await readFile("node_modules/astro-pure/components/pages/PostPreview.astro", "utf8");
+const pureToc = await readFile("node_modules/astro-pure/components/pages/TOC.astro", "utf8");
+const pureBackToTop = await readFile("node_modules/astro-pure/components/pages/BackToTop.astro", "utf8");
 const pureTheme = await readFile("node_modules/astro-pure/utils/theme.ts", "utf8");
 const pureTimeline = await readFile("node_modules/astro-pure/components/user/Timeline.astro", "utf8");
 const papyrusFooter = await readFile("src/components/PapyrusFooter.astro", "utf8");
@@ -26,8 +28,12 @@ const papyrusPostsIndex = await readFile("src/template/pages/posts/index.astro",
 const papyrusThemeProvider = await readFile("src/components/PapyrusThemeProvider.astro", "utf8");
 const papyrusTimeline = await readFile("src/components/PapyrusTimeline.astro", "utf8");
 const papyrusBackToTopRuntime = await readFile("src/components/runtime/PapyrusBackToTopRuntime.astro", "utf8");
+const papyrusToc = await readFile("src/components/PapyrusToc.astro", "utf8");
 const papyrusMediaRuntime = await readFile("src/components/runtime/PapyrusMediaRuntime.astro", "utf8");
 const papyrusPostActionsRuntime = await readFile("src/components/runtime/PapyrusPostActionsRuntime.astro", "utf8");
+const papyrusIntegration = await readFile("src/integration.ts", "utf8");
+const purePassThroughFixture = await readFile("examples/pure-pass-through/src/pages/pure-pass-through.astro", "utf8");
+const purePassThroughReadme = await readFile("examples/pure-pass-through/README.md", "utf8");
 const profilePage =
   (await readFile("src/pages/profile/index.astro", "utf8")) +
   "\n" +
@@ -212,16 +218,13 @@ for (const phrase of [
 
 for (const phrase of [
   "const repo = repoRaw.replace(/^https:\\/\\/github\\.com\\//, \"\")",
-  "class:list={[\"papyrus-github-preview\", fetchMetadata && \"loading\"]}",
+  "class=\"papyrus-github-preview\"",
   "data-repo={repo}",
-  "fetch(`https://api.github.com/repos/${repo}`",
-  "data-gh-stars",
-  "data-gh-forks",
-  "data-gh-license",
-  "data-gh-avatar",
+  "{description && <p>{description}</p>}",
 ]) {
-  assert(papyrusGithubCard.includes(phrase), `PapyrusGithubCard missing adapted Pure-like GitHub preview behavior: ${phrase}`);
+  assert(papyrusGithubCard.includes(phrase), `PapyrusGithubCard missing deterministic static repository behavior: ${phrase}`);
 }
+assert(!papyrusGithubCard.includes("api.github.com") && !papyrusGithubCard.includes("fetchMetadata"), "PapyrusGithubCard should leave live GitHub metadata to Pure");
 
 for (const phrase of [
   "PapyrusCvActions",
@@ -313,6 +316,47 @@ assert(
   doc.includes("Pure public exports") && doc.includes("astro-papyrus/pure") && doc.includes("pass-through exports"),
   "pure parity doc should record Pure public pass-through export task",
 );
+for (const phrase of [
+  "astro-papyrus/pure/advanced",
+  "astro-papyrus/pure/basic",
+  "astro-papyrus/pure/pages",
+  "astro-papyrus/pure/user",
+  "GithubCard",
+  "LinkPreview",
+  "QRCode",
+  "Icon",
+  "BackToTop",
+  "TOC",
+  "Timeline",
+]) {
+  assert(purePassThroughFixture.includes(phrase), `Pure pass-through fixture missing expected import or component: ${phrase}`);
+}
+assert(
+  purePassThroughReadme.includes("virtual:config") &&
+    purePassThroughReadme.includes("not a promise that a") &&
+    purePassThroughReadme.includes("full Pure site"),
+  "Pure pass-through fixture README should document the support boundary",
+);
+for (const [label, source] of [["src/integration.ts", papyrusIntegration]]) {
+  for (const phrase of [
+    "function pureVirtualConfig(site",
+    "title: site.title",
+    "description: site.description ?? \"\"",
+    "site: site.site ?? \"\"",
+    "npmCDN: \"https://cdn.jsdelivr.net/npm\"",
+    "header: {",
+    "footer: {",
+    "author: {",
+    "content: {",
+    "share: true",
+    "integ: {",
+    "quote: false",
+    "mediumZoom: true",
+    "pureVirtualConfigPlugin(site)",
+  ]) {
+    assert(source.includes(phrase), `${label} missing Pure virtual config bridge phrase: ${phrase}`);
+  }
+}
 assert(
   doc.includes("Upstream Pure app Shiki setup") && doc.includes("Pure's transformer order") && doc.includes("line-number/title/language/copy/diff/highlight/collapse"),
   "pure parity doc should record the upstream Pure Shiki transformer boundary",
@@ -383,8 +427,11 @@ assert(
 assert(
   doc.includes("## Pure wrapper decisions") &&
     doc.includes("Direct pass-through via `astro-papyrus/pure/user`") &&
-    doc.includes("Pure's component remains available through `astro-papyrus/pure/advanced`") &&
+    doc.includes("Keep the local static/deterministic Papyrus implementation") &&
+    doc.includes("Keep the local static variant") &&
     doc.includes("Pure page components remain available through `astro-papyrus/pure/pages`") &&
+    doc.includes("Wrap Pure `TOC` inside the Papyrus collapsible shell") &&
+    doc.includes("Wrap Pure `BackToTop` in `PapyrusBackToTopRuntime`") &&
     doc.includes("Use split Papyrus runtime components"),
   "pure parity doc should record component-by-component Pure wrapper decisions",
 );
@@ -407,9 +454,12 @@ for (const forbidden of [
 ]) {
   assert(!papyrusPostLayout.includes(forbidden), `PapyrusPostLayout still owns runtime behavior that should be extracted: ${forbidden}`);
 }
-for (const phrase of ["data-papyrus-back-to-top", "window.scrollY > 500", "window.scrollTo"]) {
+for (const phrase of ['BackToTop } from "astro-pure/components/pages"', "papyrus-post-top-sentinel", "papyrus-post-content", "data-papyrus-back-to-top"]) {
   assert(papyrusBackToTopRuntime.includes(phrase), `PapyrusBackToTopRuntime missing behavior: ${phrase}`);
 }
+assert(pureBackToTop.includes("calculateScrollPercent") && pureBackToTop.includes("window.scrollTo"), "Pure BackToTop reference should retain scroll progress and top behavior");
+assert(papyrusToc.includes('TOC as PureToc') && papyrusToc.includes("<PureToc"), "Papyrus TOC should wrap Pure's public TOC for article headings");
+assert(pureToc.includes("generateToc") && pureToc.includes("updatePositionAndStyle"), "Pure TOC reference should retain hierarchy and reading progress behavior");
 for (const phrase of ["artifactLinksEnabled", "imageZoomEnabled", "mermaidEnabled", "hydrateArtifactLinks", "renderPapyrusMermaidDiagrams", "bindImageZoom"]) {
   assert(papyrusMediaRuntime.includes(phrase), `PapyrusMediaRuntime missing optional media behavior: ${phrase}`);
 }

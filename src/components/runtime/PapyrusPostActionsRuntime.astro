@@ -1,5 +1,4 @@
 <script>
-  import QRCode from "qrcode";
   import { copyPapyrusText } from "./papyrusClipboard";
 
   function setActionButtonState(button: HTMLButtonElement, label: string, restore = "Copy code") {
@@ -76,45 +75,19 @@
     });
   });
 
-  document.querySelectorAll<HTMLButtonElement>("[data-papyrus-qr]").forEach((button) => {
-    const wrapper = button.closest<HTMLElement>(".papyrus-qr-action");
-    const popover = wrapper?.querySelector<HTMLElement>("[data-papyrus-qr-popover]");
-    if (!wrapper || !popover) return;
-
-    button.addEventListener("click", async () => {
-      const expanded = button.getAttribute("aria-expanded") === "true";
-      if (expanded) {
-        button.setAttribute("aria-expanded", "false");
-        popover.hidden = true;
-        return;
-      }
-
-      if (!popover.dataset.papyrusQrReady) {
-        const svg = await QRCode.toString(window.location.href, {
-          type: "svg",
-          errorCorrectionLevel: "M",
-          margin: 1,
-          width: 164,
-        });
-        popover.innerHTML = `${svg}<span>${window.location.href}</span>`;
-        popover.dataset.papyrusQrReady = "true";
-      }
-
-      button.setAttribute("aria-expanded", "true");
-      popover.hidden = false;
-    });
+  document.querySelectorAll<HTMLElement>("[data-papyrus-qr]").forEach((button) => {
+    const wrapper = button.closest<HTMLDetailsElement>(".papyrus-qr-action");
+    if (!wrapper) return;
 
     document.addEventListener("keydown", (event) => {
-      if (event.key !== "Escape" || popover.hidden) return;
-      button.setAttribute("aria-expanded", "false");
-      popover.hidden = true;
+      if (event.key !== "Escape" || !wrapper.open) return;
+      wrapper.open = false;
       button.focus();
     });
 
     document.addEventListener("click", (event) => {
-      if (popover.hidden || wrapper.contains(event.target as Node)) return;
-      button.setAttribute("aria-expanded", "false");
-      popover.hidden = true;
+      if (!wrapper.open || wrapper.contains(event.target as Node)) return;
+      wrapper.open = false;
     });
   });
 </script>
