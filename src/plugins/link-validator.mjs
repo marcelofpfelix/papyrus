@@ -84,7 +84,10 @@ function extractLinks(text) {
       if (link) links.add(link);
     }
   }
-  return [...links].filter((link) => !link.includes("/_astro/"));
+  return [...links].filter((link) =>
+    !link.includes("/_astro/") &&
+    !link.includes("/pagefind/")
+  );
 }
 
 // Adapted from starlight-links-validator v0.25.3 (MIT): Markdown AST link

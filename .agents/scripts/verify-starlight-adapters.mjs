@@ -32,11 +32,12 @@ try {
 
   const validDist = join(temp, "valid");
   await mkdir(join(validDist, "posts", "example"), { recursive: true });
-  await writeFile(join(validDist, "index.html"), '<a href="/docs/posts/example/">Example</a>');
+  await writeFile(join(validDist, "index.html"), '<a href="/docs/posts/example/">Example</a><script src="/docs/pagefind/pagefind-ui.js"></script>');
   await writeFile(join(validDist, "posts", "example", "index.html"), '<a href="/docs/">Home</a>');
   await writeFile(join(validDist, "example.md.txt"), '[Example](/docs/not-a-rendered-link/)');
   const valid = await plugins.validateBuiltLinks(validDist, { base: "/docs/" });
   assert(valid.broken.length === 0 && valid.checkedFiles.length === 2, "link validator should accept base-aware internal links");
+  assert(!valid.broken.some((item) => item.includes("/pagefind/")), "link validator should defer Pagefind assets generated after Astro build");
 
   await writeFile(join(validDist, "index.html"), '<a href="/docs/missing/">Missing</a>');
   const invalid = await plugins.validateBuiltLinks(validDist, { base: "/docs/" });
