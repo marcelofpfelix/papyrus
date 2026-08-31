@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.3
+
+- Compile package runtime entry points and verify the packed package in an
+  isolated Astro consumer.
+- Add optional base-path, Markdown text, link-validation, and site-graph
+  adapters with focused interoperability fixtures.
+- Generate deployment-aware social cards, including post cover images and
+  documented source-image precedence.
+- Add theme-aware Giscus comments, tag-backed profile skills, desktop post QR
+  actions, and JSON Resume-compatible CV exports.
+
 ## 0.2.2
 
 - Add configurable tricolor image treatment for post covers and profile
