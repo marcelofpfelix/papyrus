@@ -32,6 +32,8 @@ async function transpileModule(sourcePath, outputName) {
 try {
   const guide = await readFile(".agents/package-guide.md", "utf8");
   const starlightComparison = await readFile(".agents/starlight-comparison.md", "utf8");
+  const starlightInteropGuide = await readFile("examples/starlight-interop/README.md", "utf8");
+  const starlightConceptMap = JSON.parse(await readFile("examples/starlight-interop/concept-map.json", "utf8"));
   const featuresPath = await transpileModule("src/utils/features.ts", "features.mjs");
   const pluginsPath = await transpileModule("src/utils/plugins.ts", "plugins.mjs");
   const examplePluginPackage = JSON.parse(await readFile("examples/papyrus-kbd-plugin/package.json", "utf8"));
@@ -252,11 +254,14 @@ try {
     "starlight-auto-sidebar",
     "starlight-contextual-menu",
     "starlight-telescope",
-    "Keep as roadmap for global AI-first search and backlinks",
-    "dependency-free graph demo with search, type filtering, node focus, and focused connection details",
+    "papyrusSiteGraph()",
+    "papyrusMdTxt()",
+    "papyrusBasePath()",
+    "papyrusLinkValidator()",
   ]) {
     assert(guide.includes(phrase), `guide missing Starlight plugin comparison phrase: ${phrase}`);
   }
+  assert(guide.includes("Keep Pagefind as the single search engine"), "guide should record why Telescope is not shipped");
   assert(
     guide.includes("Do not mark") && guide.includes("community-plugin rows verified") && guide.includes("idea is listed here"),
     "guide missing warning not to close community-plugin rows from idea listing alone"
@@ -277,6 +282,33 @@ try {
     assert(starlightComparison.includes(phrase), `Starlight comparison missing phrase: ${phrase}`);
   }
   assert(guide.includes(".agents/starlight-comparison.md"), "guide should link to the Starlight comparison record");
+  assert(starlightConceptMap.decision === "migration-guide", "Starlight spike should choose an explicit migration-guide decision");
+  assert(starlightConceptMap.runtimeDependency === false, "Starlight must not become a Papyrus runtime dependency");
+  assert(starlightConceptMap.components.Aside.status === "adapt", "Starlight Aside should map to Papyrus callouts");
+  assert(starlightConceptMap.components.Tabs.status === "site-owned", "Starlight Tabs should remain site-owned until Papyrus has a real use case");
+  assert(starlightConceptMap.pluginHooks["config:setup"].status === "concept-only", "Starlight config:setup must not be presented as directly compatible");
+  assert(starlightConceptMap.pluginHooks["i18n:setup"].status === "unsupported", "Starlight i18n lifecycle should remain unsupported");
+  for (const phrase of [
+    "No universal adapter",
+    "full Papyrus integration in a Starlight site",
+    "Starlight plugins cannot run unchanged in Papyrus",
+    "Obsidian-style Markdown callouts",
+    "collections and `folder.toml`",
+    "framework-neutral public helpers",
+  ]) {
+    assert(starlightInteropGuide.includes(phrase), `Starlight interop guide missing decision phrase: ${phrase}`);
+  }
+  assert(
+    starlightComparison.includes("No generic Starlight compatibility layer") &&
+      starlightComparison.includes("examples/starlight-interop/concept-map.json"),
+    "Starlight comparison should record the spike decision and evidence",
+  );
+  assert(Object.keys(starlightConceptMap.selectedAdapters).length === 4, "Starlight mapping should record only the retained Papyrus-native adapters");
+  assert(
+    guide.includes("Starlight plugins cannot run unchanged in Papyrus") &&
+      guide.includes("examples/starlight-interop"),
+    "package guide should document the Starlight interoperability boundary",
+  );
   assert(guide.includes("examples/papyrus-kbd-plugin"), "guide should document the example external plugin fixture");
   assert(guide.includes("setup lifecycle"), "guide should document the plugin setup lifecycle");
   assert(guide.includes("addCapability") && guide.includes("setFeatureDefaults"), "guide should document setup context methods");

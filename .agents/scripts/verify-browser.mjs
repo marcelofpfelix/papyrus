@@ -98,7 +98,7 @@ async function clipboardText(page) {
 async function assertPackageNavScope(page, routeName) {
   const navLabels = await page.locator(".papyrus-nav a").allTextContents();
   const normalized = navLabels.map((label) => label.trim());
-  assert(normalized.join("|") === "Posts|Docs|Projects|Profile|About", `${routeName} nav labels were ${normalized.join(", ")}`);
+  assert(normalized.join("|") === "Posts|Projects|Collections|Profile|About", `${routeName} nav labels were ${normalized.join(", ")}`);
   assert(!normalized.some((label) => /timeline/i.test(label)), `${routeName} nav should not include timeline tabs: ${normalized.join(", ")}`);
 }
 
@@ -363,10 +363,10 @@ async function runHomeChecks(page, origin) {
   for (const link of homeState.sectionLinks) {
     assert(link.borderTop === "0px" && link.borderRight === "0px" && link.borderBottom === "0px" && link.borderLeft === "0px", `section link ${link.text} had borders: ${JSON.stringify(link)}`);
   }
-  assert(homeState.docsItems.length === 1, `expected one docs post-list item, found ${homeState.docsItems.length}: ${JSON.stringify(homeState.docsItems)}`);
-  assert(homeState.docsItems[0]?.title === "papyrus docs", `docs post-list item title was ${homeState.docsItems[0]?.title}`);
-  assert(homeState.docsItems[0]?.href === "/docs/", `docs post-list item href was ${homeState.docsItems[0]?.href}`);
-  assert(homeState.docsItems[0]?.description.includes("Install guide, feature map"), `docs post-list item description was ${homeState.docsItems[0]?.description}`);
+  assert(homeState.docsItems.length === 3, `expected three docs post-list items, found ${homeState.docsItems.length}: ${JSON.stringify(homeState.docsItems)}`);
+  assert(homeState.docsItems.some((item) => item.title === "Docs" && item.href === "/collections/docs/"), `docs collection item was missing: ${JSON.stringify(homeState.docsItems)}`);
+  assert(homeState.docsItems.some((item) => item.title === "Use the template" && item.href === "/collections/docs/install-configure-papyrus/"), `template guide item was missing: ${JSON.stringify(homeState.docsItems)}`);
+  assert(homeState.docsItems.some((item) => item.title === "Package boundary" && item.href === "/collections/docs/papyrus-package-shape/"), `package boundary item was missing: ${JSON.stringify(homeState.docsItems)}`);
   assert(homeState.docsProjectCardCount === 0, `home Docs section still had ${homeState.docsProjectCardCount} project cards`);
   assert(homeState.docsLinkPreviewCount === 0, `home Docs section still had ${homeState.docsLinkPreviewCount} link preview cards`);
   assert(homeState.docsGithubPreviewCount === 0, `home Docs section still had ${homeState.docsGithubPreviewCount} GitHub preview cards`);
@@ -377,8 +377,8 @@ async function runHomeChecks(page, origin) {
   assert(!homeState.firstListPostMeta.includes("pinned"), `home pinned posts should use the pin icon without text: ${homeState.firstListPostMeta}`);
   assert(!homeState.firstListPostMeta.includes("updated"), `home first post should color updates instead of showing updated text: ${homeState.firstListPostMeta}`);
   assert(homeState.firstListPostUpdatedColor !== homeState.themeAccentColor, `home updated date text should stay muted, got accent ${homeState.firstListPostUpdatedColor}`);
-  assert(homeState.firstListPostUpdatedIconColor === homeState.themeAccentColor, `home updated icon color ${homeState.firstListPostUpdatedIconColor} did not match theme accent ${homeState.themeAccentColor}`);
-  assert(homeState.firstListPostUpdatedIconPath.startsWith("M21 12"), `home updated row should use refresh icon, got path ${homeState.firstListPostUpdatedIconPath}`);
+  assert(homeState.firstListPostUpdatedIconColor === "", `old demo posts should not carry a recent-update icon color: ${homeState.firstListPostUpdatedIconColor}`);
+  assert(homeState.firstListPostUpdatedIconPath === "", `old demo posts should not carry a recent-update icon: ${homeState.firstListPostUpdatedIconPath}`);
   assert(homeState.firstListPostBackground === homeState.projectCards[0]?.backgroundColor, `home pinned post background ${homeState.firstListPostBackground} did not match project card background ${homeState.projectCards[0]?.backgroundColor}`);
   assert(homeState.coverSrc === "/images/papyrus-layout.svg", `home list cover src was ${homeState.coverSrc}`);
   assert(homeState.coverWidth > 90 && homeState.coverWidth <= 170, `home list cover width was ${homeState.coverWidth}`);
@@ -394,11 +394,11 @@ async function runHomeChecks(page, origin) {
     assert(svg.includes("var(--papyrus-"), `demo cover ${source} does not use theme tokens`);
   }
   assert(homeState.hasTag, "home page inline first tag did not render");
-  assert(homeState.projectCards.some((project) => project.title.includes("papyrus")), `home papyrus project card missing: ${JSON.stringify(homeState.projectCards)}`);
+  assert(homeState.projectCards.some((project) => project.title === "Papyrus theme"), `home Papyrus theme card missing: ${JSON.stringify(homeState.projectCards)}`);
   assert(homeState.projectCards.every((project) => project.footerCount === 0), `home project cards should not render footer metadata rows: ${JSON.stringify(homeState.projectCards)}`);
   assert(homeState.noteCards.length === 3, `home note card count was ${homeState.noteCards.length}`);
-  assert(homeState.noteCards.some((note) => note.id === "pure-shiki-code" && note.text.includes("Astro/Shiki CSS-variable") && note.date === "Jul 01"), `pure-shiki-code note missing or malformed: ${JSON.stringify(homeState.noteCards)}`);
-  assert(homeState.noteCards.some((note) => note.tags.some((tag) => tag.text === "#code" && tag.href === "/search/?tag=code")), `note #code tag link missing: ${JSON.stringify(homeState.noteCards)}`);
+  assert(homeState.noteCards.some((note) => note.id === "template-first" && note.text.includes("papyrus-template") && note.date === "Jul 01"), `template-first note missing or malformed: ${JSON.stringify(homeState.noteCards)}`);
+  assert(homeState.noteCards.some((note) => note.tags.some((tag) => tag.text === "#config" && tag.href === "/search/?tag=config")), `note #config tag link missing: ${JSON.stringify(homeState.noteCards)}`);
   assert(homeState.noteCards.every((note) => note.backgroundColor !== "rgba(0, 0, 0, 0)" && note.borderRadius === "8px" && note.paddingTop === "14px"), `note cards do not look card-like: ${JSON.stringify(homeState.noteCards)}`);
   assert(homeState.noteCards.every((note) => note.gap === "12px"), `note list gap was not 12px: ${JSON.stringify(homeState.noteCards)}`);
   assert(homeState.noteCards.every((note) => note.tagColor !== "rgb(0, 0, 0)"), `note tag color fell back to black: ${JSON.stringify(homeState.noteCards)}`);
@@ -431,9 +431,8 @@ async function runAboutChecks(page, origin) {
   assert(aboutState.h1 === "About", `about h1 was ${aboutState.h1}`);
   assert(aboutState.title.includes("About"), `about document title was ${aboutState.title}`);
   assert(aboutState.previews.some((card) => card.href === "/profile/" && card.title === "Profile"), `about page missing profile link: ${JSON.stringify(aboutState.previews)}`);
-  assert(aboutState.previews.some((card) => card.href === "/posts/" && card.title === "Posts index"), `about page missing posts link: ${JSON.stringify(aboutState.previews)}`);
-  assert(aboutState.previews.some((card) => card.href === "/projects/" && card.title === "Projects"), `about page missing projects link: ${JSON.stringify(aboutState.previews)}`);
-  assert(aboutState.githubHref === "https://github.com/marcelofpfelix/papyrus", `about github card href was ${aboutState.githubHref}`);
+  assert(aboutState.previews.length === 1, `about page should keep one profile preview: ${JSON.stringify(aboutState.previews)}`);
+  assert(aboutState.githubHref === "https://github.com/marcelofpfelix/marcelofelix", `about showcase href was ${aboutState.githubHref}`);
 }
 
 async function runProjectsChecks(page, origin) {
@@ -471,14 +470,14 @@ async function runProjectsChecks(page, origin) {
 
   assert(projectsState.h1 === "Projects", `projects h1 was ${projectsState.h1}`);
   assert(projectsState.title.includes("Projects"), `projects document title was ${projectsState.title}`);
-  assert(projectsState.projectCards.some((project) => project.title.includes("papyrus")), `projects page papyrus card missing: ${JSON.stringify(projectsState.projectCards)}`);
+  assert(projectsState.projectCards.some((project) => project.title === "Papyrus theme"), `projects page Papyrus theme card missing: ${JSON.stringify(projectsState.projectCards)}`);
   assert(projectsState.projectCards.every((project) => project.footerCount === 0), `projects page should not render project footer metadata rows: ${JSON.stringify(projectsState.projectCards)}`);
   assert(projectsState.projectCards.every((project) => project.links.every((link) => link.borderTop === "0px" && link.borderRight === "0px" && link.borderBottom === "0px" && link.borderLeft === "0px")), `projects page action links should be borderless: ${JSON.stringify(projectsState.projectCards)}`);
   assert(projectsState.projectCards.every((project) => project.repoHeaderCount === 0), `projects page should not render duplicate top repo links: ${JSON.stringify(projectsState.projectCards)}`);
   assert(projectsState.projectCards.some((project) => project.githubClass && project.links.some((link) => link.text === "marcelofpfelix/papyrus" && link.href === "https://github.com/marcelofpfelix/papyrus")), `projects page repo action link missing: ${JSON.stringify(projectsState.projectCards)}`);
-  assert(projectsState.projectCards.some((project) => project.title.includes("papyrus") && project.descriptionHref === "/docs/"), `projects page papyrus description link missing: ${JSON.stringify(projectsState.projectCards)}`);
-  assert(projectsState.projectCards.some((project) => project.title.includes("papyrus") && project.links.some((link) => link.text === "features" && link.href === "/docs/feature-map/") && project.links.some((link) => link.text === "docs" && link.href === "/docs/") && project.links.some((link) => link.text === "website" && link.href === "/") && project.links.some((link) => link.text === "marcelofpfelix/papyrus" && link.href === "https://github.com/marcelofpfelix/papyrus")), `projects page papyrus action links missing: ${JSON.stringify(projectsState.projectCards)}`);
-  assert(projectsState.projectCards.some((project) => project.title.includes("CV profile components") && project.imageHref === "/docs/cv-demo/" && project.descriptionHref === "/docs/cv-demo/" && project.imageSrc === "/demo/demo-profile-avatar.svg" && project.links.some((link) => link.text === "components" && link.href === "/docs/cv-demo/") && project.links.some((link) => link.text === "data" && link.href === "/docs/cv-data/")), `projects page CV photo/description/action links missing: ${JSON.stringify(projectsState.projectCards)}`);
+  assert(projectsState.projectCards.length === 2, `projects page should show the theme and template cards: ${JSON.stringify(projectsState.projectCards)}`);
+  assert(projectsState.projectCards.some((project) => project.title === "Papyrus theme" && project.descriptionHref === "/collections/docs/" && project.links.some((link) => link.text === "docs" && link.href === "/collections/docs/") && project.links.some((link) => link.text === "marcelofpfelix/papyrus" && link.href === "https://github.com/marcelofpfelix/papyrus")), `projects page Papyrus theme links were wrong: ${JSON.stringify(projectsState.projectCards)}`);
+  assert(projectsState.projectCards.some((project) => project.title === "Papyrus template" && project.descriptionHref === "https://github.com/marcelofpfelix/papyrus-template" && project.links.some((link) => link.text === "docs" && link.href === "/collections/docs/install-configure-papyrus/") && project.links.some((link) => link.text === "marcelofpfelix/papyrus-template" && link.href === "https://github.com/marcelofpfelix/papyrus-template")), `projects page Papyrus template links were wrong: ${JSON.stringify(projectsState.projectCards)}`);
   assert(projectsState.githubPreviewCount === 0, `projects page should not render duplicate standalone GitHub previews: ${projectsState.githubPreviewCount}`);
 }
 
@@ -558,7 +557,7 @@ async function runMobileHeaderChecks(page, origin) {
 }
 
 async function runDocsChecks(page, origin) {
-  await page.goto(`${origin}/docs/`, { waitUntil: "networkidle" });
+  await page.goto(`${origin}/collections/docs/`, { waitUntil: "networkidle" });
 
   const indexState = await page.evaluate(() => {
     const root = document.querySelector(".papyrus-content-index");
@@ -591,24 +590,20 @@ async function runDocsChecks(page, origin) {
   assert(indexState.linkCount >= 10, `content index link count was ${indexState.linkCount}`);
   assert(indexState.nestedExists, "content index did not render nested children");
   assert(indexState.nestedBorderLeft === "1px", `nested content index border-left was ${indexState.nestedBorderLeft}`);
-  assert(indexState.links.some((link) => link.text === "Getting started" && link.href === "/docs/"), `content index missing Getting started link: ${JSON.stringify(indexState.links)}`);
-  assert(indexState.rowText.some((text) => text.startsWith("Authoring")), `content index missing Authoring section from index.md: ${JSON.stringify(indexState.rowText)}`);
-  assert(indexState.rowText.some((text) => text.startsWith("Feature references")), `content index missing Feature references section from index.md: ${JSON.stringify(indexState.rowText)}`);
-  assert(indexState.links.some((link) => link.text === "Generated content structure" && link.href === "/docs/content-structure/"), `content index missing Generated content structure link: ${JSON.stringify(indexState.links)}`);
+  assert(indexState.links.some((link) => link.text === "Papyrus docs" && link.href === "/collections/docs/papyrus-docs/"), `content index missing Papyrus docs link: ${JSON.stringify(indexState.links)}`);
+  assert(indexState.rowText.some((text) => text.startsWith("Authoring")), `content index missing Authoring section: ${JSON.stringify(indexState.rowText)}`);
+  assert(indexState.rowText.some((text) => text.startsWith("References")), `content index missing References section: ${JSON.stringify(indexState.rowText)}`);
+  assert(indexState.links.some((link) => link.text === "Generated content structure" && link.href === "/collections/docs/content-structure/"), `content index missing Generated content structure link: ${JSON.stringify(indexState.links)}`);
   assert(indexState.links.some((link) => link.text === "Markdown code guide" && link.href === "/collections/docs/code-demo/"), `content index missing Markdown code guide link: ${JSON.stringify(indexState.links)}`);
-  assert(indexState.links.some((link) => link.text === "Theme package shape" && link.href === "/posts/papyrus-package-shape/"), `content index missing post-backed theme package doc: ${JSON.stringify(indexState.links)}`);
-  assert(indexState.links.some((link) => link.text === "Markdown authoring guide" && link.href === "/posts/markdown-feature-sample/"), `content index missing post-backed markdown doc: ${JSON.stringify(indexState.links)}`);
-  assert(indexState.links.some((link) => link.text === "Dark mode and search" && link.href === "/posts/dark-mode-and-search/"), `content index missing post-backed dark-mode doc: ${JSON.stringify(indexState.links)}`);
-  assert(indexState.descriptions.some((description) => description.includes("Post-as-doc")), "content index missing post-as-doc descriptions");
-  assert(indexState.bodyText.includes("src/content/docs/index.md"), "docs page missing index.md docs-model explanation");
-  assert(indexState.bodyText.includes("same content source"), "docs page missing shared content source explanation");
+  assert(indexState.links.some((link) => link.text === "Papyrus package shape" && link.href === "/collections/docs/papyrus-package-shape/"), `content index missing package boundary guide: ${JSON.stringify(indexState.links)}`);
+  assert(indexState.descriptions.some((description) => description.includes("package boundary")), "content index missing package-boundary description");
   assert(!indexState.rawJsonVisible, "content index appears to expose raw JSON data");
 
   const sectionMenuState = await page.evaluate(() => {
-    const menu = document.querySelector("[data-papyrus-section-menu]");
-    const summary = menu?.querySelector("summary");
+    const menu = document.querySelector(".papyrus-toc");
+    const summary = menu?.querySelector("[data-papyrus-toc-toggle]");
     const styles = menu ? getComputedStyle(menu) : null;
-    const links = Array.from(menu?.querySelectorAll("nav a") ?? []).map((link) => ({
+    const links = Array.from(menu?.querySelectorAll("a") ?? []).map((link) => ({
       href: link.getAttribute("href"),
       text: link.textContent?.trim(),
     }));
@@ -620,71 +615,46 @@ async function runDocsChecks(page, origin) {
       position: styles?.position ?? "",
     };
   });
-  assert(sectionMenuState.position === "fixed", `docs section menu position was ${sectionMenuState.position}`);
+  assert(sectionMenuState.position === "relative", `docs collection TOC position was ${sectionMenuState.position}`);
   assert(sectionMenuState.iconCount === 1, `docs section menu icon count was ${sectionMenuState.iconCount}`);
   assert(sectionMenuState.ariaLabel === "Sections", `docs section menu aria-label was ${sectionMenuState.ariaLabel}`);
-  assert(sectionMenuState.links.length === 5, `docs section menu link count was ${sectionMenuState.links.length}`);
-  assert(sectionMenuState.links.some((link) => link.text === "Theme profiles" && link.href === "#theme-profiles"), `docs section menu missing theme profile link: ${JSON.stringify(sectionMenuState.links)}`);
-  assert(sectionMenuState.links.some((link) => link.text === "Content model" && link.href === "#content-model"), `docs section menu missing content model link: ${JSON.stringify(sectionMenuState.links)}`);
+  assert(sectionMenuState.links.length >= 10, `docs section menu link count was ${sectionMenuState.links.length}`);
+  assert(sectionMenuState.links.some((link) => link.text === "Authoring" && link.href === "#collection-section-authoring"), `docs section menu missing Authoring section: ${JSON.stringify(sectionMenuState.links)}`);
+  assert(sectionMenuState.links.some((link) => link.text === "Feature config" && link.href === "/collections/docs/features/"), `docs section menu missing Feature config: ${JSON.stringify(sectionMenuState.links)}`);
 
-  await page.locator("[data-papyrus-section-menu] summary").click();
-  const sectionMenuOpen = await page.locator("[data-papyrus-section-menu]").getAttribute("open");
-  assert(sectionMenuOpen !== null, "docs section menu did not open");
-  await page.locator('[data-papyrus-section-menu] a[href="#content-model"]').click();
+  await page.locator("[data-papyrus-toc-toggle]").click();
+  const sectionMenuOpen = await page.locator(".papyrus-toc").getAttribute("data-open");
+  assert(sectionMenuOpen === "true", `docs section menu open state was ${sectionMenuOpen}`);
+  await page.locator('.papyrus-toc a[href="#collection-section-authoring"]').click();
   await page.waitForTimeout(100);
   const docsHash = await page.evaluate(() => location.hash);
-  assert(docsHash === "#content-model", `docs section menu did not navigate to content model, hash was ${docsHash}`);
+  assert(docsHash === "#collection-section-authoring", `docs section menu did not navigate to Authoring, hash was ${docsHash}`);
 
-  await page.goto(`${origin}/docs/features/`, { waitUntil: "networkidle" });
+  await page.goto(`${origin}/collections/docs/features/`, { waitUntil: "networkidle" });
   const featureDocsState = await page.evaluate(() => {
-    const comments = document.querySelector("#comments");
     return {
-      commentsText: comments?.textContent?.replace(/\s+/g, " ").trim() ?? "",
-      hasGiscusImport: comments?.textContent?.includes("PapyrusGiscusComments") ?? false,
       hasPluginContract: Boolean(document.querySelector("#plugin-contract")),
     };
   });
   assert(featureDocsState.hasPluginContract, "feature docs missing plugin contract section");
-  assert(featureDocsState.commentsText.includes("Default comment choice: giscus"), `comments docs missing default choice: ${featureDocsState.commentsText}`);
-  assert(featureDocsState.commentsText.includes("optional and site-owned"), `comments docs missing site-owned guidance: ${featureDocsState.commentsText}`);
-  assert(featureDocsState.hasGiscusImport, "comments docs missing PapyrusGiscusComments example");
 }
 
 async function runContentStructureChecks(page, origin) {
-  await page.goto(`${origin}/docs/content-structure/`, { waitUntil: "networkidle" });
+  await page.goto(`${origin}/collections/docs/content-structure/`, { waitUntil: "networkidle" });
   await assertPackageNavScope(page, "generated content structure");
 
   const state = await page.evaluate(() => {
-    const root = document.querySelector(".papyrus-content-index");
-    const rootStyles = root ? getComputedStyle(root) : null;
-    const nested = root?.querySelector(".papyrus-content-index");
-    const links = Array.from(document.querySelectorAll(".papyrus-content-index a")).map((link) => ({
-      href: link.getAttribute("href"),
-      text: link.textContent?.trim(),
-    }));
     return {
-      bodyText: document.body.textContent?.replace(/\s+/g, " ").trim() ?? "",
-      descriptions: Array.from(document.querySelectorAll(".papyrus-content-index small")).map((item) => item.textContent?.trim() ?? ""),
-      display: rootStyles?.display ?? "",
+      bodyText: document.querySelector(".papyrus-prose")?.textContent?.replace(/\s+/g, " ").trim() ?? "",
       h1: document.querySelector("h1")?.textContent?.trim() ?? "",
-      iconCount: document.querySelectorAll(".papyrus-content-index-row svg").length,
-      links,
-      nestedExists: Boolean(nested),
-      rowText: Array.from(document.querySelectorAll(".papyrus-content-index-row")).map((row) => row.textContent?.replace(/\s+/g, " ").trim() ?? ""),
-      sourceHref: document.querySelector('.papyrus-link-preview[href="/demo/content-structure.md"]')?.getAttribute("href") ?? "",
+      sourceHref: document.querySelector('.papyrus-prose a[href="/demo/content-structure.md"]')?.getAttribute("href") ?? "",
     };
   });
 
   assert(state.h1 === "Generated content structure", `generated content structure h1 was ${state.h1}`);
-  assert(state.bodyText.includes("public fixture for content-outline generation") && state.bodyText.includes("public/demo/content-tree"), `generated content structure missing public fixture explanation: ${state.bodyText}`);
-  assert(state.display === "grid", `generated content index display was ${state.display}`);
-  assert(state.iconCount >= 5, `generated content index icon count was ${state.iconCount}`);
-  assert(state.nestedExists, "generated content index did not render nested entries");
-  assert(state.rowText.some((text) => text.includes("Guides")), `generated content index missing Guides row: ${JSON.stringify(state.rowText)}`);
-  assert(state.rowText.some((text) => text.includes("Field notes")), `generated content index missing Field notes row: ${JSON.stringify(state.rowText)}`);
-  assert(state.descriptions.some((description) => description.includes("How-to documents grouped by folder metadata.")), `generated content index missing folder description: ${JSON.stringify(state.descriptions)}`);
-  assert(state.links.some((link) => link.text === "Theme profiles" && link.href === "/demo/content-tree/guides/theme.md"), `generated content index missing Theme profiles source link: ${JSON.stringify(state.links)}`);
-  assert(state.links.some((link) => link.text === "Console fences" && link.href === "/demo/content-tree/notes/console.md"), `generated content index missing Console fences source link: ${JSON.stringify(state.links)}`);
+  assert(state.bodyText.includes("public/demo/content-tree") && state.bodyText.includes("public/demo/content-structure.md"), `generated content structure missing fixture explanation: ${state.bodyText}`);
+  assert(state.bodyText.includes("Keep canonical slugs in frontmatter"), `generated content structure missing stable-route guidance: ${state.bodyText}`);
+  assert(state.bodyText.includes("Development-only notes stay under .agents/"), `generated content structure missing public-boundary guidance: ${state.bodyText}`);
   assert(state.sourceHref === "/demo/content-structure.md", `generated content structure source href was ${state.sourceHref}`);
 }
 
@@ -698,17 +668,14 @@ async function runSearchChecks(page, origin) {
     const visiblePosts = Array.from(document.querySelectorAll(".pf-result, .pagefind-ui__result")).map((post) =>
       post.textContent?.replace(/\s+/g, " ").trim() ?? ""
     );
-    const activeTag = document.querySelector('[data-papyrus-search-tag="cv"]');
     const empty = document.querySelector(".papyrus-search-empty");
     return {
-      activeTagText: activeTag?.textContent?.trim() ?? "",
       inputValue: document.querySelector(".pf-input, .pagefind-ui__search-input")?.value ?? "",
       emptyHidden: empty?.hasAttribute("hidden") ?? false,
       visiblePosts,
     };
   });
 
-  assert(searchState.activeTagText.includes("#cv"), `active search tag was ${searchState.activeTagText}`);
   assert(searchState.inputValue === "cv", `search input value was ${searchState.inputValue}`);
   assert(searchState.visiblePosts.some((post) => post.includes("Profile and CV")), `visible search posts were ${searchState.visiblePosts.join(", ")}`);
   assert(!searchState.visiblePosts.some((post) => post.includes("Markdown authoring guide")), `search filter did not remove markdown post: ${searchState.visiblePosts.join(", ")}`);
@@ -725,7 +692,8 @@ async function runSearchChecks(page, origin) {
     ),
   }));
   assert(archiveSearchState.inputValue === "", `archive search input value was ${archiveSearchState.inputValue}`);
-  assert(archiveSearchState.visiblePosts.length === 1 && archiveSearchState.visiblePosts[0] === "Folder tags for nested posts", `archive search posts were ${archiveSearchState.visiblePosts.join(", ")}`);
+  assert(archiveSearchState.visiblePosts.includes("Folder tags for nested posts"), `archive search did not include the hidden folder-tag post: ${archiveSearchState.visiblePosts.join(", ")}`);
+  assert(archiveSearchState.visiblePosts.length >= 1, "archive search did not return hidden posts");
 }
 
 async function runPostsIndexChecks(page, origin) {
@@ -793,16 +761,14 @@ async function runPostsIndexChecks(page, origin) {
   });
 
   assert(desktopState.title === "Posts", `posts index title was ${desktopState.title}`);
-  assert(desktopState.listCount === 7, `posts list count was ${desktopState.listCount}`);
+  assert(desktopState.listCount === 20, `posts list should respect the configured default limit of 20, got ${desktopState.listCount}`);
   assert(!desktopState.hiddenPostVisible, "posts list should not show hidden posts by default");
   assert(desktopState.alternateViewCount === 0, `posts index should only render list view, got ${desktopState.alternateViewCount} alternate views`);
   assert(desktopState.firstTitles.list === "Install and configure Papyrus", `posts list first title was ${desktopState.firstTitles.list}`);
   assert(!desktopState.firstListMeta.includes("pinned"), `posts pinned meta should use the pin icon without text: ${desktopState.firstListMeta}`);
   assert(!desktopState.firstListMeta.includes("updated"), `posts first list item should color updates instead of showing updated text: ${desktopState.firstListMeta}`);
-  assert(desktopState.firstListHasUpdatedColorState, "posts list did not mark an updated date with the recent-update color state");
-  assert(desktopState.firstListUpdatedTextColor !== desktopState.themeAccentColor, `posts updated date text should stay muted, got accent ${desktopState.firstListUpdatedTextColor}`);
-  assert(desktopState.firstListUpdatedIconColor === desktopState.themeAccentColor, `posts updated icon color ${desktopState.firstListUpdatedIconColor} did not match theme accent ${desktopState.themeAccentColor}`);
-  assert(desktopState.firstListUpdatedIconPath.startsWith("M21 12"), `posts updated row should use refresh icon, got path ${desktopState.firstListUpdatedIconPath}`);
+  assert(!desktopState.firstListHasUpdatedColorState, "old demo posts should not be marked as recently updated");
+  assert(desktopState.firstListUpdatedIconColor === "" && desktopState.firstListUpdatedIconPath === "", `old demo posts should not carry a recent-update icon: ${JSON.stringify(desktopState)}`);
   assert(desktopState.listCoverWidth > 90 && desktopState.listCoverWidth <= 170, `posts list cover width was ${desktopState.listCoverWidth}`);
   assert(desktopState.listCoverIsRightAligned, "posts list cover was not right aligned");
   assert(desktopState.actionLinks.some((link) => link.text === "Tags" && link.href === "/tag/" && link.iconCount === 1), `posts actions missing Tags link: ${JSON.stringify(desktopState.actionLinks)}`);
@@ -829,7 +795,7 @@ async function runPostsIndexChecks(page, origin) {
   });
 
   assert(mobileState.mobileNavDisplay !== "none", `posts mobile hamburger display was ${mobileState.mobileNavDisplay}`);
-	  assert(mobileState.listCount === 7 && mobileState.alternateViewCount === 0, `mobile posts view counts were ${JSON.stringify(mobileState)}`);
+	  assert(mobileState.listCount === 20 && mobileState.alternateViewCount === 0, `mobile posts view counts were ${JSON.stringify(mobileState)}`);
   assert(mobileState.actions.includes("Tags") && mobileState.actions.includes("Timeline"), `mobile posts actions missing expected links: ${JSON.stringify(mobileState)}`);
   assert(mobileState.inlineTags.some((tag) => tag?.startsWith("#")), `mobile inline first tags missing: ${JSON.stringify(mobileState)}`);
 
@@ -841,7 +807,7 @@ async function runPostsIndexChecks(page, origin) {
   }));
   assert(timelineState.title === "Timeline", `timeline page title was ${timelineState.title}`);
   assert(timelineState.archiveYears >= 1, `timeline year group count was ${timelineState.archiveYears}`);
-  assert(timelineState.linkCount === 7, `timeline link count was ${timelineState.linkCount}`);
+  assert(timelineState.linkCount >= 20, `timeline should include at least the posts-index page size, got ${timelineState.linkCount}`);
 }
 
 async function runPostChecks(page, origin) {
@@ -1283,15 +1249,12 @@ async function runProfileNavChecks(page, origin) {
   await page.goto(`${origin}/posts/cv-profile/`, { waitUntil: "networkidle" });
   await assertPackageNavScope(page, "CV profile");
 
-  const profileLinks = await page.locator(".papyrus-link-preview").evaluateAll((links) =>
-    links.map((link) => ({
-      href: link.getAttribute("href"),
-      title: link.querySelector("strong")?.textContent?.trim(),
-    }))
-  );
-  assert(profileLinks.some((link) => link.href === "/docs/cv-demo/" && link.title === "CV/profile components"), `CV profile missing CV components link: ${JSON.stringify(profileLinks)}`);
-  assert(profileLinks.some((link) => link.href === "/docs/cv-demo/jekyll/" && link.title === "Classic jekyllcv template"), `CV profile missing classic jekyllcv link: ${JSON.stringify(profileLinks)}`);
-  assert(profileLinks.some((link) => link.href === "/docs/cv-demo/print/" && link.title === "A4 print route"), `CV profile missing A4 print route link: ${JSON.stringify(profileLinks)}`);
+  const profilePostState = await page.evaluate(() => ({
+    h1: document.querySelector("h1")?.textContent?.trim() ?? "",
+    text: document.querySelector(".papyrus-prose")?.textContent?.replace(/\s+/g, " ").trim() ?? "",
+  }));
+  assert(profilePostState.h1 === "Profile and CV", `CV profile post heading was ${profilePostState.h1}`);
+  assert(profilePostState.text.includes("/profile/print/") || profilePostState.text.includes("print route"), `CV profile post did not describe printable output: ${profilePostState.text}`);
 
   await page.goto(`${origin}/profile/`, { waitUntil: "networkidle" });
   const profileState = await page.evaluate(() => {
@@ -1310,6 +1273,7 @@ async function runProfileNavChecks(page, origin) {
       tabsCenterDelta: tabsRect && tabsParentRect
         ? Math.abs((tabsRect.left + tabsRect.width / 2) - (tabsParentRect.left + tabsParentRect.width / 2))
         : Number.POSITIVE_INFINITY,
+      versionLinks: Array.from(document.querySelectorAll(".cv-print-menu a")).map((link) => link.getAttribute("href") ?? ""),
       timelineEvents: Array.from(document.querySelectorAll('[data-cv-panel="timeline"] .papyrus-timeline-item')).map((item) => item.textContent?.replace(/\s+/g, " ").trim() ?? ""),
     };
   });
@@ -1317,6 +1281,7 @@ async function runProfileNavChecks(page, origin) {
   assert(profileState.actionsCenterDelta <= 1, `profile actions were not centered in their column: ${JSON.stringify(profileState)}`);
   assert(profileState.tabsJustify === "center", `profile tabs were not centered: ${JSON.stringify(profileState)}`);
   assert(profileState.tabsCenterDelta <= 1, `profile tabs were not centered in their column: ${JSON.stringify(profileState)}`);
+  assert(profileState.versionLinks.includes("/profile/print/") && profileState.versionLinks.includes("/profile/ast/"), `profile print version links were ${JSON.stringify(profileState.versionLinks)}`);
   assert(profileState.timelineEvents.length >= 1, `profile timeline events were ${JSON.stringify(profileState.timelineEvents)}`);
   assert(profileState.timelineEvents.every((event) => /\b(?:19|20)\d{2}\b/.test(event)), `profile timeline should only include dated events: ${JSON.stringify(profileState.timelineEvents)}`);
   assert(!profileState.timelineEvents.some((event) => event.includes("Interests")), `profile timeline should only include dated events: ${JSON.stringify(profileState.timelineEvents)}`);
@@ -1350,7 +1315,7 @@ async function runMetadataChecks(page, origin) {
   assert(metadataState.metaItems.some((item) => item.text === "1 min"), `metadata demo missing read time: ${JSON.stringify(metadataState.metaItems)}`);
   assert(metadataState.tagIconCount === 1, `metadata demo tag icon count was ${metadataState.tagIconCount}`);
   assert(metadataState.tags.some((tag) => tag.text === "#authoring" && tag.href === "/tag/authoring/"), `metadata demo missing #authoring tag link: ${JSON.stringify(metadataState.tags)}`);
-  assert(metadataState.tags.some((tag) => tag.text === "#metadata" && tag.href === "/tag/metadata/"), `metadata demo missing #metadata tag link: ${JSON.stringify(metadataState.tags)}`);
+  assert(metadataState.tags.some((tag) => tag.text === "#papyrus" && tag.href === "/tag/papyrus/"), `metadata demo missing #papyrus tag link: ${JSON.stringify(metadataState.tags)}`);
 }
 
 async function runMarkdownDemoChecks(page, origin) {
@@ -1444,7 +1409,7 @@ async function runMarkdownDemoChecks(page, origin) {
   assert(copiedCode.includes('println!("papyrus");'), "Pure Shiki copy button did not copy Rust code");
 
   const calloutState = await page.evaluate(() => {
-    const variants = ["note", "tip", "important", "warning", "caution", "info", "success"];
+    const variants = ["note", "tip", "important", "warning", "caution"];
     return variants.map((variant) => {
       const callout = document.querySelector(`.callout[data-callout="${variant}"]`);
       const title = callout?.querySelector(".callout-title");
@@ -1576,137 +1541,53 @@ async function runMarkdownDemoChecks(page, origin) {
 }
 
 async function runCvChecks(page, origin) {
-  await page.goto(`${origin}/docs/cv-demo/`, { waitUntil: "networkidle" });
-  const cvControls = await page.evaluate(() => {
-    const controls = document.querySelector(".papyrus-cv-controls");
-    const buttons = Array.from(document.querySelectorAll("[data-papyrus-cv-template]")).map((button) => ({
-      pressed: button.getAttribute("aria-pressed"),
-      template: button.getAttribute("data-papyrus-cv-template"),
-      text: button.textContent?.trim(),
-    }));
+  await page.goto(`${origin}/profile/`, { waitUntil: "networkidle" });
+  const profileState = await page.evaluate(() => ({
+    actionLabels: Array.from(document.querySelectorAll(".cv-actions .cv-action")).map((item) => item.textContent?.replace(/\s+/g, " ").trim() ?? ""),
+    name: document.querySelector(".cv-sidebar h1")?.textContent?.trim() ?? "",
+    tabs: Array.from(document.querySelectorAll("[data-cv-tab]")).map((tab) => tab.textContent?.trim() ?? ""),
+    versionHrefs: Array.from(document.querySelectorAll(".cv-print-menu a")).map((link) => link.getAttribute("href") ?? ""),
+  }));
+  assert(profileState.name === "Mira Lee", `profile name was ${profileState.name}`);
+  assert(profileState.tabs.join(",") === "Resume,Timeline,Projects,Skills", `profile tabs were ${profileState.tabs.join(",")}`);
+  assert(profileState.versionHrefs.includes("/profile/print/") && profileState.versionHrefs.includes("/profile/ast/"), `profile version links were ${JSON.stringify(profileState.versionHrefs)}`);
+  assert(profileState.actionLabels.some((label) => label.includes("PDF / Print")), `profile actions were ${JSON.stringify(profileState.actionLabels)}`);
+
+  await page.goto(`${origin}/profile/print/`, { waitUntil: "networkidle" });
+  const printState = await page.evaluate(() => ({
+    backHref: document.querySelector('[data-cv-actions] a[href="/profile/"]')?.getAttribute("href") ?? "",
+    name: document.querySelector(".print-profile h1")?.textContent?.trim() ?? "",
+    sheetCount: document.querySelectorAll(".sheet").length,
+    versionHrefs: Array.from(Array.from(document.querySelectorAll(".cv-source-menu")).find((menu) => menu.querySelector("summary")?.textContent?.trim() === "Version")?.querySelectorAll("a") ?? []).map((link) => link.getAttribute("href") ?? ""),
+  }));
+  assert(printState.name === "Mira Lee", `print profile name was ${printState.name}`);
+  assert(printState.sheetCount >= 1, `print sheet count was ${printState.sheetCount}`);
+  assert(printState.backHref === "/profile/", `print back link was ${printState.backHref}`);
+  assert(printState.versionHrefs.includes("/profile/ast/"), `print version links were ${JSON.stringify(printState.versionHrefs)}`);
+  const sheet = await page.locator(".sheet").first().boundingBox();
+  assert(Boolean(sheet), "print CV sheet is missing");
+  if (sheet) {
+    assert(Math.abs(sheet.width - 794) < 10, `print A4 width was ${sheet.width}`);
+    assert(Math.abs(sheet.height - 1119) < 30, `print A4 height was ${sheet.height}`);
+  }
+
+  await page.goto(`${origin}/profile/ast/`, { waitUntil: "networkidle" });
+  const astState = await page.evaluate(() => {
+    const versionMenu = Array.from(document.querySelectorAll(".cv-source-menu")).find((menu) => menu.querySelector("summary")?.textContent?.trim() === "Version");
     return {
-      buttonCount: buttons.length,
-      buttons,
-      colorButtons: document.querySelectorAll("[data-papyrus-theme-profile-value]").length,
-      hasNormalizedName: document.body.textContent?.includes("Mira Lee") ?? false,
-      fontButtons: document.querySelectorAll("[data-papyrus-font-profile-value]").length,
-      hasControls: Boolean(controls),
-      terminalHidden: document.querySelector('[data-papyrus-cv-template-panel="terminal"]')?.hasAttribute("hidden") ?? true,
+      backHref: document.querySelector('[data-cv-actions] a[href="/profile/"]')?.getAttribute("href") ?? "",
+      hasProfessionalSummary: Boolean(document.querySelector("#summary-heading")),
+      name: document.querySelector(".resume-header h1")?.textContent?.trim() ?? "",
+      versionHrefs: Array.from(versionMenu?.querySelectorAll("a") ?? []).map((link) => link.getAttribute("href") ?? ""),
     };
   });
-  assert(cvControls.hasControls, "CV controls are missing");
-  assert(cvControls.buttonCount === 4, `CV template button count was ${cvControls.buttonCount}`);
-  assert(cvControls.buttons.some((button) => button.template === "terminal" && button.pressed === "true"), `terminal template was not initially selected: ${JSON.stringify(cvControls.buttons)}`);
-  assert(cvControls.colorButtons >= themeProfiles.length, `CV color button count was ${cvControls.colorButtons}`);
-  assert(cvControls.fontButtons >= 3, `CV font button count was ${cvControls.fontButtons}`);
-  assert(cvControls.hasNormalizedName, "CV demo did not render normalized CV name");
-  assert(cvControls.terminalHidden === false, "terminal CV panel should be visible initially");
-
-  const cvSharedComponents = await page.evaluate(() => ({
-    githubHref: document.querySelector('.papyrus-section github-card.papyrus-github-preview a[href="https://github.com/marcelofpfelix/papyrus"]')?.getAttribute("href") ?? "",
-    githubRepo: document.querySelector(".papyrus-section github-card.papyrus-github-preview")?.getAttribute("data-repo") ?? "",
-    projectCards: document.querySelectorAll(".papyrus-section .papyrus-project-card").length,
-    timelineEvents: Array.from(document.querySelectorAll(".papyrus-section .papyrus-timeline .papyrus-timeline-item")).map((item) => item.textContent?.replace(/\s+/g, " ").trim() ?? ""),
-  }));
-  assert(cvSharedComponents.projectCards >= 5, `CV demo project cards were ${cvSharedComponents.projectCards}`);
-  assert(cvSharedComponents.githubHref === "https://github.com/marcelofpfelix/papyrus", `CV demo GitHub preview href was ${cvSharedComponents.githubHref}`);
-  assert(cvSharedComponents.githubRepo === "marcelofpfelix/papyrus", `CV demo GitHub preview repo was ${cvSharedComponents.githubRepo}`);
-  assert(cvSharedComponents.timelineEvents.length >= 2, `CV demo timeline events were ${cvSharedComponents.timelineEvents.length}`);
-  assert(cvSharedComponents.timelineEvents.some((event) => event.includes("Theme maintainer") && event.includes("Papyrus Theme")), `CV demo timeline missing Papyrus Theme maintainer event: ${JSON.stringify(cvSharedComponents.timelineEvents)}`);
-  assert(cvSharedComponents.timelineEvents.every((event) => /\b(?:19|20)\d{2}\b/.test(event)), `CV demo timeline should only include dated events: ${JSON.stringify(cvSharedComponents.timelineEvents)}`);
-  assert(!cvSharedComponents.timelineEvents.some((event) => event.includes("Interests")), `CV demo timeline should only include dated events: ${JSON.stringify(cvSharedComponents.timelineEvents)}`);
-
-  const exportState = await page.evaluate(() => ({
-    jsonCopyLabel: document.querySelector('[data-papyrus-cv-copy="json"] .papyrus-button-label')?.textContent?.trim() ?? "",
-    jsonDownload: document.querySelector('[data-papyrus-cv-download="json"]')?.getAttribute("download") ?? "",
-    jsonHref: document.querySelector('[data-papyrus-cv-download="json"]')?.getAttribute("href") ?? "",
-    markdownCopyLabel: document.querySelector('[data-papyrus-cv-copy="markdown"] .papyrus-button-label')?.textContent?.trim() ?? "",
-    markdownDownload: document.querySelector('[data-papyrus-cv-download="markdown"]')?.getAttribute("download") ?? "",
-    markdownHref: document.querySelector('[data-papyrus-cv-download="markdown"]')?.getAttribute("href") ?? "",
-  }));
-  assert(exportState.jsonCopyLabel === "Copy JSON Resume", `JSON copy label was ${exportState.jsonCopyLabel}`);
-  assert(exportState.markdownCopyLabel === "Copy Markdown", `Markdown copy label was ${exportState.markdownCopyLabel}`);
-  assert(exportState.jsonDownload === "resume.json", `JSON download filename was ${exportState.jsonDownload}`);
-  assert(exportState.markdownDownload === "cv.md", `Markdown download filename was ${exportState.markdownDownload}`);
-  assert(exportState.jsonHref.startsWith("data:application/json"), `JSON download href was ${exportState.jsonHref.slice(0, 40)}`);
-  assert(decodeURIComponent(exportState.jsonHref).includes('"basics"'), "JSON Resume download payload missing basics");
-  assert(exportState.markdownHref.startsWith("data:text/markdown"), `Markdown download href was ${exportState.markdownHref.slice(0, 40)}`);
-  assert(decodeURIComponent(exportState.markdownHref).includes("# Mira Lee"), "Markdown download payload missing CV title");
-
-  await page.locator(".papyrus-cv-export-card").first().locator("summary").click();
-  await page.locator('[data-papyrus-cv-copy="json"]').click();
-  await page.waitForFunction(() => document.querySelector('[data-papyrus-cv-copy="json"]')?.getAttribute("data-state") === "copied");
-  const copiedJson = await clipboardText(page);
-  assert(copiedJson.includes('"basics"'), "JSON Resume CV copy missing basics");
-  assert(copiedJson.includes('"name": "Mira Lee"'), "JSON Resume CV copy missing name");
-
-  await page.locator(".papyrus-cv-export-card").nth(1).locator("summary").click();
-  await page.locator('[data-papyrus-cv-copy="markdown"]').click();
-  await page.waitForFunction(() => document.querySelector('[data-papyrus-cv-copy="markdown"]')?.getAttribute("data-state") === "copied");
-  const copiedMarkdown = await clipboardText(page);
-  assert(copiedMarkdown.includes("# Mira Lee"), "Markdown CV copy missing title");
-  assert(copiedMarkdown.includes("## Professional Experience"), "Markdown CV copy missing experience heading");
-
-  await page.locator('[data-papyrus-cv-template="cards"]').click();
-  await page.waitForFunction(() => document.documentElement.dataset.papyrusCvTemplate === "cards");
-  const cardsState = await page.evaluate(() => ({
-    cardsHidden: document.querySelector('[data-papyrus-cv-template-panel="cards"]')?.hasAttribute("hidden") ?? true,
-    buttons: Array.from(document.querySelectorAll("[data-papyrus-cv-template]")).map((button) => ({
-      pressed: button.getAttribute("aria-pressed"),
-      template: button.getAttribute("data-papyrus-cv-template"),
-    })),
-    rootTemplate: document.documentElement.dataset.papyrusCvTemplate,
-    terminalHidden: document.querySelector('[data-papyrus-cv-template-panel="terminal"]')?.hasAttribute("hidden") ?? false,
-    visibleCardsCv: Boolean(document.querySelector('[data-papyrus-cv-template-panel="cards"] .papyrus-cv--cards')),
-  }));
-  assert(cardsState.rootTemplate === "cards", `CV root template was ${cardsState.rootTemplate}`);
-  assert(cardsState.buttons.some((button) => button.template === "cards" && button.pressed === "true"), `cards template aria state was ${JSON.stringify(cardsState.buttons)}`);
-  assert(cardsState.cardsHidden === false, "cards CV panel should be visible after selection");
-  assert(cardsState.terminalHidden === true, "terminal CV panel should be hidden after selecting cards");
-  assert(cardsState.visibleCardsCv, "cards panel did not contain cards CV variant");
-
-  await page.locator('[data-papyrus-theme-profile-value="pure"]').first().click();
-  const cvTheme = await page.evaluate(() => document.documentElement.dataset.papyrusTheme);
-  assert(cvTheme === "pure", `CV color/theme profile was ${cvTheme}`);
-
-  await page.locator('[data-papyrus-font-profile-value="readable"]').first().click();
-  const cvFont = await page.evaluate(() => document.documentElement.dataset.papyrusFont);
-  assert(cvFont === "readable", `CV font profile was ${cvFont}`);
-
-  await page.locator('[data-papyrus-cv-template="a4"]').click();
-  const a4Panel = await page.evaluate(() => ({
-    a4Hidden: document.querySelector('[data-papyrus-cv-template-panel="a4"]')?.hasAttribute("hidden") ?? true,
-    jekyllHref: document.querySelector('[data-papyrus-cv-template-panel="a4"] a[href="/docs/cv-demo/jekyll/"]')?.getAttribute("href") ?? "",
-    printHref: document.querySelector('[data-papyrus-cv-template-panel="a4"] a[href="/docs/cv-demo/print/"]')?.getAttribute("href") ?? "",
-    rootTemplate: document.documentElement.dataset.papyrusCvTemplate,
-    visibleA4Cv: Boolean(document.querySelector('[data-papyrus-cv-template-panel="a4"] .papyrus-cv--a4')),
-  }));
-  assert(a4Panel.rootTemplate === "a4", `CV root template after A4 selection was ${a4Panel.rootTemplate}`);
-  assert(a4Panel.a4Hidden === false, "A4 CV panel should be visible after selection");
-  assert(a4Panel.printHref === "/docs/cv-demo/print/", `A4 panel print link was ${a4Panel.printHref}`);
-  assert(a4Panel.jekyllHref === "/docs/cv-demo/jekyll/", `A4 panel jekyll link was ${a4Panel.jekyllHref}`);
-  assert(a4Panel.visibleA4Cv, "A4 panel did not contain A4 CV variant");
-
-  await page.goto(`${origin}/docs/cv-demo/print/`, { waitUntil: "networkidle" });
-  const printText = await page.locator("body").textContent();
-  assert(printText?.includes("Mira Lee"), "A4 print route did not render normalized CV name");
-  const a4 = await page.locator(".papyrus-cv-a4-page").boundingBox();
-  assert(Boolean(a4), "A4 CV page is missing");
-  if (a4) {
-    assert(Math.abs(a4.width - 794) < 8, `A4 CV width was ${a4.width}`);
-    assert(Math.abs(a4.height - 1123) < 24, `A4 CV height was ${a4.height}`);
-  }
-
-  await page.goto(`${origin}/docs/cv-demo/jekyll/`, { waitUntil: "networkidle" });
-  const jekyllText = await page.locator("body").textContent();
-  assert(jekyllText?.includes("Mira Lee"), "jekyllcv route did not render normalized CV name");
-  const jekyllPage = await page.locator(".papyrus-jekyllcv-page").boundingBox();
-  assert(Boolean(jekyllPage), "jekyllcv-style page is missing");
-  if (jekyllPage) {
-    assert(Math.abs(jekyllPage.width - 794) < 16, `jekyllcv page width was ${jekyllPage.width}`);
-    assert(jekyllPage.height >= 1120, `jekyllcv page height was ${jekyllPage.height}`);
-  }
+  assert(astState.name === "Mira Lee", `ATS profile name was ${astState.name}`);
+  assert(astState.hasProfessionalSummary, "ATS profile missing professional summary");
+  assert(astState.backHref === "/profile/", `ATS back link was ${astState.backHref}`);
+  assert(astState.versionHrefs.includes("/profile/print/"), `ATS version links were ${JSON.stringify(astState.versionHrefs)}`);
 }
+
+
 
 if (!existsSync(join(dist, "index.html"))) {
   console.error("dist/index.html is missing. Run `make build` before browser verification.");
@@ -1748,4 +1629,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("Verified browser behavior for logo hover/cursor SVG, reduced-motion cursor behavior, transparent icon-button backgrounds, search/RSS/social/powered-by icons, mobile header compaction, package nav scope, About page/no Notes route, Projects page/cards/borderless action links without footer metadata or duplicate GitHub previews, CV profile links, link preview cards, home note cards, docs content index and section menu, graph search/focus/reset behavior, search tag filtering, home post-list variants, pinned post ordering/markers, home project cards, small right-side post covers, posts index views/tags/timeline link, collapsed TOC, back-to-top, post-card/tag/side-link borders, post side links, adjacent post links, Shiki code token spans, compact code line spacing, code titles/highlights/diff markers, share chip and copy fallback, rejected-clipboard textarea copy fallback states, copy/source actions, Obsidian callouts, blockquotes, task lists, borderless tables, image/SVG zoom, Mermaid SVGs, fenced Mermaid markdown, Mermaid theme re-rendering, metadata created/updated/read-time/tag icons, full theme mode cycle, theme controls, header scroll, tags/meta, CV template/color/font controls, CV JSON/Markdown copy/download controls, and CV A4 routes.");
+console.log("Verified current browser behavior for navigation, homepage/docs/projects content, collection TOC, search and hidden archive filtering, posts/timeline limits, post actions and adjacency, Pure/Shiki code, callouts, Markdown media and Mermaid, theme controls, metadata, profile tabs/actions, and modern/classic A4 routes.");

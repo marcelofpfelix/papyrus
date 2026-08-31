@@ -7,6 +7,7 @@ import PapyrusToc from "../components/PapyrusToc.astro";
 import PapyrusBackToTopRuntime from "../components/runtime/PapyrusBackToTopRuntime.astro";
 import PapyrusMediaRuntime from "../components/runtime/PapyrusMediaRuntime.astro";
 import PapyrusPostActionsRuntime from "../components/runtime/PapyrusPostActionsRuntime.astro";
+import { QRCode } from "../pure/advanced";
 import { resolvePapyrusFeatures, type PapyrusFeatureConfig } from "../utils/features";
 import { imageEffectClass, imageEffectStyle, type PapyrusImageEffect } from "../utils/image-effects";
 import { formatPostDate, tagHref, toTransitionName } from "../utils/posts";
@@ -191,7 +192,8 @@ function icon(name: string) {
       author={author}
     />
   )}
-  <article class="papyrus-post" data-pagefind-body={shouldIndexWithPagefind ? true : undefined}>
+  <span id="papyrus-post-top-sentinel" class="sr-only" aria-hidden="true"></span>
+  <article id="papyrus-post-content" class="papyrus-post" data-pagefind-body={shouldIndexWithPagefind ? true : undefined}>
     {backHref && (
       <p class="papyrus-post-back">
         <a href={withBase(backHref)}>
@@ -235,7 +237,7 @@ function icon(name: string) {
             )
           }
           {showPostActions && (
-            <p class="papyrus-post-tools" aria-label="Post actions">
+            <div class="papyrus-post-tools" aria-label="Post actions">
               {resolvedFeatures.sourceActions && editUrl && (
               <a href={editUrl}>
                 <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("edit")} />
@@ -273,19 +275,22 @@ function icon(name: string) {
               </button>
               )}
               {resolvedFeatures.share && (
-              <span class="papyrus-qr-action">
-                <button class="papyrus-share-button" type="button" data-papyrus-qr aria-expanded="false" title="Show QR code">
+              <details class="papyrus-qr-action">
+                <summary class="papyrus-share-button" data-papyrus-qr title="Show QR code">
                   <span class="papyrus-share-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" set:html={icon("qr")} />
                   </span>
                   <span class="papyrus-share-copy">
                     <span class="papyrus-button-label">QR</span>
                   </span>
-                </button>
-                <span class="papyrus-qr-popover" data-papyrus-qr-popover hidden></span>
-              </span>
+                </summary>
+                <span class="papyrus-qr-popover" data-papyrus-qr-popover>
+                  <QRCode class="papyrus-qr-code" />
+                  <span>{canonicalUrl}</span>
+                </span>
+              </details>
               )}
-            </p>
+            </div>
           )}
         </div>
       )

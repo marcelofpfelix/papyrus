@@ -4,6 +4,3 @@ allowBuilds:
   workerd: true
 minimumReleaseAge: 10080
 minimumReleaseAgeStrict: true
-minimumReleaseAgeExclude:
-  - miniflare@4.20260630.0
-  - wrangler@4.106.0

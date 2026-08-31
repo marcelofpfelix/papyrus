@@ -3,6 +3,12 @@ import sitemap from "@astrojs/sitemap";
 import papyrus from "./src/integration";
 import kamailioLang from "./src/shiki/langs/kamailio.mjs";
 import { papyrusMarkdown } from "./src/markdown/config.mjs";
+import {
+  papyrusBasePath,
+  papyrusLinkValidator,
+  papyrusMdTxt,
+  papyrusSiteGraph,
+} from "./src/plugins/index.mjs";
 import { createPapyrusSitemapFilter } from "./src/sitemap";
 import { deploymentSiteUrl } from "./src/astro/site-url.mjs";
 
@@ -15,6 +21,10 @@ export default defineConfig({
   },
   integrations: [
     papyrus(),
+    papyrusBasePath(),
+    papyrusMdTxt(),
+    papyrusSiteGraph(),
+    papyrusLinkValidator(),
     sitemap({
       filter: createPapyrusSitemapFilter(),
     }),

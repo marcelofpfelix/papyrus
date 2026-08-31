@@ -204,7 +204,7 @@ function cvIcon(name: string) {
           <h2><span><svg aria-hidden="true" viewBox="0 0 24 24" set:html={cvIcon("repo")} /></span>Projects</h2>
           <div class="cv-repo-grid">
             {visibleProfileProjects.map(project => (
-              <PapyrusGithubCard repo={project.repo} description={project.description} fetchMetadata={false} />
+              <PapyrusGithubCard repo={project.repo} description={project.description} />
             ))}
           </div>
         </section>

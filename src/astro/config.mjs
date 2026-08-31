@@ -1,7 +1,7 @@
 import sitemap from "@astrojs/sitemap";
 import { defineConfig, svgoOptimizer } from "astro/config";
-import { loadPapyrusConfig } from "../config/index.mjs";
-import papyrus from "../integration.mjs";
+import { loadPapyrusConfig } from "../../lib/config/index.js";
+import papyrus from "../../lib/integration.js";
 import { papyrusMarkdown } from "../markdown/config.mjs";
 import { createPapyrusSitemapFilter } from "../sitemap.mjs";
 import { deploymentSiteUrl } from "./site-url.mjs";
@@ -22,6 +22,7 @@ export async function definePapyrusAstroConfig(options = {}) {
     },
     integrations: [
       papyrus(),
+      ...(options.plugins ?? []),
       sitemap(sitemapOptions),
       ...(options.integrations ?? []),
     ],

@@ -1,10 +1,13 @@
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import type { AstroIntegration } from "astro";
-import { loadPapyrusConfig } from "./config";
+import { loadPapyrusConfig, type PapyrusSiteConfig } from "./config/index.ts";
+import { generateSocialImages } from "../scripts/generate-social-images.mjs";
 
 function templateRoute(path: string) {
-  return fileURLToPath(new URL(path, import.meta.url));
+  const localUrl = new URL(path, import.meta.url);
+  if (existsSync(fileURLToPath(localUrl))) return fileURLToPath(localUrl);
+  return fileURLToPath(new URL(`../src/${path.replace(/^\.\//, "")}`, import.meta.url));
 }
 
 type DefaultRoute = {
@@ -45,12 +48,85 @@ const securityTxtRoutes: DefaultRoute[] = [
   { pattern: "/security.txt", entrypoint: templateRoute("./template/pages/security.txt.ts"), localFiles: ["src/pages/security.txt.ts", "src/pages/security.txt.js", "public/security.txt"] },
 ] as const;
 
+function pureVirtualConfig(site: PapyrusSiteConfig) {
+  const navMenu = site.nav.map((item) => ({
+    name: item.label,
+    url: item.href,
+    external: /^https?:\/\//.test(item.href),
+  }));
+  const socialLinks = site.socialLinks.map((item) => ({
+    name: item.label,
+    url: item.href,
+    icon: item.icon ?? item.label.toLowerCase(),
+  }));
+
+  return {
+    title: site.title,
+    description: site.description ?? "",
+    site: site.site ?? "",
+    npmCDN: "https://cdn.jsdelivr.net/npm",
+    locale: {
+      lang: site.lang || "en-US",
+      attrs: site.lang || "en_US",
+      dateLocale: site.lang || "en-US",
+      dateOptions: {},
+    },
+    header: {
+      title: site.headerTitle ?? site.brandTitle ?? site.title,
+      menu: navMenu,
+    },
+    footer: {
+      social: socialLinks,
+      links: site.footerLinks.map((item) => ({ name: item.label, url: item.href })),
+      copyright: `© ${new Date().getFullYear()} ${site.title}`,
+    },
+    author: {
+      name: site.title,
+      url: site.site ?? "/",
+      avatar: "",
+      bio: site.description ?? "",
+      social: socialLinks,
+    },
+    content: {
+      share: true,
+    },
+    integ: {
+      quote: false,
+      mediumZoom: true,
+    },
+  };
+}
+
+function pureVirtualConfigPlugin(site: PapyrusSiteConfig) {
+  const virtualId = "virtual:config";
+  const resolvedVirtualId = `\0${virtualId}`;
+  const pureConfig = pureVirtualConfig(site);
+
+  return {
+    name: "papyrus-pure-virtual-config",
+    resolveId(id: string) {
+      if (id === virtualId) return resolvedVirtualId;
+      return undefined;
+    },
+    load(id: string) {
+      if (id === resolvedVirtualId) return `export default ${JSON.stringify(pureConfig)}`;
+      return undefined;
+    },
+  };
+}
+
 export default function papyrus(): AstroIntegration {
   return {
     name: "astro-papyrus",
     hooks: {
-      "astro:config:setup": async ({ injectRoute }) => {
+      "astro:config:setup": async ({ injectRoute, updateConfig }) => {
         const site = await loadPapyrusConfig();
+        updateConfig({
+          vite: {
+            plugins: [pureVirtualConfigPlugin(site)],
+          },
+        });
+
         for (const { pattern, entrypoint, localFiles } of defaultRoutes) {
           if (localRouteExists(localFiles)) continue;
           injectRoute({ pattern, entrypoint });
@@ -61,6 +137,9 @@ export default function papyrus(): AstroIntegration {
             injectRoute({ pattern, entrypoint });
           }
         }
+      },
+      "astro:build:start": async () => {
+        await generateSocialImages();
       },
     },
   };

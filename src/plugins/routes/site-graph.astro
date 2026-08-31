@@ -1,0 +1,40 @@
+---
+import { readFile } from "node:fs/promises";
+import { resolve } from "node:path";
+import { PapyrusBaseLayout, PapyrusSiteGraph } from "../../components";
+import { getTemplateSite } from "../../template/site";
+
+type Graph = {
+  nodes: Array<{ id: string; type: string; label: string; url?: string }>;
+  edges: Array<{ source: string; target: string; relation: string }>;
+};
+
+const graphPath = resolve("public/ai/graph.json");
+let graph: Graph;
+try {
+  graph = JSON.parse(await readFile(graphPath, "utf8")) as Graph;
+} catch (error) {
+  throw new Error(`Papyrus site graph requires public/ai/graph.json. Run papyrus-ai-indexes before Astro builds. ${error instanceof Error ? error.message : error}`);
+}
+const site = await getTemplateSite();
+---
+
+<PapyrusBaseLayout
+  title="Graph"
+  description="Explore connections between posts, tags, projects, and profile data."
+  siteTitle={site.title}
+  brandTitle={site.brandTitle}
+  brandMark={site.brandMark}
+  showBrandTitle={site.showBrandTitle}
+  defaultThemeProfile={site.defaultThemeProfile}
+  defaultFontProfile={site.defaultFontProfile}
+  nav={site.nav}
+  socialLinks={site.socialLinks}
+  features={site.features}
+  googleVerification={site.googleVerification}
+>
+  <section class="papyrus-section">
+    <h1>Graph</h1>
+    <PapyrusSiteGraph nodes={graph.nodes} edges={graph.edges} />
+  </section>
+</PapyrusBaseLayout>

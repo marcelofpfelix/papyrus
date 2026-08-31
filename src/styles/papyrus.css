@@ -1735,7 +1735,8 @@ a {
 }
 
 .papyrus-post-tools a,
-.papyrus-post-tools button {
+.papyrus-post-tools button,
+.papyrus-post-tools summary {
   align-items: center;
   appearance: none;
   background: transparent;
@@ -1750,7 +1751,20 @@ a {
   transition: border-color 150ms ease, color 150ms ease, transform 150ms ease;
 }
 
-.papyrus-post-tools svg {
+.papyrus-post-tools summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.papyrus-post-tools summary::-webkit-details-marker {
+  display: none;
+}
+
+.papyrus-post-tools summary::marker {
+  content: "";
+}
+
+.papyrus-post-tools .papyrus-share-icon svg {
   fill: none;
   height: 1em;
   stroke: currentColor;
@@ -1788,21 +1802,47 @@ a {
   z-index: 5;
 }
 
-.papyrus-qr-popover svg {
+.papyrus-qr-action:not([open]) .papyrus-qr-popover {
+  display: none;
+}
+
+.papyrus-qr-code {
   background: #fff;
-  color: #111;
-  display: block;
+  display: inline-flex;
   height: 164px;
+  padding: 0;
   width: 164px;
 }
 
-.papyrus-qr-popover span {
+.papyrus-qr-code canvas,
+.papyrus-qr-code img {
+  display: block;
+  height: 100%;
+  image-rendering: pixelated;
+  width: 100%;
+}
+
+.papyrus-qr-popover > span {
   display: block;
   font-family: var(--papyrus-font-mono);
   font-size: 0.68rem;
   line-height: 1.25;
   overflow-wrap: anywhere;
   text-align: center;
+}
+
+.papyrus-post-tools .papyrus-qr-action > summary.papyrus-share-button {
+  display: inline-flex;
+  list-style: none;
+}
+
+.papyrus-post-tools .papyrus-qr-action > summary.papyrus-share-button::marker {
+  content: "";
+  font-size: 0;
+}
+
+.papyrus-post-tools .papyrus-qr-action > summary.papyrus-share-button::-webkit-details-marker {
+  display: none;
 }
 
 @media (min-width: 768px) {
@@ -2010,8 +2050,7 @@ a {
   outline: none;
 }
 
-.papyrus-github-preview header,
-.papyrus-github-preview footer {
+.papyrus-github-preview header {
   align-items: center;
   display: flex;
   gap: 10px;
@@ -2022,16 +2061,6 @@ a {
   flex: 1 1 auto;
   gap: 4px;
   min-width: 0;
-}
-
-.papyrus-github-avatar {
-  background: var(--papyrus-panel);
-  background-position: center;
-  background-size: cover;
-  border-radius: 999px;
-  flex: 0 0 auto;
-  height: 30px;
-  width: 30px;
 }
 
 .papyrus-github-preview svg {
@@ -2047,20 +2076,6 @@ a {
 .papyrus-github-preview p {
   color: var(--papyrus-muted);
   margin: 0;
-}
-
-.papyrus-github-preview footer {
-  color: var(--papyrus-muted);
-  flex-wrap: wrap;
-  font-family: var(--papyrus-font-mono);
-  font-size: 0.8rem;
-  justify-content: space-between;
-}
-
-.papyrus-github-preview.loading [data-gh-avatar],
-.papyrus-github-preview.loading [data-gh-description],
-.papyrus-github-preview.loading footer span {
-  animation: papyrus-pulse 1.6s infinite linear;
 }
 
 .papyrus-link-preview {

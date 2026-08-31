@@ -114,6 +114,10 @@ For Starlight-specific checks, keep `.agents/starlight-comparison.md` current. I
 records public Starlight component/plugin/sidebar/override references and maps
 them to papyrus request rows without making Starlight a runtime dependency.
 
+For public theme promotion, keep `.agents/theme-promotion.md` current. It holds
+directory listing copy, demo-domain links, and manual submission context without
+turning private task tracking into public docs.
+
 ## Theme system
 
 Theme profiles live in `src/styles/themes/`. Each profile must define a light and dark block.
@@ -660,8 +664,9 @@ Supported capability kinds:
 - `route`
 - `data`
 
-The docs collection includes `/collections/docs/features/` with copyable examples and a rendered
-plugin capability list.
+The docs collection includes `/collections/docs/features/` with copyable
+capability examples. A separate list component is unnecessary until a public
+page actually renders plugin records.
 
 The repository also ships a tiny external package fixture at
 `examples/papyrus-kbd-plugin`. It imports `definePapyrusPlugin` from the public
@@ -687,19 +692,53 @@ New features should be implemented as isolated reusable units first:
   that a generic part could be proposed upstream to Pure later.
 - Add demo content and verifier coverage before marking the audit row verified.
 
+### Pure dependency boundary
+
+`astro-pure@1.4.6` installs Astro 6 and `@astrojs/mdx` 5 as regular
+dependencies. Papyrus uses Astro 7, so pnpm currently keeps both Astro trees.
+Do not hide this with a package override: forcing Pure to Astro 7 leaves its MDX
+5 peer invalid, while forcing MDX 7 failed registry resolution during the
+compatibility spike. The durable fix is an upstream Pure release with Astro and
+MDX expressed as compatible peer dependencies. Keep the duplicate until that
+release exists and the Pure fixture, package build, and browser wrappers pass.
+
 ### Starlight plugin idea comparisons
 
-These are design notes, not implemented compatibility claims. Check the
-Starlight ecosystem before building local equivalents, but keep papyrus
-plugins small, optional, and site-owned.
+Check the Starlight ecosystem before building local equivalents, but keep
+Papyrus plugins small and optional. Selected ideas now have Papyrus-native
+Astro integrations; this does not make Starlight plugins directly compatible.
+
+Current Starlight docs to check first: public authoring components (`Aside`,
+`Tabs`, `TabItem`, `Card`, `Icon`), plugin hooks (`config:setup`,
+`i18n:setup`, `updateConfig`, `addIntegration`, route middleware), component
+override patterns, custom `head`/`customCss`, and sidebar autogeneration with
+frontmatter label/order/badge metadata. The compatibility/migration spike is
+tracked as `PP-216`.
 
 | Idea | Reference | Useful for papyrus? | Decision |
 | --- | --- | --- | --- |
-| Site graph | `starlight-site-graph` | Yes, but only after the graph model grows beyond tag/source metadata. | Keep as roadmap. Reuse the idea of a generated graph index, but do not depend on Starlight page internals. |
+| Site graph | `starlight-site-graph` | Yes. | Its public API failed the Astro 7 runtime and bundle checks, so opt-in `papyrusSiteGraph()` keeps the existing `public/ai/graph.json` data and dependency-free SVG renderer. Recheck upstream before replacing it. |
 | Keyboard markup | `starlight-kbd` | Yes for technical posts and docs. | Prefer a tiny markdown/component plugin that renders `<kbd>` consistently. Do not add it until markdown demo coverage needs keyboard shortcuts. |
 | Auto sidebar | `starlight-auto-sidebar` | Maybe for docs, not for blog posts. | Use generated content indexes first. A sidebar plugin should read folder metadata and stay optional. |
 | Contextual menu | `starlight-contextual-menu` | Maybe for docs navigation and copy/source actions. | Defer until the interaction model is clear; avoid hidden menus for core post actions. |
-| Telescope/search | `starlight-telescope` | Yes for future graph/search exploration. | Keep as roadmap for global AI-first search and backlinks. Current package ships static indexes plus a dependency-free graph demo with search, type filtering, node focus, and focused connection details. |
+| Telescope/search | `starlight-telescope` | No. | Keep Pagefind as the single search engine. The upstream package requires Starlight and adds Fuse plus a second page index, so a wrapper would make every consumer pay for an optional command palette. |
+| Raw Markdown routes | `starlight-md-txt` | Yes. | Adapted as opt-in `papyrusMdTxt()` for public Papyrus posts at `/posts/<slug>.md.txt`. |
+| Base-path Markdown | `starlight-base-path` | Yes. | Adapted as opt-in `papyrusBasePath()`. It extends the existing Papyrus unified Markdown processor; component links still use `withBase()`. |
+| Link validation | `starlight-links-validator` | Yes. | Adapted as opt-in `papyrusLinkValidator()` around the existing built-output checker, now reusable and base-aware. |
+| Starlight interoperability | Public Starlight components and plugin lifecycle docs | Useful as a migration boundary, not a generic adapter. | `PP-216` concluded that Starlight plugins cannot run unchanged in Papyrus. Keep Starlight optional, map portable concepts, and use `examples/starlight-interop` as the tested decision record. |
+
+The compatibility work rejects a universal adapter. Starlight's lifecycle owns
+Starlight config, translations, middleware, and UI context; Papyrus's setup
+hook only declares capabilities and feature defaults. The selected adapters are
+ordinary Astro integrations written for Papyrus routes and data, not translated
+Starlight plugin hooks. A Starlight site may reuse framework-neutral public
+helpers individually, but it should not install the full Papyrus integration
+alongside Starlight. See
+`examples/starlight-interop` for the component and lifecycle mapping.
+
+Pinned versions, source commits, adaptation boundaries, and upstream licenses
+are recorded in `THIRD_PARTY_NOTICES.md`, which must remain part of the npm
+package.
 
 Implementation rule: when one of these ideas becomes active work, create a
 specific audit row or update the matching row before coding. Do not mark the

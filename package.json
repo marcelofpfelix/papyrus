@@ -31,9 +31,16 @@
     ".": "./src/index.ts",
     "./components": "./src/components/index.ts",
     "./astro": "./src/astro/config.mjs",
-    "./config": "./src/config/index.mjs",
+    "./config": {
+      "types": "./lib/config/index.d.ts",
+      "default": "./lib/config/index.js"
+    },
     "./content": "./src/content.ts",
-    "./integration": "./src/integration.mjs",
+    "./integration": {
+      "types": "./lib/integration.d.ts",
+      "default": "./lib/integration.js"
+    },
+    "./plugins": "./src/plugins/index.mjs",
     "./PapyrusBaseLayout.astro": "./src/layouts/PapyrusBaseLayout.astro",
     "./PapyrusPostLayout.astro": "./src/layouts/PapyrusPostLayout.astro",
     "./PapyrusHeader.astro": "./src/components/PapyrusHeader.astro",
@@ -46,12 +53,12 @@
     "./PapyrusToc.astro": "./src/components/PapyrusToc.astro",
     "./PapyrusNoteList.astro": "./src/components/PapyrusNoteList.astro",
     "./PapyrusProjectList.astro": "./src/components/PapyrusProjectList.astro",
-    "./PapyrusPluginList.astro": "./src/components/PapyrusPluginList.astro",
     "./PapyrusGiscusComments.astro": "./src/components/PapyrusGiscusComments.astro",
     "./PapyrusRemotePostStats.astro": "./src/components/PapyrusRemotePostStats.astro",
     "./PapyrusContentIndex.astro": "./src/components/PapyrusContentIndex.astro",
     "./PapyrusArtifactLink.astro": "./src/components/PapyrusArtifactLink.astro",
     "./PapyrusGithubCard.astro": "./src/components/PapyrusGithubCard.astro",
+    "./PapyrusSiteGraph.astro": "./src/components/PapyrusSiteGraph.astro",
     "./PapyrusLinkPreview.astro": "./src/components/PapyrusLinkPreview.astro",
     "./PapyrusTimeline.astro": "./src/components/PapyrusTimeline.astro",
     "./PapyrusNotFound.astro": "./src/components/PapyrusNotFound.astro",
@@ -140,12 +147,17 @@
     "README.md",
     "LICENSE",
     "CHANGELOG.md",
+    "THIRD_PARTY_NOTICES.md",
     "src",
     "public",
     "scripts",
+    "lib",
     "examples"
   ],
   "scripts": {
+    "package:runtime": "tsc -p tsconfig.package.json",
+    "prepare": "pnpm run package:runtime",
+    "prepack": "pnpm run package:runtime",
     "check": "astro check",
     "build": "pnpm run image:effects && pnpm run social:images && pnpm run cv:export && pnpm run build:llms && pnpm run ai:indexes -- src/content/posts public/ai ${SITE_URL:-${CF_PAGES_URL:-https://papyrus.marcelofelix.com}} public/demo/site-data.json && pnpm run rss:tags && astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
     "cv:export": "node scripts/export-cv.mjs src/data/profile.toml public/cv/profile",
@@ -174,6 +186,8 @@
     "verify:content": "node .agents/scripts/verify-content-model.mjs",
     "verify:config": "node .agents/scripts/verify-config-loader.mjs",
     "verify:features": "node .agents/scripts/verify-features.mjs",
+    "verify:plugins": "node .agents/scripts/verify-starlight-adapters.mjs",
+    "verify:upstream-browser": "node .agents/scripts/verify-upstream-wrappers-browser.mjs",
     "verify:cv": "node .agents/scripts/verify-cv-data.mjs",
     "verify:ats": "node .agents/scripts/verify-ats-resume.mjs",
     "verify:ai": "node .agents/scripts/verify-ai-artifacts.mjs",
@@ -198,30 +212,33 @@
     "audit:status": "node .agents/scripts/audit-status.mjs"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^7.2.0",
+    "@astrojs/markdown-remark": "7.2.2",
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/sitemap": "^3.7.3",
     "@pagefind/default-ui": "^1.5.2",
     "astro-pure": "^1.4.6",
     "hastscript": "^9.0.1",
-    "mermaid": "^11.16.0",
-    "qrcode": "^1.5.4",
+    "mermaid": "^11.16.1",
     "rehype-callouts": "^2.2.0",
-    "satori": "^0.26.0",
-    "smol-toml": "^1.7.0"
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
+    "remark-stringify": "^11.0.0",
+    "satori": "^0.29.0",
+    "smol-toml": "^1.7.1",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.1.0"
   },
   "peerDependencies": {
     "astro": ">=6.0.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9",
-    "@types/qrcode": "^1.5.6",
-    "astro": "^7.0.4",
-    "lighthouse": "^13.4.0",
+    "@astrojs/check": "^0.9.10",
+    "astro": "7.2.0",
+    "lighthouse": "^13.4.1",
     "pagefind": "^1.5.2",
-    "playwright": "^1.61.1",
+    "playwright": "^1.62.1",
     "sharp": "^0.35.3",
     "typescript": "^5.9.3",
-    "wrangler": "4.106.0"
+    "wrangler": "4.120.1"
   }
 }

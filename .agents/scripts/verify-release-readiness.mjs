@@ -13,6 +13,7 @@ const license = await readFile(join(root, "LICENSE"), "utf8");
 const releaseDocs = await readFile(join(root, "src/content/posts/docs/deploy/31-release-checklist.md"), "utf8");
 const releaseWorkflow = await readFile(join(root, ".github/workflows/release.yml"), "utf8");
 const pnpmWorkspace = await readFile(join(root, "pnpm-workspace.yaml"), "utf8");
+const smokeProfile = await readFile(join(root, "src/data/profile.toml"), "utf8");
 const failures = [];
 let packedTarball;
 
@@ -175,7 +176,8 @@ try {
   }
 
   if (packedTarball && existsSync(packedTarball)) {
-    await mkdir(join(smokeDir, "src/pages"), { recursive: true });
+    await mkdir(join(smokeDir, "src/content/posts"), { recursive: true });
+    await mkdir(join(smokeDir, "src/data"), { recursive: true });
     await writeFile(join(smokeDir, "package.json"), `${JSON.stringify({
       name: "papyrus-release-smoke",
       version: "0.0.0",
@@ -192,36 +194,36 @@ try {
     await writeFile(join(smokeDir, "pnpm-workspace.yaml"), `minimumReleaseAge: 10080
 minimumReleaseAgeStrict: true
 `);
-    await writeFile(join(smokeDir, "astro.config.mjs"), `import { defineConfig } from "astro/config";
+    await writeFile(join(smokeDir, "astro.config.mjs"), `import { definePapyrusAstroConfig } from "astro-papyrus/astro";
 
-export default defineConfig({
-  site: "https://example.test",
-});
+export default await definePapyrusAstroConfig({ site: "https://example.test" });
 `);
     await writeFile(join(smokeDir, "papyrus.config.toml"), `[site]
 title = "Smoke site"
 description = "Tarball install smoke test."
+url = "https://example.test"
 
 [[nav]]
-href = "/"
-label = "Home"
-`);
-    await writeFile(join(smokeDir, "src/pages/index.astro"), `---
-import { PapyrusBaseLayout, PapyrusPostList } from "astro-papyrus/components";
-import { loadPapyrusConfig } from "astro-papyrus/config";
-import "astro-papyrus/papyrus.css";
+href = "/posts/"
+label = "Posts"
 
-const config = await loadPapyrusConfig();
+[[projects]]
+title = "Smoke project"
+description = "Project data supplied by the consumer."
+href = "https://example.test/project"
+`);
+    await writeFile(join(smokeDir, "src/content.config.ts"), `export { collections } from "astro-papyrus/content";\n`);
+    await writeFile(join(smokeDir, "src/content/posts/smoke.md"), `---
+title: Packed package smoke post
+description: Consumer content rendered through injected Papyrus routes.
+date: 2026-01-01
+tags:
+  - smoke
 ---
 
-<PapyrusBaseLayout title={config.title} description={config.description} nav={config.nav}>
-  <section class="papyrus-hero">
-    <h1>{config.title}</h1>
-    <p class="papyrus-description">{config.description}</p>
-  </section>
-  <PapyrusPostList posts={[]} />
-</PapyrusBaseLayout>
+This post came from the temporary packed-package consumer.
 `);
+    await writeFile(join(smokeDir, "src/data/profile.toml"), smokeProfile);
 
     const install = spawnSync("pnpm", ["install", "--ignore-scripts", "--reporter=append-only"], {
       cwd: smokeDir,
@@ -246,6 +248,25 @@ const config = await loadPapyrusConfig();
       });
       if (build.status !== 0) {
         failures.push(`smoke fixture build failed: ${build.stderr || build.stdout}`);
+      } else {
+        for (const path of [
+          "dist/index.html",
+          "dist/posts/index.html",
+          "dist/posts/smoke/index.html",
+          "dist/projects/index.html",
+          "dist/profile/index.html",
+          "dist/profile/print/index.html",
+          "dist/profile/ast/index.html",
+          "dist/search/index.html",
+          "dist/rss.xml",
+          "dist/robots.txt",
+        ]) {
+          assert(existsSync(join(smokeDir, path)), `packed consumer build missing ${path}`);
+        }
+        const smokePost = await readFile(join(smokeDir, "dist/posts/smoke/index.html"), "utf8");
+        assert(smokePost.includes("Packed package smoke post"), "packed consumer post route did not render local content");
+        const smokeHome = await readFile(join(smokeDir, "dist/index.html"), "utf8");
+        assert(smokeHome.includes("Smoke site"), "packed consumer home route did not read local TOML config");
       }
     }
   }
@@ -261,4 +282,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("Verified release metadata, license/changelog/docs, package script/bin wiring, npm mature-release gate, npm pack contents, and tarball smoke install.");
+console.log("Verified release metadata, license/changelog/docs, package script/bin wiring, npm mature-release gate, npm pack contents, and an isolated tarball consumer with injected routes.");
