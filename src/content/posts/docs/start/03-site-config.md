@@ -36,6 +36,7 @@ needs to point at a finished custom social image.
 | `[profile.images]` | Default visual treatment for profile images |
 | `[markdown]` | Prose styling presets for links, headings, lists, quotes, tables, and inline code |
 | `[pages.<name>]` | Optional text overrides for inherited page descriptions |
+| `[seo]` | Open Graph locale and optional X/Twitter site attribution |
 | `[verification]` and `[[verification_meta]]` | Search engine and service verification meta tags |
 | `[analytics]` | Optional production-only analytics script |
 | `[head]` | Constrained site-owned meta, link, and external script entries |
@@ -60,6 +61,10 @@ url = "https://site.test"
 lang = "en"
 dir = "ltr"
 timezone = "Europe/Lisbon"
+
+[seo]
+locale = "en_US"
+# twitter_site = "@site_owner"
 
 [brand]
 title = "My site"
@@ -87,8 +92,16 @@ label = "Profile"
 
 Keep the URL set to the deployed origin. The same value is used for canonical
 metadata, RSS, sitemap, robots, social previews, and generated AI indexes.
+Preview deployments keep this configured origin in canonical and Open Graph
+URLs. Set `SITE_URL` only when a build intentionally needs a different origin.
 Use `home_title` only when the homepage heading should be different from the
 site title used by metadata, RSS, and shared layout chrome.
+
+Papyrus derives an Open Graph locale from `lang` when `[seo].locale` is omitted.
+Set `twitter_site` only when the site has an X account; Papyrus adds the leading
+`@` when needed. Generated homepage and post cards are `1200x630` PNG files.
+Custom `ogImage` files should also use PNG or JPEG at those dimensions for the
+broadest crawler compatibility.
 
 ## Source links
 
@@ -147,6 +160,8 @@ also covers Bing and other services:
 ```toml title="papyrus.config.toml"
 [seo]
 google_verification = "google-search-console-token"
+locale = "en_US"
+twitter_site = "@site_owner"
 
 [verification]
 bing = "bing-webmaster-token"

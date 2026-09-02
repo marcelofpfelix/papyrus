@@ -38,6 +38,22 @@ export function withBase(path, base = "") {
   await writeFile(modulePath, transpiled);
   const posts = await import(modulePath);
 
+  const collectionsSource = await readFile("src/utils/collections.ts", "utf8");
+  const collectionsTranspiled = ts.transpileModule(collectionsSource, {
+    compilerOptions: {
+      module: ts.ModuleKind.ES2022,
+      target: ts.ScriptTarget.ES2022,
+      verbatimModuleSyntax: true,
+    },
+  }).outputText
+    .replace('from "./posts"', 'from "./posts.mjs"')
+    .replace('from "./withBase"', 'from "./withBase.mjs"');
+  await mkdir(join(tmp, "node_modules", "smol-toml"), { recursive: true });
+  await writeFile(join(tmp, "node_modules", "smol-toml", "package.json"), '{"type":"module","exports":"./index.mjs"}\n');
+  await writeFile(join(tmp, "node_modules", "smol-toml", "index.mjs"), "export function parse() { return {}; }\n");
+  await writeFile(join(tmp, "collections.mjs"), collectionsTranspiled);
+  const collections = await import(join(tmp, "collections.mjs"));
+
   const nested = {
     id: "voice/ai/agent-stack.md",
     filePath: "src/content/posts/voice/ai/agent-stack.md",
@@ -88,6 +104,10 @@ export function withBase(path, base = "") {
       hidden: true,
     },
   };
+  const namespaced = {
+    ...nested,
+    data: { ...nested.data, slug: "voice/ai/agent-stack" },
+  };
 
   same(posts.folderTags(nested), ["voice", "ai"], "folderTags should derive nested folder tags");
   same(posts.postTags(nested), ["ai", "voice"], "postTags should merge explicit and folder tags without duplicates");
@@ -96,6 +116,9 @@ export function withBase(path, base = "") {
   assert(posts.postHref(nested) === "/posts/stable-agent-stack/", "postHref should use slug under /posts");
   assert(posts.postHref(older) === "/posts/ops/kamailio/", "postHref should preserve folder path fallback when no slug is set");
   assert(posts.postHref(nested, "/notes") === "/notes/stable-agent-stack/", "postHref should support an alternate base path without changing slug policy");
+  assert(collections.collectionPostSlug({ slug: "voice" }, namespaced) === "ai/agent-stack", "collectionPostSlug should strip an exact collection namespace");
+  assert(collections.collectionPostSlug({ slug: "docs" }, nested) === "stable-agent-stack", "collectionPostSlug should preserve an unrelated post slug");
+  assert(collections.collectionPostHref({ slug: "voice" }, namespaced) === "/collections/voice/ai/agent-stack/", "collectionPostHref should use the collection-relative slug");
   assert(posts.pinRank(nested) === 2, "numeric pinned rank should be preserved");
   assert(posts.pinRank(older) === 1, "boolean pinned rank should be 1");
   assert(posts.hasUpdatedDate(nested), "modDatetime on a different day should count as updated");

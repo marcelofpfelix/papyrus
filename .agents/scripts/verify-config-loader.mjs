@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { readFile } from "node:fs/promises";
 import { siteConfig } from "../../scripts/site-config.mjs";
+import { deploymentSiteUrl } from "../../src/astro/site-url.mjs";
 
 const failures = [];
 
@@ -45,6 +46,8 @@ status = "active"
 const parsedOpsConfig = configModule.parsePapyrusConfigToml(`
 [seo]
 google_verification = "google-token"
+locale = "en_US"
+twitter_site = "example"
 
 [verification]
 bing = "bing-token"
@@ -179,6 +182,8 @@ assert(parsedProjectConfig.projects[0]?.title === "Template project", "parsed pr
 assert(parsedProjectConfig.projects[0]?.links?.[0]?.text === "site-owner/template", "parsed project link text should come from TOML");
 assert(parsedProjectConfig.projects[0]?.pinned === true, "parsed project pinned flag should come from TOML");
 assert(parsedOpsConfig.verification.some(item => item.name === "google-site-verification" && item.content === "google-token"), "Google verification shorthand should become meta config");
+assert(parsedOpsConfig.ogLocale === "en_US", "Open Graph locale should parse from [seo].locale");
+assert(parsedOpsConfig.twitterSite === "@example", "Twitter site should parse and normalize to an @ handle");
 assert(parsedOpsConfig.verification.some(item => item.name === "msvalidate.01" && item.content === "bing-token"), "Bing verification should become msvalidate.01");
 assert(parsedOpsConfig.verification.some(item => item.name === "yandex-site-verification" && item.content === "yandex-token"), "Yandex verification should become provider meta");
 assert(parsedOpsConfig.verification.some(item => item.name === "p:domain_verify" && item.content === "pinterest-token"), "generic verification_meta should be parsed");
@@ -216,6 +221,11 @@ assert(loaded.title === parsed.title && loaded.nav.length === parsed.nav.length,
 assert(loaded.footerLinks.length === parsed.footerLinks.length, "loadPapyrusConfig should load footer links from papyrus.config.toml");
 assert(scriptConfig.title === parsed.title && scriptConfig.defaultThemeProfile === parsed.defaultThemeProfile, "script siteConfig should prefer papyrus.config.toml");
 assert(baseLayout.includes("configuredSite.footerLinks"), "base layout should use configured footer links when no page override is provided");
+assert(baseLayout.includes('property="og:image:width"') && baseLayout.includes('property="og:image:height"'), "base layout should emit social image dimensions");
+assert(baseLayout.includes('property="og:locale"'), "base layout should emit an Open Graph locale");
+assert(baseLayout.includes('configuredSite.lang ?? "en"'), "base layout should default the document and Open Graph language for minimal consumers");
+assert(baseLayout.includes('name="twitter:site"'), "base layout should support configured Twitter attribution");
+assert(baseLayout.includes('getAssetPath("/favicon-32x32.png")'), "base layout should reference the generated PNG favicon");
 assert(postLayout.includes("PapyrusGiscusComments"), "post layout should render configured Giscus comments");
 assert(postLayout.includes("configuredSite.comments"), "post layout should read comments from site config");
 assert(giscusComponent.includes("data-loading={loading}"), "Giscus component should support lazy loading config");
@@ -243,6 +253,23 @@ assert(demoNav.includes("../../papyrus.config.toml?raw"), "demo nav should load 
 assert(demoNav.includes("parsePapyrusConfigToml"), "demo nav should parse TOML through the package loader");
 assert(demoSite.includes("demoPapyrusConfig.postCard"), "demo site post-card defaults should come from parsed TOML");
 assert(siteConfigSource.includes("papyrus.config.toml"), "site-config script should load papyrus.config.toml");
+
+const originalSiteUrl = process.env.SITE_URL;
+const originalPagesUrl = process.env.CF_PAGES_URL;
+const originalPagesBranch = process.env.CF_PAGES_BRANCH;
+try {
+  delete process.env.SITE_URL;
+  process.env.CF_PAGES_URL = "https://preview.pages.dev";
+  process.env.CF_PAGES_BRANCH = "feature";
+  assert(deploymentSiteUrl("https://site.test") === "https://site.test", "configured site URL should remain canonical in preview builds");
+  assert(deploymentSiteUrl() === "https://preview.pages.dev", "Cloudflare Pages URL should be the fallback when no stable site URL exists");
+  process.env.SITE_URL = "https://override.test";
+  assert(deploymentSiteUrl("https://site.test") === "https://override.test", "SITE_URL should override configured and preview URLs");
+} finally {
+  if (originalSiteUrl === undefined) delete process.env.SITE_URL; else process.env.SITE_URL = originalSiteUrl;
+  if (originalPagesUrl === undefined) delete process.env.CF_PAGES_URL; else process.env.CF_PAGES_URL = originalPagesUrl;
+  if (originalPagesBranch === undefined) delete process.env.CF_PAGES_BRANCH; else process.env.CF_PAGES_BRANCH = originalPagesBranch;
+}
 assert(!siteConfigSource.includes("src/site.config.ts"), "site-config script should not keep TS config compatibility");
 
 for (const phrase of [

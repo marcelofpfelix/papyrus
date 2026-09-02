@@ -1,7 +1,6 @@
 import { defineConfig, svgoOptimizer } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import papyrus from "./src/integration";
-import kamailioLang from "./src/shiki/langs/kamailio.mjs";
 import { papyrusMarkdown } from "./src/markdown/config.mjs";
 import {
   papyrusBasePath,
@@ -29,12 +28,5 @@ export default defineConfig({
       filter: createPapyrusSitemapFilter(),
     }),
   ],
-  markdown: papyrusMarkdown({
-    shikiConfig: {
-      langs: [kamailioLang],
-      langAlias: {
-        kam: "kamailio",
-      },
-    },
-  }),
+  markdown: papyrusMarkdown(),
 });

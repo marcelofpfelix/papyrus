@@ -159,6 +159,8 @@ export type PapyrusSiteConfig = {
   lang: string;
   dir: "ltr" | "rtl" | "auto";
   timezone?: string;
+  ogLocale?: string;
+  twitterSite?: string;
   googleVerification?: string;
   verification: PapyrusVerificationConfig[];
   analytics: PapyrusAnalyticsConfig;
@@ -299,6 +301,11 @@ function asRecord(value: unknown): Record<string, unknown> {
 
 function asString(value: unknown): string | undefined {
   return typeof value === "string" && value.trim() ? value : undefined;
+}
+
+function twitterHandle(value: unknown): string | undefined {
+  const handle = asString(value)?.replace(/^@+/, "");
+  return handle ? `@${handle}` : undefined;
 }
 
 function asBoolean(value: unknown): boolean | undefined {
@@ -601,6 +608,7 @@ export function resolvePapyrusConfig(config: PapyrusConfigInput = {}): PapyrusSi
   return {
     ...defaultConfig,
     ...config,
+    twitterSite: twitterHandle(config.twitterSite),
     nav: config.nav ?? defaultConfig.nav,
     footerLinks: config.footerLinks ?? defaultConfig.footerLinks,
     socialLinks: config.socialLinks ?? defaultConfig.socialLinks,
@@ -676,6 +684,8 @@ export function parsePapyrusConfigToml(source: string): PapyrusSiteConfig {
     lang: asString(site.lang ?? parsed.lang),
     dir: (asString(site.dir ?? parsed.dir) as PapyrusSiteConfig["dir"] | undefined),
     timezone: asString(site.timezone ?? parsed.timezone),
+    ogLocale: asString(seo.locale ?? seo.ogLocale ?? seo.og_locale ?? parsed.ogLocale ?? parsed.og_locale),
+    twitterSite: twitterHandle(seo.twitterSite ?? seo.twitter_site ?? parsed.twitterSite ?? parsed.twitter_site),
     googleVerification: asString(seo.googleVerification ?? seo.google_verification ?? parsed.googleVerification ?? parsed.google_verification),
     verification: [
       ...asVerificationConfig(parsed.verification_meta ?? parsed.verificationMeta),

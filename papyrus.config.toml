@@ -6,6 +6,9 @@ lang = "en"
 dir = "ltr"
 timezone = "Europe/Lisbon"
 
+[seo]
+locale = "en_US"
+
 [brand]
 title = "papyrus"
 mark = "twinkle"
@@ -29,7 +32,6 @@ inline_code_style = "panel"
 
 [source]
 repo = "marcelofpfelix/papyrus"
-branch = "0.2.2"
 
 [comments]
 enabled = true

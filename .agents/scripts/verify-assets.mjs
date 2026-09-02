@@ -11,6 +11,7 @@ const publicDir = resolve("public");
 const logoPath = join(publicDir, "logo.svg");
 const faviconPath = join(publicDir, "favicon.svg");
 const manifestPath = join(publicDir, "site.webmanifest");
+const favicon32Path = join(publicDir, "favicon-32x32.png");
 const appleTouchPath = join(publicDir, "apple-touch-icon.png");
 const icon192Path = join(publicDir, "icon-192.png");
 const icon512Path = join(publicDir, "icon-512.png");
@@ -48,7 +49,7 @@ try {
   await execFileAsync("node", ["scripts/create-mobile-icons.mjs", "~ $", generatedTerminalIconsDir], { cwd: root });
   await execFileAsync("node", ["scripts/create-webmanifest.mjs", "papyrus", generatedManifest, "/logo.svg"], { cwd: root });
 
-  const [logo, favicon, packageShape, markdownCover, expectedLogo, terminalLogo, manifestText, expectedManifestText, appleTouch, icon192, icon512, expectedAppleTouch, expectedIcon192, expectedIcon512, terminalIcon192, baseLayout, logoScript, mobileIconScript] = await Promise.all([
+  const [logo, favicon, packageShape, markdownCover, expectedLogo, terminalLogo, manifestText, expectedManifestText, favicon32, appleTouch, icon192, icon512, expectedFavicon32, expectedAppleTouch, expectedIcon192, expectedIcon512, terminalIcon192, baseLayout, logoScript, mobileIconScript] = await Promise.all([
     readFile(logoPath, "utf8"),
     readFile(faviconPath, "utf8"),
     readFile(packageShapePath, "utf8"),
@@ -57,9 +58,11 @@ try {
     readFile(generatedTerminalLogo, "utf8"),
     readFile(manifestPath, "utf8"),
     readFile(generatedManifest, "utf8"),
+    readFile(favicon32Path),
     readFile(appleTouchPath),
     readFile(icon192Path),
     readFile(icon512Path),
+    readFile(join(generatedIconsDir, "favicon-32x32.png")),
     readFile(join(generatedIconsDir, "apple-touch-icon.png")),
     readFile(join(generatedIconsDir, "icon-192.png")),
     readFile(join(generatedIconsDir, "icon-512.png")),
@@ -88,10 +91,12 @@ try {
   assert(terminalLogo.includes("fill: var(--papyrus-fg, #654735)"), "terminal override logo foreground does not use the default theme foreground fallback");
   assert(terminalLogo.includes("@keyframes blink"), "terminal override logo is missing cursor blink CSS");
   assert(terminalLogo.includes("prefers-reduced-motion: reduce"), "terminal override logo is missing reduced-motion CSS");
+  assert(favicon32.equals(expectedFavicon32), "public/favicon-32x32.png does not match create-mobile-icons output");
   assert(appleTouch.equals(expectedAppleTouch), "public/apple-touch-icon.png does not match create-mobile-icons output");
   assert(icon192.equals(expectedIcon192), "public/icon-192.png does not match create-mobile-icons output");
   assert(icon512.equals(expectedIcon512), "public/icon-512.png does not match create-mobile-icons output");
   assert(!icon192.equals(terminalIcon192), "default Twinkling mobile icon should differ from terminal override icon");
+  assert(JSON.stringify(pngSize(favicon32)) === JSON.stringify({ width: 32, height: 32 }), "favicon-32x32.png is not 32x32");
   assert(JSON.stringify(pngSize(appleTouch)) === JSON.stringify({ width: 180, height: 180 }), "apple-touch-icon.png is not 180x180");
   assert(JSON.stringify(pngSize(icon192)) === JSON.stringify({ width: 192, height: 192 }), "icon-192.png is not 192x192");
   assert(JSON.stringify(pngSize(icon512)) === JSON.stringify({ width: 512, height: 512 }), "icon-512.png is not 512x512");
@@ -106,10 +111,11 @@ try {
   assert(manifest.icons.some(icon => String(icon.purpose ?? "").includes("maskable")), "manifest has no maskable icon");
   assert(manifest.display === "standalone", "manifest display is not standalone");
   assert(baseLayout.includes('rel="apple-touch-icon"') && baseLayout.includes('getAssetPath("/apple-touch-icon.png")'), "base layout does not reference generated apple-touch-icon.png");
+  assert(baseLayout.includes('rel="icon"') && baseLayout.includes('getAssetPath("/favicon-32x32.png")'), "base layout does not reference generated favicon-32x32.png");
   assert(logoScript.includes("themeTokens"), "create-logo-svg should read theme tokens");
   assert(mobileIconScript.includes("themeTokens") && mobileIconScript.includes("hexToRgba"), "create-mobile-icons should read theme tokens and convert them to PNG colors");
 
-  console.log("Verified theme-colored Twinkling logo.svg/favicon.svg, mobile PNG icons, terminal override generation, apple-touch icon link, and site.webmanifest generation.");
+  console.log("Verified theme-colored Twinkling logo.svg/favicon.svg, PNG favicon/mobile icons, terminal override generation, and site.webmanifest generation.");
 } finally {
   await rm(tmp, { recursive: true, force: true });
 }

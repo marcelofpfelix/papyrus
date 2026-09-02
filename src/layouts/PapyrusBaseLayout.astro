@@ -25,8 +25,14 @@ interface Props {
   defaultThemeProfile?: string;
   defaultFontProfile?: string;
   canonicalURL?: string;
+  ogType?: "website" | "article";
   ogImage?: string;
   ogImageAlt?: string;
+  ogImageType?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
+  ogLocale?: string;
+  twitterSite?: string;
   robots?: string;
   googleVerification?: string;
   verification?: PapyrusVerificationConfig[];
@@ -54,8 +60,14 @@ const {
   defaultThemeProfile = "gruvbox",
   defaultFontProfile = "readable",
   canonicalURL,
+  ogType = "website",
   ogImage,
   ogImageAlt,
+  ogImageType,
+  ogImageWidth = 1200,
+  ogImageHeight = 630,
+  ogLocale,
+  twitterSite,
   robots,
   googleVerification,
   verification,
@@ -72,6 +84,27 @@ const {
 } = Astro.props;
 
 const configuredSite = await loadPapyrusConfig();
+function localeForOpenGraph(configuredLocale: string | undefined, language: string): string {
+  if (configuredLocale) return configuredLocale.replace("-", "_");
+  try {
+    const locale = new Intl.Locale(language).maximize();
+    return locale.region ? `${locale.language}_${locale.region}` : locale.language;
+  } catch {
+    return language.replace("-", "_");
+  }
+}
+
+function contentTypeForImage(url: string | undefined): string | undefined {
+  if (!url) return undefined;
+  const pathname = new URL(url).pathname.toLowerCase();
+  if (pathname.endsWith(".png")) return "image/png";
+  if (pathname.endsWith(".jpg") || pathname.endsWith(".jpeg")) return "image/jpeg";
+  if (pathname.endsWith(".webp")) return "image/webp";
+  if (pathname.endsWith(".gif")) return "image/gif";
+  if (pathname.endsWith(".svg")) return "image/svg+xml";
+  return undefined;
+}
+
 const pageTitle = title === siteTitle ? title : `${title} | ${siteTitle}`;
 const resolvedFeatures = resolvePapyrusFeatures({
   poweredBy,
@@ -81,11 +114,15 @@ const resolvedSearchHref = resolvedFeatures.search ? searchHref : undefined;
 const resolvedRssHref = resolvedFeatures.rss ? rssHref : undefined;
 const showHeader = resolvedFeatures.header;
 const showFooter = resolvedFeatures.footer;
+const resolvedLanguage = configuredSite.lang ?? "en";
 const resolvedBrandMark = brandMark ?? (headerTitle ? "terminal" : "twinkle");
 const resolvedBrandTitle = brandTitle ?? headerTitle ?? siteTitle;
 const resolvedShowBrandTitle = showBrandTitle ?? !headerTitle;
 const resolvedCanonicalURL = canonicalURL ? new URL(withBase(canonicalURL), Astro.site ?? Astro.url).href : undefined;
 const resolvedOgImage = ogImage ? new URL(getAssetPath(ogImage), Astro.site ?? Astro.url).href : undefined;
+const resolvedOgImageType = ogImageType ?? contentTypeForImage(resolvedOgImage);
+const resolvedOgLocale = localeForOpenGraph(ogLocale ?? configuredSite.ogLocale, resolvedLanguage);
+const resolvedTwitterSite = twitterSite ?? configuredSite.twitterSite;
 const resolvedPageUrl = resolvedCanonicalURL ?? new URL(withBase(stripBase(Astro.url.pathname)), Astro.site ?? Astro.url).href;
 const resolvedNav = nav.map(item => ({ ...item, href: withBase(item.href) }));
 const resolvedFooterLinks = (footerLinks ?? configuredSite.footerLinks).map(item => ({ ...item, href: withBase(item.href) }));
@@ -109,7 +146,7 @@ const plausibleDomain = resolvedAnalytics.domain ?? (Astro.site ?? Astro.url).ho
 
 <!doctype html>
 <html
-  lang="en"
+  lang={resolvedLanguage}
   data-papyrus-markdown-link-style={resolvedMarkdown.linkStyle}
   data-papyrus-markdown-heading-style={resolvedMarkdown.headingStyle}
   data-papyrus-markdown-marker-style={resolvedMarkdown.markerStyle}
@@ -152,20 +189,26 @@ const plausibleDomain = resolvedAnalytics.domain ?? (Astro.site ?? Astro.url).ho
     {resolvedHead.scripts.map(item => <script is:inline {...item}></script>)}
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#FCFCFD" />
+    <link rel="icon" href={getAssetPath("/favicon-32x32.png")} type="image/png" sizes="32x32" />
     <link rel="icon" href={getAssetPath("/favicon.svg")} type="image/svg+xml" />
     <link rel="manifest" href={getAssetPath("/site.webmanifest")} />
     <link rel="apple-touch-icon" href={getAssetPath("/apple-touch-icon.png")} />
     {resolvedCanonicalURL && <link rel="canonical" href={resolvedCanonicalURL} />}
     {resolvedRssHref && <link rel="alternate" type="application/rss+xml" title={`${siteTitle} RSS`} href={new URL(withBase(resolvedRssHref), Astro.site ?? Astro.url).href} />}
     <meta property="og:title" content={pageTitle} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={siteTitle} />
     <meta property="og:url" content={resolvedPageUrl} />
+    {resolvedOgLocale && <meta property="og:locale" content={resolvedOgLocale} />}
     {description && <meta property="og:description" content={description} />}
     {resolvedOgImage && <meta property="og:image" content={resolvedOgImage} />}
+    {resolvedOgImage && resolvedOgImageType && <meta property="og:image:type" content={resolvedOgImageType} />}
+    {resolvedOgImage && <meta property="og:image:width" content={String(ogImageWidth)} />}
+    {resolvedOgImage && <meta property="og:image:height" content={String(ogImageHeight)} />}
     {resolvedOgImage && ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
     <meta name="twitter:card" content={resolvedOgImage ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={pageTitle} />
+    {resolvedTwitterSite && <meta name="twitter:site" content={resolvedTwitterSite} />}
     {description && <meta name="twitter:description" content={description} />}
     {resolvedOgImage && <meta name="twitter:image" content={resolvedOgImage} />}
     {resolvedOgImage && ogImageAlt && <meta name="twitter:image:alt" content={ogImageAlt} />}

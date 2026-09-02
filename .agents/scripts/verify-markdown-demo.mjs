@@ -41,6 +41,9 @@ includes(markdownConfig, "rehype-callouts", "AstroPapyrus-style callouts depende
 includes(markdownConfig, "remarkMermaidBlocks", "Mermaid fence remark plugin");
 includes(markdownConfig, "shikiConfig", "Astro Shiki config");
 includes(markdownConfig, 'theme: "css-variables"', "Pure-style css-variables Shiki theme");
+includes(markdownConfig, 'import kamailioLang from "../shiki/langs/kamailio.mjs"', "default Kamailio Shiki language import");
+includes(markdownConfig, "langs: [kamailioLang, ...(shikiConfig.langs ?? [])]", "default and consumer Shiki language merge");
+includes(markdownConfig, 'kam: "kamailio"', "short Kamailio language alias");
 includes(markdownConfig, "transformerNotationDiff()", "Pure-style Shiki diff transformer");
 includes(markdownConfig, "transformerNotationHighlight()", "Pure-style Shiki highlight transformer");
 includes(markdownConfig, "transformerRemoveNotationEscape()", "Pure-style Shiki escape transformer");

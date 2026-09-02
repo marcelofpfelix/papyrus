@@ -178,7 +178,7 @@ function icon(name: string) {
 }
 ---
 
-<PapyrusBaseLayout title={title} description={description} siteTitle={siteTitle} headerTitle={headerTitle} brandTitle={brandTitle} brandMark={brandMark} brandAriaLabel={brandAriaLabel} showBrandTitle={showBrandTitle} defaultThemeProfile={defaultThemeProfile} defaultFontProfile={defaultFontProfile} canonicalURL={canonicalUrl} ogImage={ogImage} ogImageAlt={ogImageAlt ?? title} robots={robots} googleVerification={googleVerification} nav={nav} socialLinks={socialLinks} features={features}>
+<PapyrusBaseLayout title={title} description={description} siteTitle={siteTitle} headerTitle={headerTitle} brandTitle={brandTitle} brandMark={brandMark} brandAriaLabel={brandAriaLabel} showBrandTitle={showBrandTitle} defaultThemeProfile={defaultThemeProfile} defaultFontProfile={defaultFontProfile} canonicalURL={canonicalUrl} ogType="article" ogImage={ogImage} ogImageAlt={ogImageAlt ?? title} robots={robots} googleVerification={googleVerification} nav={nav} socialLinks={socialLinks} features={features}>
   {resolvedFeatures.aiMetadata && (
   <PapyrusAiMetadata
       id={canonicalUrl ? `${canonicalUrl.replace(/#.*$/, "")}#post` : undefined}

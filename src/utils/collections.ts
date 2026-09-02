@@ -47,7 +47,13 @@ export function collectionSectionId(name: string): string {
 }
 
 export function collectionPostHref(collection: Pick<PapyrusCollection, "slug">, post: PapyrusPostEntry, basePath = `/collections/${collection.slug}`): string {
-  return withBase(`${basePath}/${postSlug(post)}/`);
+  return withBase(`${basePath}/${collectionPostSlug(collection, post)}/`);
+}
+
+export function collectionPostSlug(collection: Pick<PapyrusCollection, "slug">, post: PapyrusPostEntry): string {
+  const slug = postSlug(post);
+  const prefix = `${collection.slug}/`;
+  return slug.startsWith(prefix) ? slug.slice(prefix.length) : slug;
 }
 
 export function collectionDir(collection: Pick<PapyrusCollection, "path" | "slug">): string {

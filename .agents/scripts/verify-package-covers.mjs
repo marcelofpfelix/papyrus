@@ -13,6 +13,12 @@ function fail(message) {
   failures.push(message);
 }
 
+function pngSize(buffer) {
+  const signature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+  if (!buffer.subarray(0, 8).equals(signature)) return undefined;
+  return { width: buffer.readUInt32BE(16), height: buffer.readUInt32BE(20) };
+}
+
 function requirePath(label, relativePath) {
   if (!existsSync(join(root, relativePath))) fail(`${label} points to missing path: ${relativePath}`);
 }
@@ -123,8 +129,9 @@ try {
   const socialOutDir = join(tmp, "social");
   const generatedCover = join(coverTestDir, "cover.svg");
   const generatedCardCover = join(tmp, "card-cover.svg");
-  const generatedSocialHome = join(socialOutDir, "home.svg");
-  const generatedSocialPost = join(socialOutDir, "posts", "auto-social.svg");
+  const generatedSocialHome = join(socialOutDir, "home.png");
+  const generatedSocialPost = join(socialOutDir, "posts", "auto-social.png");
+  const generatedDraftSocialPost = join(socialOutDir, "posts", "draft-social.png");
   await writeFile(
     sourcePost,
     `---
@@ -147,6 +154,20 @@ cover: /images/package-cover.jpg
 `,
     "utf8"
   );
+  await writeFile(
+    join(socialPostsDir, "draft-social.md"),
+    `---
+title: "Draft social card"
+description: "Draft metadata must not become a public image"
+date: 2026-09-02
+draft: true
+---
+`,
+    "utf8"
+  );
+  await mkdir(join(socialOutDir, "posts"), { recursive: true });
+  await writeFile(generatedDraftSocialPost, "stale draft image", "utf8");
+  await writeFile(generatedDraftSocialPost.replace(/\.png$/, ".svg"), "stale draft image", "utf8");
 
   const coverResult = spawnSync(
     process.execPath,
@@ -225,18 +246,15 @@ cover: /images/package-cover.jpg
   if (socialResult.status !== 0) {
     fail(`generate-social-images failed: ${socialResult.stderr || socialResult.stdout}`);
   } else {
-    const homeSocial = await readFile(generatedSocialHome, "utf8");
-    const postSocial = await readFile(generatedSocialPost, "utf8");
-    for (const [label, svg] of [["home", homeSocial], ["post", postSocial]]) {
-      if (!svg.includes('viewBox="0 0 1200 630"')) fail(`${label} social SVG does not use 1200x630 viewBox`);
-      if (!svg.includes("var(--papyrus-bg")) fail(`${label} social SVG does not use theme background token`);
-      if (!svg.includes("var(--papyrus-accent")) fail(`${label} social SVG does not use accent token`);
+    const homeSocial = await readFile(generatedSocialHome);
+    const postSocial = await readFile(generatedSocialPost);
+    for (const [label, png] of [["home", homeSocial], ["post", postSocial]]) {
+      const size = pngSize(png);
+      if (!size || size.width !== 1200 || size.height !== 630) fail(`${label} social card is not a 1200x630 PNG`);
     }
-    if (!postSocial.includes("Auto social card") || !postSocial.includes("Post-specific generated sharing image")) {
-      fail("post social SVG should use post title and description");
-    }
-    if (!postSocial.includes('href="/images/package-cover.jpg"')) {
-      fail("post social SVG should include the post cover as a generated-card source image");
+    if (homeSocial.equals(postSocial)) fail("post social card should differ from the homepage card");
+    if (existsSync(generatedDraftSocialPost) || existsSync(generatedDraftSocialPost.replace(/\.png$/, ".svg"))) {
+      fail("draft social cards and stale draft social images should not be generated");
     }
   }
 
@@ -278,4 +296,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("Verified package exports, bin targets, Pure dependency boundary, and generated cover/card-cover/social SVGs.");
+console.log("Verified package exports, bin targets, Pure dependency boundary, and generated cover/card-cover/social images.");

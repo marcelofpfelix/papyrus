@@ -4,6 +4,7 @@ import remarkArtifactLinks from "./remark-artifact-links.mjs";
 import remarkMermaidBlocks from "./remark-mermaid-blocks.mjs";
 import rehypePapyrusCalloutIcons from "./rehype-callout-icons.mjs";
 import rehypeTaskListLabels from "./rehype-task-list-labels.mjs";
+import kamailioLang from "../shiki/langs/kamailio.mjs";
 import {
   addCollapse,
   addCopyButton,
@@ -36,6 +37,11 @@ export function papyrusMarkdown(options = {}) {
     shikiConfig: {
       theme: "css-variables",
       ...shikiConfig,
+      langs: [kamailioLang, ...(shikiConfig.langs ?? [])],
+      langAlias: {
+        kam: "kamailio",
+        ...(shikiConfig.langAlias ?? {}),
+      },
       transformers: shikiConfig.transformers ?? [
         transformerNotationDiff(),
         transformerNotationHighlight(),

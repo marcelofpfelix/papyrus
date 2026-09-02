@@ -2,9 +2,9 @@
 import { getCollection, render } from "astro:content";
 import { PapyrusCollectionIndex } from "../../../../components";
 import PapyrusPostLayout from "../../../../layouts/PapyrusPostLayout.astro";
-import { collectionOrderedPosts, collectionTocLinks, getPostCollections } from "../../../../utils/collections";
+import { collectionOrderedPosts, collectionPostSlug, collectionTocLinks, getPostCollections } from "../../../../utils/collections";
 import { papyrusSocialImageForPost } from "../../../../utils/social-images";
-import { postDate, postHref, postSlug, postTags, readingTime } from "../../../../utils/posts";
+import { postDate, postHref, postSlug, postTags, readingTime, type PapyrusPostEntry } from "../../../../utils/posts";
 import { getTemplateSite } from "../../../site";
 
 export async function getStaticPaths() {
@@ -13,21 +13,25 @@ export async function getStaticPaths() {
   const collections = await getPostCollections("src/content/posts", allPosts);
 
   return collections.flatMap(collection => collectionOrderedPosts(collection).flatMap((collectionPost, index, orderedPosts) => {
-    const slug = postSlug(collectionPost);
-    const post = postsBySlug.get(slug);
+    const postSlugValue = postSlug(collectionPost);
+    const post = postsBySlug.get(postSlugValue);
     if (!post) return [];
+
+    const adjacentPost = (entry: PapyrusPostEntry | undefined) => entry
+      ? { ...entry, data: { ...entry.data, slug: collectionPostSlug(collection, entry) } }
+      : undefined;
 
     return {
       params: {
         collection: collection.slug,
-        slug,
+        slug: collectionPostSlug(collection, post),
       },
       props: {
         post,
         collection,
         adjacent: {
-          previous: index > 0 ? orderedPosts[index - 1] : undefined,
-          next: index < orderedPosts.length - 1 ? orderedPosts[index + 1] : undefined,
+          previous: adjacentPost(index > 0 ? orderedPosts[index - 1] : undefined),
+          next: adjacentPost(index < orderedPosts.length - 1 ? orderedPosts[index + 1] : undefined),
         },
       },
     };

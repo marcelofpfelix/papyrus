@@ -137,6 +137,8 @@ export type PapyrusSiteConfig = {
     lang: string;
     dir: "ltr" | "rtl" | "auto";
     timezone?: string;
+    ogLocale?: string;
+    twitterSite?: string;
     googleVerification?: string;
     verification: PapyrusVerificationConfig[];
     analytics: PapyrusAnalyticsConfig;

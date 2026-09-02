@@ -38,6 +38,10 @@ const forbidden = [
   'data-gh-forks>?',
 ];
 
+function isPng(buffer) {
+  return buffer.subarray(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+}
+
 function assert(condition, message) {
   if (!condition) throw new Error(message);
 }
@@ -116,7 +120,10 @@ const homeHtml = await readFile("dist/index.html", "utf8");
 assert(homeHtml.includes("/collections/docs/") && homeHtml.includes("/posts/") && homeHtml.includes("/projects/"), "home page should link core public surfaces");
 assert(homeHtml.includes("Papyrus theme") && homeHtml.includes("Papyrus template"), "home page should show current Papyrus projects");
 assert(homeHtml.includes('name="twitter:card" content="summary_large_image"'), "home page should use a large social card");
-assert(homeHtml.includes('property="og:image" content="https://papyrus.marcelofelix.com/generated/social/home.svg"'), "home page should use the generated site social image");
+assert(homeHtml.includes('property="og:image" content="https://papyrus.marcelofelix.com/generated/social/home.png"'), "home page should use the generated PNG site social image");
+assert(homeHtml.includes('property="og:image:type" content="image/png"'), "home page should declare the social image type");
+assert(homeHtml.includes('property="og:image:width" content="1200"') && homeHtml.includes('property="og:image:height" content="630"'), "home page should declare social image dimensions");
+assert(homeHtml.includes('property="og:locale" content="en_US"'), "home page should declare its Open Graph locale");
 assert(homeHtml.includes('name="twitter:image:alt" content="papyrus"'), "home page social card should have alt text");
 
 const docsIndexHtml = await readFile("dist/collections/docs/index.html", "utf8");
@@ -152,14 +159,15 @@ const installPostHtml = await readFile("dist/posts/install-configure-papyrus/ind
 assert(installPostHtml.includes("email_user") && installPostHtml.includes("email_domain"), "install guide should document supported split email TOML fields");
 assert(llmsFull.includes("minimumReleaseAge"), "public docs should document the pnpm mature-release gate");
 assert(installPostHtml.includes('name="twitter:card" content="summary_large_image"'), "cover post should use a large social card");
-assert(installPostHtml.includes('property="og:image" content="https://papyrus.marcelofelix.com/generated/social/posts/install-configure-papyrus.svg"'), "cover post should use its generated post social image");
+assert(installPostHtml.includes('property="og:type" content="article"'), "post pages should use the article Open Graph type");
+assert(installPostHtml.includes('property="og:image" content="https://papyrus.marcelofelix.com/generated/social/posts/install-configure-papyrus.png"'), "cover post should use its generated PNG post social image");
 
 const noCoverPostHtml = await readFile("dist/posts/hidden-post-demo/index.html", "utf8");
 assert(noCoverPostHtml.includes('name="twitter:card" content="summary_large_image"'), "no-cover post should still use a large social card");
-assert(noCoverPostHtml.includes('property="og:image" content="https://papyrus.marcelofelix.com/generated/social/posts/hidden-post-demo.svg"'), "no-cover post should use its generated post social image");
+assert(noCoverPostHtml.includes('property="og:image" content="https://papyrus.marcelofelix.com/generated/social/posts/hidden-post-demo.png"'), "no-cover post should use its generated PNG post social image");
 
-const imageEffectsSocial = await readFile("public/generated/social/posts/image-effects.svg", "utf8");
-assert(imageEffectsSocial.includes('clip-path="url(#source-image-panel)"') && imageEffectsSocial.includes('href="data:image/'), "cover posts should embed the cover inside the generated social image");
+const imageEffectsSocial = await readFile("public/generated/social/posts/image-effects.png");
+assert(isPng(imageEffectsSocial), "cover posts should generate a PNG social image");
 
 const featuresHtml = await readFile("dist/collections/docs/features/index.html", "utf8");
 for (const phrase of ["SEO and social metadata", "Base path deploys", "Search, tags, sitemap, and robots", "Plugin contract"]) {

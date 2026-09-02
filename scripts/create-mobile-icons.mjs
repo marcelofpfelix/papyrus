@@ -200,6 +200,7 @@ function pngFor(size) {
 
 await mkdir(targetDir, { recursive: true });
 for (const [fileName, size] of Object.entries({
+  "favicon-32x32.png": 32,
   "apple-touch-icon.png": 180,
   "icon-192.png": 192,
   "icon-512.png": 512,

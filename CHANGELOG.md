@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.2.4
+
+- Generate `1200x630` PNG social cards with explicit Open Graph image metadata
+  for more reliable social crawler support.
+- Keep canonical and social URLs on the configured production origin during
+  preview builds.
+- Add configurable Open Graph locale and X/Twitter attribution metadata, plus
+  a generated 32px PNG favicon for search crawlers; minimal consumers default
+  to English when no language is configured.
+- Remove generated social cards when posts are drafts so unpublished content
+  does not leave a public preview asset behind.
+- Register the bundled Kamailio syntax definition and `kam` alias through the
+  default Markdown configuration inherited by consumer sites.
+- Keep collection post URLs relative to their collection instead of repeating
+  the collection slug.
+
 ## 0.2.3
 
 - Compile package runtime entry points and verify the packed package in an

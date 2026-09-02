@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, rm } from "node:fs/promises";
 import { dirname, extname, join, relative, resolve, sep } from "node:path";
+import sharp from "sharp";
 import { configuredBrand, siteConfig } from "./site-config.mjs";
 import { themeTokens } from "./theme-colors.mjs";
 
@@ -24,6 +25,10 @@ function frontmatterBlock(text) {
 function frontmatterValue(text, key) {
   const match = text.match(new RegExp(`^${key}:\\s*["']?(.+?)["']?\\s*$`, "m"));
   return match?.[1]?.trim();
+}
+
+function frontmatterBoolean(text, key) {
+  return frontmatterValue(text, key)?.toLowerCase() === "true";
 }
 
 function wrapWords(value, max = 30, limit = 3) {
@@ -144,16 +149,16 @@ function socialSvg({ title, description, brandTitle, brandMark, label, tokens, s
     .map((line, index) => `<text x="72" y="${472 + index * 38}" class="desc">${escapeXml(line)}</text>`)
     .join("\n  ");
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="${escapeXml(title)}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="${escapeXml(title)}">
   <style>
-    rect.bg { fill: var(--papyrus-bg, ${tokens["--papyrus-bg"]}); }
-    text { fill: var(--papyrus-fg, ${tokens["--papyrus-fg"]}); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .brand { fill: var(--papyrus-accent, ${tokens["--papyrus-accent"]}); font-size: 38px; font-weight: 700; }
-    .brand-mark { fill: var(--papyrus-accent, ${tokens["--papyrus-accent"]}); }
+    rect.bg { fill: ${tokens["--papyrus-bg"]}; }
+    text { fill: ${tokens["--papyrus-fg"]}; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .brand { fill: ${tokens["--papyrus-accent"]}; font-size: 38px; font-weight: 700; }
+    .brand-mark { fill: ${tokens["--papyrus-accent"]}; }
     .title { font-size: 62px; font-weight: 800; letter-spacing: 0; }
-    .desc { fill: var(--papyrus-muted, ${tokens["--papyrus-muted"]}); font-size: 30px; }
-    .label { fill: var(--papyrus-muted, ${tokens["--papyrus-muted"]}); font-size: 24px; }
-    .fade { fill: var(--papyrus-bg, ${tokens["--papyrus-bg"]}); opacity: .92; }
+    .desc { fill: ${tokens["--papyrus-muted"]}; font-size: 30px; }
+    .label { fill: ${tokens["--papyrus-muted"]}; font-size: 24px; }
+    .fade { fill: ${tokens["--papyrus-bg"]}; opacity: .92; }
   </style>
   <rect class="bg" width="1200" height="630" rx="0"/>
   ${sourceImageSvg(sourceImage)}
@@ -163,6 +168,12 @@ function socialSvg({ title, description, brandTitle, brandMark, label, tokens, s
   <text x="72" y="582" class="label">${escapeXml(label)}</text>
 </svg>
 `;
+}
+
+async function writeSocialPng(output, svg) {
+  await mkdir(dirname(output), { recursive: true });
+  await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(output);
+  await rm(output.replace(/\.png$/i, ".svg"), { force: true });
 }
 
 export async function generateSocialImages(options = {}) {
@@ -176,9 +187,8 @@ export async function generateSocialImages(options = {}) {
   const siteDescription = config.description ?? "Personal site";
   const generated = [];
 
-  const homeOutput = join(outputDir, "home.svg");
-  await mkdir(dirname(homeOutput), { recursive: true });
-  await writeFile(homeOutput, socialSvg({
+  const homeOutput = join(outputDir, "home.png");
+  await writeSocialPng(homeOutput, socialSvg({
     title: siteTitle,
     description: siteDescription,
     brandTitle: brand.title,
@@ -191,15 +201,20 @@ export async function generateSocialImages(options = {}) {
   for (const file of await walkMarkdown(postsDir)) {
     const text = await readFile(file, "utf8");
     const frontmatter = frontmatterBlock(text);
+    const slug = postSlugFromPath(file, postsDir, frontmatterValue(frontmatter, "slug"));
+    const output = join(outputDir, "posts", `${slug}.png`);
+    if (frontmatterBoolean(frontmatter, "draft")) {
+      await rm(output, { force: true });
+      await rm(output.replace(/\.png$/i, ".svg"), { force: true });
+      continue;
+    }
+
     const title = frontmatterValue(frontmatter, "title");
     if (!title) continue;
 
-    const slug = postSlugFromPath(file, postsDir, frontmatterValue(frontmatter, "slug"));
     const description = frontmatterValue(frontmatter, "description") ?? siteDescription;
     const sourceImage = await socialImageHref(root, frontmatterValue(frontmatter, "ogSourceImage") ?? frontmatterValue(frontmatter, "cover"));
-    const output = join(outputDir, "posts", `${slug}.svg`);
-    await mkdir(dirname(output), { recursive: true });
-    await writeFile(output, socialSvg({
+    await writeSocialPng(output, socialSvg({
       title,
       description,
       brandTitle: brand.title,
