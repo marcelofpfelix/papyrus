@@ -893,7 +893,7 @@ a {
   gap: 10px;
 }
 
-.papyrus-project-card h3 {
+.papyrus-project-title {
   align-items: center;
   display: flex;
   font-size: 1rem;
@@ -901,7 +901,7 @@ a {
   margin: 0;
 }
 
-.papyrus-project-card h3 svg,
+.papyrus-project-title svg,
 .papyrus-project-links svg,
 .papyrus-meta-item svg,
 .papyrus-tags > svg,
@@ -917,12 +917,12 @@ a {
   width: 1em;
 }
 
-.papyrus-project-card h3 a {
+.papyrus-project-title a {
   color: inherit;
   text-decoration: none;
 }
 
-.papyrus-project-card h3 a:hover {
+.papyrus-project-title a:hover {
   color: var(--papyrus-accent);
 }
 

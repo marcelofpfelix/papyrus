@@ -99,7 +99,7 @@ function icon(name: string) {
             : <img src={getAssetPath(project.image)} alt="" loading="lazy" />
         )}
         <header>
-          <ProjectHeading>
+          <ProjectHeading class="papyrus-project-title">
             {project.repo && <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("book")} />}
             {project.href ? <a href={href(project.href)}>{project.title}</a> : project.title}
           </ProjectHeading>

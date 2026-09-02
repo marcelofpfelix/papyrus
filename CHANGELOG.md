@@ -2,6 +2,8 @@
 
 ## 0.2.4
 
+- Keep repository icons compact on inherited project pages regardless of the
+  configured project heading level.
 - Publish optional raw Markdown representations at `/posts/<slug>.md` and
   `/collections/<collection>/<slug>.md` through one shared cleaner.
 - Generate `/profile.keys` and `/profile.gpg` from raw public keys configured

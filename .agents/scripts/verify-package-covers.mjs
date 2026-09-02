@@ -56,6 +56,15 @@ if (packageJson.dependencies?.["astro-papyrus"] || packageJson.devDependencies?.
 
 await walkDirs(root);
 
+const projectListSource = await readFile(join(root, "src/components/PapyrusProjectList.astro"), "utf8");
+const papyrusCss = await readFile(join(root, "src/styles/papyrus.css"), "utf8");
+if (!projectListSource.includes('class="papyrus-project-title"')) {
+  fail("project headings must use the shared papyrus-project-title class");
+}
+if (!papyrusCss.includes(".papyrus-project-title svg")) {
+  fail("project title icons must have heading-level-independent sizing styles");
+}
+
 const requiredExports = [
   ".",
   "./components",
