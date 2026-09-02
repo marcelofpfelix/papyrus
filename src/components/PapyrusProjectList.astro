@@ -22,9 +22,11 @@ interface ProjectLink {
 
 interface Props {
   projects: ProjectItem[];
+  headingLevel?: 2 | 3;
 }
 
-const { projects } = Astro.props;
+const { projects, headingLevel = 3 } = Astro.props;
+const ProjectHeading = headingLevel === 2 ? "h2" : "h3";
 
 function href(value?: string) {
   return value ? withBase(value) : undefined;
@@ -97,10 +99,10 @@ function icon(name: string) {
             : <img src={getAssetPath(project.image)} alt="" loading="lazy" />
         )}
         <header>
-          <h3>
+          <ProjectHeading>
             {project.repo && <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("book")} />}
             {project.href ? <a href={href(project.href)}>{project.title}</a> : project.title}
-          </h3>
+          </ProjectHeading>
         </header>
         <p>
           {project.href ? <a class="papyrus-project-description-link" href={href(project.href)}>{project.description}</a> : project.description}
