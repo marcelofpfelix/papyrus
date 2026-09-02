@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusPostList } from "../../../components";
-import { pageDescription } from "../../../config";
+import { pageDescription, pageMetaDescription } from "../../../config";
 import { getAllTags, postsByTag, publishedPosts, tagSlug } from "../../../utils";
 import { withBase } from "../../../utils/withBase";
 import { getTemplateSite } from "../../site";
@@ -17,9 +17,10 @@ export async function getStaticPaths() {
 const site = await getTemplateSite();
 const { tag, posts } = Astro.props;
 const description = pageDescription(site, "tag", `${posts.length} post${posts.length === 1 ? "" : "s"} tagged with ${tag}.`);
+const metaDescription = pageMetaDescription(site, "tag", `${posts.length} post${posts.length === 1 ? "" : "s"} tagged with ${tag}.`);
 ---
 
-<PapyrusBaseLayout title={`#${tag}`} description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+<PapyrusBaseLayout title={`#${tag}`} description={metaDescription} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
   <section class="papyrus-hero">
     <p class="papyrus-post-back">
       <a href={withBase("/tag/")}>

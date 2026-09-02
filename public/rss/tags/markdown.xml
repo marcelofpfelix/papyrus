@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>#markdown posts</title>
-    <link>/</link>
+    <link>https://papyrus.marcelofelix.com</link>
     <description>Posts tagged #markdown</description>
     <lastBuildDate>Wed, 01 Jul 2026 13:00:00 GMT</lastBuildDate>
-    <atom:link href="/rss/tags/markdown.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://papyrus.marcelofelix.com/rss/tags/markdown.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Markdown code guide</title>
-      <link>/posts/code-demo/</link>
-      <guid>/posts/code-demo/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/code-demo/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/code-demo/</guid>
       <pubDate>Wed, 01 Jul 2026 13:00:00 GMT</pubDate>
       <description>Markdown route showing Pure-style Astro/Shiki code blocks, callouts, tables, diagrams, and media.</description>
     </item>
     <item>
       <title>Markdown authoring guide</title>
-      <link>/posts/markdown-feature-sample/</link>
-      <guid>/posts/markdown-feature-sample/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/markdown-feature-sample/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/markdown-feature-sample/</guid>
       <pubDate>Tue, 30 Jun 2026 10:00:00 GMT</pubDate>
       <description>A practical guide showing how Papyrus renders Markdown, callouts, code, media, diagrams, and source actions.</description>
     </item>

@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>#cv posts</title>
-    <link>/</link>
+    <link>https://papyrus.marcelofelix.com</link>
     <description>Posts tagged #cv</description>
     <lastBuildDate>Mon, 13 Jul 2026 08:20:00 GMT</lastBuildDate>
-    <atom:link href="/rss/tags/cv.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://papyrus.marcelofelix.com/rss/tags/cv.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Profile and CV</title>
-      <link>/posts/profile/</link>
-      <guid>/posts/profile/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/profile/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/profile/</guid>
       <pubDate>Mon, 13 Jul 2026 08:20:00 GMT</pubDate>
       <description>What the Papyrus profile data file controls and how profile, print, and export routes share it.</description>
     </item>

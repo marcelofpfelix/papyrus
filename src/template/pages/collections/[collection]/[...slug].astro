@@ -3,8 +3,8 @@ import { getCollection, render } from "astro:content";
 import { PapyrusCollectionIndex } from "../../../../components";
 import PapyrusPostLayout from "../../../../layouts/PapyrusPostLayout.astro";
 import { collectionOrderedPosts, collectionPostSlug, collectionTocLinks, getPostCollections } from "../../../../utils/collections";
-import { papyrusSocialImageForPost } from "../../../../utils/social-images";
-import { postDate, postHref, postSlug, postTags, readingTime, type PapyrusPostEntry } from "../../../../utils/posts";
+import { postHref, postSlug, type PapyrusPostEntry } from "../../../../utils/posts";
+import { templatePostLayoutProps } from "../../../post";
 import { getTemplateSite } from "../../../site";
 
 export async function getStaticPaths() {
@@ -45,13 +45,14 @@ const slug = postSlug(post);
 const collectionBasePath = `/collections/${collection.slug}`;
 const showCollectionFooter = collection.settings.postFooter !== "none";
 const collectionFooterCollapsible = collection.settings.postFooterCollapsible;
+const postLayoutProps = templatePostLayoutProps(post, site);
 const collectionLinks = [
   { href: collection.href, title: "View collection", depth: 2 },
   ...collectionTocLinks(collection, collectionBasePath),
 ];
 ---
 
-<PapyrusPostLayout title={post.data.title} description={post.data.description} siteTitle={site.title} pubDatetime={postDate(post)} modDatetime={post.data.modDatetime} cover={post.data.cover} ogImage={papyrusSocialImageForPost(post)} ogImageAlt={post.data.title} coverEffect={post.data.coverEffect ?? post.data.cover_effect} tags={postTags(post)} readingTime={readingTime(post.body)} headings={headings} tocLinks={collectionLinks} showToc={true} canonicalUrl={postHref(post)} robots={post.data.robots} previous={adjacent.previous} next={adjacent.next} adjacentBasePath={collectionBasePath} backHref={`${collectionBasePath}/`} morePostsHref={`${collectionBasePath}/`} nav={site.nav} socialLinks={site.socialLinks}>
+<PapyrusPostLayout {...postLayoutProps} headings={headings} tocLinks={collectionLinks} showToc={true} canonicalUrl={postHref(post)} previous={adjacent.previous} next={adjacent.next} adjacentBasePath={collectionBasePath} backHref={`${collectionBasePath}/`} morePostsHref={`${collectionBasePath}/`}>
   <Content />
 
   {showCollectionFooter && (

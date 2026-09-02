@@ -462,8 +462,13 @@ the generated card SHOULD use the cover as an input while still outputting a
 `1200x630` PNG social-card image with MIME type and dimensions in Open Graph
 metadata. `ogSourceImage` MAY select a different post image as
 the generated-card input. `ogImage` MAY point to a finished custom social image
-and bypass the generated post card. Missing preview images should be treated as
-a regression for public pages that advertise share previews.
+and bypass the generated post card. Generated post cards SHOULD include a
+bounded tag row and, when folder metadata provides it, a bounded
+`Collection / Section` context line. Canonical and collection routes for the
+same post MUST use the same generated card. Multiple memberships MUST resolve
+to the most specific collection folder, with metadata path as the deterministic
+tie-breaker. Missing preview images should be treated as a regression for public
+pages that advertise share previews.
 
 Canonical and Open Graph URLs MUST use the configured production origin during
 preview builds. An explicit `SITE_URL` MAY override it; provider preview URLs

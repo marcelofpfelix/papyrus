@@ -1,0 +1,39 @@
+---
+interface Props {
+  defaultThemeProfile?: string;
+  defaultFontProfile?: string;
+}
+
+const {
+  defaultThemeProfile = "gruvbox",
+  defaultFontProfile = "readable",
+} = Astro.props;
+---
+
+<script is:inline data-default-theme-profile={defaultThemeProfile} data-default-font-profile={defaultFontProfile}>
+  const script = document.currentScript;
+  const defaultTheme = script?.dataset.defaultThemeProfile ?? "gruvbox";
+  const defaultFont = script?.dataset.defaultFontProfile ?? "readable";
+  const themes = ["pure", "catppuccin", "tokyo-night", "kanagawa", "rose-pine", "everforest", "dracula", "gruvbox", "nord"];
+  const fonts = ["theme", "readable", "code"];
+  const read = (key) => {
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  };
+  const mode = read("papyrus-mode") ?? read("theme") ?? "system";
+  const resolvedMode = mode === "system"
+    ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+    : mode;
+  const storedTheme = read("papyrus-theme");
+  const storedFont = read("papyrus-font");
+  const theme = themes.includes(storedTheme) ? storedTheme : defaultTheme;
+  const font = fonts.includes(storedFont) ? storedFont : defaultFont;
+
+  document.documentElement.classList.toggle("dark", resolvedMode === "dark");
+  document.documentElement.dataset.papyrusTheme = theme;
+  document.documentElement.dataset.papyrusFont = font;
+  document.documentElement.style.colorScheme = resolvedMode;
+</script>

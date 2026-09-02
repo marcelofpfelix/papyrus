@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>#changelog posts</title>
-    <link>/</link>
+    <link>https://papyrus.marcelofelix.com</link>
     <description>Posts tagged #changelog</description>
     <lastBuildDate>Tue, 30 Jun 2026 11:00:00 GMT</lastBuildDate>
-    <atom:link href="/rss/tags/changelog.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://papyrus.marcelofelix.com/rss/tags/changelog.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Papyrus package shape</title>
-      <link>/posts/papyrus-package-shape/</link>
-      <guid>/posts/papyrus-package-shape/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/papyrus-package-shape/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/papyrus-package-shape/</guid>
       <pubDate>Tue, 30 Jun 2026 11:00:00 GMT</pubDate>
       <description>Package-boundary guide showing how Papyrus keeps repeated blog UI in reusable theme exports.</description>
     </item>

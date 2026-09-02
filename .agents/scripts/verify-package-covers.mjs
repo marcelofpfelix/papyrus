@@ -4,6 +4,8 @@ import { existsSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { spawnSync } from "node:child_process";
+import { readPostCollectionMetadata } from "../../src/utils/collection-metadata.mjs";
+import { socialContextForPost, socialSvg } from "../../scripts/generate-social-images.mjs";
 
 const root = resolve(new URL("../..", import.meta.url).pathname);
 const packageJson = JSON.parse(await readFile(join(root, "package.json"), "utf8"));
@@ -142,15 +144,33 @@ cover: /.agent-cover-test/cover.svg
 `,
     "utf8"
   );
-  await mkdir(socialPostsDir, { recursive: true });
+  const socialPost = join(socialPostsDir, "guides", "basics", "auto-social.md");
+  await mkdir(join(socialPostsDir, "guides", "basics"), { recursive: true });
   await writeFile(
-    join(socialPostsDir, "auto-social.md"),
+    socialPost,
     `---
 title: "Auto social card"
 description: "Post-specific generated sharing image"
+slug: auto-social
 date: 2026-08-17
 cover: /images/package-cover.jpg
+tags:
+  - astro
+  - papyrus
+  - docs
+  - ignored-fourth-tag
 ---
+`,
+    "utf8"
+  );
+  await writeFile(
+    join(socialPostsDir, "guides", "guides.toml"),
+    `name = "Guides"
+description = "Ordered guides"
+
+[[sections]]
+name = "Basics"
+description = "Start here"
 `,
     "utf8"
   );
@@ -256,6 +276,45 @@ draft: true
     if (existsSync(generatedDraftSocialPost) || existsSync(generatedDraftSocialPost.replace(/\.png$/, ".svg"))) {
       fail("draft social cards and stale draft social images should not be generated");
     }
+
+    const collectionMetadata = await readPostCollectionMetadata(socialPostsDir);
+    const socialContext = socialContextForPost(socialPost, socialPostsDir, collectionMetadata);
+    if (socialContext !== "Guides / Basics") fail(`social card collection context was ${socialContext}`);
+    const taxonomySvg = socialSvg({
+      title: "Taxonomy card",
+      description: "Social taxonomy fixture",
+      brandTitle: "papyrus",
+      brandMark: "twinkle",
+      label: "Papyrus",
+      tokens: {
+        "--papyrus-bg": "#ffffff",
+        "--papyrus-fg": "#111111",
+        "--papyrus-muted": "#666666",
+        "--papyrus-accent": "#008080",
+      },
+      context: socialContext,
+      tags: ["Astro", "papyrus", "astro", "docs", "ignored-fourth-tag"],
+    });
+    if (!taxonomySvg.includes('class="context">Guides / Basics</text>')) fail("social card SVG is missing collection and section context");
+    if (!taxonomySvg.includes('class="tags">#Astro #papyrus #docs</text>')) fail("social card SVG does not deduplicate and cap tags");
+    if (taxonomySvg.includes("ignored-fourth-tag")) fail("social card SVG rendered more than three tags");
+
+    const longContext = "A collection context that is intentionally much longer than the available social card line";
+    const boundedSvg = socialSvg({
+      title: "Bounded card",
+      description: "Bounded metadata fixture",
+      brandTitle: "papyrus",
+      brandMark: "twinkle",
+      label: "Papyrus",
+      tokens: {
+        "--papyrus-bg": "#ffffff",
+        "--papyrus-fg": "#111111",
+        "--papyrus-muted": "#666666",
+        "--papyrus-accent": "#008080",
+      },
+      context: longContext,
+    });
+    if (boundedSvg.includes(longContext) || !boundedSvg.includes('class="context">A collection context')) fail("social card context was not truncated");
   }
 
   const orphanPost = join(tmp, "orphan.md");

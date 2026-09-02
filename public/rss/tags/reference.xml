@@ -2,28 +2,28 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>#reference posts</title>
-    <link>/</link>
+    <link>https://papyrus.marcelofelix.com</link>
     <description>Posts tagged #reference</description>
     <lastBuildDate>Mon, 13 Jul 2026 08:20:00 GMT</lastBuildDate>
-    <atom:link href="/rss/tags/reference.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://papyrus.marcelofelix.com/rss/tags/reference.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Profile and CV</title>
-      <link>/posts/profile/</link>
-      <guid>/posts/profile/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/profile/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/profile/</guid>
       <pubDate>Mon, 13 Jul 2026 08:20:00 GMT</pubDate>
       <description>What the Papyrus profile data file controls and how profile, print, and export routes share it.</description>
     </item>
     <item>
       <title>Collections</title>
-      <link>/posts/collections/</link>
-      <guid>/posts/collections/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/collections/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/collections/</guid>
       <pubDate>Mon, 13 Jul 2026 08:10:00 GMT</pubDate>
       <description>What Papyrus collections are and how folder-backed collection routes work.</description>
     </item>
     <item>
       <title>Feature map</title>
-      <link>/posts/feature-map/</link>
-      <guid>/posts/feature-map/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/feature-map/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/feature-map/</guid>
       <pubDate>Wed, 01 Jul 2026 14:00:00 GMT</pubDate>
       <description>Route-by-route guide to public Papyrus features.</description>
     </item>

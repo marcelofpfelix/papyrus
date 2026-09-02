@@ -4,6 +4,7 @@ export { default as PapyrusHeader } from "./PapyrusHeader.astro";
 export { default as PapyrusFooter } from "./PapyrusFooter.astro";
 export { default as PapyrusPostList } from "./PapyrusPostList.astro";
 export { default as PapyrusThemeProvider } from "./PapyrusThemeProvider.astro";
+export { default as PapyrusThemeBootstrap } from "./PapyrusThemeBootstrap.astro";
 export { default as PapyrusTagList } from "./PapyrusTagList.astro";
 export { default as PapyrusArchiveList } from "./PapyrusArchiveList.astro";
 export { default as PapyrusAdjacentPosts } from "./PapyrusAdjacentPosts.astro";

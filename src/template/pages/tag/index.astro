@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import { PapyrusBaseLayout, PapyrusTagList } from "../../../components";
-import { pageDescription } from "../../../config";
+import { pageDescription, pageMetaDescription } from "../../../config";
 import { getAllTags, postsByTag, publishedPosts } from "../../../utils";
 import { withBase } from "../../../utils/withBase";
 import { getTemplateSite } from "../../site";
@@ -13,9 +13,10 @@ const counts = Object.fromEntries(
   tags.map(tag => [tag, postsByTag(posts, tag).length])
 );
 const description = pageDescription(site, "tags", "Topics used by the public posts.");
+const metaDescription = pageMetaDescription(site, "tags", "Topics used by the public posts.");
 ---
 
-<PapyrusBaseLayout title="Tags" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
+<PapyrusBaseLayout title="Tags" description={metaDescription} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features}>
   <section class="papyrus-hero">
     <p class="papyrus-post-back">
       <a href={withBase("/posts/")}>

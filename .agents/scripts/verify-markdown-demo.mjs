@@ -31,6 +31,7 @@ function exists(relativePath) {
 const codeDemo = await text(codeDemoSource);
 const markdownGuide = await text("src/content/posts/docs/authoring/12-markdown-feature-sample.md");
 const markdownConfig = await text("src/markdown/config.mjs");
+const githubMarkdownAudit = await text(".agents/github-markdown-audit.md");
 const publicPost = await text("public/demo/post-demo.md");
 const excalidrawFixture = JSON.parse(await text("public/demo/sketch.excalidraw"));
 const featureCoverage = JSON.parse(await text(".agents/fixtures/markdown-feature-coverage.json"));
@@ -84,11 +85,13 @@ const codeDemoChecks = [
   ["/demo/theme-flow.mmd", "Mermaid artifact link"],
   ["/demo/call-flow.puml", "PlantUML artifact link"],
   ["/demo/sketch.excalidraw", "Excalidraw artifact link"],
-  ["## Fallback rendering", "fallback rendering section"],
+  ["## Optional rendering", "optional rendering section"],
+  ["Emoji codes like `:information_source:` | Render through the optional", "emoji plugin label"],
+  ["Inline and block math | Keep the source visible", "math fallback label"],
+  ["GeoJSON, TopoJSON, and STL fences | Render as code", "GitHub diagram fallback label"],
   ["PlantUML inline rendering | Keep as a file link", "PlantUML fallback label"],
   ["Excalidraw inline rendering | Keep as a file link", "Excalidraw fallback label"],
   ["Wiki links like `[[topic]]` | Keep as plain text", "wiki-link fallback label"],
-  ["Footnotes like `[^1]` | Render when a consuming site adds", "footnote fallback label"],
 ];
 
 for (const [needle, label] of codeDemoChecks) includes(codeDemo, needle, label);
@@ -104,6 +107,22 @@ for (const [needle, label] of [
   includes(markdownGuide, needle, label);
 }
 
+includes(markdownGuide, "Footnotes are useful", "working footnote example");
+includes(markdownGuide, "[^1]: This is a GitHub-style footnote.", "footnote definition");
+
+for (const [needle, label] of [
+  ["## Formal GFM", "formal GFM matrix"],
+  ["## GitHub file formatting", "GitHub file-formatting matrix"],
+  ["## GitHub context behavior", "GitHub context boundary"],
+  ["GFM tag filtering | Intentional difference", "raw HTML compatibility finding"],
+  ["Emoji codes such as `:information_source:` | Optional", "emoji compatibility finding"],
+  ["Inline and block math | Missing", "math compatibility finding"],
+  ["GeoJSON and TopoJSON maps | Missing", "map compatibility finding"],
+  ["No new implementation task IDs were created", "follow-up approval boundary"],
+]) {
+  includes(githubMarkdownAudit, needle, label);
+}
+
 const requiredFeatures = [
   "rust-code",
   "diff-code",
@@ -116,7 +135,7 @@ const requiredFeatures = [
   "mermaid-fence",
   "image-zoom",
   "artifact-links",
-  "unsupported-github-edge-cases",
+  "optional-markdown-fallbacks",
 ];
 
 for (const feature of requiredFeatures) {

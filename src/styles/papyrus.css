@@ -1547,6 +1547,10 @@ a {
   position: relative;
 }
 
+.papyrus-page-with-toc {
+  position: relative;
+}
+
 .papyrus-post-cover-frame {
   aspect-ratio: 16 / 9;
   margin: 24px auto 42px;
@@ -1615,7 +1619,7 @@ a {
   margin: 0 0 18px;
 }
 
-.papyrus-post-toc-top {
+.papyrus-page-toc-top {
   display: flex;
   justify-content: flex-end;
   position: absolute;
@@ -1624,16 +1628,16 @@ a {
   z-index: 45;
 }
 
-.papyrus-post-toc-top .papyrus-toc {
+.papyrus-page-toc-top .papyrus-toc {
   margin-left: auto;
 }
 
-.papyrus-post-toc-top .papyrus-toc-toggle {
+.papyrus-page-toc-top .papyrus-toc-toggle {
   margin-left: auto;
 }
 
 @media (max-width: 719px) {
-  .papyrus-post-toc-top {
+  .papyrus-page-toc-top {
     display: contents;
     margin: 0;
     position: static;

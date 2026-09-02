@@ -601,6 +601,7 @@ async function runDocsChecks(page, origin) {
 
   const sectionMenuState = await page.evaluate(() => {
     const menu = document.querySelector(".papyrus-toc");
+    const placement = menu?.closest(".papyrus-page-toc-top");
     const summary = menu?.querySelector("[data-papyrus-toc-toggle]");
     const styles = menu ? getComputedStyle(menu) : null;
     const links = Array.from(menu?.querySelectorAll("a") ?? []).map((link) => ({
@@ -612,10 +613,11 @@ async function runDocsChecks(page, origin) {
       display: styles?.display ?? "",
       iconCount: summary?.querySelectorAll("svg").length ?? 0,
       links,
-      position: styles?.position ?? "",
+      placementPosition: placement ? getComputedStyle(placement).position : "",
+      rect: summary ? summary.getBoundingClientRect().toJSON() : null,
     };
   });
-  assert(sectionMenuState.position === "relative", `docs collection TOC position was ${sectionMenuState.position}`);
+  assert(sectionMenuState.placementPosition === "absolute", `docs collection TOC placement was ${sectionMenuState.placementPosition}`);
   assert(sectionMenuState.iconCount === 1, `docs section menu icon count was ${sectionMenuState.iconCount}`);
   assert(sectionMenuState.ariaLabel === "Sections", `docs section menu aria-label was ${sectionMenuState.ariaLabel}`);
   assert(sectionMenuState.links.length >= 10, `docs section menu link count was ${sectionMenuState.links.length}`);
@@ -632,11 +634,100 @@ async function runDocsChecks(page, origin) {
 
   await page.goto(`${origin}/collections/docs/features/`, { waitUntil: "networkidle" });
   const featureDocsState = await page.evaluate(() => {
+    const summary = document.querySelector("[data-papyrus-toc-toggle]");
     return {
       hasPluginContract: Boolean(document.querySelector("#plugin-contract")),
+      tocRect: summary ? summary.getBoundingClientRect().toJSON() : null,
     };
   });
   assert(featureDocsState.hasPluginContract, "feature docs missing plugin contract section");
+  assert(sectionMenuState.rect && featureDocsState.tocRect, "collection TOC controls were not measurable");
+  assert(Math.abs(sectionMenuState.rect.top - featureDocsState.tocRect.top) <= 1, `collection TOC top positions differed: ${sectionMenuState.rect.top} vs ${featureDocsState.tocRect.top}`);
+  assert(Math.abs(sectionMenuState.rect.right - featureDocsState.tocRect.right) <= 1, `collection TOC right positions differed: ${sectionMenuState.rect.right} vs ${featureDocsState.tocRect.right}`);
+
+  const collectionPostParity = await page.evaluate(() => {
+    const tag = document.querySelector(".papyrus-tags a");
+    return {
+      fontProfile: document.documentElement.dataset.papyrusFont ?? "",
+      tagFont: tag ? getComputedStyle(tag).fontFamily : "",
+      copySourceIcons: document.querySelectorAll("[data-papyrus-copy-source] svg").length,
+      copySourceLinkIcons: document.querySelectorAll("[data-papyrus-copy-source-link] svg").length,
+      comments: document.querySelectorAll(".papyrus-comments").length,
+    };
+  });
+
+  await page.goto(`${origin}/posts/features/`, { waitUntil: "networkidle" });
+  const canonicalPostParity = await page.evaluate(() => {
+    const tag = document.querySelector(".papyrus-tags a");
+    return {
+      fontProfile: document.documentElement.dataset.papyrusFont ?? "",
+      tagFont: tag ? getComputedStyle(tag).fontFamily : "",
+      copySourceIcons: document.querySelectorAll("[data-papyrus-copy-source] svg").length,
+      copySourceLinkIcons: document.querySelectorAll("[data-papyrus-copy-source-link] svg").length,
+      comments: document.querySelectorAll(".papyrus-comments").length,
+    };
+  });
+
+  assert(collectionPostParity.fontProfile === canonicalPostParity.fontProfile, `collection post font profile differs from /posts/: ${JSON.stringify({ collectionPostParity, canonicalPostParity })}`);
+  assert(collectionPostParity.tagFont === canonicalPostParity.tagFont, `collection post tag font differs from /posts/: ${JSON.stringify({ collectionPostParity, canonicalPostParity })}`);
+  assert(collectionPostParity.copySourceIcons > 0 && collectionPostParity.copySourceLinkIcons > 0, `collection post source actions are missing: ${JSON.stringify(collectionPostParity)}`);
+  assert(collectionPostParity.comments > 0, `collection post comments are missing: ${JSON.stringify(collectionPostParity)}`);
+  assert(collectionPostParity.copySourceIcons === canonicalPostParity.copySourceIcons && collectionPostParity.copySourceLinkIcons === canonicalPostParity.copySourceLinkIcons && collectionPostParity.comments === canonicalPostParity.comments, `collection post actions/comments differ from /posts/: ${JSON.stringify({ collectionPostParity, canonicalPostParity })}`);
+}
+
+async function runMarkdownPageChecks(page, origin) {
+  const response = await page.goto(`${origin}/markdown-page-demo/`, { waitUntil: "networkidle" });
+  assert(response?.status() === 200, `Markdown page status was ${response?.status()}`);
+  const state = await page.evaluate(() => ({
+    description: document.querySelector('meta[name="description"]')?.getAttribute("content") ?? "",
+    h1: document.querySelector("h1")?.textContent?.trim() ?? "",
+    heading: document.querySelector(".papyrus-prose h2")?.textContent?.trim() ?? "",
+    pagefind: document.querySelector(".papyrus-markdown-page")?.hasAttribute("data-pagefind-body") ?? false,
+  }));
+  assert(state.h1 === "Markdown page demo", `Markdown page h1 was ${state.h1}`);
+  assert(state.heading === "Where it lives", `Markdown page body heading was ${state.heading}`);
+  assert(state.description.includes("standalone page"), `Markdown page description was ${state.description}`);
+  assert(state.pagefind, "Markdown page was not marked for Pagefind");
+}
+
+async function runThemeBootstrapChecks(browser, origin) {
+  const persistedContext = await browser.newContext({ colorScheme: "light" });
+  await persistedContext.addInitScript(() => {
+    localStorage.setItem("papyrus-mode", "dark");
+    localStorage.setItem("papyrus-theme", "rose-pine");
+    localStorage.setItem("papyrus-font", "code");
+    window.__papyrusInitialRoot = {
+      font: document.documentElement.dataset.papyrusFont ?? "",
+      theme: document.documentElement.dataset.papyrusTheme ?? "",
+    };
+  });
+  const persistedPage = await persistedContext.newPage();
+  await persistedPage.goto(`${origin}/`, { waitUntil: "domcontentloaded" });
+  const persisted = await persistedPage.evaluate(() => ({
+    ...window.__papyrusInitialRoot,
+    dark: document.documentElement.classList.contains("dark"),
+    finalFont: document.documentElement.dataset.papyrusFont ?? "",
+    finalTheme: document.documentElement.dataset.papyrusTheme ?? "",
+  }));
+  assert(persisted.dark && persisted.finalTheme === "rose-pine" && persisted.finalFont === "code", `persisted theme was not applied before DOMContentLoaded: ${JSON.stringify(persisted)}`);
+  await persistedContext.close();
+
+  const blockedStorageContext = await browser.newContext({ colorScheme: "dark" });
+  await blockedStorageContext.addInitScript(() => {
+    Storage.prototype.getItem = () => { throw new DOMException("blocked", "SecurityError"); };
+  });
+  const blockedStoragePage = await blockedStorageContext.newPage();
+  const pageErrors = [];
+  blockedStoragePage.on("pageerror", error => pageErrors.push(error.message));
+  await blockedStoragePage.goto(`${origin}/`, { waitUntil: "domcontentloaded" });
+  const blockedStorage = await blockedStoragePage.evaluate(() => ({
+    dark: document.documentElement.classList.contains("dark"),
+    font: document.documentElement.dataset.papyrusFont ?? "",
+    theme: document.documentElement.dataset.papyrusTheme ?? "",
+  }));
+  assert(blockedStorage.dark && blockedStorage.theme === "gruvbox" && blockedStorage.font === "readable", `blocked-storage fallback was ${JSON.stringify(blockedStorage)}`);
+  assert(pageErrors.length === 0, `blocked storage raised page errors: ${JSON.stringify(pageErrors)}`);
+  await blockedStorageContext.close();
 }
 
 async function runContentStructureChecks(page, origin) {
@@ -802,10 +893,14 @@ async function runPostsIndexChecks(page, origin) {
   await page.goto(`${origin}/posts/timeline/`, { waitUntil: "networkidle" });
   const timelineState = await page.evaluate(() => ({
     archiveYears: document.querySelectorAll(".papyrus-archive-list h2").length,
+    descriptionCount: document.querySelectorAll(".papyrus-hero .papyrus-description").length,
     linkCount: document.querySelectorAll(".papyrus-archive-list a").length,
+    metaDescription: document.querySelector('meta[name="description"]')?.getAttribute("content") ?? "",
     title: document.querySelector("h1")?.textContent?.trim() ?? "",
   }));
   assert(timelineState.title === "Timeline", `timeline page title was ${timelineState.title}`);
+  assert(timelineState.descriptionCount === 0, `timeline should hide its visible description: ${JSON.stringify(timelineState)}`);
+  assert(timelineState.metaDescription.length > 0, `timeline should retain a meta description: ${JSON.stringify(timelineState)}`);
   assert(timelineState.archiveYears >= 1, `timeline year group count was ${timelineState.archiveYears}`);
   assert(timelineState.linkCount >= 20, `timeline should include at least the posts-index page size, got ${timelineState.linkCount}`);
 }
@@ -1504,7 +1599,7 @@ async function runMarkdownDemoChecks(page, origin) {
   assert(tableState.headingColor !== "rgb(0, 0, 0)", "table heading color is black");
 
   const fallbackState = await page.evaluate(() => {
-    const heading = Array.from(document.querySelectorAll("h2")).find((item) => item.textContent?.trim() === "Fallback rendering");
+    const heading = Array.from(document.querySelectorAll("h2")).find((item) => item.textContent?.trim() === "Optional rendering");
     const tables = Array.from(document.querySelectorAll("table"));
     const table = tables[tables.length - 1];
     const rows = Array.from(table?.querySelectorAll("tbody tr") ?? []).map((row) =>
@@ -1599,6 +1694,7 @@ const server = await startServer();
 const browser = await chromium.launch({ headless: true });
 
 try {
+  await runThemeBootstrapChecks(browser, server.origin);
   const context = await browser.newContext();
   await context.grantPermissions(["clipboard-read", "clipboard-write"], { origin: server.origin });
   const page = await context.newPage();
@@ -1611,6 +1707,7 @@ try {
   await runProjectsChecks(page, server.origin);
   await runMobileHeaderChecks(page, server.origin);
   await runDocsChecks(page, server.origin);
+  await runMarkdownPageChecks(page, server.origin);
   await runContentStructureChecks(page, server.origin);
   await runSearchChecks(page, server.origin);
   await runPostsIndexChecks(page, server.origin);

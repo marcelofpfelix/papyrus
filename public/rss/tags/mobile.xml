@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>#mobile posts</title>
-    <link>/</link>
+    <link>https://papyrus.marcelofelix.com</link>
     <description>Posts tagged #mobile</description>
     <lastBuildDate>Wed, 01 Jul 2026 14:10:00 GMT</lastBuildDate>
-    <atom:link href="/rss/tags/mobile.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://papyrus.marcelofelix.com/rss/tags/mobile.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AI and mobile readiness</title>
-      <link>/posts/ai-mobile/</link>
-      <guid>/posts/ai-mobile/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/ai-mobile/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/ai-mobile/</guid>
       <pubDate>Wed, 01 Jul 2026 14:10:00 GMT</pubDate>
       <description>AI metadata, generated indexes, and mobile-ready defaults in a Papyrus site.</description>
     </item>

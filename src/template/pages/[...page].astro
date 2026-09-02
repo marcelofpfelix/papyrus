@@ -1,0 +1,30 @@
+---
+import { getCollection, render } from "astro:content";
+import { PapyrusBaseLayout } from "../../components";
+import { pageSlug, routablePages } from "../../utils/pages";
+import { getTemplateSite } from "../site";
+
+export async function getStaticPaths() {
+  return routablePages(await getCollection("pages")).map(page => ({
+    params: { page: pageSlug(page) },
+    props: { page },
+  }));
+}
+
+const site = await getTemplateSite();
+const { page } = Astro.props;
+const { Content } = await render(page);
+const slug = pageSlug(page);
+---
+
+<PapyrusBaseLayout title={page.data.title} description={page.data.description} canonicalURL={`/${slug}/`} robots={page.data.robots} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
+  <article class="papyrus-markdown-page" data-pagefind-body>
+    <header class="papyrus-hero">
+      <h1>{page.data.title}</h1>
+      {page.data.description && <p class="papyrus-description">{page.data.description}</p>}
+    </header>
+    <div class="papyrus-prose">
+      <Content />
+    </div>
+  </article>
+</PapyrusBaseLayout>

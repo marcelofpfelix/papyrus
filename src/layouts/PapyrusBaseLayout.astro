@@ -3,6 +3,7 @@ import { ClientRouter } from "astro:transitions";
 import PapyrusHeader from "../components/PapyrusHeader.astro";
 import PapyrusFooter from "../components/PapyrusFooter.astro";
 import PapyrusThemeProvider from "../components/PapyrusThemeProvider.astro";
+import PapyrusThemeBootstrap from "../components/PapyrusThemeBootstrap.astro";
 import { loadPapyrusConfig, type PapyrusAnalyticsConfig, type PapyrusHeadConfig, type PapyrusMarkdownStyleConfig, type PapyrusVerificationConfig } from "../config";
 import { resolvePapyrusFeatures, type PapyrusFeatureConfig } from "../utils/features";
 import { getAssetPath, stripBase, withBase } from "../utils/withBase";
@@ -147,6 +148,8 @@ const plausibleDomain = resolvedAnalytics.domain ?? (Astro.site ?? Astro.url).ho
 <!doctype html>
 <html
   lang={resolvedLanguage}
+  data-papyrus-theme={defaultThemeProfile}
+  data-papyrus-font={defaultFontProfile}
   data-papyrus-markdown-link-style={resolvedMarkdown.linkStyle}
   data-papyrus-markdown-heading-style={resolvedMarkdown.headingStyle}
   data-papyrus-markdown-marker-style={resolvedMarkdown.markerStyle}
@@ -157,6 +160,7 @@ const plausibleDomain = resolvedAnalytics.domain ?? (Astro.site ?? Astro.url).ho
 >
   <head>
     <meta charset="utf-8" />
+    <PapyrusThemeBootstrap defaultThemeProfile={defaultThemeProfile} defaultFontProfile={defaultFontProfile} />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     {description && <meta name="description" content={description} />}
     {robots && <meta name="robots" content={robots} />}

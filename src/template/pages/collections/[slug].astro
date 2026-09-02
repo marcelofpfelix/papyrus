@@ -20,28 +20,32 @@ const sectionLinks = collectionTocLinks(collection);
 ---
 
 <PapyrusBaseLayout title={collection.name} description={collection.description || `Posts in the ${collection.name} collection.`} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
-  <PapyrusToc links={sectionLinks} title="Sections" linksTitle="Sections" />
+  <div class="papyrus-page-with-toc">
+    <div class="papyrus-page-toc-top">
+      <PapyrusToc links={sectionLinks} title="Sections" linksTitle="Sections" />
+    </div>
 
-  <section class="papyrus-hero">
-    <p class="papyrus-post-back">
-      <a href={withBase("/collections/")}>
-        <svg aria-hidden="true" viewBox="0 0 24 24">
-          <path d="M19 12H5"></path>
-          <path d="m12 19-7-7 7-7"></path>
-        </svg>
-        <span>Back</span>
-      </a>
-    </p>
-    <h1>{collection.name}</h1>
-    {collection.description && <p class="papyrus-description">{collection.description}</p>}
-  </section>
+    <section class="papyrus-hero">
+      <p class="papyrus-post-back">
+        <a href={withBase("/collections/")}>
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M19 12H5"></path>
+            <path d="m12 19-7-7 7-7"></path>
+          </svg>
+          <span>Back</span>
+        </a>
+      </p>
+      <h1>{collection.name}</h1>
+      {collection.description && <p class="papyrus-description">{collection.description}</p>}
+    </section>
 
-  <section id="posts" class="papyrus-section">
-    <h2>Posts by section</h2>
-    {collection.posts.length > 0 ? (
-      <PapyrusCollectionIndex collection={collection} />
-    ) : (
-      <p>No posts found in this collection folder.</p>
-    )}
-  </section>
+    <section id="posts" class="papyrus-section">
+      <h2>Posts by section</h2>
+      {collection.posts.length > 0 ? (
+        <PapyrusCollectionIndex collection={collection} />
+      ) : (
+        <p>No posts found in this collection folder.</p>
+      )}
+    </section>
+  </div>
 </PapyrusBaseLayout>

@@ -165,6 +165,8 @@ assert(defaults.securityTxt.contacts.length === 0, "default security.txt contact
 for (const page of ["posts", "timeline", "tags", "search", "projects", "about"]) {
   assert(defaults.pages[page]?.description === false, `default ${page} page description should be hidden`);
 }
+assert(configModule.pageDescription(defaults, "timeline", "Timeline fallback") === undefined, "false page description should hide visible copy");
+assert(configModule.pageMetaDescription(defaults, "timeline", "Timeline fallback") === "Timeline fallback", "false page description should retain metadata fallback");
 const aboutOnly = configModule.resolvePapyrusConfig({ pages: { about: { content: "About body" } } });
 assert(aboutOnly.pages.about?.description === false, "page defaults should merge with about content overrides");
 assert(aboutOnly.pages.about?.content === "About body", "about content override should be preserved");

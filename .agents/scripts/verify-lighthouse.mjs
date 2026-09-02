@@ -11,6 +11,7 @@ const dist = join(root, "dist");
 const reportDir = join(root, ".lighthouse");
 const port = Number(process.env.LIGHTHOUSE_PORT ?? 4177);
 const minScore = Number(process.env.LIGHTHOUSE_MIN_SCORE ?? 100);
+const concurrency = Math.min(8, Math.max(1, Number.parseInt(process.env.LIGHTHOUSE_CONCURRENCY ?? "4", 10) || 4));
 const origin = `http://127.0.0.1:${port}`;
 const systemChromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const chromePath = process.env.CHROME_PATH
@@ -97,6 +98,8 @@ async function collectRoutes() {
         continue;
       }
       if (entry.name !== "index.html") continue;
+      const html = await readFile(path, "utf8");
+      if (/<meta\b(?=[^>]*\bname=["']robots["'])(?=[^>]*\bcontent=["'][^"']*\bnoindex\b)[^>]*>/i.test(html)) continue;
 
       const directoryRoute = relative(dist, dirname(path)).split("/").filter(Boolean).join("/");
       const route = directoryRoute ? `/${directoryRoute}/` : "/";
@@ -186,10 +189,11 @@ const routes = await collectRoutes();
 assert(routes.length > 0, "No Lighthouse routes found.");
 console.log(`Lighthouse Chrome: ${chromePath}`);
 console.log(`Lighthouse routes: ${routes.join(", ")}`);
+console.log(`Lighthouse concurrency: ${concurrency}`);
 
 const server = await startServer();
 try {
-  for (const route of routes) {
+  async function verifyRoute(route) {
     const reportPath = routeReportPath(route);
     await runLighthouse(route, reportPath);
     const report = JSON.parse(await readFile(reportPath, "utf8"));
@@ -208,6 +212,12 @@ try {
       assert(score >= minScore, `${route} ${category} score ${score} is below LIGHTHOUSE_MIN_SCORE=${minScore}`);
     }
   }
+
+  await Promise.all(Array.from({ length: Math.min(concurrency, routes.length) }, async (_, worker) => {
+    for (let index = worker; index < routes.length; index += concurrency) {
+      await verifyRoute(routes[index]);
+    }
+  }));
 } finally {
   await new Promise((resolveClose) => server.close(resolveClose));
 }

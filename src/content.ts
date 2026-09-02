@@ -28,4 +28,16 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { posts };
+const pages = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/pages" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    layout: z.literal("page").optional().default("page"),
+    permalink: z.string().regex(/^\/[A-Za-z0-9][A-Za-z0-9/_-]*\/?$/, "Use an absolute path such as /uses/ or /notes/setup/.").optional(),
+    draft: z.boolean().optional().default(false),
+    robots: z.string().optional(),
+  }),
+});
+
+export const collections = { pages, posts };

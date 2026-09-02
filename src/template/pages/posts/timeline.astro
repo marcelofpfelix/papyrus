@@ -1,16 +1,17 @@
 ---
 import { getCollection } from "astro:content";
 import { PapyrusArchiveList, PapyrusBaseLayout } from "../../../components";
-import { pageDescription } from "../../../config";
+import { pageDescription, pageMetaDescription } from "../../../config";
 import { publishedPosts } from "../../../utils";
 import { getTemplateSite } from "../../site";
 
 const site = await getTemplateSite();
 const posts = publishedPosts(await getCollection("posts"));
 const description = pageDescription(site, "timeline", "A compact chronological archive for readers who want every public post by date.");
+const metaDescription = pageMetaDescription(site, "timeline", "A compact chronological archive for readers who want every public post by date.");
 ---
 
-<PapyrusBaseLayout title="Timeline" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
+<PapyrusBaseLayout title="Timeline" description={metaDescription} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
   <section class="papyrus-hero">
     <h1>Timeline</h1>
     {description && <p class="papyrus-description">{description}</p>}

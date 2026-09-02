@@ -1,16 +1,17 @@
 ---
 import { PapyrusBaseLayout } from "../../components";
-import { pageContent, pageDescription } from "../../config";
+import { pageContent, pageDescription, pageMetaDescription } from "../../config";
 import { withBase } from "../../utils";
 import { getTemplateSite } from "../site";
 
 const site = await getTemplateSite();
 const description = pageDescription(site, "about", site.description);
+const metaDescription = pageMetaDescription(site, "about", site.description);
 const content = pageContent(site, "about");
 const paragraphs = content?.split(/\n\s*\n/).map(paragraph => paragraph.trim()).filter(Boolean) ?? [];
 ---
 
-<PapyrusBaseLayout title="About" description={description} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
+<PapyrusBaseLayout title="About" description={metaDescription} siteTitle={site.title} brandTitle={site.brandTitle} brandMark={site.brandMark} showBrandTitle={site.showBrandTitle} defaultThemeProfile={site.defaultThemeProfile} defaultFontProfile={site.defaultFontProfile} nav={site.nav} socialLinks={site.socialLinks} features={site.features} googleVerification={site.googleVerification}>
   <section class="papyrus-hero">
     <h1>About</h1>
     {description && <p class="papyrus-description">{description}</p>}

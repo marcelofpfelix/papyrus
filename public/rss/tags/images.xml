@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>#images posts</title>
-    <link>/</link>
+    <link>https://papyrus.marcelofelix.com</link>
     <description>Posts tagged #images</description>
     <lastBuildDate>Thu, 13 Aug 2026 00:00:00 GMT</lastBuildDate>
-    <atom:link href="/rss/tags/images.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://papyrus.marcelofelix.com/rss/tags/images.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Theme-aware image effects</title>
-      <link>/posts/image-effects/</link>
-      <guid>/posts/image-effects/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/image-effects/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/image-effects/</guid>
       <pubDate>Thu, 13 Aug 2026 00:00:00 GMT</pubDate>
       <description>Configure duotone, tritone, and dithered image treatments for covers and profile photos.</description>
     </item>

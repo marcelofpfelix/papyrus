@@ -2,77 +2,77 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>#papyrus posts</title>
-    <link>/</link>
+    <link>https://papyrus.marcelofelix.com</link>
     <description>Posts tagged #papyrus</description>
     <lastBuildDate>Thu, 13 Aug 2026 00:00:00 GMT</lastBuildDate>
-    <atom:link href="/rss/tags/papyrus.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://papyrus.marcelofelix.com/rss/tags/papyrus.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Theme-aware image effects</title>
-      <link>/posts/image-effects/</link>
-      <guid>/posts/image-effects/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/image-effects/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/image-effects/</guid>
       <pubDate>Thu, 13 Aug 2026 00:00:00 GMT</pubDate>
       <description>Configure duotone, tritone, and dithered image treatments for covers and profile photos.</description>
     </item>
     <item>
       <title>Profile and CV</title>
-      <link>/posts/profile/</link>
-      <guid>/posts/profile/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/profile/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/profile/</guid>
       <pubDate>Mon, 13 Jul 2026 08:20:00 GMT</pubDate>
       <description>What the Papyrus profile data file controls and how profile, print, and export routes share it.</description>
     </item>
     <item>
       <title>Collections</title>
-      <link>/posts/collections/</link>
-      <guid>/posts/collections/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/collections/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/collections/</guid>
       <pubDate>Mon, 13 Jul 2026 08:10:00 GMT</pubDate>
       <description>What Papyrus collections are and how folder-backed collection routes work.</description>
     </item>
     <item>
       <title>Site config</title>
-      <link>/posts/site-config/</link>
-      <guid>/posts/site-config/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/site-config/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/site-config/</guid>
       <pubDate>Mon, 13 Jul 2026 08:00:00 GMT</pubDate>
       <description>What papyrus.config.toml controls and how a site should edit it.</description>
     </item>
     <item>
       <title>Install and configure Papyrus</title>
-      <link>/posts/install-configure-papyrus/</link>
-      <guid>/posts/install-configure-papyrus/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/install-configure-papyrus/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/install-configure-papyrus/</guid>
       <pubDate>Fri, 10 Jul 2026 09:00:00 GMT</pubDate>
       <description>Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides.</description>
     </item>
     <item>
       <title>Feature map</title>
-      <link>/posts/feature-map/</link>
-      <guid>/posts/feature-map/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/feature-map/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/feature-map/</guid>
       <pubDate>Wed, 01 Jul 2026 14:00:00 GMT</pubDate>
       <description>Route-by-route guide to public Papyrus features.</description>
     </item>
     <item>
       <title>Generated content structure</title>
-      <link>/posts/content-structure/</link>
-      <guid>/posts/content-structure/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/content-structure/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/content-structure/</guid>
       <pubDate>Wed, 01 Jul 2026 13:10:00 GMT</pubDate>
       <description>How Papyrus turns nested Markdown folders and folder metadata into a readable public content index.</description>
     </item>
     <item>
       <title>Feature config</title>
-      <link>/posts/features/</link>
-      <guid>/posts/features/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/features/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/features/</guid>
       <pubDate>Wed, 01 Jul 2026 09:10:00 GMT</pubDate>
       <description>Grouped feature toggles for Papyrus layouts.</description>
     </item>
     <item>
       <title>Papyrus docs</title>
-      <link>/posts/papyrus-docs/</link>
-      <guid>/posts/papyrus-docs/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/papyrus-docs/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/papyrus-docs/</guid>
       <pubDate>Wed, 01 Jul 2026 09:00:00 GMT</pubDate>
       <description>Start with papyrus-template, then edit config, Markdown, profile data, and assets.</description>
     </item>
     <item>
       <title>Papyrus package shape</title>
-      <link>/posts/papyrus-package-shape/</link>
-      <guid>/posts/papyrus-package-shape/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/papyrus-package-shape/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/papyrus-package-shape/</guid>
       <pubDate>Tue, 30 Jun 2026 11:00:00 GMT</pubDate>
       <description>Package-boundary guide showing how Papyrus keeps repeated blog UI in reusable theme exports.</description>
     </item>

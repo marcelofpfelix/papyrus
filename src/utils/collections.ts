@@ -1,8 +1,11 @@
-import { readdir, readFile } from "node:fs/promises";
-import { join, relative, sep } from "node:path";
-import { parse } from "smol-toml";
 import { postSlug, type PapyrusPostEntry } from "./posts";
 import { withBase } from "./withBase";
+import {
+  collectionContainsPost,
+  collectionSectionForPost,
+  collectionSectionSlug as sectionSlug,
+  readPostCollectionMetadata,
+} from "./collection-metadata.mjs";
 
 export type PapyrusCollectionSection = {
   name: string;
@@ -34,12 +37,7 @@ export type PapyrusCollectionTocLink = {
 };
 
 export function collectionSectionSlug(name: string): string {
-  return name
-    .normalize("NFKD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
+  return sectionSlug(name);
 }
 
 export function collectionSectionId(name: string): string {
@@ -65,10 +63,10 @@ function postPath(post: PapyrusPostEntry) {
 }
 
 export function collectionPostsForSection(collection: PapyrusCollection, sectionName: string): PapyrusPostEntry[] {
-  const sectionSlug = collectionSectionSlug(sectionName);
-  const prefix = `src/content/posts/${collectionDir(collection)}/${sectionSlug}/`;
-
-  return collection.posts.filter(post => postPath(post).startsWith(prefix));
+  return collection.posts.filter(post => collectionSectionForPost({
+    ...collection,
+    directory: collectionDir(collection),
+  }, postPath(post)) === sectionName);
 }
 
 export function collectionOrderedPosts(collection: PapyrusCollection): PapyrusPostEntry[] {
@@ -117,78 +115,19 @@ export function collectionTocLinks(collection: PapyrusCollection, basePath = `/c
     : links;
 }
 
-function asRecord(value: unknown): Record<string, unknown> {
-  return value && typeof value === "object" && !Array.isArray(value) ? value as Record<string, unknown> : {};
-}
-
-function asString(value: unknown, fallback = ""): string {
-  return typeof value === "string" ? value : fallback;
-}
-
-function asSections(value: unknown): PapyrusCollectionSection[] {
-  return Array.isArray(value)
-    ? value.map(section => {
-        const record = asRecord(section);
-        return {
-          name: asString(record.name),
-          description: asString(record.description),
-        };
-      }).filter(section => section.name)
-    : [];
-}
-
-function asSettings(value: unknown): PapyrusCollectionSettings {
-  const record = asRecord(value);
-  const postFooter = asString(record.post_footer, "collection");
-
-  return {
-    postFooter: postFooter === "none" ? "none" : "collection",
-    postFooterCollapsible: record.post_footer_collapsible !== false,
-  };
-}
-
-function titleFromSlug(slug: string): string {
-  return slug.split("-").filter(Boolean).map(part => `${part[0]?.toUpperCase() ?? ""}${part.slice(1)}`).join(" ");
-}
-
-async function findTomlFiles(dir: string): Promise<string[]> {
-  const entries = await readdir(dir, { withFileTypes: true });
-  const files = await Promise.all(entries.map(async entry => {
-    const path = join(dir, entry.name);
-    if (entry.isDirectory()) return findTomlFiles(path);
-    return entry.isFile() && entry.name.endsWith(".toml") ? [path] : [];
-  }));
-
-  return files.flat();
-}
-
 export async function getPostCollections(postsDir = "src/content/posts", sourcePosts: PapyrusPostEntry[] = []): Promise<PapyrusCollection[]> {
-  const collectionSourcePosts = sourcePosts;
-  const collectionFiles = await findTomlFiles(postsDir);
-  const collections = await Promise.all(collectionFiles.map(async path => {
-    const source = await readFile(path, "utf8");
-    const parsed = asRecord(parse(source));
-    const relativePath = relative(postsDir, path).split(sep).join("/");
-    const slug = relativePath.replace(/\/[^/]+\.toml$/, "").replace(/\.toml$/, "");
-    const collectionSlug = slug.split("/").filter(Boolean).at(-1) ?? slug;
-    const collectionDir = relativePath.includes("/") ? relativePath.slice(0, relativePath.lastIndexOf("/")) : "";
-    const collectionPostPrefix = collectionDir ? `${postsDir}/${collectionDir}/` : `${postsDir}/`;
-    const collectionPosts = collectionSourcePosts
+  const collections = (await readPostCollectionMetadata(postsDir)).map(metadata => {
+    const collectionPosts = sourcePosts
       .filter(post => !post.data.draft && !post.data.hidden)
-      .filter(post => postPath(post).includes(collectionPostPrefix))
+      .filter(post => collectionContainsPost(metadata, postPath(post), postsDir))
       .sort((a, b) => (a.filePath ?? a.id).localeCompare(b.filePath ?? b.id));
 
     return {
-      slug: collectionSlug,
-      href: withBase(`/collections/${collectionSlug}/`),
-      path: relativePath,
-      name: asString(parsed.name, titleFromSlug(collectionSlug)),
-      description: asString(parsed.description),
-      settings: asSettings(parsed.settings),
-      sections: asSections(parsed.sections),
+      ...metadata,
+      href: withBase(`/collections/${metadata.slug}/`),
       posts: collectionPosts,
     };
-  }));
+  });
 
   return collections.sort((a, b) => a.name.localeCompare(b.name));
 }

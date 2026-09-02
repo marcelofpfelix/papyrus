@@ -1,112 +1,112 @@
 [
   {
     "tag": "ai",
-    "feed": "/rss/tags/ai.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/ai.xml",
     "count": 1
   },
   {
     "tag": "astro",
-    "feed": "/rss/tags/astro.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/astro.xml",
     "count": 4
   },
   {
     "tag": "authoring",
-    "feed": "/rss/tags/authoring.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/authoring.xml",
     "count": 2
   },
   {
     "tag": "changelog",
-    "feed": "/rss/tags/changelog.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/changelog.xml",
     "count": 1
   },
   {
     "tag": "code",
-    "feed": "/rss/tags/code.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/code.xml",
     "count": 1
   },
   {
     "tag": "collections",
-    "feed": "/rss/tags/collections.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/collections.xml",
     "count": 1
   },
   {
     "tag": "config",
-    "feed": "/rss/tags/config.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/config.xml",
     "count": 2
   },
   {
     "tag": "content",
-    "feed": "/rss/tags/content.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/content.xml",
     "count": 1
   },
   {
     "tag": "custom",
-    "feed": "/rss/tags/custom.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/custom.xml",
     "count": 1
   },
   {
     "tag": "cv",
-    "feed": "/rss/tags/cv.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/cv.xml",
     "count": 1
   },
   {
     "tag": "deploy",
-    "feed": "/rss/tags/deploy.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/deploy.xml",
     "count": 1
   },
   {
     "tag": "docs",
-    "feed": "/rss/tags/docs.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/docs.xml",
     "count": 7
   },
   {
     "tag": "images",
-    "feed": "/rss/tags/images.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/images.xml",
     "count": 1
   },
   {
     "tag": "markdown",
-    "feed": "/rss/tags/markdown.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/markdown.xml",
     "count": 2
   },
   {
     "tag": "mobile",
-    "feed": "/rss/tags/mobile.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/mobile.xml",
     "count": 1
   },
   {
     "tag": "papyrus",
-    "feed": "/rss/tags/papyrus.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/papyrus.xml",
     "count": 10
   },
   {
     "tag": "portuguese-food",
-    "feed": "/rss/tags/portuguese-food.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/portuguese-food.xml",
     "count": 20
   },
   {
     "tag": "profile",
-    "feed": "/rss/tags/profile.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/profile.xml",
     "count": 1
   },
   {
     "tag": "recipe",
-    "feed": "/rss/tags/recipe.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/recipe.xml",
     "count": 20
   },
   {
     "tag": "reference",
-    "feed": "/rss/tags/reference.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/reference.xml",
     "count": 3
   },
   {
     "tag": "start",
-    "feed": "/rss/tags/start.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/start.xml",
     "count": 1
   },
   {
     "tag": "theme",
-    "feed": "/rss/tags/theme.xml",
+    "feed": "https://papyrus.marcelofelix.com/rss/tags/theme.xml",
     "count": 2
   }
 ]

@@ -88,10 +88,10 @@
     "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
   },
   {
-    "feature": "unsupported-github-edge-cases",
+    "feature": "optional-markdown-fallbacks",
     "route": "/collections/docs/code-demo/",
     "source": "src/content/posts/docs/authoring/10-code-demo.md",
-    "sourceNeedle": "Fallback rendering",
+    "sourceNeedle": "Optional rendering",
     "selector": ".papyrus-prose table",
     "screenshots": [".screenshots/responsive/code-demo-desktop.png", ".screenshots/responsive/code-demo-tablet.png", ".screenshots/responsive/code-demo-mobile.png"]
   }

@@ -3,6 +3,8 @@ import { spawnSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 
 const provider = await readFile("src/components/PapyrusThemeProvider.astro", "utf8");
+const bootstrap = await readFile("src/components/PapyrusThemeBootstrap.astro", "utf8");
+const baseLayout = await readFile("src/layouts/PapyrusBaseLayout.astro", "utf8");
 const papyrusCss = await readFile("src/styles/papyrus.css", "utf8");
 const pureTheme = await readFile("src/styles/themes/pure.css", "utf8");
 const catppuccinTheme = await readFile("src/styles/themes/catppuccin.css", "utf8");
@@ -55,11 +57,18 @@ assert(provider.includes("setFontProfile(undefined, true)"), "font profile toggl
 
 assert(provider.includes('defaultThemeProfile = "gruvbox"'), "default theme profile is not gruvbox");
 assert(provider.includes('defaultFontProfile = "readable"'), "default font profile is not readable");
-assert(provider.includes("localStorage.getItem(PAPYRUS_PROFILE_STORAGE_KEY) ?? PAPYRUS_INLINE_DEFAULT_THEME_PROFILE"), "early stored theme profile does not use configurable default");
-assert(provider.includes("localStorage.getItem(PAPYRUS_FONT_STORAGE_KEY) ?? PAPYRUS_INLINE_DEFAULT_FONT_PROFILE"), "early stored font profile does not use configurable default");
-assert(provider.includes('localStorage.getItem("papyrus-theme") ?? PAPYRUS_RUNTIME_DEFAULT_THEME_PROFILE'), "runtime stored theme profile does not use configurable default");
-assert(provider.includes('localStorage.getItem("papyrus-font") ?? PAPYRUS_RUNTIME_DEFAULT_FONT_PROFILE'), "runtime stored font profile does not use configurable default");
-assert(provider.includes('papyrusPureApplyTheme(papyrusPureStoredMode() ?? "system", papyrusPureStoredProfile())'), "initial theme mode does not default to system");
+assert(bootstrap.includes('read("papyrus-theme")') && bootstrap.includes(": defaultTheme"), "early stored theme profile does not use configurable default");
+assert(bootstrap.includes('read("papyrus-font")') && bootstrap.includes(": defaultFont"), "early stored font profile does not use configurable default");
+assert(provider.includes('readThemeStorage("papyrus-theme") ?? PAPYRUS_RUNTIME_DEFAULT_THEME_PROFILE'), "runtime stored theme profile does not use configurable default");
+assert(provider.includes('readThemeStorage("papyrus-font") ?? PAPYRUS_RUNTIME_DEFAULT_FONT_PROFILE'), "runtime stored font profile does not use configurable default");
+assert(bootstrap.includes('read("papyrus-mode") ?? read("theme") ?? "system"'), "initial theme mode does not default to system");
+assert(bootstrap.includes("try {\n      return localStorage.getItem(key);"), "theme bootstrap does not tolerate inaccessible storage");
+assert(baseLayout.includes("data-papyrus-theme={defaultThemeProfile}"), "initial HTML does not declare the configured theme profile");
+assert(baseLayout.includes("data-papyrus-font={defaultFontProfile}"), "initial HTML does not declare the configured font profile");
+assert(baseLayout.indexOf('<meta charset="utf-8"') < baseLayout.indexOf("<PapyrusThemeBootstrap"), "charset must precede the theme bootstrap");
+assert(baseLayout.indexOf("<PapyrusThemeBootstrap") < baseLayout.indexOf('<meta name="viewport"'), "theme bootstrap must run before render-affecting head content");
+assert(baseLayout.indexOf("<PapyrusThemeProvider") > baseLayout.indexOf("<title>"), "full theme control runtime should remain outside the critical bootstrap path");
+assert(bootstrap.length < 2400, `theme bootstrap is too large (${bootstrap.length} bytes)`);
 assert(provider.includes('const themes = ["system", "dark", "light"]'), "mode cycle does not include system/light/dark");
 assert(!/dyslexic|OpenDyslexic/i.test(`${provider}\n${papyrusCss}\n${footer}`), "dyslexic font option should not be present");
 assert(packageJson.bin?.["papyrus-theme"] === "scripts/theme-profile.mjs", "papyrus-theme bin is missing");
@@ -88,7 +97,7 @@ for (const [profile] of themeProfiles) {
   }
 }
 
-assert(catppuccinTheme.includes("--papyrus-accent: #7287fd"), "Catppuccin Latte accent is not lavender");
+assert(catppuccinTheme.includes("--papyrus-accent: #8839ef"), "Catppuccin Latte accent is not mauve");
 assert(catppuccinTheme.includes("--papyrus-accent: #b4befe"), "Catppuccin Mocha accent is not lavender");
 assert(pureTheme.includes("--papyrus-bg: #fcfcfd"), "Pure light background should match Pure's #FCFCFD baseline");
 assert(pureTheme.includes("--papyrus-theme-color: #fcfcfd"), "Pure light theme-color should match Pure's #FCFCFD baseline");
@@ -117,4 +126,4 @@ for (const [profile, file] of themeProfiles) {
   assert(themeList.stdout.includes(`${profile}\t${file}`), `theme-profile list missing ${profile}`);
 }
 
-console.log("Verified theme defaults, Pure background baseline, theme token pairs, package exports, Catppuccin lavender accents, font profiles, and theme-profile script.");
+console.log("Verified pre-paint theme bootstrap, theme defaults/token pairs, package exports, font profiles, and theme-profile script.");

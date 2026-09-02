@@ -2,35 +2,35 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>#astro posts</title>
-    <link>/</link>
+    <link>https://papyrus.marcelofelix.com</link>
     <description>Posts tagged #astro</description>
     <lastBuildDate>Fri, 10 Jul 2026 09:00:00 GMT</lastBuildDate>
-    <atom:link href="/rss/tags/astro.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://papyrus.marcelofelix.com/rss/tags/astro.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Install and configure Papyrus</title>
-      <link>/posts/install-configure-papyrus/</link>
-      <guid>/posts/install-configure-papyrus/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/install-configure-papyrus/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/install-configure-papyrus/</guid>
       <pubDate>Fri, 10 Jul 2026 09:00:00 GMT</pubDate>
       <description>Use papyrus-template as the recommended starting point, then configure the site with TOML, Markdown, and asset overrides.</description>
     </item>
     <item>
       <title>Deploy Papyrus</title>
-      <link>/posts/deploy/</link>
-      <guid>/posts/deploy/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/deploy/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/deploy/</guid>
       <pubDate>Wed, 01 Jul 2026 15:00:00 GMT</pubDate>
       <description>Static hosting, build settings, metadata URLs, and base-path notes for a Papyrus site.</description>
     </item>
     <item>
       <title>Papyrus docs</title>
-      <link>/posts/papyrus-docs/</link>
-      <guid>/posts/papyrus-docs/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/papyrus-docs/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/papyrus-docs/</guid>
       <pubDate>Wed, 01 Jul 2026 09:00:00 GMT</pubDate>
       <description>Start with papyrus-template, then edit config, Markdown, profile data, and assets.</description>
     </item>
     <item>
       <title>Papyrus package shape</title>
-      <link>/posts/papyrus-package-shape/</link>
-      <guid>/posts/papyrus-package-shape/</guid>
+      <link>https://papyrus.marcelofelix.com/posts/papyrus-package-shape/</link>
+      <guid>https://papyrus.marcelofelix.com/posts/papyrus-package-shape/</guid>
       <pubDate>Tue, 30 Jun 2026 11:00:00 GMT</pubDate>
       <description>Package-boundary guide showing how Papyrus keeps repeated blog UI in reusable theme exports.</description>
     </item>

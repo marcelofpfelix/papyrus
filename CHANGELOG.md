@@ -2,6 +2,14 @@
 
 ## 0.2.4
 
+- Keep canonical and collection post routes on one shared layout-props path so
+  metadata, actions, comments, tags, typography, and feature flags stay in sync.
+- Add standalone Markdown pages inherited from `src/content/pages`, and apply
+  the configured theme before first paint to avoid a light-theme flash.
+- Export a framework-neutral GitHub repository-card renderer for components and
+  optional external Markdown plugins.
+- Add deduplicated tags plus collection and section context to generated post
+  social cards while preserving explicit social-image and cover precedence.
 - Generate `1200x630` PNG social cards with explicit Open Graph image metadata
   for more reliable social crawler support.
 - Keep canonical and social URLs on the configured production origin during

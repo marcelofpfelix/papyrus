@@ -89,6 +89,14 @@ yet. Create a dedicated `PP-*` row before implementing any of them.
   Console shorthand, but allow Bing/Yandex/generic verification meta tags.
 - Maybe: sidebar blocks. Optional custom sidebar content/navigation for long pages or
   collection sections.
+- Maybe: strict or sanitized Markdown mode. Preserve trusted raw HTML by default,
+  but provide an explicit boundary for sites that ingest third-party Markdown.
+- Maybe: optional math rendering. Support accessible inline and block math without
+  adding a renderer or client payload to sites that do not use equations.
+- Maybe: heading permalink controls. Add a small hover/focus link beside article
+  headings while keeping the existing table of contents as the main navigation.
+- Maybe: GeoJSON and TopoJSON rendering. Keep it an optional plugin because maps
+  add browser code, accessibility requirements, and maintenance cost.
 
 ## Features to skip or avoid copying directly
 

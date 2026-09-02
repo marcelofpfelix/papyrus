@@ -150,15 +150,27 @@ flowchart LR
 - [PlantUML source](/demo/call-flow.puml "PlantUML source")
 - [Excalidraw source](/demo/sketch.excalidraw "Excalidraw source")
 
-## Fallback rendering
+## Optional rendering
 
 Some GitHub-style or diagram-adjacent formats need a site-owned plugin or
 renderer. Papyrus keeps the source visible so authors can choose the right
 integration for their site.
 
+For example, the planned external GitHub-card plugin can turn this readable
+fallback into the same static card used by Papyrus components after the shared
+renderer is published:
+
+````md
+```github
+marcelofpfelix/papyrus
+```
+````
+
 | Feature | Expected fallback |
 | --- | --- |
+| Emoji codes like `:information_source:` | Render through the optional [`papyrus-plugins`](https://github.com/marcelofpfelix/papyrus-plugins) package, or remain literal when it is not enabled |
+| Inline and block math | Keep the source visible or render a `math` fence as code |
+| GeoJSON, TopoJSON, and STL fences | Render as code instead of an interactive map or model |
 | PlantUML inline rendering | Keep as a file link |
 | Excalidraw inline rendering | Keep as a file link |
 | Wiki links like `[[topic]]` | Keep as plain text |
-| Footnotes like `[^1]` | Render when a consuming site adds a plugin |

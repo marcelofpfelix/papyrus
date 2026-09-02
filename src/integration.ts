@@ -41,6 +41,7 @@ const defaultRoutes: DefaultRoute[] = [
   { pattern: "/rss.xml", entrypoint: templateRoute("./template/pages/rss.xml.ts"), localFiles: ["src/pages/rss.xml.ts", "src/pages/rss.xml.js"] },
   { pattern: "/robots.txt", entrypoint: templateRoute("./template/pages/robots.txt.ts"), localFiles: ["src/pages/robots.txt.ts", "src/pages/robots.txt.js"] },
   { pattern: "/giscus/[profile]/[mode].css", entrypoint: templateRoute("./template/pages/giscus/[profile]/[mode].css.ts"), localFiles: ["src/pages/giscus/[profile]/[mode].css.ts", "src/pages/giscus/[profile]/[mode].css.js"] },
+  { pattern: "/[...page]", entrypoint: templateRoute("./template/pages/[...page].astro"), localFiles: ["src/pages/[...page].astro"] },
 ];
 
 const securityTxtRoutes: DefaultRoute[] = [

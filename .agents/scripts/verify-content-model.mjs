@@ -51,8 +51,21 @@ export function withBase(path, base = "") {
   await mkdir(join(tmp, "node_modules", "smol-toml"), { recursive: true });
   await writeFile(join(tmp, "node_modules", "smol-toml", "package.json"), '{"type":"module","exports":"./index.mjs"}\n');
   await writeFile(join(tmp, "node_modules", "smol-toml", "index.mjs"), "export function parse() { return {}; }\n");
+  await writeFile(join(tmp, "collection-metadata.mjs"), await readFile("src/utils/collection-metadata.mjs", "utf8"));
   await writeFile(join(tmp, "collections.mjs"), collectionsTranspiled);
   const collections = await import(join(tmp, "collections.mjs"));
+  const collectionMetadata = await import(join(tmp, "collection-metadata.mjs"));
+
+  const pagesSource = await readFile("src/utils/pages.ts", "utf8");
+  const pagesTranspiled = ts.transpileModule(pagesSource, {
+    compilerOptions: {
+      module: ts.ModuleKind.ES2022,
+      target: ts.ScriptTarget.ES2022,
+      verbatimModuleSyntax: true,
+    },
+  }).outputText;
+  await writeFile(join(tmp, "pages.mjs"), pagesTranspiled);
+  const pages = await import(join(tmp, "pages.mjs"));
 
   const nested = {
     id: "voice/ai/agent-stack.md",
@@ -108,6 +121,18 @@ export function withBase(path, base = "") {
     ...nested,
     data: { ...nested.data, slug: "voice/ai/agent-stack" },
   };
+  const markdownPage = {
+    id: "notes/setup.md",
+    data: { title: "Setup", layout: "page" },
+  };
+  const permalinkPage = {
+    id: "elsewhere.md",
+    data: { title: "Uses", layout: "page", permalink: "/uses/" },
+  };
+  const draftPage = {
+    id: "draft-page.md",
+    data: { title: "Draft page", layout: "page", draft: true },
+  };
 
   same(posts.folderTags(nested), ["voice", "ai"], "folderTags should derive nested folder tags");
   same(posts.postTags(nested), ["ai", "voice"], "postTags should merge explicit and folder tags without duplicates");
@@ -115,10 +140,25 @@ export function withBase(path, base = "") {
   assert(posts.postSlug(older) === "ops/kamailio", "postSlug should fall back to id without extension");
   assert(posts.postHref(nested) === "/posts/stable-agent-stack/", "postHref should use slug under /posts");
   assert(posts.postHref(older) === "/posts/ops/kamailio/", "postHref should preserve folder path fallback when no slug is set");
+  assert(pages.pageSlug(markdownPage) === "notes/setup", "pageSlug should preserve nested source paths");
+  assert(pages.pageSlug(permalinkPage) === "uses", "pageSlug should prefer an explicit permalink");
+  same(pages.routablePages([markdownPage, draftPage]).map(page => page.id), ["notes/setup.md"], "routablePages should exclude drafts");
+  let reservedRouteError = "";
+  try {
+    pages.pageSlug({ id: "about.md", data: { title: "About" } });
+  } catch (error) {
+    reservedRouteError = error instanceof Error ? error.message : String(error);
+  }
+  assert(reservedRouteError.includes("reserved route"), "pageSlug should reject package-owned routes");
   assert(posts.postHref(nested, "/notes") === "/notes/stable-agent-stack/", "postHref should support an alternate base path without changing slug policy");
   assert(collections.collectionPostSlug({ slug: "voice" }, namespaced) === "ai/agent-stack", "collectionPostSlug should strip an exact collection namespace");
   assert(collections.collectionPostSlug({ slug: "docs" }, nested) === "stable-agent-stack", "collectionPostSlug should preserve an unrelated post slug");
   assert(collections.collectionPostHref({ slug: "voice" }, namespaced) === "/collections/voice/ai/agent-stack/", "collectionPostHref should use the collection-relative slug");
+  const broadCollection = { slug: "voice", path: "voice/voice.toml", directory: "voice", name: "Voice", sections: [{ name: "AI", description: "" }] };
+  const nestedCollection = { slug: "ai", path: "voice/ai/ai.toml", directory: "voice/ai", name: "Voice AI", sections: [] };
+  assert(collectionMetadata.collectionContainsPost(broadCollection, nested.filePath), "folder collection should contain nested posts");
+  assert(collectionMetadata.collectionSectionForPost(broadCollection, nested.filePath) === "AI", "collection section should derive from the post folder");
+  assert(collectionMetadata.primaryCollectionForPost([broadCollection, nestedCollection], nested.filePath)?.slug === "ai", "most specific collection should provide social-card context");
   assert(posts.pinRank(nested) === 2, "numeric pinned rank should be preserved");
   assert(posts.pinRank(older) === 1, "boolean pinned rank should be 1");
   assert(posts.hasUpdatedDate(nested), "modDatetime on a different day should count as updated");
@@ -179,7 +219,7 @@ export function withBase(path, base = "") {
     "guide missing planned backlink/graph interaction guidance"
   );
 
-  console.log("Verified post utilities, stable route policy, backlink plan, and content-outline folder metadata behavior.");
+  console.log("Verified post and Markdown-page routes, stable route policy, backlink plan, and content-outline folder metadata behavior.");
 } finally {
   await rm(tmp, { recursive: true, force: true });
 }

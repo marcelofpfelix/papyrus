@@ -4,6 +4,12 @@ import { dirname, extname, join, relative, resolve, sep } from "node:path";
 import sharp from "sharp";
 import { configuredBrand, siteConfig } from "./site-config.mjs";
 import { themeTokens } from "./theme-colors.mjs";
+import { frontmatterTags, parseFrontmatter } from "./frontmatter.mjs";
+import {
+  collectionSectionForPost,
+  primaryCollectionForPost,
+  readPostCollectionMetadata,
+} from "../src/utils/collection-metadata.mjs";
 
 const cwd = process.cwd();
 const defaultPostsDir = "src/content/posts";
@@ -15,20 +21,6 @@ function escapeXml(value) {
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;");
-}
-
-function frontmatterBlock(text) {
-  const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
-  return match?.[1] ?? "";
-}
-
-function frontmatterValue(text, key) {
-  const match = text.match(new RegExp(`^${key}:\\s*["']?(.+?)["']?\\s*$`, "m"));
-  return match?.[1]?.trim();
-}
-
-function frontmatterBoolean(text, key) {
-  return frontmatterValue(text, key)?.toLowerCase() === "true";
 }
 
 function wrapWords(value, max = 30, limit = 3) {
@@ -88,7 +80,7 @@ async function socialImageHref(root, value) {
 }
 
 function postSlugFromPath(file, postsDir, frontmatterSlug) {
-  if (frontmatterSlug) return frontmatterSlug.replace(/^\/+|\/+$/g, "");
+  if (typeof frontmatterSlug === "string" && frontmatterSlug) return frontmatterSlug.replace(/^\/+|\/+$/g, "");
   const relativePath = relative(postsDir, file).split(sep).join("/");
   return relativePath.replace(/\.(md|mdx)$/i, "");
 }
@@ -138,16 +130,44 @@ function sourceImageSvg(sourceHref) {
   <rect x="720" y="0" width="52" height="630" class="fade"/>`;
 }
 
-function socialSvg({ title, description, brandTitle, brandMark, label, tokens, sourceImage }) {
+function boundedLine(value, max) {
+  const text = String(value ?? "").replace(/\s+/g, " ").trim();
+  return text.length > max ? `${text.slice(0, Math.max(0, max - 3)).trimEnd()}...` : text;
+}
+
+function tagLine(tags, max) {
+  const seen = new Set();
+  const unique = tags.filter(tag => {
+    const key = tag.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+  return boundedLine(unique.slice(0, 3).map(tag => `#${tag.replace(/\s+/g, "-")}`).join("  "), max);
+}
+
+export function socialContextForPost(file, postsDir, collections) {
+  const collection = primaryCollectionForPost(collections, file, postsDir);
+  if (!collection) return "";
+  const section = collectionSectionForPost(collection, file, postsDir);
+  return section ? `${collection.name} / ${section}` : collection.name;
+}
+
+export function socialSvg({ title, description, brandTitle, brandMark, label, tokens, sourceImage, context = "", tags = [] }) {
   const hasSourceImage = Boolean(sourceImage);
+  const contextText = boundedLine(context, hasSourceImage ? 38 : 62);
+  const tagsText = tagLine(tags, hasSourceImage ? 38 : 62);
   const titleLines = wrapWords(title, hasSourceImage ? 20 : 26, 3);
   const descriptionLines = wrapWords(description, hasSourceImage ? 38 : 58, 3);
+  const titleStart = contextText ? 225 : 205;
+  const descriptionStart = contextText ? 450 : 472;
   const titleSvg = titleLines
-    .map((line, index) => `<text x="72" y="${205 + index * 70}" class="title">${escapeXml(line)}</text>`)
+    .map((line, index) => `<text x="72" y="${titleStart + index * 70}" class="title">${escapeXml(line)}</text>`)
     .join("\n  ");
   const descriptionSvg = descriptionLines
-    .map((line, index) => `<text x="72" y="${472 + index * 38}" class="desc">${escapeXml(line)}</text>`)
+    .map((line, index) => `<text x="72" y="${descriptionStart + index * 38}" class="desc">${escapeXml(line)}</text>`)
     .join("\n  ");
+  const labelX = tagsText ? (hasSourceImage ? 700 : 1128) : 72;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="${escapeXml(title)}">
   <style>
@@ -157,15 +177,19 @@ function socialSvg({ title, description, brandTitle, brandMark, label, tokens, s
     .brand-mark { fill: ${tokens["--papyrus-accent"]}; }
     .title { font-size: 62px; font-weight: 800; letter-spacing: 0; }
     .desc { fill: ${tokens["--papyrus-muted"]}; font-size: 30px; }
+    .context { fill: ${tokens["--papyrus-accent"]}; font-size: 24px; font-weight: 700; }
+    .tags { fill: ${tokens["--papyrus-accent"]}; font-size: 23px; }
     .label { fill: ${tokens["--papyrus-muted"]}; font-size: 24px; }
     .fade { fill: ${tokens["--papyrus-bg"]}; opacity: .92; }
   </style>
   <rect class="bg" width="1200" height="630" rx="0"/>
   ${sourceImageSvg(sourceImage)}
   ${brandSvg({ brandMark, brandTitle })}
+  ${contextText ? `<text x="72" y="170" class="context">${escapeXml(contextText)}</text>` : ""}
   ${titleSvg}
   ${descriptionSvg}
-  <text x="72" y="582" class="label">${escapeXml(label)}</text>
+  ${tagsText ? `<text x="72" y="582" class="tags">${escapeXml(tagsText)}</text>` : ""}
+  <text x="${labelX}" y="582" class="label"${tagsText ? ' text-anchor="end"' : ""}>${escapeXml(label)}</text>
 </svg>
 `;
 }
@@ -183,6 +207,7 @@ export async function generateSocialImages(options = {}) {
   const config = await siteConfig(root);
   const tokens = await themeTokens();
   const brand = configuredBrand(config);
+  const collections = await readPostCollectionMetadata(postsDir);
   const siteTitle = config.title ?? brand.title;
   const siteDescription = config.description ?? "Personal site";
   const generated = [];
@@ -200,20 +225,20 @@ export async function generateSocialImages(options = {}) {
 
   for (const file of await walkMarkdown(postsDir)) {
     const text = await readFile(file, "utf8");
-    const frontmatter = frontmatterBlock(text);
-    const slug = postSlugFromPath(file, postsDir, frontmatterValue(frontmatter, "slug"));
+    const { data } = parseFrontmatter(text);
+    const slug = postSlugFromPath(file, postsDir, data.slug);
     const output = join(outputDir, "posts", `${slug}.png`);
-    if (frontmatterBoolean(frontmatter, "draft")) {
+    if (data.draft === true) {
       await rm(output, { force: true });
       await rm(output.replace(/\.png$/i, ".svg"), { force: true });
       continue;
     }
 
-    const title = frontmatterValue(frontmatter, "title");
+    const title = data.title;
     if (!title) continue;
 
-    const description = frontmatterValue(frontmatter, "description") ?? siteDescription;
-    const sourceImage = await socialImageHref(root, frontmatterValue(frontmatter, "ogSourceImage") ?? frontmatterValue(frontmatter, "cover"));
+    const description = data.description ?? siteDescription;
+    const sourceImage = await socialImageHref(root, data.ogSourceImage ?? data.cover);
     await writeSocialPng(output, socialSvg({
       title,
       description,
@@ -222,6 +247,8 @@ export async function generateSocialImages(options = {}) {
       label: siteTitle,
       tokens,
       sourceImage,
+      context: socialContextForPost(file, postsDir, collections),
+      tags: frontmatterTags(data.tags),
     }));
     generated.push(output);
   }

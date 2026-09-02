@@ -112,6 +112,30 @@ that already has a generated Pagefind index.
 Exact upstream releases, commits, adaptation boundaries, and licenses are
 listed in `THIRD_PARTY_NOTICES.md` in the package.
 
+## Optional Markdown plugins
+
+Build-time Markdown transforms that do not belong on every site live in the
+separate [`papyrus-plugins`](https://github.com/marcelofpfelix/papyrus-plugins)
+repository. Install the current GitHub package to enable emoji aliases:
+
+```sh
+pnpm add github:marcelofpfelix/papyrus-plugins
+```
+
+```js title="astro.config.mjs"
+import { definePapyrusAstroConfig } from "astro-papyrus/astro";
+import { remarkPapyrusEmoji } from "astro-papyrus-plugins";
+
+export default definePapyrusAstroConfig({
+  markdown: {
+    remarkPlugins: [remarkPapyrusEmoji],
+  },
+});
+```
+
+Aliases such as `:information_source:` become Unicode during the build. Inline
+and fenced code remain unchanged, and no browser JavaScript is added.
+
 Custom routes can read the same TOML file through `loadPapyrusConfig`:
 
 ```ts
@@ -137,9 +161,33 @@ Papyrus adds these routes:
 | `/404.html` | Helpful not-found page |
 | `/rss.xml` | Main RSS feed |
 | `/robots.txt` | Robots file with sitemap URL |
+| `/<permalink>/` | Standalone pages from `src/content/pages/` |
 
 Because the pages are injected by the package, the template does not need a
 `src/pages` tree unless your site adds custom routes.
+
+## Add a standalone Markdown page
+
+Put a file under `src/content/pages/` when the content should be a normal page
+rather than a dated post:
+
+```md title="src/content/pages/uses.md"
+---
+title: Uses
+description: Hardware and software I use regularly.
+layout: page
+permalink: /uses/
+---
+
+Page content goes here.
+```
+
+`layout: page` selects Papyrus's standard Markdown page layout. `permalink` is
+optional; without it, the route follows the file path below
+`src/content/pages/`. Set `draft: true` to omit the page from the build. Routes
+owned by Papyrus, such as `/posts/`, `/about/`, and `/search/`, cannot be
+replaced this way; add a matching Astro file under `src/pages/` when you need to
+override one of those pages.
 
 ## Know `src` vs `public`
 
@@ -150,6 +198,7 @@ Use `src/` for files Astro should read, transform, type-check, or route during
 the build:
 
 - `src/content/posts/*.md` for posts
+- `src/content/pages/*.md` for standalone Markdown pages
 - `src/content/posts/**/folder.toml` for ordered collections
 - `src/content.config.ts` for the Papyrus content collection export
 - `src/data/profile.toml` for the profile and CV source
@@ -175,6 +224,7 @@ For normal site work, start with these files:
 | Site title, description, navigation, theme, feature flags, homepage counts, and post-card defaults | `papyrus.config.toml` |
 | Project cards | `src/data/projects.toml` |
 | Add or edit posts | `src/content/posts/*.md` |
+| Add a standalone Markdown page | `src/content/pages/*.md` |
 | Add ordered docs or guide sections | `src/content/posts/<folder>/<folder>.toml` plus Markdown posts |
 | Change the profile, CV, links, skills, dates, and print color | `src/data/profile.toml` |
 | Change logos, favicons, covers, avatars, and project images | `public/` assets |
@@ -206,7 +256,13 @@ social preview cards. A post does not need `cover` frontmatter to get an Open
 Graph/X sharing image. Generated cards are `1200x630` PNG files with matching
 Open Graph dimensions and content type. When a post has a cover, Papyrus uses
 it inside the generated social card instead of pointing `og:image` directly at
-the original cover file.
+the original cover file. The card includes up to three post tags. If the post
+belongs to a collection, it also shows the collection and section. Both
+`/posts/` and collection routes use the same card for the underlying post.
+
+When more than one collection contains a post, Papyrus uses the collection in
+the most specific folder. Equal-depth matches are resolved by collection TOML
+path, so generation remains deterministic.
 
 Use `ogSourceImage` when the best social-card visual is an image from the post
 body instead of the article cover:

@@ -15,92 +15,48 @@ const {
   data-default-theme-profile={defaultThemeProfile}
   data-default-font-profile={defaultFontProfile}
 >
-  const PAPYRUS_THEME_PROFILES = ["pure", "catppuccin", "tokyo-night", "kanagawa", "rose-pine", "everforest", "dracula", "gruvbox", "nord"];
-  const PAPYRUS_FONT_PROFILES = ["theme", "readable", "code"];
-  const PAPYRUS_INLINE_SCRIPT = document.currentScript;
-  const PAPYRUS_INLINE_DEFAULT_THEME_PROFILE = PAPYRUS_INLINE_SCRIPT?.dataset.defaultThemeProfile ?? "gruvbox";
-  const PAPYRUS_INLINE_DEFAULT_FONT_PROFILE = PAPYRUS_INLINE_SCRIPT?.dataset.defaultFontProfile ?? "readable";
-  const PAPYRUS_MODE_STORAGE_KEY = "papyrus-mode";
-  const PAPYRUS_PROFILE_STORAGE_KEY = "papyrus-theme";
-  const PAPYRUS_FONT_STORAGE_KEY = "papyrus-font";
-
-  function papyrusPureStoredMode() {
-    return localStorage.getItem(PAPYRUS_MODE_STORAGE_KEY) ?? localStorage.getItem("theme");
-  }
-
-  function papyrusPureStoredProfile() {
-    return localStorage.getItem(PAPYRUS_PROFILE_STORAGE_KEY) ?? PAPYRUS_INLINE_DEFAULT_THEME_PROFILE;
-  }
-
-  function papyrusPureStoredFont() {
-    return localStorage.getItem(PAPYRUS_FONT_STORAGE_KEY) ?? PAPYRUS_INLINE_DEFAULT_FONT_PROFILE;
-  }
-
-  function papyrusPureResolvedMode(mode) {
-    if (!mode || mode === "system") {
-      return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    }
-
-    return mode;
-  }
-
-  function papyrusPureApplyTheme(mode, profile) {
-    const targetMode = papyrusPureResolvedMode(mode);
-    const targetProfile = PAPYRUS_THEME_PROFILES.includes(profile) ? profile : "pure";
-    const targetFont = PAPYRUS_FONT_PROFILES.includes(papyrusPureStoredFont()) ? papyrusPureStoredFont() : "theme";
-
-    document.documentElement.classList.toggle("dark", targetMode === "dark");
-    document.documentElement.dataset.papyrusTheme = targetProfile;
-    document.documentElement.dataset.papyrusFont = targetFont;
-
-    requestAnimationFrame(() => {
-      const themeColor = getComputedStyle(document.documentElement).getPropertyValue("--papyrus-theme-color").trim();
-      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", themeColor || (targetMode === "dark" ? "#0B0B10" : "#FCFCFD"));
-      document.dispatchEvent(new CustomEvent("papyrus:theme-change", {
-        detail: { mode: targetMode, profile: targetProfile },
-      }));
-    });
-  }
-
-  function papyrusPureSetInitialTheme() {
-    papyrusPureApplyTheme(papyrusPureStoredMode() ?? "system", papyrusPureStoredProfile());
-  }
-
-  papyrusPureSetInitialTheme();
-  document.addEventListener("astro:page-load", () => papyrusPureSetInitialTheme());
-</script>
-
-<script
-  is:inline
-  data-default-theme-profile={defaultThemeProfile}
-  data-default-font-profile={defaultFontProfile}
->
   const PAPYRUS_RUNTIME_SCRIPT = document.currentScript;
   const PAPYRUS_RUNTIME_DEFAULT_THEME_PROFILE = PAPYRUS_RUNTIME_SCRIPT?.dataset.defaultThemeProfile ?? "gruvbox";
   const PAPYRUS_RUNTIME_DEFAULT_FONT_PROFILE = PAPYRUS_RUNTIME_SCRIPT?.dataset.defaultFontProfile ?? "readable";
 
+  function readThemeStorage(key) {
+    try {
+      return localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  }
+
+  function writeThemeStorage(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch {
+      // The selected value still applies for this page when storage is unavailable.
+    }
+  }
+
   function getTheme() {
-    return localStorage.getItem("papyrus-mode") ?? localStorage.getItem("theme");
+    return readThemeStorage("papyrus-mode") ?? readThemeStorage("theme");
   }
 
   function getThemeProfile() {
-    return localStorage.getItem("papyrus-theme") ?? PAPYRUS_RUNTIME_DEFAULT_THEME_PROFILE;
+    return readThemeStorage("papyrus-theme") ?? PAPYRUS_RUNTIME_DEFAULT_THEME_PROFILE;
   }
 
   function getFontProfile() {
-    return localStorage.getItem("papyrus-font") ?? PAPYRUS_RUNTIME_DEFAULT_FONT_PROFILE;
+    return readThemeStorage("papyrus-font") ?? PAPYRUS_RUNTIME_DEFAULT_FONT_PROFILE;
   }
 
   function setTheme(theme, save = false) {
     const themes = ["system", "dark", "light"];
     if (theme) {
       if (!themes.includes(theme)) return theme;
-      if (save) localStorage.setItem("papyrus-mode", theme);
+      if (save) writeThemeStorage("papyrus-mode", theme);
     } else {
       theme = getTheme() ?? "system";
       if (save) {
         theme = themes[(themes.indexOf(theme) + 1) % themes.length];
-        localStorage.setItem("papyrus-mode", theme);
+        writeThemeStorage("papyrus-mode", theme);
       }
     }
 
@@ -117,6 +73,7 @@ const {
 
     document.documentElement.classList.toggle("dark", targetMode === "dark");
     document.documentElement.dataset.papyrusTheme = targetProfile;
+    document.documentElement.style.colorScheme = targetMode;
 
     requestAnimationFrame(() => {
       const themeColor = getComputedStyle(document.documentElement).getPropertyValue("--papyrus-theme-color").trim();
@@ -143,7 +100,7 @@ const {
       profile = profiles[(profiles.indexOf(profile) + 1) % profiles.length];
     }
 
-    if (save) localStorage.setItem("papyrus-theme", profile);
+    if (save) writeThemeStorage("papyrus-theme", profile);
     applyTheme(getTheme() ?? "system", profile);
 
     return profile;
@@ -160,7 +117,7 @@ const {
       profile = toggleProfiles[(currentIndex + 1) % toggleProfiles.length];
     }
 
-    if (save) localStorage.setItem("papyrus-font", profile);
+    if (save) writeThemeStorage("papyrus-font", profile);
     applyFontProfile(profile);
 
     return profile;
