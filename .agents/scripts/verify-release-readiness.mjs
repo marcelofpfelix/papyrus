@@ -42,6 +42,8 @@ assert(packageJson.repository?.url === "git+https://github.com/marcelofpfelix/pa
 assert(packageJson.bugs?.url === "https://github.com/marcelofpfelix/papyrus/issues", "package bugs URL must point to papyrus issues");
 assert(packageJson.publishConfig?.access === "public", "publishConfig.access must be public");
 assert(packageJson.publishConfig?.provenance === true, "publishConfig.provenance must stay enabled");
+assert(!packageJson.scripts?.prepare, "Git consumers should use tracked lib files without running a prepare script");
+assert(packageJson.scripts?.prepack === "pnpm run package:runtime", "npm packages should regenerate lib files during prepack");
 assert(/^minimumReleaseAge:\s*10080$/m.test(pnpmWorkspace), "pnpm-workspace.yaml must reject packages newer than 7 days");
 assert(/^minimumReleaseAgeStrict:\s*true$/m.test(pnpmWorkspace), "pnpm-workspace.yaml must keep minimumReleaseAge strict");
 
