@@ -16,7 +16,7 @@
 - Keep collection post URLs relative to their collection instead of repeating
   the collection slug.
 - Let Git consumers use the tracked compiled runtime without running a local
-  package build; npm packaging still regenerates the runtime before packing.
+  package lifecycle build; release CI regenerates the runtime explicitly.
 
 ## 0.2.3
 

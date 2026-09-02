@@ -156,7 +156,6 @@
   ],
   "scripts": {
     "package:runtime": "tsc -p tsconfig.package.json",
-    "prepack": "pnpm run package:runtime",
     "check": "astro check",
     "build": "pnpm run image:effects && pnpm run social:images && pnpm run cv:export && pnpm run build:llms && pnpm run ai:indexes -- src/content/posts public/ai ${SITE_URL:-${CF_PAGES_URL:-https://papyrus.marcelofelix.com}} public/demo/site-data.json && pnpm run rss:tags && astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
     "cv:export": "node scripts/export-cv.mjs src/data/profile.toml public/cv/profile",

@@ -39,6 +39,7 @@ jobs:
           registry-url: https://registry.npmjs.org
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm run package:runtime
       - run: pnpm run verify:release
       - run: pnpm run build
       - run: pnpm publish --access public --provenance
