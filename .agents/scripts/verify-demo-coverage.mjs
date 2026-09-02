@@ -89,7 +89,7 @@ for (const href of [
 }
 
 assert(docsConfig.includes('name = "Papyrus docs"'), "docs collection config missing name");
-assert(docsConfig.includes('name = "Start"'), "docs collection config missing Start section");
+assert(docsConfig.includes('name = "Getting started"'), "docs collection config missing Getting started section");
 assert(docsConfig.includes('name = "Authoring"'), "docs collection config missing Authoring section");
 assert(docsConfig.includes('name = "References"'), "docs collection config missing References section");
 assert(docsConfig.includes('name = "Deploy"'), "docs collection config missing Deploy section");

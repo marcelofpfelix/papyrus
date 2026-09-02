@@ -33,15 +33,17 @@ function parseSections(value) {
         const record = asRecord(section);
         return {
           name: asString(record.name),
+          directory: asString(record.directory),
           description: asString(record.description),
         };
       }).filter(section => section.name)
     : [];
 }
 
-function parseSettings(value) {
+export function parseCollectionSettings(value) {
   const record = asRecord(value);
   return {
+    breadcrumbs: record.breadcrumbs !== false,
     postFooter: record.post_footer === "none" ? "none" : "collection",
     postFooterCollapsible: record.post_footer_collapsible !== false,
   };
@@ -73,7 +75,7 @@ export async function readPostCollectionMetadata(postsDir = "src/content/posts")
       directory,
       name: asString(parsed.name, titleFromSlug(slug)),
       description: asString(parsed.description),
-      settings: parseSettings(parsed.settings),
+      settings: parseCollectionSettings(parsed.settings),
       sections: parseSections(parsed.sections),
     };
   }));
@@ -96,7 +98,7 @@ export function collectionSectionForPost(collection, postPath, postsDir = "src/c
   const post = relativePostPath(postsDir, postPath);
   const withinCollection = collection.directory ? post.slice(collection.directory.length + 1) : post;
   const sectionDirectory = withinCollection.split("/")[0];
-  return collection.sections.find(section => collectionSectionSlug(section.name) === sectionDirectory)?.name;
+  return collection.sections.find(section => (section.directory || collectionSectionSlug(section.name)) === sectionDirectory)?.name;
 }
 
 export function primaryCollectionForPost(collections, postPath, postsDir = "src/content/posts") {

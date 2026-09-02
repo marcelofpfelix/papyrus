@@ -130,7 +130,7 @@ const docsIndexHtml = await readFile("dist/collections/docs/index.html", "utf8")
 for (const repoOnlyDoc of ["guide", "request-audit", "status-roadmap", "pure-parity"]) {
   assert(!docsIndexHtml.includes(`/collections/docs/${repoOnlyDoc}/`), `repo-only ${repoOnlyDoc} doc should not be linked from the public docs collection index`);
 }
-for (const phrase of ["Start", "Authoring", "References", "Deploy", "Feature map", "Markdown code guide", "Papyrus package shape"]) {
+for (const phrase of ["Getting started", "Authoring", "References", "Deploy", "Feature map", "Markdown code guide", "Papyrus package shape"]) {
   assert(docsIndexHtml.includes(phrase), `docs collection index missing ${phrase}`);
 }
 assert(!docsIndexHtml.includes("/posts/ai-first-metadata-demo/") && !docsIndexHtml.includes("AI-first metadata"), "docs collection index should not link the removed AI metadata post");
@@ -147,7 +147,6 @@ assert(contentStructureHtml.includes("Development-only notes stay under <code>.a
 const profileHtml = await readFile("dist/profile/index.html", "utf8");
 assert(profileHtml.includes(">Source<") && profileHtml.includes("profile.toml") && profileHtml.includes("resume.json") && profileHtml.includes("profile.md"), "profile page should expose canonical source links through the shared action menu");
 assert(!profileHtml.includes("profile.json"), "profile page should not expose the old normalized profile JSON export");
-assert(profileHtml.includes("keys.openpgp.org"), "profile page should expose configured PGP key links");
 assert(!profileHtml.includes("Original CV"), "profile page should not use the ambiguous Original CV label");
 
 const metadataDemoHtml = await readFile("dist/metadata-demo/index.html", "utf8");

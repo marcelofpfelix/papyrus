@@ -44,6 +44,7 @@ name = "Papyrus docs"
 description = "Package docs for installing, composing, and extending Papyrus."
 
 [settings]
+breadcrumbs = true
 post_footer = "collection"
 post_footer_collapsible = true
 
@@ -57,7 +58,9 @@ description = "Reusable route and content references."
 ```
 
 Sections are matched by folder slug. A section named `Start` reads posts from
-`start/`; a section named `References` reads posts from `references/`.
+`start/`; a section named `References` reads posts from `references/`. Set
+`directory` when the public name differs from the folder, for example
+`name = "Getting started"` with `directory = "start"`.
 
 ## Ordering
 
@@ -79,10 +82,13 @@ route at `/collections/docs/my-slug/`.
 
 Collection post pages receive collection-aware navigation:
 
-- the back link points to the collection page
+- breadcrumbs link to the collection and current section
 - previous and next links follow filename order
 - the table of contents can include collection sections
 - the footer can show the current collection, collapsed by default
+
+Breadcrumbs are enabled by default. Set `breadcrumbs = false` to keep the
+single Back link instead.
 
 Use collection routes when sequence matters. Use normal post routes when date
 order is enough.

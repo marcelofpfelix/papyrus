@@ -60,6 +60,11 @@ export type PapyrusCvNamedFlag = {
   flag?: string;
 };
 
+export type PapyrusCvPublicKeys = {
+  ssh?: string;
+  gpg?: string;
+};
+
 export type PapyrusCvUser = {
   name: string;
   handle?: string;
@@ -82,6 +87,7 @@ export type PapyrusCvUser = {
   languages?: PapyrusCvNamedFlag[];
   roles?: string[];
   profileTabs?: Partial<Record<"resume" | "timeline" | "projects" | "skills", boolean>>;
+  publicKeys?: PapyrusCvPublicKeys;
   links?: PapyrusCvLink[];
   sections?: PapyrusCvSection[];
 };
@@ -147,14 +153,6 @@ function linkFor(user: JekyllCvRecord, key: string): PapyrusCvLink | undefined {
   };
 }
 
-function pgpLinkFor(user: JekyllCvRecord): PapyrusCvLink | undefined {
-  const href = cvHref(stringValue(user.pgp_key) ?? stringValue(user.pgp_url) ?? stringValue(user.pgpKey) ?? stringValue(user.pgpUrl));
-  if (!href) return undefined;
-  const fingerprint = stringValue(user.pgp_fingerprint) ?? stringValue(user.pgpFingerprint);
-  const label = stringValue(user.pgp_label) ?? stringValue(user.pgpLabel) ?? (fingerprint ? `PGP ${fingerprint.slice(-8)}` : "PGP");
-  return { label, href, icon: "pgp" };
-}
-
 function namedFlagFor(user: JekyllCvRecord, key: string): PapyrusCvNamedFlag | undefined {
   const item = record(user[key]);
   const name = stringValue(item.name);
@@ -213,6 +211,9 @@ export function normalizeJekyllCvUser(input: unknown): PapyrusCvUser {
   } : undefined;
   const linkKeys = stringList(user.links);
   const profileTabs = record(user.profile_tabs ?? user.profileTabs);
+  const publicKeys = record(user.public_keys);
+  const sshPublicKey = stringValue(publicKeys.ssh);
+  const gpgPublicKey = stringValue(publicKeys.gpg);
 
   return {
     name: stringValue(user.name) ?? "Unnamed profile",
@@ -249,9 +250,13 @@ export function normalizeJekyllCvUser(input: unknown): PapyrusCvUser {
       ...(booleanValue(profileTabs.projects) !== undefined ? { projects: booleanValue(profileTabs.projects) } : {}),
       ...(booleanValue(profileTabs.skills) !== undefined ? { skills: booleanValue(profileTabs.skills) } : {}),
     },
+    publicKeys: sshPublicKey || gpgPublicKey ? {
+      ...(sshPublicKey ? { ssh: sshPublicKey } : {}),
+      ...(gpgPublicKey ? { gpg: gpgPublicKey } : {}),
+    } : undefined,
     links: [
       ...linkKeys.map((key) => linkFor(user, key)).filter((link): link is PapyrusCvLink => Boolean(link)),
-      pgpLinkFor(user),
+      ...(gpgPublicKey ? [{ label: "GPG", href: "/profile.gpg", icon: "pgp" }] : []),
     ].filter((link): link is PapyrusCvLink => Boolean(link)),
     sections: stringList(user.sections)
       .map((sectionKey) => {

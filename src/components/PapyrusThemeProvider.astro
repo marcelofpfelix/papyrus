@@ -230,6 +230,7 @@ const {
   }
 
   function setupThemeControls() {
+    setTheme(getTheme() ?? "system");
     setFontProfile(getFontProfile());
     bindThemeControls();
   }

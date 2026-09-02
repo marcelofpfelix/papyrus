@@ -57,14 +57,6 @@ function linkFor(user, key) {
   };
 }
 
-function pgpLinkFor(user) {
-  const href = cvHref(stringValue(user.pgp_key) || stringValue(user.pgp_url) || stringValue(user.pgpKey) || stringValue(user.pgpUrl));
-  if (!href) return undefined;
-  const fingerprint = stringValue(user.pgp_fingerprint) || stringValue(user.pgpFingerprint);
-  const label = stringValue(user.pgp_label) || stringValue(user.pgpLabel) || (fingerprint ? `PGP ${fingerprint.slice(-8)}` : "PGP");
-  return { label, href, icon: "pgp" };
-}
-
 function namedFlagFor(user, key) {
   const item = objectValue(user[key]);
   const name = stringValue(item.name);
@@ -133,9 +125,12 @@ function normalizeCv(source) {
     domainParts: emailDomain.split(".").filter(Boolean),
     display: `${emailUser}＠${emailDomain}`,
   } : undefined;
+  const publicKeys = objectValue(user.public_keys);
+  const sshPublicKey = stringValue(publicKeys.ssh);
+  const gpgPublicKey = stringValue(publicKeys.gpg);
   const links = [
     ...stringList(user.links).map(key => linkFor(user, key)).filter(Boolean),
-    pgpLinkFor(user),
+    ...(gpgPublicKey ? [{ label: "GPG", href: "/profile.gpg", icon: "pgp" }] : []),
   ].filter(Boolean);
   const sections = stringList(user.sections)
     .map(sectionKey => {
@@ -171,6 +166,10 @@ function normalizeCv(source) {
     nationality: stringList(user.nationality).map(key => namedFlagFor(user, key)).filter(Boolean),
     languages: stringList(user.languages).map(key => namedFlagFor(user, key)).filter(Boolean),
     roles: stringList(user.roles),
+    publicKeys: sshPublicKey || gpgPublicKey ? {
+      ...(sshPublicKey ? { ssh: sshPublicKey } : {}),
+      ...(gpgPublicKey ? { gpg: gpgPublicKey } : {}),
+    } : undefined,
     links,
     sections,
   };

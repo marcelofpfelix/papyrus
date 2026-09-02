@@ -131,7 +131,7 @@ export async function validateBuiltLinks(distArg = "dist", { base = "/" } = {}) 
 
   for (const file of await walk(dist)) {
     const relative = posix.relative(dist, file);
-    if (relative === "llms-full.txt" || relative.endsWith(".md.txt")) continue;
+    if (relative === "llms-full.txt" || relative.endsWith(".md")) continue;
     checkedFiles.push(relative);
     let text = await readFile(file, "utf8");
     if (file.endsWith(".html")) {

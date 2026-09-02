@@ -765,6 +765,7 @@ name = "Papyrus docs"
 description = "Package docs for installing, composing, and extending Papyrus."
 
 [settings]
+breadcrumbs = true
 post_footer = "collection"
 post_footer_collapsible = true
 
@@ -778,7 +779,9 @@ description = "Reusable route and content references."
 ```
 
 Sections are matched by folder slug. A section named `Start` reads posts from
-`start/`; a section named `References` reads posts from `references/`.
+`start/`; a section named `References` reads posts from `references/`. Set
+`directory` when the public name differs from the folder, for example
+`name = "Getting started"` with `directory = "start"`.
 
 ## Ordering
 
@@ -800,10 +803,13 @@ route at `/collections/docs/my-slug/`.
 
 Collection post pages receive collection-aware navigation:
 
-- the back link points to the collection page
+- breadcrumbs link to the collection and current section
 - previous and next links follow filename order
 - the table of contents can include collection sections
 - the footer can show the current collection, collapsed by default
+
+Breadcrumbs are enabled by default. Set `breadcrumbs = false` to keep the
+single Back link instead.
 
 Use collection routes when sequence matters. Use normal post routes when date
 order is enough.
@@ -955,13 +961,22 @@ blogs.
 
 ## Export and print
 
-Optional encrypted-contact links can be configured without changing the profile
-component:
+Public SSH and GPG keys can be configured without adding route files:
 
 ```toml title="src/data/profile.toml"
-pgp_key = "https://keys.openpgp.org/search?q=0123456789ABCDEF"
-pgp_fingerprint = "0123 4567 89AB CDEF"
+[user.public_keys]
+ssh = "ssh-ed25519 AAAA... workstation"
+gpg = """-----BEGIN PGP PUBLIC KEY BLOCK-----
+...
+-----END PGP PUBLIC KEY BLOCK-----"""
 ```
+
+Papyrus publishes the configured values unchanged at `/profile.keys` and
+`/profile.gpg`. Omit either field to omit its route. The SSH value is a complete
+line suitable for `authorized_keys`, cloud-init `ssh_authorized_keys`, or an
+Ansible `authorized_key` task after it is fetched. The GPG value must be the
+complete armored public certificate. Timestamps and fingerprints are not
+required because tools can derive them from the key material when needed.
 
 Run the export command after editing profile data:
 
@@ -1195,8 +1210,9 @@ export default definePapyrusAstroConfig({
 - `papyrusBasePath()` rewrites root-relative links and images in Markdown when
   Astro is deployed below a base path. Components continue to use Papyrus's
   `withBase()` helper.
-- `papyrusMdTxt()` publishes each public post at
-  `/posts/.md.txt` with minimal title and description frontmatter. Its
+- `papyrusMdTxt()` publishes each public post at `/posts/.md` and each
+  collection view at `/collections//.md`, with minimal title
+  and description frontmatter. Its
   AST cleaner follows `starlight-md-txt` and removes MDX-only wrappers while
   preserving their readable content.
 - `papyrusSiteGraph()` adds `/graph/` from the existing

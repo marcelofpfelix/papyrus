@@ -10,6 +10,7 @@ const packageRoot = resolve(new URL("../..", import.meta.url).pathname);
 const root = resolve(process.env.LIGHTHOUSE_ROOT ?? packageRoot);
 const dist = join(root, "dist");
 const reportDir = join(root, ".lighthouse");
+const lighthouseCli = join(packageRoot, "node_modules", "lighthouse", "cli", "index.js");
 const port = Number(process.env.LIGHTHOUSE_PORT ?? 4177);
 const minScore = Number(process.env.LIGHTHOUSE_MIN_SCORE ?? 100);
 const concurrency = Math.min(8, Math.max(1, Number.parseInt(process.env.LIGHTHOUSE_CONCURRENCY ?? "4", 10) || 4));
@@ -118,12 +119,9 @@ async function collectRoutes() {
 function runLighthouse(route, reportPath) {
   return new Promise((resolveRun, rejectRun) => {
     const child = spawn(
-      "pnpm",
+      process.execPath,
       [
-        "--dir",
-        packageRoot,
-        "exec",
-        "lighthouse",
+        lighthouseCli,
         `${origin}${route}`,
         "--quiet",
         "--output=json",

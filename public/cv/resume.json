@@ -28,11 +28,6 @@
         "network": "keybase",
         "username": "papyrus-theme",
         "url": "https://keybase.io/papyrus-theme"
-      },
-      {
-        "network": "pgp",
-        "username": "PGP 123 4567",
-        "url": "https://keys.openpgp.org/search?q=0123456789ABCDEF0123456789ABCDEF01234567"
       }
     ]
   },

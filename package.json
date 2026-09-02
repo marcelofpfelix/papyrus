@@ -119,6 +119,8 @@
     "./template/pages/robots.txt.ts": "./src/template/pages/robots.txt.ts",
     "./template/pages/giscus/[profile]/[mode].css.ts": "./src/template/pages/giscus/[profile]/[mode].css.ts",
     "./template/pages/security.txt.ts": "./src/template/pages/security.txt.ts",
+    "./template/pages/profile.keys.ts": "./src/template/pages/profile.keys.ts",
+    "./template/pages/profile.gpg.ts": "./src/template/pages/profile.gpg.ts",
     "./template/pages/[...page].astro": "./src/template/pages/[...page].astro",
     "./pure": "./src/pure/index.ts",
     "./pure/advanced": "./src/pure/advanced.ts",

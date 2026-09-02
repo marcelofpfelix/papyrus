@@ -56,6 +56,17 @@ export function withBase(path, base = "") {
   const collections = await import(join(tmp, "collections.mjs"));
   const collectionMetadata = await import(join(tmp, "collection-metadata.mjs"));
 
+  same(
+    collectionMetadata.parseCollectionSettings({}),
+    { breadcrumbs: true, postFooter: "collection", postFooterCollapsible: true },
+    "collection settings should enable breadcrumbs by default",
+  );
+  same(
+    collectionMetadata.parseCollectionSettings({ breadcrumbs: false }),
+    { breadcrumbs: false, postFooter: "collection", postFooterCollapsible: true },
+    "collection settings should allow breadcrumbs to be disabled",
+  );
+
   const pagesSource = await readFile("src/utils/pages.ts", "utf8");
   const pagesTranspiled = ts.transpileModule(pagesSource, {
     compilerOptions: {

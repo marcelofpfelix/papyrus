@@ -3,6 +3,7 @@ description = "Demo collection for Portuguese food posts grouped by recipe type.
 
 [settings]
 # Options: "collection" or "none".
+breadcrumbs = true
 post_footer = "collection"
 post_footer_collapsible = true
 

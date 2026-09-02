@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import type { AstroIntegration } from "astro";
 import { loadPapyrusConfig, type PapyrusSiteConfig } from "./config/index.ts";
 import { generateSocialImages } from "../scripts/generate-social-images.mjs";
+import { getTemplatePublicKeys, type PapyrusPublicKeys } from "./template/public-keys.ts";
 
 function templateRoute(path: string) {
   const localUrl = new URL(path, import.meta.url);
@@ -48,6 +49,11 @@ const securityTxtRoutes: DefaultRoute[] = [
   { pattern: "/.well-known/security.txt", entrypoint: templateRoute("./template/pages/security.txt.ts"), localFiles: ["src/pages/.well-known/security.txt.ts", "src/pages/.well-known/security.txt.js", "public/.well-known/security.txt"] },
   { pattern: "/security.txt", entrypoint: templateRoute("./template/pages/security.txt.ts"), localFiles: ["src/pages/security.txt.ts", "src/pages/security.txt.js", "public/security.txt"] },
 ] as const;
+
+const publicKeyRoutes: Array<DefaultRoute & { key: keyof PapyrusPublicKeys }> = [
+  { key: "ssh", pattern: "/profile.keys", entrypoint: templateRoute("./template/pages/profile.keys.ts"), localFiles: ["src/pages/profile.keys.ts", "src/pages/profile.keys.js", "public/profile.keys"] },
+  { key: "gpg", pattern: "/profile.gpg", entrypoint: templateRoute("./template/pages/profile.gpg.ts"), localFiles: ["src/pages/profile.gpg.ts", "src/pages/profile.gpg.js", "public/profile.gpg"] },
+];
 
 function pureVirtualConfig(site: PapyrusSiteConfig) {
   const navMenu = site.nav.map((item) => ({
@@ -122,6 +128,7 @@ export default function papyrus(): AstroIntegration {
     hooks: {
       "astro:config:setup": async ({ injectRoute, updateConfig }) => {
         const site = await loadPapyrusConfig();
+        const publicKeys: PapyrusPublicKeys = await getTemplatePublicKeys().catch(() => ({}));
         updateConfig({
           vite: {
             plugins: [pureVirtualConfigPlugin(site)],
@@ -137,6 +144,10 @@ export default function papyrus(): AstroIntegration {
             if (localRouteExists(localFiles)) continue;
             injectRoute({ pattern, entrypoint });
           }
+        }
+        for (const { key, pattern, entrypoint, localFiles } of publicKeyRoutes) {
+          if (!publicKeys[key] || localRouteExists(localFiles)) continue;
+          injectRoute({ pattern, entrypoint });
         }
       },
       "astro:build:start": async () => {

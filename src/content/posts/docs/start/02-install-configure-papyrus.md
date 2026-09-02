@@ -89,8 +89,9 @@ export default definePapyrusAstroConfig({
 - `papyrusBasePath()` rewrites root-relative links and images in Markdown when
   Astro is deployed below a base path. Components continue to use Papyrus's
   `withBase()` helper.
-- `papyrusMdTxt()` publishes each public post at
-  `/posts/<slug>.md.txt` with minimal title and description frontmatter. Its
+- `papyrusMdTxt()` publishes each public post at `/posts/<slug>.md` and each
+  collection view at `/collections/<collection>/<slug>.md`, with minimal title
+  and description frontmatter. Its
   AST cleaner follows `starlight-md-txt` and removes MDX-only wrappers while
   preserving their readable content.
 - `papyrusSiteGraph()` adds `/graph/` from the existing

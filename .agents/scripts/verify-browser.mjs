@@ -636,10 +636,23 @@ async function runDocsChecks(page, origin) {
   const featureDocsState = await page.evaluate(() => {
     const summary = document.querySelector("[data-papyrus-toc-toggle]");
     return {
+      backLinkCount: document.querySelectorAll(".papyrus-post-back").length,
+      breadcrumbs: Array.from(document.querySelectorAll(".papyrus-breadcrumbs a")).map((link) => ({
+        href: link.getAttribute("href") ?? "",
+        text: link.textContent?.trim() ?? "",
+      })),
       hasPluginContract: Boolean(document.querySelector("#plugin-contract")),
       tocRect: summary ? summary.getBoundingClientRect().toJSON() : null,
     };
   });
+  assert(featureDocsState.backLinkCount === 0, `collection post should replace Back with breadcrumbs: ${JSON.stringify(featureDocsState)}`);
+  assert(
+    JSON.stringify(featureDocsState.breadcrumbs) === JSON.stringify([
+      { href: "/collections/docs/", text: "Papyrus docs" },
+      { href: "/collections/docs/#collection-section-getting-started", text: "Getting started" },
+    ]),
+    `collection post breadcrumbs were ${JSON.stringify(featureDocsState.breadcrumbs)}`,
+  );
   assert(featureDocsState.hasPluginContract, "feature docs missing plugin contract section");
   assert(sectionMenuState.rect && featureDocsState.tocRect, "collection TOC controls were not measurable");
   assert(Math.abs(sectionMenuState.rect.top - featureDocsState.tocRect.top) <= 1, `collection TOC top positions differed: ${sectionMenuState.rect.top} vs ${featureDocsState.tocRect.top}`);
@@ -710,7 +723,41 @@ async function runThemeBootstrapChecks(browser, origin) {
     finalTheme: document.documentElement.dataset.papyrusTheme ?? "",
   }));
   assert(persisted.dark && persisted.finalTheme === "rose-pine" && persisted.finalFont === "code", `persisted theme was not applied before DOMContentLoaded: ${JSON.stringify(persisted)}`);
+
+  await persistedPage.locator('.papyrus-nav a[href="/posts/"]').click();
+  await persistedPage.waitForURL(`${origin}/posts/`);
+  const persistedAfterNavigation = await persistedPage.evaluate(() => ({
+    colorScheme: document.documentElement.style.colorScheme,
+    dark: document.documentElement.classList.contains("dark"),
+    font: document.documentElement.dataset.papyrusFont ?? "",
+    theme: document.documentElement.dataset.papyrusTheme ?? "",
+  }));
+  assert(
+    persistedAfterNavigation.dark
+      && persistedAfterNavigation.colorScheme === "dark"
+      && persistedAfterNavigation.theme === "rose-pine"
+      && persistedAfterNavigation.font === "code",
+    `persisted theme was lost after client navigation: ${JSON.stringify(persistedAfterNavigation)}`,
+  );
   await persistedContext.close();
+
+  const systemContext = await browser.newContext({ colorScheme: "dark" });
+  const systemPage = await systemContext.newPage();
+  await systemPage.goto(`${origin}/`, { waitUntil: "domcontentloaded" });
+  await systemPage.locator('.papyrus-nav a[href="/posts/"]').click();
+  await systemPage.waitForURL(`${origin}/posts/`);
+  const systemAfterNavigation = await systemPage.evaluate(() => ({
+    colorScheme: document.documentElement.style.colorScheme,
+    dark: document.documentElement.classList.contains("dark"),
+    mode: localStorage.getItem("papyrus-mode"),
+  }));
+  assert(
+    systemAfterNavigation.dark
+      && systemAfterNavigation.colorScheme === "dark"
+      && systemAfterNavigation.mode === null,
+    `system theme was lost after client navigation: ${JSON.stringify(systemAfterNavigation)}`,
+  );
+  await systemContext.close();
 
   const blockedStorageContext = await browser.newContext({ colorScheme: "dark" });
   await blockedStorageContext.addInitScript(() => {

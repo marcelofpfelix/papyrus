@@ -2,6 +2,15 @@
 
 ## 0.2.4
 
+- Publish optional raw Markdown representations at `/posts/<slug>.md` and
+  `/collections/<collection>/<slug>.md` through one shared cleaner.
+- Generate `/profile.keys` and `/profile.gpg` from raw public keys configured
+  in `src/data/profile.toml`, without redundant fingerprint metadata.
+- Add configurable collection and section breadcrumbs to collection posts.
+- Reapply the selected color mode after Astro client-side navigation so pages
+  do not switch back to light mode.
+- Let collection section labels differ from their source directory names, and
+  preserve absolute tag-feed URLs during local and Cloudflare builds.
 - Keep canonical and collection post routes on one shared layout-props path so
   metadata, actions, comments, tags, typography, and feature flags stay in sync.
 - Add standalone Markdown pages inherited from `src/content/pages`, and apply

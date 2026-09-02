@@ -149,13 +149,22 @@ blogs.
 
 ## Export and print
 
-Optional encrypted-contact links can be configured without changing the profile
-component:
+Public SSH and GPG keys can be configured without adding route files:
 
 ```toml title="src/data/profile.toml"
-pgp_key = "https://keys.openpgp.org/search?q=0123456789ABCDEF"
-pgp_fingerprint = "0123 4567 89AB CDEF"
+[user.public_keys]
+ssh = "ssh-ed25519 AAAA... workstation"
+gpg = """-----BEGIN PGP PUBLIC KEY BLOCK-----
+...
+-----END PGP PUBLIC KEY BLOCK-----"""
 ```
+
+Papyrus publishes the configured values unchanged at `/profile.keys` and
+`/profile.gpg`. Omit either field to omit its route. The SSH value is a complete
+line suitable for `authorized_keys`, cloud-init `ssh_authorized_keys`, or an
+Ansible `authorized_key` task after it is fetched. The GPG value must be the
+complete armored public certificate. Timestamps and fingerprints are not
+required because tools can derive them from the key material when needed.
 
 Run the export command after editing profile data:
 

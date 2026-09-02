@@ -15,7 +15,6 @@ Documentation engineer for content systems
 - papyrus-theme: https://github.com/papyrus-theme
 - papyrus-theme: https://t.me/papyrus-theme
 - papyrus-theme: https://keybase.io/papyrus-theme
-- PGP 123 4567: https://keys.openpgp.org/search?q=0123456789ABCDEF0123456789ABCDEF01234567
 
 ## Profile
 

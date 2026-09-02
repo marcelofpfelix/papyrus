@@ -1619,6 +1619,48 @@ a {
   margin: 0 0 18px;
 }
 
+.papyrus-breadcrumbs {
+  color: var(--papyrus-muted);
+  font-family: var(--papyrus-font-mono);
+  font-size: 0.85rem;
+  margin: 0 0 18px;
+}
+
+.papyrus-breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.papyrus-breadcrumbs li {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.papyrus-breadcrumbs li + li::before {
+  color: var(--papyrus-border);
+  content: "/";
+}
+
+.papyrus-breadcrumbs a {
+  color: inherit;
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.papyrus-breadcrumbs a:hover,
+.papyrus-breadcrumbs a:focus-visible {
+  color: var(--papyrus-accent);
+  outline: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .papyrus-page-toc-top {
   display: flex;
   justify-content: flex-end;

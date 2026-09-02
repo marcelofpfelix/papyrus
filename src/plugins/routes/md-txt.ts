@@ -8,7 +8,7 @@ import { visit } from "unist-util-visit";
 import config from "virtual:papyrus-md-txt/config";
 import { postSlug, publishedPosts } from "../../utils/posts";
 
-type RawPost = {
+export type RawPost = {
   title: string;
   description?: string;
   body: string;
@@ -74,7 +74,7 @@ export async function cleanMdx(body: string): Promise<string> {
   return String(await processor.process(body));
 }
 
-async function rawMarkdown(post: RawPost): Promise<string> {
+export async function rawMarkdown(post: RawPost): Promise<string> {
   const frontmatter = [
     "---",
     `title: ${frontmatterValue(post.title)}`,
@@ -98,9 +98,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }));
 };
 
-export const GET: APIRoute<RawPost> = async ({ props }) => new Response(await rawMarkdown(props), {
-  headers: {
-    "Content-Type": config.format === ".md.txt" ? "text/plain; charset=utf-8" : "text/markdown; charset=utf-8",
-    "X-Content-Type-Options": "nosniff",
-  },
-});
+export async function markdownResponse(props: RawPost): Promise<Response> {
+  return new Response(await rawMarkdown(props), {
+    headers: {
+      "Content-Type": "text/markdown; charset=utf-8",
+      "X-Content-Type-Options": "nosniff",
+    },
+  });
+}
+
+export const GET: APIRoute<RawPost> = async ({ props }) => markdownResponse(props);

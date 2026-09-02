@@ -2,7 +2,7 @@
 import { getCollection, render } from "astro:content";
 import { PapyrusCollectionIndex } from "../../../../components";
 import PapyrusPostLayout from "../../../../layouts/PapyrusPostLayout.astro";
-import { collectionOrderedPosts, collectionPostSlug, collectionTocLinks, getPostCollections } from "../../../../utils/collections";
+import { collectionOrderedPosts, collectionPostSlug, collectionSectionId, collectionSectionNameForPost, collectionTocLinks, getPostCollections } from "../../../../utils/collections";
 import { postHref, postSlug, type PapyrusPostEntry } from "../../../../utils/posts";
 import { templatePostLayoutProps } from "../../../post";
 import { getTemplateSite } from "../../../site";
@@ -43,6 +43,15 @@ const { post, collection, adjacent } = Astro.props;
 const { Content, headings } = await render(post);
 const slug = postSlug(post);
 const collectionBasePath = `/collections/${collection.slug}`;
+const collectionSection = collectionSectionNameForPost(collection, post);
+const breadcrumbs = collection.settings.breadcrumbs
+  ? [
+      { href: `${collectionBasePath}/`, label: collection.name },
+      ...(collectionSection
+        ? [{ href: `${collectionBasePath}/#${collectionSectionId(collectionSection)}`, label: collectionSection }]
+        : []),
+    ]
+  : [];
 const showCollectionFooter = collection.settings.postFooter !== "none";
 const collectionFooterCollapsible = collection.settings.postFooterCollapsible;
 const postLayoutProps = templatePostLayoutProps(post, site);
@@ -52,7 +61,7 @@ const collectionLinks = [
 ];
 ---
 
-<PapyrusPostLayout {...postLayoutProps} headings={headings} tocLinks={collectionLinks} showToc={true} canonicalUrl={postHref(post)} previous={adjacent.previous} next={adjacent.next} adjacentBasePath={collectionBasePath} backHref={`${collectionBasePath}/`} morePostsHref={`${collectionBasePath}/`}>
+<PapyrusPostLayout {...postLayoutProps} headings={headings} tocLinks={collectionLinks} showToc={true} canonicalUrl={postHref(post)} previous={adjacent.previous} next={adjacent.next} adjacentBasePath={collectionBasePath} backHref={`${collectionBasePath}/`} breadcrumbs={breadcrumbs} morePostsHref={`${collectionBasePath}/`}>
   <Content />
 
   {showCollectionFooter && (

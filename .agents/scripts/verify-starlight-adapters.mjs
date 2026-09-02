@@ -34,7 +34,7 @@ try {
   await mkdir(join(validDist, "posts", "example"), { recursive: true });
   await writeFile(join(validDist, "index.html"), '<a href="/docs/posts/example/">Example</a><script src="/docs/pagefind/pagefind-ui.js"></script>');
   await writeFile(join(validDist, "posts", "example", "index.html"), '<a href="/docs/">Home</a>');
-  await writeFile(join(validDist, "example.md.txt"), '[Example](/docs/not-a-rendered-link/)');
+  await writeFile(join(validDist, "example.md"), '[Example](/docs/not-a-rendered-link/)');
   const valid = await plugins.validateBuiltLinks(validDist, { base: "/docs/" });
   assert(valid.broken.length === 0 && valid.checkedFiles.length === 2, "link validator should accept base-aware internal links");
   assert(!valid.broken.some((item) => item.includes("/pagefind/")), "link validator should defer Pagefind assets generated after Astro build");
@@ -68,7 +68,8 @@ try {
     injectRoute(route) { injectedMdRoutes.push(route); },
     updateConfig(config) { mdConfigUpdates.push(config); },
   });
-  assert(injectedMdRoutes.some((route) => route.pattern === "/posts/[...slug].md.txt" && route.prerender === true), "md-txt plugin should inject prerendered post routes");
+  assert(injectedMdRoutes.some((route) => route.pattern === "/posts/[...slug].md" && route.prerender === true), "md-txt plugin should inject prerendered post Markdown routes");
+  assert(injectedMdRoutes.some((route) => route.pattern === "/collections/[collection]/[...slug].md" && route.prerender === true), "md-txt plugin should inject prerendered collection-post Markdown routes");
   assert(mdConfigUpdates.some((config) => config.vite?.plugins?.some((plugin) => plugin.name === "vite-plugin-papyrus-md-txt")), "md-txt plugin should expose its adapted route config through a virtual module");
 
   const mdRoute = await readFile("src/plugins/routes/md-txt.ts", "utf8");
@@ -76,18 +77,20 @@ try {
   const graphComponent = await readFile("src/components/PapyrusSiteGraph.astro", "utf8");
   const graphIntegration = await readFile("src/plugins/site-graph.mjs", "utf8");
   const notices = await readFile("THIRD_PARTY_NOTICES.md", "utf8");
-  const postRoute = await readFile("src/template/pages/posts/[...slug].astro", "utf8");
+  const postTemplate = await readFile("src/template/post.ts", "utf8");
   const installGuide = await readFile("src/content/posts/docs/start/02-install-configure-papyrus.md", "utf8");
   const astroConfig = await readFile("src/astro/config.mjs", "utf8");
   const packageJson = JSON.parse(await readFile("package.json", "utf8"));
 
-  assert(mdRoute.includes('"text/plain; charset=utf-8"') && mdRoute.includes('"text/markdown; charset=utf-8"'), "md-txt route should return the upstream-compatible content type for its configured extension");
+  assert(mdRoute.includes('"text/markdown; charset=utf-8"'), "md-txt route should return the Markdown content type");
   assert(mdRoute.includes("publishedPosts") && mdRoute.includes("postSlug") && mdRoute.includes("cleanMdx"), "md-txt route should combine upstream cleaning with Papyrus publication and slug rules");
+  const collectionMdRoute = await readFile("src/plugins/routes/collection-md.ts", "utf8");
+  assert(collectionMdRoute.includes("getPostCollections") && collectionMdRoute.includes("collectionPostSlug") && collectionMdRoute.includes("markdownResponse"), "collection Markdown routes should reuse Papyrus collection membership and the shared Markdown response");
   assert(graphRoute.includes("public/ai/graph.json") && graphRoute.includes("PapyrusSiteGraph"), "graph route should reuse the generated graph index");
   assert(graphComponent.includes("data-papyrus-graph-node") && graphComponent.includes('role="group"'), "graph fallback should retain the accessible local SVG renderer");
   assert(graphIntegration.includes('pattern: route'), "site-graph adapter should retain its configurable Papyrus route");
   assert(notices.includes("process is not defined") && notices.includes("816 KB"), "site-graph notice should record why the public upstream wrapper was rolled back");
-  assert(postRoute.includes("tags={post.data.hidden ? [] : postTags(post)}"), "hidden posts should not link to intentionally absent public tag pages");
+  assert(postTemplate.includes("tags: post.data.hidden ? [] : postTags(post)"), "hidden posts should not link to intentionally absent public tag pages");
   for (const record of [
     ["starlight-site-graph@0.5.0", "fed9ce0b3aa160255a673aa76aeea17166dcceb9"],
     ["starlight-md-txt@0.1.0", "66dd11fac57d1e913ea40f371722651ed9928525"],

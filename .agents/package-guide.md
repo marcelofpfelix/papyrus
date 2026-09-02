@@ -722,7 +722,7 @@ tracked as `PP-216`.
 | Auto sidebar | `starlight-auto-sidebar` | Maybe for docs, not for blog posts. | Use generated content indexes first. A sidebar plugin should read folder metadata and stay optional. |
 | Contextual menu | `starlight-contextual-menu` | Maybe for docs navigation and copy/source actions. | Defer until the interaction model is clear; avoid hidden menus for core post actions. |
 | Telescope/search | `starlight-telescope` | No. | Keep Pagefind as the single search engine. The upstream package requires Starlight and adds Fuse plus a second page index, so a wrapper would make every consumer pay for an optional command palette. |
-| Raw Markdown routes | `starlight-md-txt` | Yes. | Adapted as opt-in `papyrusMdTxt()` for public Papyrus posts at `/posts/<slug>.md.txt`. |
+| Raw Markdown routes | `starlight-md-txt` | Yes. | Adapted as opt-in `papyrusMdTxt()` for public posts at `/posts/<slug>.md` and collection views at `/collections/<collection>/<slug>.md`. |
 | Base-path Markdown | `starlight-base-path` | Yes. | Adapted as opt-in `papyrusBasePath()`. It extends the existing Papyrus unified Markdown processor; component links still use `withBase()`. |
 | Link validation | `starlight-links-validator` | Yes. | Adapted as opt-in `papyrusLinkValidator()` around the existing built-output checker, now reusable and base-aware. |
 | Starlight interoperability | Public Starlight components and plugin lifecycle docs | Useful as a migration boundary, not a generic adapter. | `PP-216` concluded that Starlight plugins cannot run unchanged in Papyrus. Keep Starlight optional, map portable concepts, and use `examples/starlight-interop` as the tested decision record. |

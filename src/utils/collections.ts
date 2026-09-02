@@ -9,6 +9,7 @@ import {
 
 export type PapyrusCollectionSection = {
   name: string;
+  directory: string;
   description: string;
 };
 
@@ -26,6 +27,7 @@ export type PapyrusCollection = {
 export type PapyrusCollectionPostFooter = "collection" | "none";
 
 export type PapyrusCollectionSettings = {
+  breadcrumbs: boolean;
   postFooter: PapyrusCollectionPostFooter;
   postFooterCollapsible: boolean;
 };
@@ -60,6 +62,13 @@ export function collectionDir(collection: Pick<PapyrusCollection, "path" | "slug
 
 function postPath(post: PapyrusPostEntry) {
   return post.filePath?.replaceAll("\\", "/") ?? "";
+}
+
+export function collectionSectionNameForPost(collection: PapyrusCollection, post: PapyrusPostEntry): string | undefined {
+  return collectionSectionForPost({
+    ...collection,
+    directory: collectionDir(collection),
+  }, postPath(post));
 }
 
 export function collectionPostsForSection(collection: PapyrusCollection, sectionName: string): PapyrusPostEntry[] {

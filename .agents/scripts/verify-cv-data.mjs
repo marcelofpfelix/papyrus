@@ -36,6 +36,18 @@ try {
   const modulePath = join(tmp, "cv.mjs");
   await writeFile(modulePath, output);
   const cv = await import(modulePath);
+  const publicKeySource = (await readFile("src/template/public-keys.ts", "utf8"))
+    .replace(/^import .*;$/gm, "");
+  const publicKeyOutput = ts.transpileModule(publicKeySource, {
+    compilerOptions: {
+      module: ts.ModuleKind.ES2022,
+      target: ts.ScriptTarget.ES2022,
+      verbatimModuleSyntax: true,
+    },
+  }).outputText;
+  const publicKeyModulePath = join(tmp, "public-keys.mjs");
+  await writeFile(publicKeyModulePath, publicKeyOutput);
+  const publicKeyModule = await import(publicKeyModulePath);
 
   const data = {
     user: {
@@ -47,8 +59,10 @@ try {
       email_domain: "example.net",
       links: ["github"],
       github: { name: "marcelofpfelix", url: "https://github.com/" },
-      pgp_key: "https://keys.openpgp.org/search?q=0123456789ABCDEF",
-      pgp_fingerprint: "0123 4567 89AB CDEF",
+      public_keys: {
+        ssh: "ssh-ed25519 AAAATEST profile-test",
+        gpg: "-----BEGIN PGP PUBLIC KEY BLOCK-----\nTEST\n-----END PGP PUBLIC KEY BLOCK-----",
+      },
       location: "Lisbon",
       born: "1980-01-01",
       nationality: ["nat_pt"],
@@ -102,7 +116,13 @@ try {
   assert(user.nationality?.[0]?.flag === "pt", "nationality flag was not preserved");
   assert(user.languages?.[0]?.name === "English", "language entry was not preserved");
   assert(user.links?.[0]?.href === "https://github.com/marcelofpfelix", "profile link was not normalized");
-  assert(user.links?.some(link => link.icon === "pgp" && link.href?.includes("keys.openpgp.org")), "PGP link was not normalized");
+  assert(user.publicKeys?.ssh === "ssh-ed25519 AAAATEST profile-test", "SSH public key was not normalized");
+  assert(user.publicKeys?.gpg?.startsWith("-----BEGIN PGP PUBLIC KEY BLOCK-----"), "GPG public key was not normalized");
+  assert(user.links?.some(link => link.icon === "pgp" && link.href === "/profile.gpg"), "GPG route link was not normalized");
+  const routeKeys = publicKeyModule.profilePublicKeys(data);
+  assert(routeKeys.ssh === "ssh-ed25519 AAAATEST profile-test\n", "SSH route body should preserve the complete key line and add one trailing newline");
+  assert(routeKeys.gpg === "-----BEGIN PGP PUBLIC KEY BLOCK-----\nTEST\n-----END PGP PUBLIC KEY BLOCK-----\n", "GPG route body should preserve the complete armored certificate");
+  assert(publicKeyModule.profilePublicKeys({ user: {} }).ssh === undefined, "missing SSH configuration should not emit key content");
   assert(user.sections?.length === 2, "sections were not normalized");
   assert(user.sections?.[0]?.groups?.[0]?.url === "https://telnyx.com", "group URL was not normalized");
   assert(user.sections?.[0]?.groups?.[0]?.items?.[0]?.range?.start === "2020-01-01", "range start was not normalized");

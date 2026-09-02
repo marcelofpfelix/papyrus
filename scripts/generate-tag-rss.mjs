@@ -3,7 +3,11 @@ import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const args = process.argv.slice(2).filter((arg) => arg !== "--");
-const [input = "src/content/posts", outputDir = "public/rss/tags", siteUrl = ""] = args;
+const [
+  input = "src/content/posts",
+  outputDir = "public/rss/tags",
+  siteUrl = process.env.SITE_URL ?? process.env.CF_PAGES_URL ?? "",
+] = args;
 const root = process.cwd();
 const inputDir = path.resolve(root, input);
 const targetDir = path.resolve(root, outputDir);

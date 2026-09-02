@@ -2,11 +2,13 @@ name = "Papyrus docs"
 description = "Template-first docs for building a small Astro site with Papyrus."
 
 [settings]
+breadcrumbs = true
 post_footer = "collection"
 post_footer_collapsible = true
 
 [[sections]]
-name = "Start"
+name = "Getting started"
+directory = "start"
 description = "Start with papyrus-template, then edit config, posts, profile data, and assets."
 
 [[sections]]

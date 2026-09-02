@@ -1,14 +1,18 @@
 import { fileURLToPath } from "node:url";
 
-export function papyrusMdTxt({ includeDrafts = false, format = ".md.txt" } = {}) {
-  const cleanFormat = format.startsWith(".") ? format : `.${format}`;
+export function papyrusMdTxt({ includeDrafts = false } = {}) {
   return {
     name: "astro-papyrus-md-txt",
     hooks: {
       "astro:config:setup"({ injectRoute, updateConfig }) {
         injectRoute({
-          pattern: `/posts/[...slug]${cleanFormat}`,
+          pattern: "/posts/[...slug].md",
           entrypoint: fileURLToPath(new URL("./routes/md-txt.ts", import.meta.url)),
+          prerender: true,
+        });
+        injectRoute({
+          pattern: "/collections/[collection]/[...slug].md",
+          entrypoint: fileURLToPath(new URL("./routes/collection-md.ts", import.meta.url)),
           prerender: true,
         });
         const virtualId = "virtual:papyrus-md-txt/config";
@@ -19,7 +23,7 @@ export function papyrusMdTxt({ includeDrafts = false, format = ".md.txt" } = {})
               name: "vite-plugin-papyrus-md-txt",
               resolveId(id) { if (id === virtualId) return resolvedId; },
               load(id) {
-                if (id === resolvedId) return `export default ${JSON.stringify({ includeDrafts, format: cleanFormat })}`;
+                if (id === resolvedId) return `export default ${JSON.stringify({ includeDrafts })}`;
               },
             }],
           },

@@ -5,8 +5,6 @@ bio = "Documentation engineer for content systems"
 url = "github.com/marcelofpfelix/papyrus"
 email_user = "mira"
 email_domain = "site.test"
-pgp_key = "https://keys.openpgp.org/search?q=0123456789ABCDEF0123456789ABCDEF01234567"
-pgp_fingerprint = "0123 4567 89AB CDEF 0123 4567 89AB CDEF 0123 4567"
 links = ["linkedin", "github", "telegram", "keybase"]
 print_links = ["email", "linkedin", "github", "website"]
 link = "github.com/marcelofpfelix/papyrus"
@@ -17,6 +15,9 @@ languages = ["lan_en"]
 roles = ["Docs engineer", "Frontend maintainer"]
 pages = 1
 sections = ["about", "experience", "education", "skills", "interests"]
+
+[user.public_keys]
+ssh = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOfvc4E0eLYLbVw14kIB+oK6Z7EW6bN3o2MbGILglFdc papyrus-demo"
 
 [user.telegram]
 name = "papyrus-theme"

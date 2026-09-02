@@ -91,6 +91,8 @@ const requiredExports = [
   "./rehype-task-list-labels",
   "./shiki",
   "./template/pages/security.txt.ts",
+  "./template/pages/profile.keys.ts",
+  "./template/pages/profile.gpg.ts",
 ];
 
 for (const exportName of requiredExports) {

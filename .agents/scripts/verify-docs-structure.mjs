@@ -117,7 +117,7 @@ for (const phrase of [
 assert(!astroPapyrusParity.includes("| Partial |"), "AstroPapyrus parity decisions should not keep ambiguous Partial rows");
 assert(!astroPapyrusParity.includes("Implement next"), "AstroPapyrus parity decisions should not keep open-ended Implement next rows");
 assert(docsCollection.includes('name = "Papyrus docs"'), "docs collection metadata missing collection name");
-for (const section of ["Start", "Authoring", "References", "Deploy"]) {
+for (const section of ["Getting started", "Authoring", "References", "Deploy"]) {
   assert(docsCollection.includes(`name = "${section}"`), `docs collection missing ${section} section`);
 }
 

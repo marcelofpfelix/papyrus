@@ -26,6 +26,11 @@ interface TocLink {
   depth?: number;
 }
 
+interface Breadcrumb {
+  href: string;
+  label: string;
+}
+
 interface Props {
   title: string;
   description?: string;
@@ -61,6 +66,7 @@ interface Props {
   aiMetadata?: boolean;
   backHref?: string | false;
   backLabel?: string;
+  breadcrumbs?: Breadcrumb[];
   moreAboutHref?: string;
   moreAboutLabel?: string;
   morePostsHref?: string;
@@ -117,6 +123,7 @@ const {
   aiMetadata = true,
   backHref = "/posts/",
   backLabel = "Back",
+  breadcrumbs = [],
   moreAboutHref,
   moreAboutLabel = "more about me",
   morePostsHref = "/posts/",
@@ -194,7 +201,15 @@ function icon(name: string) {
   )}
   <span id="papyrus-post-top-sentinel" class="sr-only" aria-hidden="true"></span>
   <article id="papyrus-post-content" class="papyrus-post" data-pagefind-body={shouldIndexWithPagefind ? true : undefined}>
-    {backHref && (
+    {breadcrumbs.length > 0 ? (
+      <nav class="papyrus-breadcrumbs" aria-label="Breadcrumb">
+        <ol>
+          {breadcrumbs.map(crumb => (
+            <li><a href={withBase(crumb.href)}>{crumb.label}</a></li>
+          ))}
+        </ol>
+      </nav>
+    ) : backHref && (
       <p class="papyrus-post-back">
         <a href={withBase(backHref)}>
           <svg aria-hidden="true" viewBox="0 0 24 24" set:html={icon("arrowLeft")} />
