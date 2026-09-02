@@ -1672,12 +1672,15 @@ async function runCvChecks(page, origin) {
     return {
       backHref: document.querySelector('[data-cv-actions] a[href="/profile/"]')?.getAttribute("href") ?? "",
       hasProfessionalSummary: Boolean(document.querySelector("#summary-heading")),
+      headingLevels: Array.from(document.querySelectorAll("main h1, main h2, main h3, main h4, main h5, main h6"))
+        .map((heading) => Number(heading.tagName.slice(1))),
       name: document.querySelector(".resume-header h1")?.textContent?.trim() ?? "",
       versionHrefs: Array.from(versionMenu?.querySelectorAll("a") ?? []).map((link) => link.getAttribute("href") ?? ""),
     };
   });
   assert(astState.name === "Mira Lee", `ATS profile name was ${astState.name}`);
   assert(astState.hasProfessionalSummary, "ATS profile missing professional summary");
+  assert(astState.headingLevels.every((level, index, levels) => index === 0 || level <= levels[index - 1] + 1), `ATS heading levels skipped: ${astState.headingLevels.join(", ")}`);
   assert(astState.backHref === "/profile/", `ATS back link was ${astState.backHref}`);
   assert(astState.versionHrefs.includes("/profile/print/"), `ATS version links were ${JSON.stringify(astState.versionHrefs)}`);
 }

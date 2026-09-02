@@ -6,7 +6,8 @@ import { dirname, extname, join, normalize, relative, resolve } from "node:path"
 import { spawn } from "node:child_process";
 import { chromium } from "playwright";
 
-const root = resolve(new URL("../..", import.meta.url).pathname);
+const packageRoot = resolve(new URL("../..", import.meta.url).pathname);
+const root = resolve(process.env.LIGHTHOUSE_ROOT ?? packageRoot);
 const dist = join(root, "dist");
 const reportDir = join(root, ".lighthouse");
 const port = Number(process.env.LIGHTHOUSE_PORT ?? 4177);
@@ -119,6 +120,8 @@ function runLighthouse(route, reportPath) {
     const child = spawn(
       "pnpm",
       [
+        "--dir",
+        packageRoot,
         "exec",
         "lighthouse",
         `${origin}${route}`,
